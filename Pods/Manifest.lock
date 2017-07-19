@@ -1,0 +1,62 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - IQKeyboardManager (4.0.8)
+  - LXMButtonImagePosition (1.1.1)
+  - Masonry (1.0.2)
+  - MJExtension (3.0.13)
+  - MJRefresh (3.1.12)
+  - ReactiveObjC (2.1.2)
+  - SDCycleScrollView (1.65):
+    - SDWebImage (~> 3.7)
+  - SDWebImage (3.7.0):
+    - SDWebImage/Core (= 3.7.0)
+  - SDWebImage/Core (3.7.0)
+  - SVProgressHUD (2.1.2)
+  - WMPageController (2.2.1)
+  - XLForm (3.0.0)
+
+DEPENDENCIES:
+  - AFNetworking (= 3.1.0)
+  - IQKeyboardManager (= 4.0.8)
+  - LXMButtonImagePosition (= 1.1.1)
+  - Masonry (= 1.0.2)
+  - MJExtension (= 3.0.13)
+  - MJRefresh (= 3.1.12)
+  - ReactiveObjC (= 2.1.2)
+  - SDCycleScrollView (= 1.65)
+  - SDWebImage (= 3.7)
+  - SVProgressHUD
+  - WMPageController (= 2.2.1)
+  - XLForm (= 3.0)
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
+  LXMButtonImagePosition: bbbe4fceb2f6011cf02add36750acbeddd161c3e
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MJExtension: 5932755f451458eefa24239358817f8d291240c7
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  ReactiveObjC: 7b6782ae39f9ac0f57205c3b0c0b69b9dd7048c0
+  SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
+  SDWebImage: b42db92951f9d565c55f1d7f1d5efe47e33a7515
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
+  XLForm: 10fc7eb9e2d5df21a515fa3a794f4e26319abd0e
+
+PODFILE CHECKSUM: 15361ad703fc54b56d44a3729f8d8b0685f6a1ba
+
+COCOAPODS: 1.2.0

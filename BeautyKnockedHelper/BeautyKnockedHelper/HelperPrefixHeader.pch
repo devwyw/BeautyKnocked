@@ -1,0 +1,20 @@
+//
+//  HelperPrefixHeader.pch
+//  BeautyKnockedHelper
+//
+//  Created by zhongweiping on 2017/5/6.
+//  Copyright © 2017年 Dadichushi. All rights reserved.
+//
+
+#ifndef HelperPrefixHeader_pch
+#define HelperPrefixHeader_pch
+
+
+#define KScreenBounds [UIScreen mainScreen].bounds
+#define KScreenWidth [UIScreen mainScreen].bounds.size.width
+#define KScreenHeight [UIScreen mainScreen].bounds.size.height
+
+
+
+
+#endif /* HelperPrefixHeader_pch */

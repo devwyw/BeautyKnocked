@@ -1,0 +1,57 @@
+//
+//  UserPrefixHeader.pch
+//  BeautyKnocked
+//
+//  Created by zhongweiping on 2017/5/6.
+//  Copyright © 2017年 Dadichushi. All rights reserved.
+//
+
+#ifndef UserPrefixHeader_pch
+#define UserPrefixHeader_pch
+
+#define Bounds [UIScreen mainScreen].bounds
+#define Width [UIScreen mainScreen].bounds.size.width
+#define Height [UIScreen mainScreen].bounds.size.height
+
+#define  Width_Pt(x) x / 1080.f * Width
+#define  Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
+
+#define GetPT(x) x / 3.f
+
+#define Size_Change ((Height != 667) ? 667/Height : 1)
+#define Font_Size(x) Height == 480 ? x*3/8/Size_Change*1.19 : x*3/8/Size_Change
+
+#define Weakify(o)        __weak   typeof(self) mmwo = o;
+#define Strongify(o)      __strong typeof(self) o = mmwo;
+
+#import <AFNetworking.h>
+#import <Masonry.h>
+#import <ReactiveObjC.h>
+#import <IQKeyboardManager.h>
+#import <WMPageController.h>
+#import <MJRefresh.h>
+#import <MJExtension.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <XLForm.h>
+#import <SDCycleScrollView.h>
+#import <SVProgressHUD.h>
+#import <UIButton+LXMImagePosition.h>
+
+#import "UIImage+Original.h"
+#import "UIColor+RGB.h"
+#import "UIColor+help.h"
+
+
+#define ThemeColor [UIColor ddcs_colorWithRed:220 green:182 blue:100 alpha:1]
+#define ViewMake CGRectMake(0, 64, Width, Height-64)
+
+#ifdef __OBJC__
+#ifdef DEBUG
+#define NSLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#define NSLog(...)
+#endif
+#endif
+
+
+#endif /* UserPrefixHeader_pch */

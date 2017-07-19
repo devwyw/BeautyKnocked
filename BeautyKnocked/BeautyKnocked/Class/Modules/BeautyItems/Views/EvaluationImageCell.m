@@ -1,0 +1,42 @@
+//
+//  EvaluationImageCell.m
+//  BeautyKnocked
+//
+//  Created by zhongweiping on 2017/6/3.
+//  Copyright © 2017年 Dadichushi. All rights reserved.
+//
+
+#import "EvaluationImageCell.h"
+
+@interface EvaluationImageCell ()
+@property (nonatomic, strong) UIImageView *imgView;
+@end
+
+@implementation EvaluationImageCell
+
+-(instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        _imgView = [[UIImageView alloc] init];
+        [self.contentView addSubview:_imgView];
+        
+        [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.contentView);
+        }];
+        
+    }
+    return self;
+}
+
+-(void)setImageURL:(NSURL *)imageURL {
+    if (imageURL) {
+        [_imgView sd_setImageWithURL:imageURL];
+    }
+}
+
+-(void)setImageName:(NSString *)imageName {
+    [_imgView setImage:[UIImage imageNamed:imageName]];
+}
+
+@end
