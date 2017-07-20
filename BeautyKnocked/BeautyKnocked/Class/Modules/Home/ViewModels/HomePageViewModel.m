@@ -21,6 +21,7 @@
 #import "ShareViewController.h"
 #import "LightViewController.h"
 #import "NewUserController.h"
+#import "NearbyController.h"
 
 
 
@@ -291,7 +292,9 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 break;
             case 7:
             {
-                
+                NearbyController *controller=[[NearbyController alloc]init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
                 break;
             default:

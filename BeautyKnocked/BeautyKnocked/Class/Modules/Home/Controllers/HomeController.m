@@ -67,17 +67,17 @@
         [self.navigationController.navigationBar addSubview:item];
     }
     {
-        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-50, 2, 40, 40)];
+        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-Width_Pt(80)-15, 22-Height_Pt(80)/2, Width_Pt(80), Height_Pt(80))];
         [item setTag:102];
         [item setImage:[UIImage imageNamed:@"cell-phone_03"] forState:UIControlStateNormal];
         [item addTarget:self action:@selector(phone:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationController.navigationBar addSubview:item];
     }
     {
-        UIImageView *item=[[UIImageView alloc]initWithFrame:CGRectMake(Width_Pt(397), 2, Width_Pt(287), 40)];
+        UIImageView *item=[[UIImageView alloc]initWithFrame:CGRectMake(self.navigationController.navigationBar.frame.size.width/2-Width_Pt(282)/2, 22-Height_Pt(71)/2, Width_Pt(282), Height_Pt(71))];
         [item setTag:103];
         [item setImage:[UIImage imageNamed:@"top-logo_03"]];
-        [item setContentMode:UIViewContentModeScaleAspectFit];
+        [item setContentMode:UIViewContentModeScaleAspectFill];
         [self.navigationController.navigationBar addSubview:item];
     }
 }

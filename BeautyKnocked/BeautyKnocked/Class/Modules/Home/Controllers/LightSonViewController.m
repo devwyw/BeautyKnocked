@@ -23,10 +23,10 @@
     NSInteger height=[heightArr[_Mtag-1] integerValue];
     
     UIScrollView *Sview=[[UIScrollView alloc]initWithFrame:ViewMake];
-    [Sview setContentSize:CGSizeMake(Width, Height_Pt(height))];
+    [Sview setContentSize:CGSizeMake(Width_Pt(1080), Height_Pt(height))];
     [self.view addSubview:Sview];
     
-    UIImageView * image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(height))];
+    UIImageView * image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1080), Height_Pt(height))];
     [image setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",imageArr[_Mtag-1]]]];
     [image setContentMode:UIViewContentModeScaleAspectFill];
     [Sview addSubview:image];

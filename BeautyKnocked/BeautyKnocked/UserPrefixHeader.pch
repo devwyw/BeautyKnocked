@@ -9,12 +9,11 @@
 #ifndef UserPrefixHeader_pch
 #define UserPrefixHeader_pch
 
-#define Bounds [UIScreen mainScreen].bounds
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
 
-#define  Width_Pt(x) x / 1080.f * Width
-#define  Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
+#define Width_Pt(x) x / 1080.f * Width
+#define Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
 
 #define GetPT(x) x / 3.f
 
@@ -40,7 +39,6 @@
 #import "UIImage+Original.h"
 #import "UIColor+RGB.h"
 #import "UIColor+help.h"
-
 
 #define ThemeColor [UIColor ddcs_colorWithRed:220 green:182 blue:100 alpha:1]
 #define ViewMake CGRectMake(0, 64, Width, Height-64)

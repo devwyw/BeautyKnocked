@@ -16,7 +16,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     {
-        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-50, 2, 40, 40)];
+        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-Width_Pt(80)-15, 22-Height_Pt(80)/2, Width_Pt(80), Height_Pt(80))];
         [item setTag:105];
         [item setImage:[UIImage imageNamed:@"fenxiang-bai"] forState:UIControlStateNormal];
         [item setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateHighlighted];
@@ -46,10 +46,16 @@
     [image setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:image];
     
-    UIButton *button=[[UIButton alloc]initWithFrame:CGRectMake(50, Height-90, Width-100, 60)];
+    UIButton *button=[[UIButton alloc]init];
     [button setImage:[UIImage imageNamed:@"lijilingqu"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(lingqu:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
+    
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-Height_Pt(140));
+        make.width.height.mas_equalTo(CGSizeMake(Width_Pt(920),Height_Pt(200)));
+    }];
 }
 -(void)lingqu:(UIButton*)button{
     [button setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
