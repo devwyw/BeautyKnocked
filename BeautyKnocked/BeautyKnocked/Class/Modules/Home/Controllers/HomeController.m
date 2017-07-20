@@ -97,10 +97,16 @@
     self.homePageViewModel.navigationController = self.navigationController;
     [self addSubItemviews];
     [self configureConstraints];
-    
+
+    /** 购物车 */
+    UIButton *button=[DocumentsManager getCarViewWithOrigin:CGPointMake(5, Height-170)];
+    [self.view addSubview:button];
+    [button addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
+}
+-(void)Car:(UIButton*)button{
+    NSLog(@"1");
 }
 -(void)addSubItemviews {
-    
     [self.view addSubview:self.tableView];
 }
 
@@ -111,8 +117,6 @@
     }];
     
 }
-
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.homePageViewModel numberOfSectionsInHomePageTableView];
 }

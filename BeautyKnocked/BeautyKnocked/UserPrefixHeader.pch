@@ -39,6 +39,7 @@
 #import "UIImage+Original.h"
 #import "UIColor+RGB.h"
 #import "UIColor+help.h"
+#import "DocumentsManager.h"
 
 #define ThemeColor [UIColor ddcs_colorWithRed:220 green:182 blue:100 alpha:1]
 #define ViewMake CGRectMake(0, 64, Width, Height-64)
