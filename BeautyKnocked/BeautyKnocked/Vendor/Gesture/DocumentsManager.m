@@ -12,47 +12,34 @@ static DocumentsManager *instance=nil;
 
 @implementation DocumentsManager
 
-
-/** 重写allocWithZone */
-+(instancetype)allocWithZone:(struct _NSZone *)zone
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if (!instance) {
-            instance = [super allocWithZone:zone];
-        }
-    });
-    return instance;
++(void)load{
+    /** 每次加载第一个调用的方法 */
+    [super load];
+    instance=[DocumentsManager new];
+    [instance setString:@"123"];
 }
-/** 重写copyWithZone */
--(id)copyWithZone:(NSZone *)zone
-{
-    return instance;
++(instancetype)alloc{
+    if (instance) {
+        NSException *exp=[[NSException alloc]initWithName:@"SQLiteManager单例警告" reason:@"只能有一个实例" userInfo:nil];
+        [exp raise];
+    }
+    return [super alloc];
 }
-/** 重写mutableCopyWithZone */
--(id)mutableCopyWithZone:(NSZone *)zone
-{
-    return instance;
-}
-/** 单例方法 */
 +(instancetype)shareManager{
-    return [DocumentsManager new];
+    return instance;
 }
-+(UIButton*)getCarViewWithOrigin:(CGPoint)point{
-    UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(point.x, point.y, 60, 60)];
-    [Car setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
-    [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
-
-    UILabel *carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
-    [carCount setText:@"99+"];
-    [carCount setFont:[UIFont systemFontOfSize:10]];
-    [carCount setTextAlignment:NSTextAlignmentCenter];
-    [carCount setTextColor:[UIColor whiteColor]];
-    [carCount setBackgroundColor:[UIColor blackColor]];
-    [carCount.layer setCornerRadius:11];
-    [carCount.layer setMasksToBounds:YES];
-    [Car addSubview:carCount];
-    return Car;
++(UIImage*)GetImageWithColor:(UIColor*)color andHeight:(CGFloat)height
+{
+    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, height);
+    UIGraphicsBeginImageContext(r.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, r);
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
 }
-
 @end

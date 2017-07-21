@@ -156,7 +156,13 @@
         make.top.equalTo(Jimage.mas_top).offset(Height_Pt(290));
         make.size.mas_equalTo(CGSizeMake(Width_Pt(300), Height_Pt(80)));
     }];
-    
+
+    UITextView *textview=[[UITextView alloc]init];
+    [textview setTextColor:[UIColor blackColor]];
+    [textview setEditable:NO];
+    [textview setText:@"1.如果您的闺蜜从未在美丽敲敲门APP平台下单，则可以领取您分享的“闺蜜25元优惠券”，优惠券有效期为一个月；\n\n2.您的闺蜜只要完成领券后在一个月内消费并使用了本次活动优惠券，您可以领取25元代金券，该优惠券实时到账，可在“我的优惠券”中查看，使用期限为一个月；\n\n3.分享有礼可根据人数进行累加；\n\n4.拥有相同账户（手机号、设备、银行卡、支付账户）均视为同一用户，仅对首次在APP下单的闺蜜及分享者进行返券活动；\n\n5.一经发现任何违规获取美丽敲敲门优惠券的行为， 不予发放任何优惠券，追究法律责任。"];
+    [_Jview addSubview:textview];
+
     UIButton *zhidao=[[UIButton alloc]init];
     [zhidao setImage:[UIImage imageNamed:@"wozhidaole"] forState:UIControlStateNormal];
     [zhidao addTarget:self action:@selector(zhidao:) forControlEvents:UIControlEventTouchUpInside];
@@ -167,6 +173,14 @@
         make.width.height.mas_equalTo(CGSizeMake(Width_Pt(440), Height_Pt(145)));
     }];
     
+    [textview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(Jimage);
+        make.top.equalTo(title.mas_bottom).offset(10);
+        make.left.equalTo(Jimage.mas_left).offset(10);
+        make.bottom.equalTo(zhidao.mas_top).offset(-10);
+        make.right.equalTo(Jimage.mas_right).offset(-10);
+    }];
+    [_Jview setHidden:YES];
 }
 -(void)share:(UIButton*)button{
     NSLog(@"分享");

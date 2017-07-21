@@ -10,6 +10,7 @@
 #import "UIButton+Category.h"
 #import "PSSortDropMenu.h"
 #import "PSRightFilterView.h"
+#import "UIImage+Original.h"
 
 @interface BeautyItemSortView ()<PSSortDropMenuDelegate>
 @property (nonatomic, strong) UIButton *entireSortBtn;
@@ -91,6 +92,7 @@
 -(void)setupInterface {
     
     _entireSortBtn = [self setupCustomBtnWtihImageName:@"paixu-weixuanze" selectedImageName:@"paixuheshang" title:@"综合排序"];
+    [_entireSortBtn setTitleColor:[UIColor colorWithHexString:@"#E0C070"] forState:UIControlStateSelected];
     [_entireSortBtn addTarget:self action:@selector(clickedAtIndexButton:) forControlEvents:UIControlEventTouchUpInside];
     _entireSortBtn.tag = 500;
     [self addSubview:_entireSortBtn];
@@ -101,6 +103,7 @@
     [_saleSortBtn setTitle:@"销量优先" forState:UIControlStateNormal];
     [_saleSortBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_saleSortBtn addTarget:self action:@selector(clickedAtIndexButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_saleSortBtn setTitleColor:[UIColor colorWithHexString:@"#E0C070"] forState:UIControlStateSelected];
     [self addSubview:_saleSortBtn];
     
     _filterSortBtn = [self setupCustomBtnWtihImageName:@"shaixuan-weixuanze" selectedImageName:@"shaixuan-xuanzhong" title:@"筛选"];

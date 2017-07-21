@@ -7,15 +7,19 @@
 //
 
 #import "ItemClassificationController.h"
-#import "WMPanGestureRecognizer.h"
 #import "ItemListBaseController.h"
+#import "SearchController.h"
+#import "WMPanGestureRecognizer.h"
+#import <SVProgressHUD.h>
 #import <SDCycleScrollView.h>
 
-@interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate>
+@interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,SearchTextDelegate>
 @property (nonatomic, strong) NSArray *itemCategories;
 @property (nonatomic, strong) WMPanGestureRecognizer *panGesture;
 @property (nonatomic, assign) CGPoint lastPoint;
 @property (nonatomic, strong) SDCycleScrollView *classBannerView;
+@property (nonatomic,strong) UILabel * carCount;
+@property (nonatomic,strong) UITextField * searchField;
 
 @end
 
@@ -27,7 +31,70 @@
     }
     return _itemCategories;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [_carCount setText:@"99+"];
 
+    UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
+    [item setHidden:NO];
+    
+    UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
+    [field setHidden:NO];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
+    UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
+    [item setHidden:YES];
+    
+    UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
+    [field setHidden:YES];
+}
+
+-(void)setHeaderView{
+    //顶部控件
+    UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(15, 2, 60, 40)];
+    [item setTag:101];
+    [item setTitle:@"南昌" forState:UIControlStateNormal];
+    [item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [item setImage:[UIImage imageNamed:@"shouyelocation"] forState:UIControlStateNormal];
+    [item setImagePosition:LXMImagePositionRight spacing:5];
+    [item addTarget:self action:@selector(locationClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:item];
+
+    UISearchBar *Sbar = [[UISearchBar alloc]initWithFrame:CGRectMake(85, 5, Width-100, 34)];
+    [Sbar setTag:102];
+    [Sbar setSearchFieldBackgroundImage:[DocumentsManager GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andHeight:25] forState:UIControlStateNormal];
+    [self.navigationController.navigationBar addSubview:Sbar];
+    
+    _searchField = [Sbar valueForKey:@"_searchField"];
+    _searchField.textColor = [UIColor whiteColor];
+    [_searchField.layer setCornerRadius:3];
+    [_searchField setClipsToBounds:YES];
+    [_searchField setClearButtonMode:UITextFieldViewModeNever];
+    [_searchField setDelegate:self];
+    UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fenlei-sousou"]];
+    iconView.frame = CGRectMake(0, 0, 13 , 13);
+    _searchField.leftView = iconView;
+}
+-(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
+    [textField resignFirstResponder];
+    SearchController *controller=[[SearchController alloc]init];
+    [controller setSearchDelegate:self];
+    [controller setText:_searchField.text];
+    controller.hidesBottomBarWhenPushed = YES;
+    controller.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
+    [self presentViewController:controller animated:YES completion:nil];
+
+    return NO;
+}
+-(void)SearchField:(NSString *)text{
+    [_searchField setText:text];
+}
+-(void)locationClick:(UIButton*)button{
+    [SVProgressHUD showInfoWithStatus:@"目前只提供南昌地区的服务"];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD dismissWithDelay:1.85];
+}
 - (instancetype)init {
     if (self = [super init]) {
         self.titleSizeNormal = Font_Size(38);
@@ -37,32 +104,50 @@
         self.menuHeight = Height_Pt(100);
         self.viewTop = kNavigationBarHeight + kWMHeaderViewHeight;
         self.menuBGColor = [UIColor whiteColor];
-        self.titleColorSelected = [UIColor brownColor];
-        self.titleColorNormal = [UIColor grayColor];
+        self.titleColorSelected = [UIColor colorWithHexString:@"#ECBD4E"];
+        self.titleColorNormal = [UIColor blackColor];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setHeaderView];
     // Do any additional setup after loading the view.
     
     self.panGesture = [[WMPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnView:)];
     [self.view addGestureRecognizer:self.panGesture];
-
     [self.view addSubview:self.classBannerView];
+    [self setViewTop:64];
+    
+    /** 购物车 */
+    {
+        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-110, 60, 60)];
+        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 12.5, 12.5)];
+        [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
+        [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:Car];
+        
+        _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+        [_carCount setFont:[UIFont systemFontOfSize:10]];
+        [_carCount setTextAlignment:NSTextAlignmentCenter];
+        [_carCount setTextColor:[UIColor whiteColor]];
+        [_carCount setBackgroundColor:[UIColor blackColor]];
+        [_carCount.layer setCornerRadius:11];
+        [_carCount.layer setMasksToBounds:YES];
+        [Car addSubview:_carCount];
+    }
     //[self.view sendSubviewToBack:self.classBannerView];
 }
-
+-(void)Car:(UIButton*)button{
+    NSLog(@"1");
+}
 - (void)panOnView:(WMPanGestureRecognizer *)recognizer {
-    NSLog(@"pannnnnning received..");
-    
     CGPoint currentPoint = [recognizer locationInView:self.view];
     
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.lastPoint = currentPoint;
     } else if (recognizer.state == UIGestureRecognizerStateEnded) {
-        
         CGPoint velocity = [recognizer velocityInView:self.view];
         CGFloat targetPoint = velocity.y < 0 ? kNavigationBarHeight : kNavigationBarHeight + kWMHeaderViewHeight;
         NSTimeInterval duration = fabs((targetPoint - self.viewTop) / velocity.y);
@@ -80,6 +165,7 @@
         }
         
     }
+    
     CGFloat yChange = currentPoint.y - self.lastPoint.y;
     self.viewTop += yChange;
     self.lastPoint = currentPoint;

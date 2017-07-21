@@ -54,7 +54,7 @@
     [_remarksLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(12);
         make.top.equalTo(self.contentView).with.offset(12);
-        make.width.mas_equalTo(30);
+        make.width.mas_equalTo(40);
     }];
     
     [_inputTextView mas_makeConstraints:^(MASConstraintMaker *make) {

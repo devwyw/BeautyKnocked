@@ -9,6 +9,7 @@
 #import "BeauticianSortMenuView.h"
 #import "UIButton+Category.h"
 #import "PSSortDropMenu.h"
+#import "UIImage+Original.h"
 
 @interface BeauticianSortMenuView ()<PSSortDropMenuDelegate>
 

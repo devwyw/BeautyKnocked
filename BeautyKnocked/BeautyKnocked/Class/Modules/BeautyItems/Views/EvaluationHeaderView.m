@@ -9,6 +9,7 @@
 #import "EvaluationHeaderView.h"
 #import "UIButton+Category.h"
 
+
 @interface EvaluationHeaderView ()
 @property (nonatomic, strong) UILabel *evalutionCountLabel;
 @property (nonatomic, strong) UIButton *checkAllEvalutionButton;

@@ -19,6 +19,7 @@
 #import "SusoensionFlowLayout.h"
 #import "MineFightgroupTableController.h"
 
+
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
 @property (nonatomic, strong) PersonCenterHeadView *headView;

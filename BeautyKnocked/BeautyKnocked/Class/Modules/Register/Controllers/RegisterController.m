@@ -8,6 +8,7 @@
 
 #import "RegisterController.h"
 #import "UIImageView+Category.h"
+#import "UIImage+Original.h"
 
 @interface RegisterController ()
 

@@ -8,6 +8,7 @@
 
 #import "FightGroupsView.h"
 #import "UIButton+Category.h"
+#import "UIImage+Original.h"
 
 @interface FightGroupsView ()
 

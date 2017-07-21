@@ -8,12 +8,15 @@
 
 #import "HomeController.h"
 #import "HomePageViewModel.h"
+#import <SVProgressHUD.h>
 
 @interface HomeController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) HomePageViewModel *homePageViewModel;
+
+@property (nonatomic,strong) UILabel * carCount;
 
 @end
 
@@ -29,6 +32,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [_carCount setText:@"99+"];
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];
         [item setHidden:NO];
@@ -99,9 +103,22 @@
     [self configureConstraints];
 
     /** 购物车 */
-    UIButton *button=[DocumentsManager getCarViewWithOrigin:CGPointMake(5, Height-170)];
-    [self.view addSubview:button];
-    [button addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
+    {
+        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-175, 60, 60)];
+        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 12.5, 12.5)];
+        [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
+        [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:Car];
+        
+        _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+        [_carCount setFont:[UIFont systemFontOfSize:10]];
+        [_carCount setTextAlignment:NSTextAlignmentCenter];
+        [_carCount setTextColor:[UIColor whiteColor]];
+        [_carCount setBackgroundColor:[UIColor blackColor]];
+        [_carCount.layer setCornerRadius:11];
+        [_carCount.layer setMasksToBounds:YES];
+        [Car addSubview:_carCount];
+    }
 }
 -(void)Car:(UIButton*)button{
     NSLog(@"1");

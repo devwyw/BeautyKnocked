@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class RACSignal;
+
 @protocol PSheaderViewDelegate <NSObject>
 
 -(void)headIconDidClicked;

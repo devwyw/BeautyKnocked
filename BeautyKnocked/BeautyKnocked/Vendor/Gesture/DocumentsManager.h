@@ -11,5 +11,6 @@
 @interface DocumentsManager : NSObject
 
 +(instancetype)shareManager;
-+(UIButton*)getCarViewWithOrigin:(CGPoint)point;
++(UIImage*)GetImageWithColor:(UIColor*)color andHeight:(CGFloat)height;
+@property (nonatomic,copy) NSString * string;
 @end

@@ -51,7 +51,6 @@
     
     [self.contentView addSubview:_titleLabel];
     [self.contentView addSubview:_contentLabel];
-    
 }
 -(void)addConstraints {
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

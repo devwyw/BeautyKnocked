@@ -24,24 +24,20 @@
 #define Strongify(o)      __strong typeof(self) o = mmwo;
 
 #import <AFNetworking.h>
-#import <Masonry.h>
-#import <ReactiveObjC.h>
-#import <IQKeyboardManager.h>
-#import <WMPageController.h>
-#import <MJRefresh.h>
-#import <MJExtension.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <XLForm.h>
-#import <SDCycleScrollView.h>
-#import <SVProgressHUD.h>
+#import <Masonry.h>
 #import <UIButton+LXMImagePosition.h>
+#import <IQKeyboardManager.h>
+#import <MJRefresh.h>
+#import <ReactiveObjC.h>
+#import <WMPageController.h>
+#import <XLForm.h>
+#import <MJExtension.h>
 
-#import "UIImage+Original.h"
-#import "UIColor+RGB.h"
 #import "UIColor+help.h"
 #import "DocumentsManager.h"
 
-#define ThemeColor [UIColor ddcs_colorWithRed:220 green:182 blue:100 alpha:1]
+#define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
 #define ViewMake CGRectMake(0, 64, Width, Height-64)
 
 #ifdef __OBJC__

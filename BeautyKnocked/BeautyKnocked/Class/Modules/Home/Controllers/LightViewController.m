@@ -121,6 +121,10 @@
 }
 -(void)pushOk:(UIButton*)button{
     NSLog(@"%@-%@",_text1.text,_text2.text);
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"预约成功" message:@"非常感谢您的预约，我们会尽快处理" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if (textField.text.length >= 10) {
@@ -151,6 +155,10 @@
                     textField.text = [toBeString substringWithRange:rangeRange];
                 }
             }
+        }
+    }else{
+        if (textField.text.length >=11) {
+            textField.text=[textField.text substringToIndex:11];
         }
     }
 }

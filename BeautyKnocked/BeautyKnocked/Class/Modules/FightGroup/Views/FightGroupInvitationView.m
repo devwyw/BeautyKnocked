@@ -9,6 +9,7 @@
 #import "FightGroupInvitationView.h"
 #import "FightGroupHourglassShareView.h"
 
+
 @interface FightGroupInvitationView ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) FightGroupHourglassShareView *inviteView;

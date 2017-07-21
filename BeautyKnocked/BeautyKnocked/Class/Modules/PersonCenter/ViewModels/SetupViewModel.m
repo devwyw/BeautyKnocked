@@ -10,6 +10,7 @@
 #import "AboutUsTableViewController.h"
 #import "BeauticianRegistrationController.h"
 
+
 static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
 
 @interface SetupViewModel ()

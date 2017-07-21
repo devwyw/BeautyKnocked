@@ -75,19 +75,19 @@ static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((Width - Width_Pt(20) * 3) / 2, Height_Pt(640));
+    return CGSizeMake((Width - 10 * 3) / 2, Height_Pt(640));
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return Width_Pt(20);
+    return 10;
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return Height_Pt(20);
+    return 10;
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(Height_Pt(20), Width_Pt(20), Height_Pt(20), Width_Pt(20));
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 

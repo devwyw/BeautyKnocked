@@ -11,6 +11,7 @@
 #import "MineFightGroupDetailController.h"
 #import "FightGroupInvitationView.h"
 
+
 static NSString *const mineFightGroupCellReuseIdentifier = @"MineFightGroupCell";
 @interface MineFightGroupViewModel ()<MineFightGroupCellDelegate,FightGroupInvitationViewDelegate>
 
