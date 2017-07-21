@@ -7,6 +7,8 @@
 //
 
 #import "SearchController.h"
+#import "SearchCollectionCell.h"
+#import "SearchReusableView.h"
 
 @interface SearchController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -35,6 +37,22 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [self loadNavigationbar];
+    
+    UICollectionViewFlowLayout *Layout=[[UICollectionViewFlowLayout alloc]init];
+    [Layout setMinimumLineSpacing:20];
+    [Layout setMinimumInteritemSpacing:(Width-320)/10];
+    Layout.estimatedItemSize = CGSizeMake(60, 30);
+    Layout.scrollDirection=UICollectionViewScrollDirectionVertical;
+    Layout.sectionInset=UIEdgeInsetsMake(10, 10, 10, 10);
+    [Layout setHeaderReferenceSize:CGSizeMake(Width,50)];
+    
+    _collection = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64) collectionViewLayout:Layout];
+    _collection.delegate = self;
+    _collection.dataSource = self;
+    _collection.backgroundColor = [UIColor clearColor];
+    [_collection registerClass:[SearchReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Headers"];
+    [_collection registerClass:[SearchCollectionCell class] forCellWithReuseIdentifier:@"SearchCell"];
+    [self.view addSubview:_collection];
     // Do any additional setup after loading the view.
 }
 -(void)loadNavigationbar{
@@ -67,8 +85,52 @@
     [_searchDelegate SearchField:searchBar.text];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [_searchDelegate SearchField:searchBar.text];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if ([searchText length] > 4) {
+        [searchBar setText:[searchText substringToIndex:4]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"关键词请不要超过4个哦." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:alertAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        SearchReusableView * Head = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Headers" forIndexPath:indexPath];
+        [Head.title setText:@"哈哈哈哈"];
+        return Head;
+    }
+    return nil;
+}
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeZero;
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    SearchCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SearchCell" forIndexPath:indexPath];
+    cell.message.text=@"哈哈哈啊";
+    [cell layoutIfNeeded];
+    return cell;
+}
 
-
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 2;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return 30;
+        case 1:
+            return 30;
+        default:
+            return 0;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

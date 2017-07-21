@@ -79,6 +79,8 @@
 		04B46E4E1F20A918007349F2 /* gouwuche_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B46E4C1F20A918007349F2 /* gouwuche_03@2x.png */; };
 		04B46E4F1F20A918007349F2 /* gouwuche_03@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B46E4D1F20A918007349F2 /* gouwuche_03@3x.png */; };
 		04F978731F1F3E66002E4BBE /* RatingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F978721F1F3E66002E4BBE /* RatingBar.m */; };
+		15E550781F223149001BFEE7 /* SearchReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E550771F223149001BFEE7 /* SearchReusableView.m */; };
+		15E550831F2254C2001BFEE7 /* SearchCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E550811F2254C2001BFEE7 /* SearchCollectionCell.m */; };
 		5D8095F77245647DFC0B0685 /* libPods-CommonLib-BeautyKnocked.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCA16B93354FD6F29A02D2E /* libPods-CommonLib-BeautyKnocked.a */; };
 		731986171EC172A300FA7DF0 /* fen0_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 731986151EC172A300FA7DF0 /* fen0_03@2x.png */; };
 		731986181EC172A300FA7DF0 /* fen1_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 731986161EC172A300FA7DF0 /* fen1_03@2x.png */; };
@@ -635,6 +637,10 @@
 		04C53C701F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04F978711F1F3E66002E4BBE /* RatingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingBar.h; sourceTree = "<group>"; };
 		04F978721F1F3E66002E4BBE /* RatingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingBar.m; sourceTree = "<group>"; };
+		15E550761F223149001BFEE7 /* SearchReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchReusableView.h; sourceTree = "<group>"; };
+		15E550771F223149001BFEE7 /* SearchReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchReusableView.m; sourceTree = "<group>"; };
+		15E550811F2254C2001BFEE7 /* SearchCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionCell.m; sourceTree = "<group>"; };
+		15E550821F2254C2001BFEE7 /* SearchCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCollectionCell.h; sourceTree = "<group>"; };
 		3CCA16B93354FD6F29A02D2E /* libPods-CommonLib-BeautyKnocked.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CommonLib-BeautyKnocked.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		731986151EC172A300FA7DF0 /* fen0_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fen0_03@2x.png"; sourceTree = "<group>"; };
 		731986161EC172A300FA7DF0 /* fen1_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fen1_03@2x.png"; sourceTree = "<group>"; };
@@ -1624,6 +1630,10 @@
 				7373309F1EE29C7200DF54AC /* ProductIntroduceView.m */,
 				7375CE8E1EE4F6F9009F7F21 /* ProductTitlePriceView.h */,
 				7375CE8F1EE4F6F9009F7F21 /* ProductTitlePriceView.m */,
+				15E550811F2254C2001BFEE7 /* SearchCollectionCell.m */,
+				15E550821F2254C2001BFEE7 /* SearchCollectionCell.h */,
+				15E550761F223149001BFEE7 /* SearchReusableView.h */,
+				15E550771F223149001BFEE7 /* SearchReusableView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3286,6 +3296,7 @@
 				7390F4C81EE6AA360059A168 /* IntegralMallController.m in Sources */,
 				73440A3A1ED2B893003807B8 /* BeauticianItemViewModel.m in Sources */,
 				7382AC541EEB89E000743546 /* MLPaymentView.m in Sources */,
+				15E550781F223149001BFEE7 /* SearchReusableView.m in Sources */,
 				7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */,
 				7382AC491EEB87FB00743546 /* MMPopupItem.m in Sources */,
 				7383EC651ECC419200C87A06 /* HomePageEndView.m in Sources */,
@@ -3383,6 +3394,7 @@
 				737A1FE61EDFEAE800CD6FD2 /* NewsCenterModel.m in Sources */,
 				0413DB721F1F0DE000357B27 /* LightSonViewController.m in Sources */,
 				736DE2911ECFE10200E32717 /* OrderPageController.m in Sources */,
+				15E550831F2254C2001BFEE7 /* SearchCollectionCell.m in Sources */,
 				737AEF821ED7C1BA0039E88A /* PersonInfoTextField.m in Sources */,
 				737125FE1EE7DE52001A02DC /* ExchangeDetailController.m in Sources */,
 				737125D31EE78C8A001A02DC /* IntegralMallViewModel.m in Sources */,
