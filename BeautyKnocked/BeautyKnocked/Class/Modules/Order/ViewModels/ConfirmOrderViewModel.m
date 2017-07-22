@@ -14,6 +14,7 @@
 #import "ConfirmOrderItemCell.h"
 #import "ConfirmOrderRemarksCell.h"
 #import "ConfirmOrderChooseDateView.h"
+#import <SVProgressHUD.h>
 
 
 static NSString *const addressCellReuseIdentifier = @"ConfirmOrderAddressCell";
@@ -25,12 +26,20 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
 @interface ConfirmOrderViewModel ()<ConfirmOrderAddCellDelegate>
 
 @property (nonatomic, strong) NSArray *titles;
+@property (nonatomic,strong) UITableView * tableView;
+@property (nonatomic,strong) NSMutableArray * addArray;
 
 @end
 
 @implementation ConfirmOrderViewModel
-
+-(NSMutableArray*)addArray{
+    if (!_addArray) {
+        _addArray=[[NSMutableArray alloc]initWithObjects:@"水美人", nil];
+    }
+    return _addArray;
+}
 -(void)ddcs_register:(UITableView *)tableview {
+    _tableView=tableview;
     [tableview registerClass:[ConfirmOrderAddressCell class] forCellReuseIdentifier:addressCellReuseIdentifier];
     
     [tableview registerClass:[ConfirmOrderFillCell class] forCellReuseIdentifier:confirmOrderFillCellReuseIdentifier];
@@ -51,7 +60,7 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
 }
 -(NSInteger)ddcs_tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 1) {
-        return 4;
+        return self.addArray.count+3;
     }
     return [self.titles[section] count];
     
@@ -59,7 +68,6 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
 -(UITableViewCell *)ddcs_tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         ConfirmOrderAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellReuseIdentifier forIndexPath:indexPath];
-
         return cell;
     }else if (indexPath.section == 1) {
         if (indexPath.row < 2) {
@@ -81,11 +89,10 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
             
             return cell;
         }
-        
         if (self.orderStyle == MLItem) {
             ConfirmOrderItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:confirmOrderItemCellReuseIdentifier forIndexPath:indexPath];
             
-            cell.itemName = @"水美人";
+            cell.itemName = _addArray[indexPath.row-2];
             cell.itemImage = [UIImage imageNamed:@"touxiang_03"];
             cell.price = [[NSMutableAttributedString alloc] initWithString:@"VIP价: $88   市场价:$125"];
             cell.serviceLength = [NSString stringWithFormat:@"服务时90长分钟"];
@@ -127,7 +134,16 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
 
 #pragma mark ConfirmOrderAddCellDelegate
 -(void)wantAddMore:(NSString *)currentTitle {
-    
+    if (_addArray.count>=4) {
+        [SVProgressHUD showInfoWithStatus:@"您已超过四个项目，考虑时间因素不可继续添加项目"];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD dismissWithDelay:1.85];
+    }else{
+        [_addArray addObject:currentTitle];
+        [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count+1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_addArray.count+2 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+
 }
 
 @end

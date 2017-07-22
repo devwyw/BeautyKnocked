@@ -33,8 +33,8 @@
     if (self) {
         
         _addButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_addButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        [_addButton setTitleColor:[UIColor orangeColor] forState:UIControlStateHighlighted];
+        [_addButton setTitleColor:[UIColor colorWithHexString:@"#E8D09B"] forState:UIControlStateNormal];
+        [_addButton setTitleColor:[UIColor colorWithHexString:@"#E8D09B"] forState:UIControlStateHighlighted];
         _addButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
         [_addButton setBackgroundImage:[UIImage imageNamed:@"tianjiakuang"] forState:UIControlStateNormal];
         [_addButton setBackgroundImage:[UIImage imageNamed:@"tianjiakuang"] forState:UIControlStateHighlighted];

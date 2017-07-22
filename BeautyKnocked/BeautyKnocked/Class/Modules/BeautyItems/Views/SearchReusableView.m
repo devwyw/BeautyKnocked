@@ -14,7 +14,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _title = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, frame.size.width, frame.size.height)];
-        [_title setFont:[UIFont systemFontOfSize:20]];
+        [_title setFont:[UIFont systemFontOfSize:15]];
         [self addSubview:_title];
     }
     return self;

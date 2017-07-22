@@ -8,14 +8,15 @@
 
 #import "EvaluationCell.h"
 #import "EvaluationImageCell.h"
+#import "RatingBar.h"
 
 static NSString *reuseIdentifier = @"EvaluationImageCell";
-@interface EvaluationCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface EvaluationCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,RatingBarDelegate>
 
 @property (nonatomic, strong) UIImageView *headImgView;
 @property (nonatomic, strong) UILabel *telLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) UIView *starRatingView;
+@property (nonatomic, strong) RatingBar * starRatingView;
 @property (nonatomic, strong) UILabel *textContentLabel;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILabel *beauticianLabel;
@@ -83,7 +84,9 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
-
+- (void)ratingChanged:(float)newRating{
+    
+}
 -(void)initializeViews {
     
     _headImgView = [[UIImageView alloc] init];
@@ -95,8 +98,11 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     _dateLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
     _dateLabel.textColor = [UIColor lightGrayColor];
     
-    _starRatingView = [[UIView alloc] init];
-    _starRatingView.backgroundColor = [UIColor yellowColor];
+    _starRatingView = [[RatingBar alloc] init];
+    _starRatingView.backgroundColor = [UIColor clearColor];
+    [_starRatingView setIsIndicator:YES];
+    [_starRatingView setImageDeselected:@"huisexingxing" halfSelected:@"huisexingxing" fullSelected:@"huangsexingxing" andDelegate:self];
+    [_starRatingView displayRating:3];
     
     _textContentLabel = [[UILabel alloc] init];
     _textContentLabel.font = [UIFont systemFontOfSize:Font_Size(39)];
@@ -119,8 +125,8 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     _customerServiceReply = [[UILabel alloc] init];
     _customerServiceReply.font = [UIFont systemFontOfSize:Font_Size(34)];
     _customerServiceReply.numberOfLines = 0;
-    UIImage *replyImage = [UIImage imageNamed:@"huifukuang"];
-    [_customerServiceReply setBackgroundColor:[UIColor colorWithPatternImage:replyImage]];
+    //UIImage *replyImage = [UIImage imageNamed:@"huifukuang"];
+    [_customerServiceReply setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     [self.contentView addSubview:_headImgView];
     [self.contentView addSubview:_telLabel];

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) AddAndReserveView *addReserveView;
 @property (nonatomic, strong) ItemDetailViewModel *itemDetailViewModel;
 @property (nonatomic, strong) UIImageView *tableheaderView;
+@property (nonatomic,strong) UIView * addView;
 @end
 
 @implementation ItemDetailController
@@ -27,7 +28,17 @@
     }
     return _itemDetailViewModel;
 }
-
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+//    CGFloat newoffsetY = scrollView.contentOffset.y;
+//    NSInteger x=64;
+//    if (newoffsetY >= 0 && newoffsetY <= x) {
+//        [self.navigationController.navigationBar setAlpha:1- newoffsetY/x];
+//    }else if(newoffsetY > x){
+//        [self.navigationController.navigationBar setAlpha:0];
+//    }else{
+//        [self.navigationController.navigationBar setAlpha:1];
+//    }
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -37,7 +48,33 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self initializeViews];
     [self addConstraints];
-    
+    {
+        UIView *gview=[[UIView alloc]initWithFrame: self.view.bounds];
+        gview.backgroundColor=[[UIColor grayColor] colorWithAlphaComponent:0.3];
+        [gview setTag:101];
+        gview.hidden=YES;
+        [self.view addSubview:gview];
+        
+        _addView=[[UIView alloc]initWithFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
+        [_addView setBackgroundColor:[UIColor whiteColor]];
+        
+        UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(Width_Pt(60), -Height_Pt(50), Width_Pt(305), Height_Pt(305))];
+        image.layer.masksToBounds=YES;
+        image.layer.cornerRadius=8;
+        //image.backgroundColor=[UIColor clearColor];
+        image.contentMode=UIViewContentModeScaleAspectFit;
+        [image setImage:[UIImage imageNamed:@"mote"]];
+        [_addView addSubview:image];
+        
+        UIButton *done=[[UIButton alloc]initWithFrame:CGRectMake(0,Height_Pt(740)-Height_Pt(145), Width, Height_Pt(145))];
+        [done setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
+        [done setTitle:@"确定" forState:UIControlStateNormal];
+        [done addTarget:self action:@selector(done:) forControlEvents:UIControlEventTouchUpInside];
+        [_addView addSubview:done];
+        
+        [self.view addSubview:_addView];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,13 +97,26 @@
         confirmController.orderStyle = MLItem;
         [self.navigationController pushViewController:confirmController animated:YES];
     }];
+
+    [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
+        UIView *view=[self.view viewWithTag:101];
+        view.hidden=NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            [_addView setFrame:CGRectMake(0, Height-64-Height_Pt(740), Width, Height_Pt(740))];
+        }];
+    }];
     
     self.itemDetailViewModel.navigationController = self.navigationController;
     
     [self.view addSubview:_tableView];
     [self.view addSubview:_addReserveView];
-    
-    
+}
+-(void)done:(UIButton*)btn{
+    UIView *view=[self.view viewWithTag:101];
+    view.hidden=YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        [_addView setFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
+    }];
 }
 -(void)addConstraints {
     

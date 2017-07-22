@@ -68,5 +68,7 @@
 -(RACSignal *)reserveNowSignal {
     return [_appointNow rac_signalForControlEvents:UIControlEventTouchUpInside];
 }
-
+-(RACSignal*)addCar{
+    return [_addShoppingCart rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
 @end

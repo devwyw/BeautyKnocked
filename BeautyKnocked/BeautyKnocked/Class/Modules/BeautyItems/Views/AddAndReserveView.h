@@ -12,5 +12,5 @@
 @interface AddAndReserveView : UIView
 
 @property (nonatomic, strong) RACSignal *reserveNowSignal;
-
+@property (nonatomic, strong) RACSignal *addCar;
 @end

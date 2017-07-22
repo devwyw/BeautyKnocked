@@ -70,6 +70,7 @@
     _searchField.textColor = [UIColor whiteColor];
     [_searchField.layer setCornerRadius:3];
     [_searchField setClipsToBounds:YES];
+    [_searchField setTextAlignment:NSTextAlignmentCenter];
     [_searchField setClearButtonMode:UITextFieldViewModeNever];
     [_searchField setDelegate:self];
     UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fenlei-sousou"]];
@@ -78,13 +79,13 @@
 }
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
     [textField resignFirstResponder];
+    
     SearchController *controller=[[SearchController alloc]init];
     [controller setSearchDelegate:self];
     [controller setText:_searchField.text];
     controller.hidesBottomBarWhenPushed = YES;
     controller.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
     [self presentViewController:controller animated:YES completion:nil];
-
     return NO;
 }
 -(void)SearchField:(NSString *)text{
@@ -122,7 +123,7 @@
     
     /** 购物车 */
     {
-        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-110, 60, 60)];
+        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-111, 60, 60)];
         [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 12.5, 12.5)];
         [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
         [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
