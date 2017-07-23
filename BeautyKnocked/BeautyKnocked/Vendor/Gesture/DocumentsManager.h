@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface DocumentsManager : NSObject
-
+/** 单例模式 */
 +(instancetype)shareManager;
+/** 颜色转图片 */
 +(UIImage*)GetImageWithColor:(UIColor*)color andHeight:(CGFloat)height;
-@property (nonatomic,copy) NSString * string;
+/** 获取搜索栏数据 */
++(NSMutableArray*)getSearchArray;
+/** 保存搜索栏数据 */
++(BOOL)saveSearchArray:(NSMutableArray*)array;
 @end

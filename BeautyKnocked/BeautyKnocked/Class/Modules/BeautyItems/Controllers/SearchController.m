@@ -9,12 +9,14 @@
 #import "SearchController.h"
 #import "SearchCollectionCell.h"
 #import "SearchReusableView.h"
+#import "DocumentsManager.h"
 
 @interface SearchController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic,strong) UISearchBar * barField;
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UICollectionView * collections;
+@property (nonatomic,strong) NSMutableArray * dataArray;
 
 @end
 
@@ -33,7 +35,6 @@
     [navigationBarAppearance setBackgroundColor:ThemeColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
@@ -41,6 +42,13 @@
     [self.view addSubview:self.collection];
     [self.view addSubview:self.collections];
 }
+-(NSMutableArray*)dataArray{
+    if (!_dataArray) {
+        _dataArray=[[NSMutableArray alloc]initWithArray:[DocumentsManager getSearchArray]];
+    }
+    return _dataArray;
+}
+
 -(UICollectionView*)collection{
     if (!_collection) {
         UICollectionViewFlowLayout *Layout=[[UICollectionViewFlowLayout alloc]init];
@@ -115,10 +123,18 @@
     }
 }
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    if (![[_dataArray[1] objectForKey:@"data"] containsObject:searchBar.text]  && searchBar.text.length>0) {
+        [[_dataArray[1] objectForKey:@"data"] addObject:searchBar.text];
+        [DocumentsManager saveSearchArray:_dataArray];
+    }
     [_searchDelegate SearchField:searchBar.text];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    if (![[_dataArray[1] objectForKey:@"data"] containsObject:searchBar.text]  && searchBar.text.length>0) {
+        [[_dataArray[1] objectForKey:@"data"] addObject:searchBar.text];
+        [DocumentsManager saveSearchArray:_dataArray];
+    }
     [_searchDelegate SearchField:searchBar.text];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -127,34 +143,45 @@
     if ([searchText length] > 4) {
         [searchBar setText:[searchText substringToIndex:4]];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"关键词请不要超过4个哦." preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil];
-        [alertController addAction:alertAction];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if (collectionView==_collection) {
         SearchReusableView *HView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"SearchReusableView" forIndexPath:indexPath];
-        HView.title.text=@"关键词搜索";
+        HView.title.text=[self.dataArray[0] objectForKey:@"title"];
+        [HView.button setImage:[UIImage imageNamed:@"guanjianci"] forState:UIControlStateNormal];
         return HView;
     }else{
         SearchReusableView *HView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"SearchReusableViews" forIndexPath:indexPath];
-        HView.title.text=@"历史搜索记录";
+        HView.title.text=[self.dataArray[1] objectForKey:@"title"];
+        [HView.button setImage:[UIImage imageNamed:@"lishi-shanchu"] forState:UIControlStateNormal];
+        [HView.button addTarget:self action:@selector(cleanDataArray:) forControlEvents:UIControlEventTouchUpInside];
         return HView;
     }
+}
+-(void)cleanDataArray:(UIButton*)btn{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"清空全部历史记录." preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[_dataArray[1] objectForKey:@"data"] removeAllObjects];
+        [DocumentsManager saveSearchArray:_dataArray];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeZero;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *arr=@[@"哈哈",@"哈哈",@"哈哈",@"哈哈",@"哈哈哈",@"哈哈",@"哈哈",@"哈哈哈哈",@"哈哈哈哈",@"哈哈哈哈"];
     if (collectionView==_collection) {
         SearchCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SearchCollectionCell" forIndexPath:indexPath];
-        cell.message.text=arr[indexPath.item];
+        cell.message.text=[_dataArray[0] objectForKey:@"data"][indexPath.item];
         return cell;
     }else{
         SearchCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SearchCollectionCells" forIndexPath:indexPath];
-        cell.message.text=arr[indexPath.item];
+        cell.message.text=[_dataArray[1] objectForKey:@"data"][indexPath.item];
         return cell;
     }
 }
@@ -165,19 +192,20 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (collectionView==_collection) {
-        return 10;
+        NSArray *array=[[NSArray alloc]initWithArray:[self.dataArray[0] objectForKey:@"data"]];
+        return array.count;
     }else{
-        return 10;
+        NSArray *array=[[NSArray alloc]initWithArray:[self.dataArray[1] objectForKey:@"data"]];
+        return array.count;
     }
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSArray *arr=@[@"哈哈",@"哈哈",@"哈哈",@"哈哈",@"哈哈哈",@"哈哈",@"哈哈",@"哈哈哈哈",@"哈哈哈哈",@"哈哈哈哈"];
     if (collectionView==_collection) {
-        _barField.text=arr[indexPath.item];
+        _barField.text=[_dataArray[0] objectForKey:@"data"][indexPath.item];;
         [_searchDelegate SearchField:_barField.text];
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
-        _barField.text=arr[indexPath.item];
+        _barField.text=[_dataArray[1] objectForKey:@"data"][indexPath.item];
         [_searchDelegate SearchField:_barField.text];
         [self dismissViewControllerAnimated:YES completion:nil];
     }

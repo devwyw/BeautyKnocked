@@ -16,6 +16,9 @@
         _title = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, frame.size.width, frame.size.height)];
         [_title setFont:[UIFont systemFontOfSize:15]];
         [self addSubview:_title];
+        
+        _button=[[UIButton alloc]initWithFrame:CGRectMake(Width-40, 0, 30, 30)];
+        [self addSubview:_button];
     }
     return self;
 }

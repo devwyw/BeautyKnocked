@@ -21,7 +21,6 @@
         
         [self setupContent];
     }
-    
     return self;
 }
 

@@ -83,6 +83,7 @@
 		04B46E4E1F20A918007349F2 /* gouwuche_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B46E4C1F20A918007349F2 /* gouwuche_03@2x.png */; };
 		04B46E4F1F20A918007349F2 /* gouwuche_03@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B46E4D1F20A918007349F2 /* gouwuche_03@3x.png */; };
 		04F978731F1F3E66002E4BBE /* RatingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F978721F1F3E66002E4BBE /* RatingBar.m */; };
+		1541AFFF1F23777600B5C6B2 /* searchlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1541AFFE1F23777600B5C6B2 /* searchlist.plist */; };
 		15E550781F223149001BFEE7 /* SearchReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E550771F223149001BFEE7 /* SearchReusableView.m */; };
 		15E550831F2254C2001BFEE7 /* SearchCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15E550811F2254C2001BFEE7 /* SearchCollectionCell.m */; };
 		5D8095F77245647DFC0B0685 /* libPods-CommonLib-BeautyKnocked.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCA16B93354FD6F29A02D2E /* libPods-CommonLib-BeautyKnocked.a */; };
@@ -645,6 +646,7 @@
 		04C53C701F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04F978711F1F3E66002E4BBE /* RatingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingBar.h; sourceTree = "<group>"; };
 		04F978721F1F3E66002E4BBE /* RatingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingBar.m; sourceTree = "<group>"; };
+		1541AFFE1F23777600B5C6B2 /* searchlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = searchlist.plist; path = ../../Vendor/Gesture/searchlist.plist; sourceTree = "<group>"; };
 		15E550761F223149001BFEE7 /* SearchReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchReusableView.h; sourceTree = "<group>"; };
 		15E550771F223149001BFEE7 /* SearchReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchReusableView.m; sourceTree = "<group>"; };
 		15E550811F2254C2001BFEE7 /* SearchCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCollectionCell.m; sourceTree = "<group>"; };
@@ -2422,6 +2424,7 @@
 				737564C81EF4DA360097367C /* InputView */,
 				7382AC391EEB87FA00743546 /* MMPopupView */,
 				737431361ECD440B00A617F3 /* Gesture */,
+				1541AFFE1F23777600B5C6B2 /* searchlist.plist */,
 				04B46E491F20A48F007349F2 /* DocumentsManager.h */,
 				04B46E4A1F20A48F007349F2 /* DocumentsManager.m */,
 				04F978711F1F3E66002E4BBE /* RatingBar.h */,
@@ -2966,6 +2969,7 @@
 				737CD2F11EE1168100B6A5DB /* shenglvehao@3x.png in Resources */,
 				048401C11F22FDEB00699A6E /* huisexingxing@2x.png in Resources */,
 				040442291F1F498700E59CF1 /* duanxinfenxiang@2x.png in Resources */,
+				1541AFFF1F23777600B5C6B2 /* searchlist.plist in Resources */,
 				048401C01F22FDEB00699A6E /* huangsexingxing@3x.png in Resources */,
 				737125E71EE7963B001A02DC /* jilu@2x.png in Resources */,
 				040442351F1F498700E59CF1 /* quxiaoblue@2x.png in Resources */,
@@ -3545,7 +3549,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3588,7 +3592,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -3604,7 +3608,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
 				INFOPLIST_FILE = BeautyKnocked/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.paisen.com.BeautyKnocked;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3620,7 +3624,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
 				INFOPLIST_FILE = BeautyKnocked/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.paisen.com.BeautyKnocked;
 				PRODUCT_NAME = "$(TARGET_NAME)";

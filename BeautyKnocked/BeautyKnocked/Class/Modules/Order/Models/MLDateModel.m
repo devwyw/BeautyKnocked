@@ -17,8 +17,7 @@
         self.month = components.month;
         self.day = components.day;
         self.week =components.weekday;
-        
-        self.date = [NSString stringWithFormat:@"%ld-%ld-%ld",(long)self.year,self.month,self.day];
+        self.date = [NSString stringWithFormat:@"%ld-%ld-%ld",(long)self.year,(long)self.month,self.day];
     }
     return self;
 }
