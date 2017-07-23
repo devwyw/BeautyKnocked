@@ -49,7 +49,6 @@
     UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
     [field setHidden:YES];
 }
-
 -(void)setHeaderView{
     //顶部控件
     UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(15, 2, 60, 40)];
@@ -110,9 +109,15 @@
     }
     return self;
 }
-
+-(void)dismissHUD:(NSNotificationCenter*)not{
+    [SVProgressHUD dismiss];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dismissHUD:)
+                                                 name:SVProgressHUDDidReceiveTouchEventNotification
+                                               object:nil];
     [self setHeaderView];
     // Do any additional setup after loading the view.
     

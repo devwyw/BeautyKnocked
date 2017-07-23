@@ -93,8 +93,15 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+-(void)dismissHUD:(NSNotificationCenter*)not{
+    [SVProgressHUD dismiss];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dismissHUD:)
+                                                 name:SVProgressHUDDidReceiveTouchEventNotification
+                                               object:nil];
     // Do any additional setup after loading the view.
     [self setHeaderView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
