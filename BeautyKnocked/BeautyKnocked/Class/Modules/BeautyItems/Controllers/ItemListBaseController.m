@@ -71,7 +71,6 @@ static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
     }else {
         [self.navigationController pushViewController:productDetailController animated:YES];
     }
-    
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

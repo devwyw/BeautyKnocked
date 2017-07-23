@@ -74,7 +74,6 @@
         
         [self.view addSubview:_addView];
     }
-
 }
 
 - (void)didReceiveMemoryWarning {
