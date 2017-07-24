@@ -44,7 +44,7 @@
 
 -(void)setupInterface {
     
-    self.backgroundColor =[UIColor groupTableViewBackgroundColor];
+    self.backgroundColor =[UIColor colorWithHexString:@"#F7F7F7"];
     
     UIFont *font = [UIFont systemFontOfSize:Font_Size(42)];
     

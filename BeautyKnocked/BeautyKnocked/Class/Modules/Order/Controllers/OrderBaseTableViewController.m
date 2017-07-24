@@ -25,7 +25,8 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#F7F7F7"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[OrderTableViewCell class] forCellReuseIdentifier:orderTableViewCellIdentifier];
     
 }

@@ -44,7 +44,6 @@
         self.tableView;
     });
     self.tableView.frame = CGRectMake(0, _top_heeight, Width, 0);
-   
     
 }
 
@@ -79,6 +78,7 @@
     // delete all accessoryView
     for (UITableViewCell *cell in tableView.visibleCells) {
         cell.accessoryView = nil;
+        [cell.textLabel setTextColor:[UIColor blackColor]];
     }
     // did selected cell
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -87,6 +87,7 @@
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(44), Height_Pt(30))];
     [imgView setImage:[UIImage imageNamed:@"paixuxialaxuanzhong"]];
     cell.accessoryView = imgView;
+    [cell.textLabel setTextColor:[UIColor colorWithHexString:@"#E0C070"]];
     
     [self disMissView];
     

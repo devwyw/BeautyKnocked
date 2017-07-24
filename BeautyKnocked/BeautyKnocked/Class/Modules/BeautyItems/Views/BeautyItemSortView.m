@@ -39,15 +39,14 @@
     return self;
 }
 
--(void)didSelectAtRow:(NSUInteger)row{
-    
-}
-#pragma mark PSSortDropMenuDelegate
 
+#pragma mark PSSortDropMenuDelegate
 -(void)haveDismiss {
     _entireSortBtn.selected = NO;
 }
-
+-(void)didSelectAtRow:(NSUInteger)row{
+    
+}
 
 
 -(void)filterButtonClicked {
@@ -74,17 +73,18 @@
 #pragma mark Events Handle
 
 -(void)clickedAtIndexButton:(UIButton *)button {
-    
     button.selected = !button.selected;
-    
     if (button == _entireSortBtn) {
+        _saleSortBtn.selected=NO;
         if (button.selected) {
             [self.sortMenu showInView:self.superview];
         }else {
             [self.sortMenu hideView];
-            self.sortMenu = nil;
         }
-        
+    }else{
+        _entireSortBtn.selected=NO;
+        [self.sortMenu hideView];
+        _sortMenu=nil;
     }
 }
 
@@ -92,7 +92,6 @@
 -(void)setupInterface {
     
     _entireSortBtn = [self setupCustomBtnWtihImageName:@"paixu-weixuanze" selectedImageName:@"paixuheshang" title:@"综合排序"];
-    [_entireSortBtn setTitleColor:[UIColor colorWithHexString:@"#E0C070"] forState:UIControlStateSelected];
     [_entireSortBtn addTarget:self action:@selector(clickedAtIndexButton:) forControlEvents:UIControlEventTouchUpInside];
     _entireSortBtn.tag = 500;
     [self addSubview:_entireSortBtn];

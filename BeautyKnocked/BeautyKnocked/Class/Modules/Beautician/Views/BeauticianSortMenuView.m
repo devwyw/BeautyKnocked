@@ -10,18 +10,25 @@
 #import "UIButton+Category.h"
 #import "PSSortDropMenu.h"
 #import "UIImage+Original.h"
+#import "MLDateManager.h"
+#import "MLDateCollectionViewCell.h"
 
-@interface BeauticianSortMenuView ()<PSSortDropMenuDelegate>
+@interface BeauticianSortMenuView ()<PSSortDropMenuDelegate,UICollectionViewDelegate ,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIButton *sortingBtn;
-
 @property (nonatomic, strong) UIImageView *lineImgView;
-
 @property (nonatomic, strong) UIButton *filterBtn;
-
 @property (nonatomic, strong) PSSortDropMenu *sortMenu;
-
 @property (nonatomic, assign) CGFloat topHeight;
+
+@property (nonatomic, strong) UIView * popView;
+@property (nonatomic, strong) NSArray *months;
+@property (nonatomic, strong) NSArray *weekDays;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+
+@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, assign) NSInteger todayWeekDay;
 
 @end
 
@@ -35,11 +42,7 @@
     }
     return self;
 }
--(void)didSelectAtRow:(NSUInteger)row{
-    
-}
 -(void)setupInterface {
-    
     _sortingBtn = [self setupCustomBtnWtihImageName:@"paixu_03" title:@"排序"];
     [_sortingBtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_sortingBtn];
@@ -51,22 +54,31 @@
     _filterBtn = [self setupCustomBtnWtihImageName:@"shaixuan_03" title:@"筛选"];
     [_filterBtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_filterBtn];
-   
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:self.popView];
+    [self initializeViews];
+    [_popView setHidden:YES];
 }
 
 -(void)buttonClicked:(UIButton *)button {
-    
     button.selected = !button.selected;
     if (button == _sortingBtn) {
         if (button.selected) {
             [self.sortMenu showInView:self.superview];
         }else {
             [self.sortMenu hideView];
-            self.sortMenu = nil;
         }
-
+    }else{
+        if (button.selected) {
+            [UIView animateWithDuration:0.2 animations:^{
+                [_popView setHidden:NO];
+            }];
+        }else {
+            [UIView animateWithDuration:0.2 animations:^{
+                [self.popView setHidden:YES];
+            }];
+        }
     }
-    
 }
 
 -(PSSortDropMenu *)sortMenu {
@@ -81,13 +93,21 @@
     }
     return _sortMenu;
 }
-
+-(UIView*)popView{
+    if (!_popView) {
+        _popView=[[UIView alloc]initWithFrame:CGRectMake(0, 100.5, Width, Height-100.5)];
+        [_popView setBackgroundColor:[[UIColor grayColor] colorWithAlphaComponent:0.3]];
+    }
+    return _popView;
+}
 #pragma mark PSSortDropMenuDelegate
 
 -(void)haveDismiss {
     _sortingBtn.selected = NO;
 }
-
+-(void)didSelectAtRow:(NSUInteger)row{
+    
+}
 -(void)setupConstraints {
     
     [_lineImgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -120,5 +140,174 @@
     [button setImgViewStyle:ButtonImgViewStyleRight imageSize:image.size space:GetPT(20.f)];
     return button;
 }
+-(NSArray *)months {
+    if (!_months) {
+        _months = @[@"月份",@"1月",@"2月",@"3月",@"4月",@"5月",@"6月",@"7月",@"8月",@"9月",@"10月",@"11月",@"12月"];
+    }
+    return _months;
+}
+-(NSArray *)weekDays {
+    if (!_weekDays) {
+        _weekDays = @[@"日",@"一",@"二",@"三",@"四",@"五",@"六"];
+    }
+    return _weekDays;
+}
+-(NSMutableArray *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [NSMutableArray arrayWithCapacity:35];
+        [_dataSource addObjectsFromArray:[MLDateManager fetchDate]];
+    }
+    return _dataSource;
+}
+-(void)initializeViews {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
+    _todayWeekDay = nowCompoents.weekday;
+    
+    _backView = [[UIView alloc]init];
+    _backView.backgroundColor = [UIColor whiteColor];
+    [_popView addSubview:self.backView];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
+    titleLabel.text = @"请选择服务日期";
+    [self.backView addSubview:titleLabel];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.backView);
+        make.top.equalTo(self.backView).with.offset(12);
+    }];
+    
+    NSMutableArray *views = [NSMutableArray arrayWithCapacity:7];
+    for (NSInteger i = 0; i < 7; i += 1) {
+        UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:Font_Size(50)];
+        label.text = [self.weekDays objectAtIndex:i];
+        
+        label.textAlignment =  NSTextAlignmentCenter;
+        [self.backView addSubview:label];
+        [views addObject:label];
+    }
+    
+    self.collectionView = ({
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.itemSize = CGSizeMake((Width - 8*2-5*6)/7 - 3, (Width - 8*2-5*6)/7 + 5);
+        flowLayout.minimumInteritemSpacing = 2.5;
+        flowLayout.minimumLineSpacing = 5;
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:@"dateCell"];
+        self.collectionView;
+    });
+    [self.backView addSubview:self.collectionView];
+    
+    UIButton *canBtn=[[UIButton alloc]init];
+    [canBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [canBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [canBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [canBtn addTarget:self action:@selector(canBtn:) forControlEvents:UIControlEventTouchUpInside];
+    canBtn.layer.cornerRadius=5;
+    canBtn.layer.masksToBounds=YES;
+    [canBtn.layer setBorderWidth:0.5];//设置边界的宽度
+    [canBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [_backView addSubview:canBtn];
+    
+    UIButton *donBtn=[[UIButton alloc]init];
+    [donBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [donBtn setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
+    [donBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
+    [donBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [donBtn addTarget:self action:@selector(donBtn:) forControlEvents:UIControlEventTouchUpInside];
+    donBtn.layer.cornerRadius=5;
+    donBtn.layer.masksToBounds=YES;
+    [_backView addSubview:donBtn];
+    
+    [views mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(titleLabel.mas_bottom).with.offset(8);
+        make.height.mas_equalTo((Width - 21)/7);
+        make.bottom.equalTo(self.collectionView.mas_top);
+    }];
+    [views mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:5 leadSpacing:8 tailSpacing:8];
+    
+    [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.backView);
+        make.height.mas_equalTo( ((Width - 16-30)/7 + 5) * 5 +4*5 + 8*2);
+    }];
+    [_backView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(_popView);
+        make.bottom.equalTo(_collectionView.mas_bottom).offset(Height_Pt(158));
+    }];
+    [canBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_backView).offset(Width_Pt(140));
+        make.bottom.equalTo(_backView).offset(-(Height_Pt(158)-Height_Pt(80))/2);
+        make.width.mas_equalTo(Width_Pt(240));
+        make.height.mas_equalTo(Height_Pt(80));
+    }];
+    
+    [donBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_backView).offset(-Width_Pt(140));
+        make.bottom.equalTo(_backView).offset(-(Height_Pt(158)-Height_Pt(80))/2);
+        make.width.mas_equalTo(Width_Pt(240));
+        make.height.mas_equalTo(Height_Pt(80));
+    }];
+}
+-(void)canBtn:(UIButton*)btn{
+    _filterBtn.selected=NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.popView setHidden:YES];
+    }];
+}
+-(void)donBtn:(UIButton*)btn{
+    
+}
+#pragma mark UICollectionViewDataSource
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 35;
+}
 
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"dateCell" forIndexPath:indexPath];
+    MLDateModel *dateModel = self.dataSource[indexPath.item];
+    if (indexPath.item + 1 == _todayWeekDay) {
+        cell.dateNumber = @"今天";
+        cell.content = @"约满";
+        cell.numberColor = ThemeColor;
+        cell.contentColor = ThemeColor;
+    }else {
+        cell.dateNumber = [NSString stringWithFormat:@"%ld",(long)dateModel.day];
+    }
+    
+    if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
+        cell.content = self.months[dateModel.month];
+    }
+    
+    // border
+    if (dateModel.isInThirtyDays) {
+        // selected
+        UIView *selectedView = [[UIView alloc] init];
+        selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
+        cell.selectedBackgroundView = selectedView;
+        cell.contentView.layer.borderWidth = 0.5;
+        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [cell setBackgroundColor:[UIColor whiteColor]];
+    }
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MLDateModel *dateModel = self.dataSource[indexPath.item];
+    NSLog(@"date == %@",dateModel.date);
+    
+    if (!dateModel.isInThirtyDays) {
+        return;
+    }
+}
+
+#pragma mark UICollectionViewDelegateFlowLayout
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(8, 8, 8, 8);
+}
 @end

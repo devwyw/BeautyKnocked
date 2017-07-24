@@ -15,7 +15,6 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - IQKeyboardManager (4.0.8)
-  - LXMButtonImagePosition (1.1.1)
   - Masonry (1.0.2)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
@@ -32,7 +31,6 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (= 3.1.0)
   - IQKeyboardManager (= 4.0.8)
-  - LXMButtonImagePosition (= 1.1.1)
   - Masonry (= 1.0.2)
   - MJExtension (= 3.0.13)
   - MJRefresh (= 3.1.12)
@@ -46,7 +44,6 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
-  LXMButtonImagePosition: bbbe4fceb2f6011cf02add36750acbeddd161c3e
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
@@ -57,6 +54,6 @@ SPEC CHECKSUMS:
   WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
   XLForm: 10fc7eb9e2d5df21a515fa3a794f4e26319abd0e
 
-PODFILE CHECKSUM: 15361ad703fc54b56d44a3729f8d8b0685f6a1ba
+PODFILE CHECKSUM: a60c9a9d1e21f15f11763e41107625fbc22fe9e6
 
 COCOAPODS: 1.2.0

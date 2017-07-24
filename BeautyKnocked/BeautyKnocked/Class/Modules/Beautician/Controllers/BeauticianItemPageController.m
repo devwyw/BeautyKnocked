@@ -31,15 +31,15 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.titleSizeNormal = Font_Size(40);
+        self.titleSizeNormal = Font_Size(38);
         self.titleSizeSelected = Font_Size(40);
         self.menuViewStyle = WMMenuViewStyleLine;
         self.menuItemWidth = [UIScreen mainScreen].bounds.size.width / self.musicCategories.count;
         self.menuHeight = Height_Pt(100);
         self.viewTop = kNavigationBarHeight + K_HeaderViewHeight;
         self.menuBGColor = [UIColor whiteColor];
-        self.titleColorSelected = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];
-        self.titleColorNormal = [UIColor colorWithRed:0.4 green:0.8 blue:0.1 alpha:1.0];
+        self.titleColorSelected = [UIColor colorWithHexString:@"#ECBD4E"];
+        self.titleColorNormal = [UIColor blackColor];
     }
     return self;
 }

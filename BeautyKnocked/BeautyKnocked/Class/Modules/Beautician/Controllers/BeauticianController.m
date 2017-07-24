@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setTitle:@"预约美容师"];
     // Do any additional setup after loading the view.
     
     self.beauticianViewModel.navigationController = self.navigationController;
@@ -74,8 +75,7 @@
         make.left.and.right.and.equalTo(self.view);
         make.bottom.equalTo(self.view).with.offset(-49.f);
     }];
-    
-    
+
 }
 
 - (void)didReceiveMemoryWarning {

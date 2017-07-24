@@ -49,7 +49,7 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 
 -(void)initializeViews {
     
-    self.type = MMPopupTypeCustom;
+    self.type = MMPopupTypeAlert;
     
     MMPopupCompletionBlock completionBlock = ^(MMPopupView *popupView, BOOL finished){
         if (finished) {
@@ -102,13 +102,14 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.itemSize = CGSizeMake((Width_Pt(1018) - 5*5)/4, Height_Pt(130));
-        flowLayout.minimumInteritemSpacing = 5;
+        flowLayout.minimumInteritemSpacing = 0.25;
         flowLayout.minimumLineSpacing = 5;
+        
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier];
         self.collectionView;
     });
@@ -127,8 +128,7 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
                 *stop = YES;
             }
         }];
-        
-        
+
     }];
     
     [self.backView addSubview:_backBtn];
@@ -139,9 +139,10 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
     [self.backView addSubview:_confirmBtn];
     
     [_backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.backView).with.offset(15);
-        make.top.equalTo(self.backView).with.offset(20);
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(40), Height_Pt(50)));
+        make.top.equalTo(self.backView).with.offset(0);
+        make.left.equalTo(self.backView).with.offset(0);
+        make.bottom.equalTo(_collectionView.mas_top).offset(0);
+        make.width.mas_equalTo(40);
     }];
     
     [_cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -184,8 +185,12 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     // border
-    cell.contentView.layer.borderWidth = 1;
+    UIView *selectedView = [[UIView alloc] init];
+    selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
+    cell.selectedBackgroundView = selectedView;
+    cell.contentView.layer.borderWidth = 0.5;
     cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [cell setBackgroundColor:[UIColor whiteColor]];
     
     cell.dateNumber = self.dataSource[indexPath.item];
 
@@ -193,6 +198,7 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     
 }
 

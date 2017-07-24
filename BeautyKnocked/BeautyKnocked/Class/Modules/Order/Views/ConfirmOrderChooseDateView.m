@@ -65,7 +65,7 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 }
 
 -(void)initializeViews {
-    self.type = MMPopupTypeCustom;
+    self.type = MMPopupTypeAlert;
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
@@ -108,19 +108,19 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
         [views addObject:label];
     }
     
-    
     self.collectionView = ({
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.itemSize = CGSizeMake((Width - 8*2-5*6)/7 - 3, (Width - 8*2-5*6)/7 + 5);
-        flowLayout.minimumInteritemSpacing = 5;
+        flowLayout.minimumInteritemSpacing = 2.5;
         flowLayout.minimumLineSpacing = 5;
+        
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         //_collectionView.scrollEnabled = NO;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier];
         self.collectionView;
     });
@@ -164,9 +164,8 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return 35;
 }
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier forIndexPath:indexPath];
     MLDateModel *dateModel = self.dataSource[indexPath.item];
@@ -187,20 +186,19 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
     if (dateModel.isInThirtyDays) {
         // selected
         UIView *selectedView = [[UIView alloc] init];
-        selectedView.backgroundColor = ThemeColor;
+        selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
         cell.selectedBackgroundView = selectedView;
-        cell.contentView.layer.borderWidth = 1;
+        cell.contentView.layer.borderWidth = 0.5;
         cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [cell setBackgroundColor:[UIColor whiteColor]];
     }
-
-    
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     NSLog(@"date == %@",dateModel.date);
-    
+
     if (!dateModel.isInThirtyDays) {
         return;
     }
@@ -210,7 +208,6 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
     chooseAppointTimeView.delegate = self;
     
     [chooseAppointTimeView show];
-    
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
@@ -221,6 +218,7 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 #pragma mark MLChooseAppointTimeViewDelegate
 -(void)shouldHideBackDetailDate:(NSString *)detailDate {
     [self hide];
+    [_collectionView reloadData];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ShareViewController.h"
+#import "UIButton+Category.h"
 
 @interface ShareViewController ()
 
@@ -124,7 +125,7 @@
         [Sbutton setTitle:titleArr[i-1] forState:UIControlStateNormal];
         [Sbutton setImage:[UIImage imageNamed:imageArr[i-1]] forState:UIControlStateNormal];
         [Sbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [Sbutton setImagePosition:LXMImagePositionTop spacing:5];
+        [Sbutton setImgViewStyle:ButtonImgViewStyleTop imageSize:[UIImage imageNamed:imageArr[i-1]].size space:5];
         [self.view addSubview:Sbutton];
     }
     

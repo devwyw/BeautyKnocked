@@ -54,7 +54,7 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 -(void)setupInterface {
     
     _leftView = [[UIView alloc] init];
-    [_leftView setBackgroundColor:[UIColor yellowColor]];
+    [_leftView setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
     [self.contentView addSubview:_leftView];
     
     _beauticianBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,6 +77,8 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.scrollEnabled = NO;
+        [tableView setBackgroundColor:[UIColor clearColor]];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tableView registerClass:[OrderItemTableViewCell class] forCellReuseIdentifier:orderItemTableViewCellIdentifier];
         
         self.tableView = tableView;

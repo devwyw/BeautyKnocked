@@ -12,6 +12,7 @@
 #import "WMPanGestureRecognizer.h"
 #import <SVProgressHUD.h>
 #import <SDCycleScrollView.h>
+#import "UIButton+Category.h"
 
 @interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,SearchTextDelegate>
 @property (nonatomic, strong) NSArray *itemCategories;
@@ -56,7 +57,7 @@
     [item setTitle:@"南昌" forState:UIControlStateNormal];
     [item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [item setImage:[UIImage imageNamed:@"shouyelocation"] forState:UIControlStateNormal];
-    [item setImagePosition:LXMImagePositionRight spacing:5];
+    [item setImgViewStyle:ButtonImgViewStyleRight imageSize:[UIImage imageNamed:@"shouyelocation"].size space:5];
     [item addTarget:self action:@selector(locationClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:item];
 

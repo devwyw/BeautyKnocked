@@ -84,9 +84,6 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
-- (void)ratingChanged:(float)newRating{
-    
-}
 -(void)initializeViews {
     
     _headImgView = [[UIImageView alloc] init];
@@ -101,7 +98,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     _starRatingView = [[RatingBar alloc] init];
     _starRatingView.backgroundColor = [UIColor clearColor];
     [_starRatingView setIsIndicator:YES];
-    [_starRatingView setImageDeselected:@"huisexingxing" halfSelected:@"huisexingxing" fullSelected:@"huangsexingxing" andDelegate:self];
+    [_starRatingView setImageDeselected:@"huisexingxing" halfSelected:@"huisexingxing" fullSelected:@"huangsexingxing" andDelegate:nil];
     [_starRatingView displayRating:3];
     
     _textContentLabel = [[UILabel alloc] init];

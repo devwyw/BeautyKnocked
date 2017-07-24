@@ -9,6 +9,7 @@
 #import "HomeController.h"
 #import "HomePageViewModel.h"
 #import <SVProgressHUD.h>
+#import "UIButton+Category.h"
 
 @interface HomeController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -66,7 +67,7 @@
         [item setTitle:@"南昌" forState:UIControlStateNormal];
         [item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [item setImage:[UIImage imageNamed:@"shouyelocation"] forState:UIControlStateNormal];
-        [item setImagePosition:LXMImagePositionRight spacing:5];
+        [item setImgViewStyle:ButtonImgViewStyleRight imageSize:[UIImage imageNamed:@"shouyelocation"].size space:5];
         [item addTarget:self action:@selector(locationClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.navigationController.navigationBar addSubview:item];
     }
