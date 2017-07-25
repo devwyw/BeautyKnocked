@@ -72,6 +72,7 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
     }else if (indexPath.section == 1) {
         if (indexPath.row < 2) {
             ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:confirmOrderFillCellReuseIdentifier forIndexPath:indexPath];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.title = self.titles[indexPath.section][indexPath.row];
             return cell;
         }else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
@@ -83,9 +84,9 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
         if (self.orderStyle == MLProduct) {
             ConfirmOrderProductCell *cell = [tableView dequeueReusableCellWithIdentifier:confirmOrderProductCellReuseIdentifier forIndexPath:indexPath];
             
-            cell.itemName = @"紫根胡村膏";
+            cell.itemName = _addArray[indexPath.row-2];
             cell.itemImage = [UIImage imageNamed:@"touxiang_03"];
-            cell.price = @"$ 500";
+            cell.price = @"¥ 500";
             
             return cell;
         }
@@ -94,7 +95,8 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
             
             cell.itemName = _addArray[indexPath.row-2];
             cell.itemImage = [UIImage imageNamed:@"touxiang_03"];
-            cell.price = [[NSMutableAttributedString alloc] initWithString:@"VIP价: $88   市场价:$125"];
+            cell.price =88;
+            cell.blcakprice=128;
             cell.serviceLength = [NSString stringWithFormat:@"服务时90长分钟"];
             return cell;
         }
@@ -143,7 +145,6 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
         [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count+1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
         [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_addArray.count+2 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-
 }
 
 @end

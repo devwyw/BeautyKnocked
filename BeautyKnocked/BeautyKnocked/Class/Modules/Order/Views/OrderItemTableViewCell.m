@@ -45,8 +45,12 @@
 -(void)setupInterface {
     
     self.backgroundColor =[UIColor colorWithHexString:@"#F7F7F7"];
-    
+
     UIFont *font = [UIFont systemFontOfSize:Font_Size(42)];
+    
+    UIView *topline=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
+    [topline setBackgroundColor:[UIColor whiteColor]];
+    [self.contentView addSubview:topline];
     
     _imgView = [[UIImageView alloc] init];
     [_imgView setImage:[UIImage imageNamed:@"touxiang_03"]];

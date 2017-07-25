@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *serviceLenghtLabel;
 @property (nonatomic, strong) UILabel *priceLabel;
+@property (nonatomic, strong) UILabel *blcakPrice;
 
 @end
 
@@ -35,10 +36,14 @@
 -(void)setServiceLength:(NSString *)serviceLength {
     _serviceLenghtLabel.text = serviceLength;
 }
--(void)setPrice:(NSAttributedString *)price {
-    _priceLabel.attributedText = price;
+-(void)setPrice:(CGFloat)price{
+    NSMutableAttributedString *AttStr=[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"VIP价：¥%.1f",price]];
+    [AttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, AttStr.length)];
+    _priceLabel.attributedText = AttStr;
 }
-
+-(void)setBlcakprice:(CGFloat)blcakprice{
+    _blcakPrice.text = [NSString stringWithFormat:@"市场价：¥%.1f",blcakprice];
+}
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -61,10 +66,14 @@
     _priceLabel = [[UILabel alloc] init];
     _priceLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     
+    _blcakPrice=[[UILabel alloc]init];
+    _blcakPrice.font = [UIFont systemFontOfSize:Font_Size(35)];
+    
     [self.contentView addSubview:_imgView];
     [self.contentView addSubview:_titleLabel];
     [self.contentView addSubview:_serviceLenghtLabel];
     [self.contentView addSubview:_priceLabel];
+    [self.contentView addSubview:_blcakPrice];
     
 }
 -(void)addConstraints {
@@ -87,6 +96,11 @@
     
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_titleLabel.mas_left);
+        make.bottom.equalTo(_imgView.mas_bottom).with.offset(- 8);
+    }];
+    
+    [_blcakPrice mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_priceLabel.mas_right).offset(20);
         make.bottom.equalTo(_imgView.mas_bottom).with.offset(- 8);
     }];
 

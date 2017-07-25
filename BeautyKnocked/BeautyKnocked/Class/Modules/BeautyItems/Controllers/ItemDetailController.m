@@ -60,6 +60,11 @@
     gview.hidden=YES;
     [self.view addSubview:gview];
     
+    UITapGestureRecognizer* singleTouch;
+    singleTouch = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(done)];
+    singleTouch.numberOfTapsRequired = 1;
+    [gview addGestureRecognizer:singleTouch];
+    
     _addView=[[UIView alloc]initWithFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
     [_addView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:_addView];
@@ -222,6 +227,13 @@
     [self.view addSubview:_addReserveView];
 }
 -(void)done:(UIButton*)btn{
+    UIView *view=[self.view viewWithTag:101];
+    view.hidden=YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        [_addView setFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
+    }];
+}
+-(void)done{
     UIView *view=[self.view viewWithTag:101];
     view.hidden=YES;
     [UIView animateWithDuration:0.5 animations:^{

@@ -10,4 +10,6 @@
 
 @interface OrderBaseTableViewController : UITableViewController
 
+@property (nonatomic,assign) NSInteger index;
+
 @end

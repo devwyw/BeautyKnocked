@@ -93,6 +93,7 @@
     
     _entireSortBtn = [self setupCustomBtnWtihImageName:@"paixu-weixuanze" selectedImageName:@"paixuheshang" title:@"综合排序"];
     [_entireSortBtn addTarget:self action:@selector(clickedAtIndexButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_entireSortBtn setTitleColor:[UIColor colorWithHexString:@"#E0C070"] forState:UIControlStateSelected];
     _entireSortBtn.tag = 500;
     [self addSubview:_entireSortBtn];
     

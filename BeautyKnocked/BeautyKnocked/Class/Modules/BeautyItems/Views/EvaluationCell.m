@@ -11,7 +11,7 @@
 #import "RatingBar.h"
 
 static NSString *reuseIdentifier = @"EvaluationImageCell";
-@interface EvaluationCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,RatingBarDelegate>
+@interface EvaluationCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UIImageView *headImgView;
 @property (nonatomic, strong) UILabel *telLabel;

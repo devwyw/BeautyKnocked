@@ -8,11 +8,12 @@
 
 #import "OrderBaseTableViewController.h"
 #import "OrderTableViewCell.h"
-
+#import "OrderMessageViewController.h"
+#import "WuLiuController.h"
 
 static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 
-@interface OrderBaseTableViewController ()
+@interface OrderBaseTableViewController ()<OrderTableViewCellDelegate>
 
 @end
 
@@ -28,7 +29,6 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     [self.view setBackgroundColor:[UIColor colorWithHexString:@"#F7F7F7"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[OrderTableViewCell class] forCellReuseIdentifier:orderTableViewCellIdentifier];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,27 +39,53 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 5;
+    switch (_index) {
+        case 0:
+            return 15;
+        case 1:
+            return 4;
+        case 2:
+            return 5;
+        case 3:
+            return 6;
+        default:
+            return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
     return 1;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:orderTableViewCellIdentifier forIndexPath:indexPath];
+    cell.cellDelegate=self;
     
+    [cell.leftButton addTarget:self action:@selector(leftPush:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.rightButton addTarget:self action:@selector(rightPush:) forControlEvents:UIControlEventTouchUpInside];
+    /*
+     查看评价 再次购买
+     技师定位 联系技师 - 查看物流 确认收货
+     追加订单 确认订单
+     删除订单 去评价 All
+     */
     return cell;
 }
-
+-(void)cellPush{
+    OrderMessageViewController *controller=[[OrderMessageViewController alloc]init];
+    controller.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+-(void)leftPush:(UIButton*)btn{
+    NSLog(@"左边");
+}
+-(void)rightPush:(UIButton*)btn{
+    WuLiuController *controller=[[WuLiuController alloc]init];
+    controller.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    // if the data from net,you should make this
-    // Height_Pt(299) * data.count + .....header footer ,all views' height
-    
-    return Height_Pt(522);
+    return Height_Pt(110)*2+Height_Pt(300)*2;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

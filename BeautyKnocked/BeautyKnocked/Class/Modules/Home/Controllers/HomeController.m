@@ -113,7 +113,7 @@
     /** 购物车 */
     {
         UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-175, 60, 60)];
-        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 12.5, 12.5)];
+        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10.5, 10.5)];
         [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
         [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:Car];

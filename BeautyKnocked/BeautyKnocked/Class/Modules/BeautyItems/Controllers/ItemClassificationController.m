@@ -110,15 +110,8 @@
     }
     return self;
 }
--(void)dismissHUD:(NSNotificationCenter*)not{
-    [SVProgressHUD dismiss];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dismissHUD:)
-                                                 name:SVProgressHUDDidReceiveTouchEventNotification
-                                               object:nil];
     [self setHeaderView];
     // Do any additional setup after loading the view.
     
@@ -130,7 +123,7 @@
     /** 购物车 */
     {
         UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-111, 60, 60)];
-        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 12.5, 12.5)];
+        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10.5, 10.5)];
         [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
         [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:Car];

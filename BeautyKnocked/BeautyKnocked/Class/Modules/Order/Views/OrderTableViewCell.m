@@ -8,13 +8,12 @@
 
 #import "OrderTableViewCell.h"
 #import "OrderItemTableViewCell.h"
+#import "UIButton+Category.h"
 
 static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCell";
 @interface OrderTableViewCell ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UIView *leftView;
-
-@property (nonatomic, strong) UIButton *beauticianBtn;
 
 @property (nonatomic, strong) UILabel *statusLabel;
 
@@ -24,11 +23,7 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 
 @property (nonatomic, strong) UIView *bottomLine;
 
-@property (nonatomic, strong) UIButton *leftButton;
-
 @property (nonatomic, strong) UIView *marginLine;
-
-@property (nonatomic, strong) UIButton *rightButton;
 
 @end
 
@@ -60,16 +55,18 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
     _beauticianBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_beauticianBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _beauticianBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
+    [_beauticianBtn setTitle:@"1号技师 陈梦琳" forState:UIControlStateNormal];
+    [_beauticianBtn setImage:[UIImage imageNamed:@"dingdan-gengduo"] forState:UIControlStateNormal];
+    [_beauticianBtn setImgViewStyle:ButtonImgViewStyleRight imageSize:[UIImage imageNamed:@"dingdan-gengduo"].size space:10];
+    [_beauticianBtn addTarget:self action:@selector(beauticianBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_beauticianBtn];
-    
-    [_beauticianBtn setTitle:@"1号技师 陈梦琳 ＞" forState:UIControlStateNormal];
     
     _statusLabel = [[UILabel alloc] init];
     _statusLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     [self.contentView addSubview:_statusLabel];
     
     _topLine = [[UIView alloc] init];
-    _topLine.backgroundColor = [UIColor lightGrayColor];
+    _topLine.backgroundColor = [UIColor colorWithHexString:@"#F7F7F7"];
     [self.contentView addSubview:_topLine];
     
     self.tableView = ({
@@ -77,7 +74,7 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.scrollEnabled = NO;
-        [tableView setBackgroundColor:[UIColor clearColor]];
+        [tableView setBackgroundColor:[UIColor whiteColor]];
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tableView registerClass:[OrderItemTableViewCell class] forCellReuseIdentifier:orderItemTableViewCellIdentifier];
         
@@ -87,7 +84,7 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
     [self.contentView addSubview:self.tableView];
     
     _bottomLine = [[UIView alloc] init];
-    _bottomLine.backgroundColor = [UIColor lightGrayColor];
+    _bottomLine.backgroundColor = [UIColor colorWithHexString:@"#F7F7F7"];
     [self.contentView addSubview:_bottomLine];
     
     _leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -97,7 +94,7 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
     [self.contentView addSubview:_leftButton];
     
     _marginLine = [[UIView alloc] init];
-    _marginLine.backgroundColor = [UIColor lightGrayColor];
+    _marginLine.backgroundColor = [UIColor colorWithHexString:@"#F7F7F7"];
     [self.contentView addSubview:_marginLine];
     
     _rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -105,7 +102,6 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
     [_rightButton setTitle:@"联系技师" forState:UIControlStateNormal];
     _rightButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(38)];
     [self.contentView addSubview:_rightButton];
-    
 }
 
 -(void)setupConstraints {
@@ -171,7 +167,7 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 #pragma mark UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -180,9 +176,14 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
     
     return cell;
 }
-
+-(void)beauticianBtn:(UIButton*)btn{
+    [_cellDelegate cellPush];
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [_cellDelegate cellPush];
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return Height_Pt(299);
+    return Height_Pt(298);
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -40,8 +40,6 @@
     return self;
 }
 -(void)initializeViews {
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     

@@ -26,20 +26,22 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.titleSizeNormal = 15;
+        self.titleSizeNormal = 14;
         self.titleSizeSelected = 15;
         self.menuViewStyle = WMMenuViewStyleLine;
         self.menuItemWidth = [UIScreen mainScreen].bounds.size.width / self.orderStatus.count;
-        self.menuHeight = 50;
-        self.titleColorSelected = [UIColor blackColor];
-        self.titleColorNormal = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];  }
+        self.menuBGColor=[UIColor whiteColor];
+        self.menuHeight = 35;
+        self.titleColorSelected = [UIColor colorWithHexString:@"#E1BF6E"];
+        self.titleColorNormal = [UIColor blackColor];
+    }
     return self;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"订单";
+    self.navigationItem.title=@"确认订单";
     
 }
 
@@ -53,8 +55,9 @@
     return self.orderStatus.count;
 }
 
-- (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
+- (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index{
     OrderBaseTableViewController *vc = [[OrderBaseTableViewController alloc] init];
+    [vc setIndex:index];
     return vc;
 }
 

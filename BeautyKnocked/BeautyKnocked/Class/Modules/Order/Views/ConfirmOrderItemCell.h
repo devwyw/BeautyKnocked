@@ -13,6 +13,6 @@
 @property (nonatomic, strong) UIImage *itemImage;
 @property (nonatomic, copy) NSString *itemName;
 @property (nonatomic, copy) NSString *serviceLength;
-@property (nonatomic, copy) NSAttributedString *price;
-
+@property (nonatomic,assign) CGFloat price;
+@property (nonatomic,assign) CGFloat blcakprice;
 @end
