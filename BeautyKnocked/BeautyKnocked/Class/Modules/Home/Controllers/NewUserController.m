@@ -41,7 +41,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)loadBackView{
-    UIImageView *image=[[UIImageView alloc]initWithFrame:ViewMake];
+    UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [image setImage:[UIImage imageNamed:@"xinrenlingquan"]];
     [image setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:image];

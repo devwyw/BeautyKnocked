@@ -130,7 +130,7 @@
     }
     
 //    /** 奖励细则弹框 */
-    _Jview =[[UIView alloc]initWithFrame:ViewMake];
+    _Jview =[[UIView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [_Jview setBackgroundColor:[[UIColor grayColor]colorWithAlphaComponent:0.3]];
     [self.view addSubview:_Jview];
     
@@ -138,6 +138,7 @@
     [Jimage setImage:[UIImage imageNamed:@"bj"]];
     [Jimage setContentMode:UIViewContentModeScaleAspectFill];
     [_Jview addSubview:Jimage];
+    
     [Jimage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.left.equalTo(_Jview).offset(25);

@@ -10,10 +10,13 @@
 #import "OrderTableViewCell.h"
 #import "OrderMessageViewController.h"
 #import "WuLiuController.h"
+#import "OrderPJController.h"
 
 static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 
 @interface OrderBaseTableViewController ()<OrderTableViewCellDelegate>
+
+@property (nonatomic,strong) UIView * nilView;
 
 @end
 
@@ -29,6 +32,34 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     [self.view setBackgroundColor:[UIColor colorWithHexString:@"#F7F7F7"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[OrderTableViewCell class] forCellReuseIdentifier:orderTableViewCellIdentifier];
+    
+    if (_index==0) {
+        _nilView=[[UIView alloc]init];
+        _nilView.hidden=YES;
+        [self.view addSubview:_nilView];
+        
+        UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"wudingdan"]];
+        [_nilView addSubview:image];
+        
+        UILabel *title=[[UILabel alloc]init];
+        title.text=@"暂无订单，赶紧去逛逛吧~";
+        title.font=[UIFont systemFontOfSize:Font_Size(30)];
+        title.textColor=[UIColor grayColor];
+        [_nilView addSubview:title];
+        
+        [_nilView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.view);
+        }];
+        [image mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_nilView);
+            make.centerX.equalTo(_nilView);
+        }];
+        [title mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(image.mas_bottom).offset(Height_Pt(45));
+            make.centerX.equalTo(_nilView);
+            make.left.bottom.right.equalTo(_nilView);
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +72,10 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (_index) {
         case 0:
-            return 15;
+        {
+            _nilView.hidden=NO;
+        }
+            return 0;
         case 1:
             return 4;
         case 2:

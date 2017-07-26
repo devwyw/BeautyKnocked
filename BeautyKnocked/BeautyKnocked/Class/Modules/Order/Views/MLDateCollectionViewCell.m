@@ -42,6 +42,7 @@
 }
 -(void)initializeViews {
     _numberLabel = [[UILabel alloc] init];
+    _numberLabel.textAlignment = NSTextAlignmentCenter;
     _numberLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
     _contentLabel = [[UILabel alloc] init];

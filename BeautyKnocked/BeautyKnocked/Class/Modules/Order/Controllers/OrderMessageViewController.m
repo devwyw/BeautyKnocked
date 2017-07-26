@@ -12,6 +12,7 @@
 #import "ConfirmOrderItemCell.h"
 #import "TopMessageView.h"
 #import "OrderHeaderView.h"
+#import "PayInfoController.h"
 
 @interface OrderMessageViewController ()<UITableViewDelegate,UITableViewDataSource,ConfirmOrderAddCellDelegate>
 @property (nonatomic,strong) UITableView * tableview;
@@ -36,6 +37,7 @@
         _tableview.dataSource=self;
         [_tableview setBackgroundColor:[UIColor clearColor]];
         _tableview.estimatedRowHeight = 120;
+        _tableview.separatorInset=UIEdgeInsetsMake(0,10,0,10);
         [self registerCell:_tableview];
     }
     return _tableview;
@@ -73,6 +75,7 @@
                 ConfirmOrderAddCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ConfirmOrderAddCell" forIndexPath:indexPath];
                 cell.delegate = self;
                 cell.title = @"添加项目";
+                //cell.colorStr=@"#E1BF6E";
                 return cell;
             }else{
                 ConfirmOrderItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:@"ConfirmOrderItemCell" forIndexPath:indexPath];
@@ -88,7 +91,13 @@
         {
             ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ConfirmOrderFillCell" forIndexPath:indexPath];
             cell.title = @"预约技师:";
-            cell.content=@"李军晴";
+            if (indexPath.section==1 && indexPath.row==3) {
+                NSMutableAttributedString *AttStr=[[NSMutableAttributedString alloc]initWithString:@"¥468.0"];
+                [AttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, AttStr.length)];
+                cell.contentLabel.attributedText = AttStr;
+            }else{
+                cell.content=@"李军晴";
+            }
             return cell;
         }
     }
@@ -133,6 +142,13 @@
 }
 -(void)wantAddMore:(NSString *)currentTitle{
     NSLog(@"添加项目");
+    
+    PayInfoController *controller=[[PayInfoController alloc]init];
+    [controller setImageName:@"zhifushibai"];
+    [controller setString1:@"支付失败，请重新支付"];
+    controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
+    controller.btnName=@"重新支付";
+    [self.navigationController pushViewController:controller animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

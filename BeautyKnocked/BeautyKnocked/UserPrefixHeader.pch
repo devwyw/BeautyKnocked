@@ -11,6 +11,7 @@
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
+#define Make [UIScreen mainScreen].bounds
 
 #define Width_Pt(x) x / 1080.f * Width
 #define Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
@@ -37,7 +38,6 @@
 #import "DocumentsManager.h"
 
 #define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
-#define ViewMake CGRectMake(0, 64, Width, Height-64)
 
 #ifdef __OBJC__
 #ifdef DEBUG

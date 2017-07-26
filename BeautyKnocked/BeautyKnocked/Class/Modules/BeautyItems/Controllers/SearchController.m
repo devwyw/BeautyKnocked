@@ -56,7 +56,7 @@
         Layout.scrollDirection=UICollectionViewScrollDirectionVertical;
         Layout.sectionInset=UIEdgeInsetsMake(10, 20, 10, 20);
         
-        _collection = [[UICollectionView alloc]initWithFrame:ViewMake collectionViewLayout:Layout];
+        _collection = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64) collectionViewLayout:Layout];
         _collection.delegate = self;
         _collection.dataSource = self;
         _collection.backgroundColor = [UIColor clearColor];

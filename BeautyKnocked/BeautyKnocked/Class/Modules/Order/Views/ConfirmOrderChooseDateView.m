@@ -120,7 +120,7 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         //_collectionView.scrollEnabled = NO;
-        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier];
         self.collectionView;
     });

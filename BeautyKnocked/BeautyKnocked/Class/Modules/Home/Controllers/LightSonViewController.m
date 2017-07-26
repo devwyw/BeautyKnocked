@@ -22,7 +22,7 @@
     NSArray * heightArr=@[@"11684",@"7169",@"8518",@"8021",@"11716",@"8956"];
     NSInteger height=[heightArr[_Mtag-1] integerValue];
     
-    UIScrollView *Sview=[[UIScrollView alloc]initWithFrame:ViewMake];
+    UIScrollView *Sview=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [Sview setContentSize:CGSizeMake(Width_Pt(1080), Height_Pt(height))];
     [self.view addSubview:Sview];
     

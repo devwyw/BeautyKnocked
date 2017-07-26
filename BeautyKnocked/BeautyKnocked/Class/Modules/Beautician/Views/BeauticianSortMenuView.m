@@ -29,6 +29,7 @@
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, assign) NSInteger todayWeekDay;
+@property (nonatomic,strong) UIButton * donBtn;
 
 @end
 
@@ -198,7 +199,7 @@
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
-        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:@"dateCell"];
         self.collectionView;
     });
@@ -215,15 +216,15 @@
     [canBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [_backView addSubview:canBtn];
     
-    UIButton *donBtn=[[UIButton alloc]init];
-    [donBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [donBtn setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
-    [donBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
-    [donBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [donBtn addTarget:self action:@selector(donBtn:) forControlEvents:UIControlEventTouchUpInside];
-    donBtn.layer.cornerRadius=5;
-    donBtn.layer.masksToBounds=YES;
-    [_backView addSubview:donBtn];
+    _donBtn=[[UIButton alloc]init];
+    [_donBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [_donBtn setTitleColor:[UIColor  whiteColor] forState:UIControlStateNormal];
+    [_donBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
+    [_donBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [_donBtn addTarget:self action:@selector(donBtn:) forControlEvents:UIControlEventTouchUpInside];
+    _donBtn.layer.cornerRadius=5;
+    _donBtn.layer.masksToBounds=YES;
+    [_backView addSubview:_donBtn];
     
     [views mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(titleLabel.mas_bottom).with.offset(8);
@@ -247,7 +248,7 @@
         make.height.mas_equalTo(Height_Pt(80));
     }];
     
-    [donBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_donBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_backView).offset(-Width_Pt(140));
         make.bottom.equalTo(_backView).offset(-(Height_Pt(158)-Height_Pt(80))/2);
         make.width.mas_equalTo(Width_Pt(240));
@@ -261,7 +262,16 @@
     }];
 }
 -(void)donBtn:(UIButton*)btn{
-    
+    [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MLDateCollectionViewCell *cell = obj;
+        if (cell.selected) {
+            _filterBtn.selected=NO;
+            [UIView animateWithDuration:0.2 animations:^{
+                [self.popView setHidden:YES];
+            }];
+            *stop = YES;
+        }
+    }];
 }
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -302,8 +312,10 @@
     NSLog(@"date == %@",dateModel.date);
     
     if (!dateModel.isInThirtyDays) {
+        _donBtn.userInteractionEnabled=NO;
         return;
     }
+    _donBtn.userInteractionEnabled=YES;
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

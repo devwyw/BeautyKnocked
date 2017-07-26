@@ -30,7 +30,6 @@
             make.bottom.equalTo(self.message.mas_bottom).offset(10);
         }];
         
-        
         [_message mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.contentView).with.offset(10);
             make.left.equalTo(self.contentView).with.offset(15);

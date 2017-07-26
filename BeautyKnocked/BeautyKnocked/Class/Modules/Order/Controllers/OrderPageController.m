@@ -19,7 +19,7 @@
 
 - (NSArray *)orderStatus {
     if (!_orderStatus) {
-        _orderStatus = @[@"全部订单", @"服务中", @"进行中",@"待评价"];
+        _orderStatus = @[@"全部订单", @"待服务", @"进行中",@"待评价"];
     }
     return _orderStatus;
 }
@@ -42,7 +42,6 @@
     // Do any additional setup after loading the view.
     
     self.navigationItem.title=@"确认订单";
-    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -57,6 +57,13 @@
 		0413DB691F1EFDD800357B27 /* LightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0413DB681F1EFDD800357B27 /* LightViewController.m */; };
 		0413DB6C1F1F05F500357B27 /* UIColor+help.m in Sources */ = {isa = PBXBuildFile; fileRef = 0413DB6A1F1F05F500357B27 /* UIColor+help.m */; };
 		0413DB721F1F0DE000357B27 /* LightSonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0413DB711F1F0DE000357B27 /* LightSonViewController.m */; };
+		042DF05E1F2828CF00429D49 /* WuLiuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DF05D1F2828CF00429D49 /* WuLiuCell.m */; };
+		042DF0611F2847E800429D49 /* PayInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DF0601F2847E800429D49 /* PayInfoController.m */; };
+		042DF0661F286CEB00429D49 /* zhifuchenggong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042DF0621F286CEB00429D49 /* zhifuchenggong@2x.png */; };
+		042DF0671F286CEB00429D49 /* zhifuchenggong@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042DF0631F286CEB00429D49 /* zhifuchenggong@3x.png */; };
+		042DF0681F286CEB00429D49 /* zhifushibai@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042DF0641F286CEB00429D49 /* zhifushibai@2x.png */; };
+		042DF0691F286CEB00429D49 /* zhifushibai@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042DF0651F286CEB00429D49 /* zhifushibai@3x.png */; };
+		042DF06C1F287CFE00429D49 /* OrderPJController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DF06B1F287CFE00429D49 /* OrderPJController.m */; };
 		043212A71F26F76800F29D1B /* dingdan-gengduo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043212951F26F76800F29D1B /* dingdan-gengduo@2x.png */; };
 		043212A81F26F76800F29D1B /* dingdan-gengduo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043212961F26F76800F29D1B /* dingdan-gengduo@3x.png */; };
 		043212A91F26F76800F29D1B /* haungkuang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043212971F26F76800F29D1B /* haungkuang@2x.png */; };
@@ -648,6 +655,16 @@
 		0413DB6B1F1F05F500357B27 /* UIColor+help.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+help.h"; sourceTree = "<group>"; };
 		0413DB701F1F0DE000357B27 /* LightSonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSonViewController.h; sourceTree = "<group>"; };
 		0413DB711F1F0DE000357B27 /* LightSonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightSonViewController.m; sourceTree = "<group>"; };
+		042DF05C1F2828CF00429D49 /* WuLiuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuLiuCell.h; sourceTree = "<group>"; };
+		042DF05D1F2828CF00429D49 /* WuLiuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuLiuCell.m; sourceTree = "<group>"; };
+		042DF05F1F2847E800429D49 /* PayInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInfoController.h; sourceTree = "<group>"; };
+		042DF0601F2847E800429D49 /* PayInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayInfoController.m; sourceTree = "<group>"; };
+		042DF0621F286CEB00429D49 /* zhifuchenggong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhifuchenggong@2x.png"; sourceTree = "<group>"; };
+		042DF0631F286CEB00429D49 /* zhifuchenggong@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhifuchenggong@3x.png"; sourceTree = "<group>"; };
+		042DF0641F286CEB00429D49 /* zhifushibai@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhifushibai@2x.png"; sourceTree = "<group>"; };
+		042DF0651F286CEB00429D49 /* zhifushibai@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zhifushibai@3x.png"; sourceTree = "<group>"; };
+		042DF06A1F287CFE00429D49 /* OrderPJController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPJController.h; sourceTree = "<group>"; };
+		042DF06B1F287CFE00429D49 /* OrderPJController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPJController.m; sourceTree = "<group>"; };
 		043212951F26F76800F29D1B /* dingdan-gengduo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dingdan-gengduo@2x.png"; sourceTree = "<group>"; };
 		043212961F26F76800F29D1B /* dingdan-gengduo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dingdan-gengduo@3x.png"; sourceTree = "<group>"; };
 		043212971F26F76800F29D1B /* haungkuang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "haungkuang@2x.png"; sourceTree = "<group>"; };
@@ -2103,6 +2120,10 @@
 		7382AC581EEB996800743546 /* Pay */ = {
 			isa = PBXGroup;
 			children = (
+				042DF0621F286CEB00429D49 /* zhifuchenggong@2x.png */,
+				042DF0631F286CEB00429D49 /* zhifuchenggong@3x.png */,
+				042DF0641F286CEB00429D49 /* zhifushibai@2x.png */,
+				042DF0651F286CEB00429D49 /* zhifushibai@3x.png */,
 				7382AC711EEBCF0600743546 /* querenzhifu@2x.png */,
 				7382AC721EEBCF0600743546 /* querenzhifu@3x.png */,
 				7382AC6D1EEBC0D100743546 /* quxiao@2x.png */,
@@ -2399,6 +2420,10 @@
 				043212BA1F26F9F400F29D1B /* OrderMessageViewController.m */,
 				043212CE1F273B5800F29D1B /* WuLiuController.h */,
 				043212CF1F273B5800F29D1B /* WuLiuController.m */,
+				042DF05F1F2847E800429D49 /* PayInfoController.h */,
+				042DF0601F2847E800429D49 /* PayInfoController.m */,
+				042DF06A1F287CFE00429D49 /* OrderPJController.h */,
+				042DF06B1F287CFE00429D49 /* OrderPJController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2454,6 +2479,8 @@
 				043212BD1F272D6B00F29D1B /* OrderHeaderView.m */,
 				043212BF1F272F2000F29D1B /* TopMessageView.h */,
 				043212C01F272F2000F29D1B /* TopMessageView.m */,
+				042DF05C1F2828CF00429D49 /* WuLiuCell.h */,
+				042DF05D1F2828CF00429D49 /* WuLiuCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3009,6 +3036,7 @@
 				737C1E8C1EEA7B540020D342 /* rentou@2x.png in Resources */,
 				7383EC521ECBFAD400C87A06 /* xuanzhong_03@3x.png in Resources */,
 				7382AC6B1EEB999B00743546 /* weigouxuan@2x.png in Resources */,
+				042DF0681F286CEB00429D49 /* zhifushibai@2x.png in Resources */,
 				04B46E481F208888007349F2 /* jingqingqidai@3x.png in Resources */,
 				737C1E811EEA6F080020D342 /* gengduo-lan@2x.png in Resources */,
 				0404424C1F1F498700E59CF1 /* pinpai1.jpg in Resources */,
@@ -3300,6 +3328,7 @@
 				737C1E7D1EEA6EF10020D342 /* benyuezhaunxiang@2x.png in Resources */,
 				731986581EC1818900FA7DF0 /* success_05@3x.png in Resources */,
 				731986521EC1816C00FA7DF0 /* success_05@2x.png in Resources */,
+				042DF0661F286CEB00429D49 /* zhifuchenggong@2x.png in Resources */,
 				7374314C1ECD81B000A617F3 /* paixuheshang@3x.png in Resources */,
 				7387BCEC1EF122EA0061C5A1 /* pengyouquan@3x.png in Resources */,
 				7382AC271EE92A1F00FF4542 /* duihuanbeijing@3x.png in Resources */,
@@ -3335,6 +3364,7 @@
 				7382AC741EEBCF0600743546 /* querenzhifu@3x.png in Resources */,
 				7387BCEB1EF122EA0061C5A1 /* pengyouquan@2x.png in Resources */,
 				7391D9B61EC30B960020F3CE /* xian3_19@2x.png in Resources */,
+				042DF0671F286CEB00429D49 /* zhifuchenggong@3x.png in Resources */,
 				7319865E1EC18DB100FA7DF0 /* denglu-logo_03@3x.png in Resources */,
 				7382AC681EEB998A00743546 /* gouxuan@3x.png in Resources */,
 				737A201E1EE011BC00CD6FD2 /* xianxingpeifu@2x.png in Resources */,
@@ -3348,6 +3378,7 @@
 				7391D99B1EC2EB560020F3CE /* jifen_11@3x.png in Resources */,
 				739D675C1EC6D7DA00370DE6 /* pinpaizhenxuan_03@3x.png in Resources */,
 				737AEFA01ED829500039E88A /* shezhi@3x.png in Resources */,
+				042DF0691F286CEB00429D49 /* zhifushibai@3x.png in Resources */,
 				731986311EC173C400FA7DF0 /* shou1_03@3x.png in Resources */,
 				043212B51F26F76800F29D1B /* suxian@2x.png in Resources */,
 				737AEF9F1ED829500039E88A /* shezhi@2x.png in Resources */,
@@ -3457,6 +3488,7 @@
 				7391D9D31EC30FD50020F3CE /* BeauticianListViewModel.m in Sources */,
 				738DAADC1EDEB40300F45DE3 /* OurcommitmentController.m in Sources */,
 				736DE2971ED01F0F00E32717 /* BeauticianItemPageController.m in Sources */,
+				042DF06C1F287CFE00429D49 /* OrderPJController.m in Sources */,
 				737A1FE01EDFE1B300CD6FD2 /* MyMessageController.m in Sources */,
 				738406EB1EC0155E001CAFCD /* UIImage+Original.m in Sources */,
 				7389D8881EEE383F0012EEDC /* MineFightGroupCell.m in Sources */,
@@ -3545,6 +3577,7 @@
 				7385E0BF1ED6CAA800561DB0 /* PersonInfoViewController.m in Sources */,
 				73440A3D1ED2CFDC003807B8 /* BeauticianItemController.m in Sources */,
 				7382AC0F1EE8EF6C00FF4542 /* ExchangeDetailViewModel.m in Sources */,
+				042DF0611F2847E800429D49 /* PayInfoController.m in Sources */,
 				73440A401ED2D279003807B8 /* PSFooterReserveView.m in Sources */,
 				7388F5301EDA6B6500EB7EE4 /* AboutUsTableViewController.m in Sources */,
 				737C1E891EEA73570020D342 /* FightGroupSectionTitle.m in Sources */,
@@ -3589,6 +3622,7 @@
 				157BBBEE1F24BAE900D8FED0 /* SectionHeaderView.m in Sources */,
 				737AEF8D1ED804820039E88A /* UITextField+Category.m in Sources */,
 				7382800F1EF274240005DC28 /* ConfirmOrderController.m in Sources */,
+				042DF05E1F2828CF00429D49 /* WuLiuCell.m in Sources */,
 				737C1E701EEA2CD50020D342 /* FightGroupRulesView.m in Sources */,
 				737CD3031EE13CC100B6A5DB /* ProductDetailViewModel.m in Sources */,
 				7387BCE01EF11BB30061C5A1 /* FightGroupPeopleView.m in Sources */,

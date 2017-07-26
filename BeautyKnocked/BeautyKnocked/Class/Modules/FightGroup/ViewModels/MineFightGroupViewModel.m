@@ -55,7 +55,6 @@ static NSString *const mineFightGroupCellReuseIdentifier = @"MineFightGroupCell"
 #pragma mark MineFightGroupCellDelegate
 -(void)didClickedAtIndex:(NSUInteger)index {
     if (index == 0) {
-        
         FightGroupInvitationView *inviteview = [[FightGroupInvitationView alloc] initWithFrame:CGRectMake(0, 64, Width, Height-64)];        
         [inviteview.rulesSignal subscribeNext:^(id  _Nullable x) {
             Class ruleViewControllerClass = NSClassFromString(@"FightGroupRulesController");
