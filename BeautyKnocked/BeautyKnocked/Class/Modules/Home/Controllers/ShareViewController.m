@@ -18,7 +18,7 @@
 @implementation ShareViewController
 
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
 //    {
 //        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]}];
 //        [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
@@ -35,7 +35,7 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+    [super viewWillDisappear:animated];
 //    {
 //        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]}];
 //        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];

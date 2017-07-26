@@ -14,7 +14,7 @@
 
 @implementation NewUserController
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
     {
         UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-Width_Pt(80)-15, 22-Height_Pt(80)/2, Width_Pt(80), Height_Pt(80))];
         [item setTag:105];
@@ -25,7 +25,7 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+    [super viewWillDisappear:animated];
     {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:105];
         [item removeFromSuperview];

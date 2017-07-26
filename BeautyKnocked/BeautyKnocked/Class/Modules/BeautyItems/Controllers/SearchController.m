@@ -22,14 +22,14 @@
 @implementation SearchController
 
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setBackgroundColor:[UIColor colorWithHexString:@"#FCFCFC"]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     [_barField setText:_text];
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+    [super viewWillDisappear:animated];
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setBackgroundColor:ThemeColor];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];

@@ -32,7 +32,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
     [_carCount setText:@"99+"];
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];
@@ -44,7 +44,7 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+    [super viewWillDisappear:animated];
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];
         [item setHidden:YES];

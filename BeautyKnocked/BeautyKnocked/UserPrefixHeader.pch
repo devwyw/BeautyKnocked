@@ -36,6 +36,7 @@
 
 #import "UIColor+help.h"
 #import "DocumentsManager.h"
+#import "UIViewController+Cloudox.h"
 
 #define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
 

@@ -17,4 +17,6 @@
 +(NSMutableArray*)getSearchArray;
 /** 保存搜索栏数据 */
 +(BOOL)saveSearchArray:(NSMutableArray*)array;
+/** 打印所有子视图 */
++(void)getSub:(UIView *)view andLevel:(int)level;
 @end

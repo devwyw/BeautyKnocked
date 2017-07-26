@@ -33,7 +33,9 @@
     return _itemCategories;
 }
 -(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
+    self.navBarBgAlpha = @"1.0";
+    
     [_carCount setText:@"99+"];
 
     UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
@@ -43,7 +45,7 @@
     [field setHidden:NO];
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
+    [super viewWillDisappear:animated];
     UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
     [item setHidden:YES];
     
@@ -118,7 +120,7 @@
     self.panGesture = [[WMPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnView:)];
     [self.view addGestureRecognizer:self.panGesture];
     [self.view addSubview:self.classBannerView];
-    [self setViewTop:64];
+    [self setViewTop:kNavigationBarHeight];
     
     /** 购物车 */
     {

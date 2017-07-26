@@ -9,6 +9,7 @@
 #import "ConfirmOrderController.h"
 #import "ConfirmOrderViewModel.h"
 #import "ConfirmOrderSubmitView.h"
+#include "UIViewController+Cloudox.h"
 
 @interface ConfirmOrderController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) ConfirmOrderViewModel *viewModel;
@@ -19,6 +20,10 @@
 
 @implementation ConfirmOrderController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navBarBgAlpha = @"1";
+}
 -(ConfirmOrderViewModel *)viewModel {
     if (!_viewModel) {
         _viewModel = [[ConfirmOrderViewModel alloc] init];

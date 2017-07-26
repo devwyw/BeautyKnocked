@@ -15,6 +15,7 @@
 #import "EvaluationFooterView.h"
 #import "EvaluationCell.h"
 #import "EvaluationTableViewController.h"
+#import "CommentController.h"
 
 static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
@@ -152,8 +153,7 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
         @weakify(self);
         [_evaluationHeader.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-            WMPageController *pageController = [self configPageController];
-            [self.navigationController pushViewController:pageController animated:YES];
+            [self.navigationController pushViewController:[self configPageController] animated:YES];
         }];
     }
     return _evaluationHeader;
@@ -164,26 +164,16 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
         @weakify(self);
         [_evaluationFooter.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-            WMPageController *pageController = [self configPageController];
-            [self.navigationController pushViewController:pageController animated:YES];
+            [self.navigationController pushViewController:[self configPageController] animated:YES];
         }];
     }
     return _evaluationFooter;
 }
 
--(WMPageController *)configPageController {
-
+-(WMPageController *)configPageController{
     NSArray *viewControllerClasses = @[[EvaluationTableViewController class],[EvaluationTableViewController class]];
     NSArray *titles = @[@"全部评论",@"晒图"];
-    WMPageController *pageController = [[WMPageController alloc] initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
-    pageController.title = @"用户评论";
-    pageController.menuViewStyle = WMMenuViewStyleLine;
-    pageController.titleSizeSelected = 14;
-    pageController.titleSizeNormal = 14;
-    //pageController.progressWidth = Width / 2;
-    // you can post values
-    pageController.values = @[@22, @"Mark"].mutableCopy;
-    pageController.keys = @[@"age",@"name"].mutableCopy;
+    CommentController *pageController = [[CommentController alloc]initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
     return pageController;
 }
 

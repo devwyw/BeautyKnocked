@@ -11,7 +11,6 @@
 #import "ProductDetailViewModel.h"
 #import "ConfirmOrderController.h"
 
-
 @interface ProductDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -26,13 +25,14 @@
 
 @implementation ProductDetailController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navBarBgAlpha = @"0";
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.title = @"产品详情";
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self initializeViews];
     [self addConstraints];
     [self addGView];
@@ -43,7 +43,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)addGView{
-    UIView *gview=[[UIView alloc]initWithFrame: self.view.bounds];
+    UIView *gview=[[UIView alloc]initWithFrame:self.view.bounds];
     gview.backgroundColor=[[UIColor grayColor] colorWithAlphaComponent:0.3];
     [gview setTag:101];
     gview.hidden=YES;
@@ -56,6 +56,7 @@
     
     _addView=[[UIView alloc]initWithFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
     [_addView setBackgroundColor:[UIColor whiteColor]];
+    _addView.hidden=gview.isHidden;
     [self.view addSubview:_addView];
     
     UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(Width_Pt(60), -Height_Pt(50), Width_Pt(305), Height_Pt(305))];
@@ -184,24 +185,32 @@
 -(void)done:(UIButton*)btn{
     UIView *view=[self.view viewWithTag:101];
     view.hidden=YES;
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [_addView setFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
+    }completion:^(BOOL finished) {
+        if (finished) {
+            _addView.hidden=view.isHidden;
+        }
     }];
 }
 -(void)done{
     UIView *view=[self.view viewWithTag:101];
     view.hidden=YES;
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [_addView setFrame:CGRectMake(0, Height, Width, Height_Pt(740))];
+    }completion:^(BOOL finished) {
+        if (finished) {
+            _addView.hidden=view.isHidden;
+        }
     }];
 }
 -(void)initializeViews {
-    
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.estimatedRowHeight = 200;
+    _tableView.showsVerticalScrollIndicator = NO;
     [self.productDetailViewModel configRegisterTableView:_tableView];
     
     self.productDetailViewModel.navigationController = self.navigationController;
@@ -216,8 +225,9 @@
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
         UIView *view=[self.view viewWithTag:101];
         view.hidden=NO;
-        [UIView animateWithDuration:0.5 animations:^{
-            [_addView setFrame:CGRectMake(0, Height-64-Height_Pt(740), Width, Height_Pt(740))];
+        _addView.hidden=view.isHidden;
+        [UIView animateWithDuration:0.25 animations:^{
+            [_addView setFrame:CGRectMake(0, Height-Height_Pt(740), Width, Height_Pt(740))];
         }];
     }];
     
@@ -226,7 +236,6 @@
     
 }
 -(void)addConstraints {
-    
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, Height_Pt(147), 0));
     }];

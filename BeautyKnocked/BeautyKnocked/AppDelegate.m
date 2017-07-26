@@ -32,8 +32,9 @@
 }
 
 -(void)setupGlobalAppearance {
-    UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    
+    UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]}];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];
     [navigationBarAppearance setBarTintColor:ThemeColor];
