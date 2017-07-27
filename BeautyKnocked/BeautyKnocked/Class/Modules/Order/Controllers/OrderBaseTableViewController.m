@@ -33,7 +33,7 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[OrderTableViewCell class] forCellReuseIdentifier:orderTableViewCellIdentifier];
     
-    if (_index==0) {
+
         _nilView=[[UIView alloc]init];
         _nilView.hidden=YES;
         [self.view addSubview:_nilView];
@@ -59,7 +59,6 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
             make.centerX.equalTo(_nilView);
             make.left.bottom.right.equalTo(_nilView);
         }];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,9 +72,9 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     switch (_index) {
         case 0:
         {
-            _nilView.hidden=NO;
+            //_nilView.hidden=NO;
         }
-            return 0;
+            return 15;
         case 1:
             return 4;
         case 2:
@@ -88,7 +87,6 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,7 +109,9 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)leftPush:(UIButton*)btn{
-    NSLog(@"左边");
+    OrderPJController *controller=[[OrderPJController alloc]init];
+    controller.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)rightPush:(UIButton*)btn{
     WuLiuController *controller=[[WuLiuController alloc]init];

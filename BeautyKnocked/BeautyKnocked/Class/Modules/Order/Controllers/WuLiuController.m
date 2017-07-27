@@ -102,7 +102,7 @@
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableview.backgroundColor=[UIColor colorWithHexString:@"#FAFAFA"];
         _tableview.estimatedRowHeight = 120;
-        [_tableview registerClass:[WuLiuCell class] forCellReuseIdentifier:@"WuLiuCell"   ];
+        [_tableview registerClass:[WuLiuCell class] forCellReuseIdentifier:@"WuLiuCell"];
     }
     return _tableview;
 }

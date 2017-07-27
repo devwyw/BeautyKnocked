@@ -7,6 +7,7 @@
 //
 
 #import "OrderPJController.h"
+#import "PJBeautViewCell.h"
 
 @interface OrderPJController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
@@ -20,14 +21,29 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.title=@"订单评价";
 
-    _tableview=[[UITableView alloc]initWithFrame:Make style:UITableViewStyleGrouped];
+    _tableview=[[UITableView alloc]init];
     _tableview.dataSource=self;
     _tableview.delegate=self;
     _tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableview.backgroundColor=[UIColor colorWithHexString:@"#EBEBEB"];
     _tableview.estimatedRowHeight = 120;
+    [_tableview registerClass:[PJBeautViewCell class] forCellReuseIdentifier:@"PJBeautViewCell"];
+    [self.view addSubview:_tableview];
+    [_tableview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     // Do any additional setup after loading the view.
 }
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    PJBeautViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PJBeautViewCell" forIndexPath:indexPath];
+    cell.imageName=@"meirongshi_03";
+    cell.titleStr=@"01  橙梦露";
+    return cell;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

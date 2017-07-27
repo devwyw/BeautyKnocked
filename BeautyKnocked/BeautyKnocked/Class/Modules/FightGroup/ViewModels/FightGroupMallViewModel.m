@@ -30,6 +30,7 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 @property (nonatomic, strong) EvaluationHeaderView *evaluationHeader;
 @property (nonatomic, strong) EvaluationFooterView *evaluationFooter;
 @property (nonatomic, strong) FightGroupSectionTitle *sectionOneTitleView;
+@property (nonatomic,strong) CommentController * pageController;
 
 @end
 
@@ -168,7 +169,7 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
         @weakify(self);
         [_evaluationHeader.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-            [self.navigationController pushViewController:[self configPageController] animated:YES];
+            [self.navigationController pushViewController:self.pageController animated:YES];
         }];
     }
     return _evaluationHeader;
@@ -179,16 +180,19 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
         @weakify(self);
         [_evaluationFooter.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
-            [self.navigationController pushViewController:[self configPageController] animated:YES];
+            [self.navigationController pushViewController:self.pageController animated:YES];
         }];
     }
     return _evaluationFooter;
 }
--(WMPageController *)configPageController{
-    NSArray *viewControllerClasses = @[[EvaluationTableViewController class],[EvaluationTableViewController class]];
-    NSArray *titles = @[@"全部评论",@"晒图"];
-    CommentController *pageController = [[CommentController alloc] initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
-    return pageController;
+-(CommentController *)pageController{
+    if (!_pageController) {
+        NSArray *viewControllerClasses = @[[EvaluationTableViewController class],[EvaluationTableViewController class]];
+        NSArray *titles = @[@"全部评论",@"晒图"];
+        _pageController = [[CommentController alloc]initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
+    }
+    return _pageController;
 }
+
 
 @end
