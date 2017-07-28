@@ -21,7 +21,7 @@
 @property (nonatomic,strong) UILabel * number;
 @property (nonatomic,strong) UIButton * Lbtn;
 @property (nonatomic,strong) UIButton * Rbtn;
-
+@property (nonatomic,strong) UILabel * carCount;
 @end
 
 @implementation ItemDetailController
@@ -35,20 +35,40 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navBarBgAlpha = @"0";
+    [_carCount setText:@"99+"];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
     self.title = @"项目详情";
     
     [self initializeViews];
     [self addConstraints];
     [self addGView];
+    /** 购物车 */
+    {
+        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-111, 60, 60)];
+        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10.5, 10.5)];
+        [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
+        [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:Car];
+        
+        _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
+        [_carCount setFont:[UIFont systemFontOfSize:10]];
+        [_carCount setTextAlignment:NSTextAlignmentCenter];
+        [_carCount setTextColor:[UIColor whiteColor]];
+        [_carCount setBackgroundColor:[UIColor blackColor]];
+        [_carCount.layer setCornerRadius:11];
+        [_carCount.layer setMasksToBounds:YES];
+        [Car addSubview:_carCount];
+    }
+}
+-(void)Car:(UIButton*)button{
+    NSLog(@"1");
 }
 -(void)addGView{
     UIView *gview=[[UIView alloc]initWithFrame: self.view.bounds];
-    gview.backgroundColor=[[UIColor grayColor]colorWithAlphaComponent:0.3];
+    gview.backgroundColor=[[UIColor blackColor]colorWithAlphaComponent:0.65];
     [gview setTag:101];
     gview.hidden=YES;
     [self.view addSubview:gview];
@@ -67,7 +87,7 @@
     image.layer.masksToBounds=YES;
     image.layer.cornerRadius=8;
     image.contentMode=UIViewContentModeScaleAspectFit;
-    [image setImage:[UIImage imageNamed:@"mote"]];
+    [image setImage:[UIImage imageNamed:@"jiaruchanpin"]];
     [_addView addSubview:image];
     
     UIButton *done=[[UIButton alloc]initWithFrame:CGRectMake(0,Height_Pt(740)-Height_Pt(145), Width, Height_Pt(145))];
@@ -200,6 +220,7 @@
     _tableView.showsVerticalScrollIndicator = NO;
     [self.itemDetailViewModel configRegisterTableView:_tableView];
     
+    /** 立即预约  购物车 */
     _addReserveView = [[AddAndReserveView alloc] init];
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
         ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
@@ -273,8 +294,10 @@
 -(UIImageView *)tableheaderView {
     if (!_tableheaderView) {
         _tableheaderView = [[UIImageView alloc] init];
+        _tableheaderView.clipsToBounds = YES;
+        _tableheaderView.contentMode = UIViewContentModeScaleAspectFill;
         _tableheaderView.frame = CGRectMake(0, 0, Width, Height_Pt(675));
-        _tableheaderView.image = [UIImage imageNamed:@"mote"];
+        _tableheaderView.image = [UIImage imageNamed:@"chanppic"];
     }
     return _tableheaderView;
 }

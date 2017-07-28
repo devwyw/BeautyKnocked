@@ -65,7 +65,7 @@
 
     UISearchBar *Sbar = [[UISearchBar alloc]initWithFrame:CGRectMake(85, 5, Width-100, 34)];
     [Sbar setTag:102];
-    [Sbar setSearchFieldBackgroundImage:[DocumentsManager GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andHeight:25] forState:UIControlStateNormal];
+    [Sbar setSearchFieldBackgroundImage:[AdminManager GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andHeight:25] forState:UIControlStateNormal];
     [self.navigationController.navigationBar addSubview:Sbar];
     
     _searchField = [Sbar valueForKey:@"_searchField"];

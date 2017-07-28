@@ -1,21 +1,21 @@
 //
-//  DocumentsManager.m
+//  AdminManager.m
 //  BeautyKnocked
 //
 //  Created by Mac on 2017/7/20.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
-#import "DocumentsManager.h"
+#import "AdminManager.h"
 
-static DocumentsManager *instance=nil;
+static AdminManager *instance=nil;
 
-@implementation DocumentsManager
+@implementation AdminManager
 
 +(void)load{
     /** 每次加载第一个调用的方法 */
     [super load];
-    instance=[DocumentsManager new];
+    instance=[AdminManager new];
 }
 +(instancetype)alloc{
     if (instance) {
@@ -67,7 +67,7 @@ static DocumentsManager *instance=nil;
     }
 }
 /** 打印所有子视图 */
--(void)getSub:(UIView *)view andLevel:(int)level{
++(void)getSub:(UIView *)view andLevel:(int)level{
     NSArray *subviews = [view subviews];
     // 如果没有子视图就直接返回
     if ([subviews count] == 0) return;

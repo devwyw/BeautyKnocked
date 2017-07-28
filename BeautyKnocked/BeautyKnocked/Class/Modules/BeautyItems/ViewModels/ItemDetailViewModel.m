@@ -89,7 +89,6 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
             make.edges.equalTo(cell.contentView);
         }];
     }else if (section == 4) {
-        
         if (row == 0) {
             [cell.contentView addSubview:self.evaluationHeader];
             [self.evaluationHeader mas_makeConstraints:^(MASConstraintMaker *make) {

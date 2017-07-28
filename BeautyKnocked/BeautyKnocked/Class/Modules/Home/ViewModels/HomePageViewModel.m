@@ -108,9 +108,8 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
 
     }else if (section == 5 || section == 6 || section == 7) {
         /** 每日推荐等 */
-//        HomePageMuduleCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         HomePageMuduleCell *cell = [tableView dequeueReusableCellWithIdentifier:homePageMuduleCellReuseIdentifier];
-        if (cell == nil) {
+        if (!cell) {
             cell = [[HomePageMuduleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homePageMuduleCellReuseIdentifier andSection:section];
         }
         [cell setCellDelegate:self];
@@ -119,8 +118,7 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }else if (section == 9 || section == 10 || section == 11 || section == 12) {
         /** 感兴趣的课程等 */
         HomePageEnjoyTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//        HomePageEnjoyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:homePageEnjoyTableViewCellReuseIdentifier];
-        if (cell == nil) {
+        if (!cell) {
             cell = [[HomePageEnjoyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homePageEnjoyTableViewCellReuseIdentifier];
         }
         return cell;

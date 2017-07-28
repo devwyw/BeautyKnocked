@@ -8,7 +8,7 @@
 
 #import "SearchController.h"
 #import "SearchCollectionCell.h"
-#import "DocumentsManager.h"
+#import "AdminManager.h"
 #import "SectionHeaderView.h"
 
 @interface SearchController ()<UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
@@ -42,7 +42,7 @@
 }
 -(NSMutableArray*)dataArray{
     if (!_dataArray) {
-        _dataArray=[[NSMutableArray alloc]initWithArray:[DocumentsManager getSearchArray]];
+        _dataArray=[[NSMutableArray alloc]initWithArray:[AdminManager getSearchArray]];
     }
     return _dataArray;
 }
@@ -93,7 +93,7 @@
     [_barField setPlaceholder:@"关键词"];
     [_barField setTintColor:[UIColor grayColor]];
     [_barField setShowsCancelButton:YES animated:YES];
-    [_barField setSearchFieldBackgroundImage:[DocumentsManager GetImageWithColor:[UIColor groupTableViewBackgroundColor] andHeight:25] forState:UIControlStateNormal];
+    [_barField setSearchFieldBackgroundImage:[AdminManager GetImageWithColor:[UIColor groupTableViewBackgroundColor] andHeight:25] forState:UIControlStateNormal];
     [_barField setDelegate:self];
     [NBar addSubview:_barField];
     
@@ -112,7 +112,7 @@
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
     if (![[_dataArray[0] objectForKey:@"data"] containsObject:searchBar.text]  && searchBar.text.length>0 &&![[_dataArray[1] objectForKey:@"data"] containsObject:searchBar.text]) {
         [[_dataArray[1] objectForKey:@"data"] addObject:searchBar.text];
-        [DocumentsManager saveSearchArray:_dataArray];
+        [AdminManager saveSearchArray:_dataArray];
     }
     [_searchDelegate SearchField:searchBar.text];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -120,7 +120,7 @@
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     if (![[_dataArray[0] objectForKey:@"data"] containsObject:searchBar.text]  && searchBar.text.length>0 &&![[_dataArray[1] objectForKey:@"data"] containsObject:searchBar.text]) {
         [[_dataArray[1] objectForKey:@"data"] addObject:searchBar.text];
-        [DocumentsManager saveSearchArray:_dataArray];
+        [AdminManager saveSearchArray:_dataArray];
     }
     [_searchDelegate SearchField:searchBar.text];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -138,7 +138,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"清空全部历史记录." preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[_dataArray[1] objectForKey:@"data"] removeAllObjects];
-        [DocumentsManager saveSearchArray:_dataArray];
+        [AdminManager saveSearchArray:_dataArray];
         [_collection reloadSections:[NSIndexSet indexSetWithIndex:1]];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];

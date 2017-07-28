@@ -32,16 +32,14 @@
 }
 
 -(void)setupGlobalAppearance {
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"fanhui2"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 25, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]}];
     [navigationBarAppearance setTintColor:[UIColor whiteColor]];
     [navigationBarAppearance setBarTintColor:ThemeColor];
     [navigationBarAppearance setBackgroundColor:ThemeColor];
-    //[navigationBarAppearance setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [navigationBarAppearance setShadowImage:[UIImage new]];
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

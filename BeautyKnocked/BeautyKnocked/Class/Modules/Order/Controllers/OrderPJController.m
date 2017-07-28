@@ -8,6 +8,7 @@
 
 #import "OrderPJController.h"
 #import "PJBeautViewCell.h"
+#import "PJItemViewCell.h"
 
 @interface OrderPJController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
@@ -27,7 +28,10 @@
     _tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableview.backgroundColor=[UIColor colorWithHexString:@"#EBEBEB"];
     _tableview.estimatedRowHeight = 120;
+    
     [_tableview registerClass:[PJBeautViewCell class] forCellReuseIdentifier:@"PJBeautViewCell"];
+    [_tableview registerClass:[PJItemViewCell class] forCellReuseIdentifier:@"PJItemViewCell"];
+    
     [self.view addSubview:_tableview];
     [_tableview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -35,20 +39,26 @@
     // Do any additional setup after loading the view.
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return 5;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    PJBeautViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PJBeautViewCell" forIndexPath:indexPath];
-    cell.imageName=@"meirongshi_03";
-    cell.titleStr=@"01  橙梦露";
-    return cell;
+    if (indexPath.row==0) {
+        PJBeautViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PJBeautViewCell" forIndexPath:indexPath];
+        cell.imageName=@"meirongshi_03";
+        cell.titleStr=@"01  橙梦露";
+        return cell;
+    }else{
+        PJItemViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PJItemViewCell" forIndexPath:indexPath];
+        cell.imageName=@"meirongshi_03";
+        cell.titleStr=@"深层卸妆乳-100ml";
+        return cell;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

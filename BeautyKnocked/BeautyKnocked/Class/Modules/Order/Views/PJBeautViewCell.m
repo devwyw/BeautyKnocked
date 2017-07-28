@@ -10,6 +10,7 @@
 #import "RatingBar.h"
 
 @interface PJBeautViewCell ()
+
 @property (nonatomic,strong) UIView * whiteView;
 @property (nonatomic,strong) UIImageView * image;
 @property (nonatomic,strong) UILabel * title;
@@ -30,10 +31,6 @@
     if (self) {
         self.backgroundColor=[[UIColor whiteColor] colorWithAlphaComponent:0];
         self.selectionStyle=UITableViewCellSelectionStyleNone;
-//        self.contentView.backgroundColor=[UIColor whiteColor];
-//        self.contentView.layer.cornerRadius=5;
-//        self.contentView.layer.masksToBounds=YES;
-        
         [self setMyViews];
         [self setMyFrames];
     }
@@ -41,19 +38,17 @@
 }
 
 -(void)setMyViews{
-    
     _whiteView=[[UIView alloc]init];
     _whiteView.backgroundColor=[UIColor whiteColor];
     _whiteView.layer.cornerRadius=5;
     _whiteView.layer.masksToBounds=YES;
     [self.contentView addSubview:_whiteView];
     
-    _image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"meirongshi_03"]];
+    _image=[[UIImageView alloc]init];
     [self.contentView addSubview:_image];
     
     _title=[[UILabel alloc]init];
     _title.font=[UIFont systemFontOfSize:Font_Size(38)];
-    _title.text=@"01  橙梦露";
     [self.contentView addSubview:_title];
     
     _line=[[UIView alloc]init];
@@ -65,9 +60,13 @@
     [self.contentView addSubview:_starBar];
 }
 -(void)setMyFrames{
+    [_whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contentView).mas_equalTo(UIEdgeInsetsMake(8, 10, 8, 10));
+    }];
+    
     [_image mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(Height_Pt(42)+8);
-        make.left.equalTo(self.contentView).offset(Width_Pt(60)+10);
+        make.top.equalTo(_whiteView).offset(Height_Pt(42));
+        make.left.equalTo(_whiteView).offset(Width_Pt(60));
     }];
     
     [_title mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,19 +76,15 @@
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_image.mas_bottom).offset(Height_Pt(42));
-        make.width.mas_equalTo(Width-20);
-        make.height.mas_equalTo(0.5);
+        make.size.mas_equalTo(CGSizeMake(Width-20,1));
+        make.centerX.equalTo(_whiteView);
     }];
     
     [_starBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_line.mas_bottom).offset(Height_Pt(55));
-        make.centerX.equalTo(self.contentView);
+        make.centerX.equalTo(_whiteView);
         make.size.mas_equalTo(CGSizeMake([UIImage imageNamed:@"huixing"].size.width*5, Height_Pt(100)));
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-Height_Pt(78)-10);
-    }];
-    
-    [_whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.contentView).mas_equalTo(UIEdgeInsetsMake(8, 10, 8, 10));
+        make.bottom.equalTo(_whiteView.mas_bottom).offset(-Height_Pt(78));
     }];
 }
 -(void)setImageName:(NSString *)imageName{
@@ -101,8 +96,5 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
-
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "EvaluationFooterView.h"
+#import "UIButton+Category.h"
 
 @interface EvaluationFooterView ()
 @property (nonatomic, strong) UIButton *evaluationButton;
@@ -26,8 +27,9 @@
 -(void)initializeViews {
     _evaluationButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_evaluationButton setTitle:@"查看全部评论" forState:UIControlStateNormal];
-    [_evaluationButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [_evaluationButton setTitleColor:[UIColor colorWithHexString:@"#D6AA3A"] forState:UIControlStateNormal];
     [_evaluationButton setImage:[UIImage imageNamed:@"pinglun"] forState:UIControlStateNormal];
+    [_evaluationButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"pinglun"].size space:5];
     _evaluationButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     
     [self addSubview:_evaluationButton];

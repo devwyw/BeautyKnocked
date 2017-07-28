@@ -87,7 +87,6 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
             cell.itemName = _addArray[indexPath.row-2];
             cell.itemImage = [UIImage imageNamed:@"touxiang_03"];
             cell.price = @"¥ 500";
-            
             return cell;
         }
         if (self.orderStyle == MLItem) {
@@ -105,10 +104,11 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
         if (indexPath.row == 0) {
             ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:confirmOrderFillCellReuseIdentifier forIndexPath:indexPath];
             cell.title = self.titles[indexPath.section][indexPath.row];
+            cell.content=@"暂无优惠券";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }
         ConfirmOrderRemarksCell *cell = [tableView dequeueReusableCellWithIdentifier:confirmOrderRemarksCellReuseIdentifier forIndexPath:indexPath];
-        
         return cell;
     }
     return nil;
