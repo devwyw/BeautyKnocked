@@ -8,13 +8,13 @@
 
 #import "ItemClassificationController.h"
 #import "ItemListBaseController.h"
-#import "SearchController.h"
 #import "WMPanGestureRecognizer.h"
 #import <SVProgressHUD.h>
 #import <SDCycleScrollView.h>
 #import "UIButton+Category.h"
+#import <PYSearchViewController.h>
 
-@interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,SearchTextDelegate>
+@interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate>
 @property (nonatomic, strong) NSArray *itemCategories;
 @property (nonatomic, strong) WMPanGestureRecognizer *panGesture;
 @property (nonatomic, assign) CGPoint lastPoint;
@@ -34,6 +34,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.navBarBgAlpha = @"1.0";
     
     [_carCount setText:@"99+"];
@@ -46,6 +47,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+
     UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
     [item setHidden:YES];
     
@@ -81,17 +83,29 @@
 }
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
     [textField resignFirstResponder];
+    NSArray *hotSeaches = @[@"美白", @"补水", @"背部", @"清洁", @"化妆水", @"精油", @"按摩", @"养肤系列", @"长效系列", @"水光疗养"];
+    PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        [searchViewController dismissViewControllerAnimated:YES completion:nil];
+        _searchField.text=searchText;
+    }];
+    controller.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+    controller.hotSearchTitle=@"关键词";
+    controller.cancelButton.tintColor=[UIColor lightGrayColor];
+    //controller setCancelButton:<#(UIBarButtonItem *)#>
+    //controller setSearchBar:<#(UISearchBar *)#>
     
-    SearchController *controller=[[SearchController alloc]init];
-    [controller setSearchDelegate:self];
-    [controller setText:_searchField.text];
-    controller.hidesBottomBarWhenPushed = YES;
-    controller.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
-    [self presentViewController:controller animated:YES completion:nil];
+    
+    controller.hotSearchStyle = PYHotSearchStyleDefault;
+    controller.searchHistoryStyle = PYSearchHistoryStyleNormalTag;
+    
+    UINavigationController *NewNavigation=[[UINavigationController alloc]initWithRootViewController:controller];
+    [NewNavigation.navigationBar setBackgroundImage:[AdminManager GetImageWithColor:[UIColor colorWithHexString:@"#FCFCFC"] andHeight:64] forBarMetrics:UIBarMetricsDefault];
+    NewNavigation.navigationBar.shadowImage=[UIImage new];
+    NewNavigation.hidesBottomBarWhenPushed = YES;
+    NewNavigation.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
+    [self presentViewController:NewNavigation animated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     return NO;
-}
--(void)SearchField:(NSString *)text{
-    [_searchField setText:text];
 }
 -(void)locationClick:(UIButton*)button{
     [SVProgressHUD showInfoWithStatus:@"目前只提供南昌地区的服务"];

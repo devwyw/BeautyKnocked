@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '57C475C62F9A5403157E76B8A0DF0915'
+               BlueprintIdentifier = 'F4CEFA530918C1CE3DAAE4E2A49354F3'
                BlueprintName = 'Pods-CommonLib-BeautyKnockedHelper'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-CommonLib-BeautyKnockedHelper.a'>

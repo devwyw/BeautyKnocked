@@ -65,6 +65,7 @@
     [self.contentView addSubview:_starBar];
     
     _textview=[[UITextView alloc]init];
+    _textview.font=[UIFont systemFontOfSize:Font_Size(35)];
     _textview.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     _textview.layer.borderColor=[UIColor colorWithHexString:@"#E0E0E0"].CGColor;
     _textview.layer.borderWidth=0.5;
@@ -73,7 +74,7 @@
     
     _topTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, (Width-20-Width_Pt(120))-10, Font_Size(35)*3)];
     _topTitle.font=[UIFont systemFontOfSize:Font_Size(35)];
-    _topTitle.text=@"亲，产品使用是否满意，快来写出你的使用心得吧~";
+    _topTitle.text=@"亲，产品使用是否满意？快来写出你的使用心得吧~";
     _topTitle.numberOfLines=0;
     _topTitle.textColor=[UIColor lightGrayColor];
     [_textview addSubview:_topTitle];

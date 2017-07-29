@@ -96,7 +96,7 @@
     [self.backView addSubview:_headImgView];
     
     _nameLabel = [[UILabel alloc] init];
-    _nameLabel.font = [UIFont systemFontOfSize:GetPT(45)];
+    _nameLabel.font = [UIFont systemFontOfSize:15];
     _nameLabel.text = @"刘亦菲";
     [self.backView addSubview:_nameLabel];
     
@@ -109,46 +109,46 @@
     [self.backView addSubview:_horizonLine];
     
     _collectionLabel = [[UILabel alloc] init];
-    _collectionLabel.font = [UIFont systemFontOfSize:GetPT(39)];
+    _collectionLabel.font = [UIFont systemFontOfSize:13];
     _collectionLabel.textColor = [UIColor lightGrayColor];
     _collectionLabel.text = @"总收藏数";
     [self.backView addSubview:_collectionLabel];
     
     _collectionCount = [[UILabel alloc] init];
-    _collectionCount.font = [UIFont systemFontOfSize:GetPT(30)];
+    _collectionCount.font = [UIFont systemFontOfSize:10];
     _collectionCount.text = @"55";
     _collectionCount.textColor = [UIColor redColor];
     [self.backView addSubview:_collectionCount];
     
     _scoreLabel = [[UILabel alloc] init];
-    _scoreLabel.font = [UIFont systemFontOfSize:GetPT(39)];
+    _scoreLabel.font = [UIFont systemFontOfSize:13];
     _scoreLabel.textColor = [UIColor lightGrayColor];
     _scoreLabel.text = @"总评分";
     [self.backView addSubview:_scoreLabel];
     
     _scoreNumber = [[UILabel alloc] init];
-    _scoreNumber.font = [UIFont systemFontOfSize:GetPT(30)];
+    _scoreNumber.font = [UIFont systemFontOfSize:10];
     _scoreNumber.textColor = [UIColor redColor];
     _scoreNumber.text = @"5.0";
     [self.backView addSubview:_scoreNumber];
     
     _descrLabel = [[UILabel alloc] init];
     _descrLabel.numberOfLines = 0;
-    _descrLabel.font = [UIFont systemFontOfSize:GetPT(45)];
+    _descrLabel.font = [UIFont systemFontOfSize:15];
     _descrLabel.text = @"本人从事美容1000年,擅长各种美容,能把丑女变美女,能让仙女变巫婆,能让男人变女人,能让女人变男人,找我,一切都不是问题,请拨打123466498778";
     [self.backView addSubview:_descrLabel];
     
     _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_collectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_collectBtn setTitle:@"收藏美容师" forState:UIControlStateNormal];
-    _collectBtn.titleLabel.font = [UIFont systemFontOfSize:GetPT(45)];
+    _collectBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_collectBtn setBackgroundImage:[UIImage imageNamed:@"shoucangkuang_19"] forState:UIControlStateNormal];
     [self.backView addSubview:_collectBtn];
     
     _reserveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_reserveBtn setBackgroundImage:[UIImage imageNamed:@"yuyuekuang_19"] forState:UIControlStateNormal];
     [_reserveBtn setTitle:@"预约美容师" forState:UIControlStateNormal];
-    _reserveBtn.titleLabel.font = [UIFont systemFontOfSize:GetPT(45)];
+    _reserveBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.backView addSubview:_reserveBtn];
     
     // event
@@ -225,7 +225,7 @@
     
     [_horizonLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_verticalLine.mas_bottom).with.offset(Height_Pt(30));
-        make.left.equalTo(_backView).with.offset(GetPT(111));
+        make.left.equalTo(_backView).with.offset(37);
         make.right.equalTo(_backView).with.offset( - Width_Pt(111));
         make.height.mas_equalTo(Height_Pt(8));
     }];

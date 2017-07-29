@@ -80,7 +80,7 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
     return CGFLOAT_MIN;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return GetPT(20);
+    return 20/3.f;
 }
 
 

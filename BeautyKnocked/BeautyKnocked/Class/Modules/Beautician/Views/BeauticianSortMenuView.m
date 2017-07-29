@@ -140,12 +140,12 @@
 
 -(UIButton *)setupCustomBtnWtihImageName:(NSString *)imageName title:(NSString *)title {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.titleLabel.font = [UIFont systemFontOfSize:GetPT(35)];
+    button.titleLabel.font = [UIFont systemFontOfSize:35/3.f];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     UIImage *image = [UIImage imageOriginalImageName:imageName];
     [button setImage:image forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setImgViewStyle:ButtonImgViewStyleRight imageSize:image.size space:GetPT(20.f)];
+    [button setImgViewStyle:ButtonImgViewStyleRight imageSize:image.size space:20/3.f];
     return button;
 }
 -(NSArray *)months {

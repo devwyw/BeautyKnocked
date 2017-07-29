@@ -42,30 +42,18 @@ static AdminManager *instance=nil;
     
     return img;
 }
-/** 获取搜索栏数据 */
-+(NSMutableArray*)getSearchArray{
-    NSString *DocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *filePath = [DocumentPath stringByAppendingPathComponent:@"searchlist.plist"];
-    NSMutableArray *array=[[NSMutableArray alloc]initWithContentsOfFile:filePath];
-
-    if(!array){
-        NSString *sysPath=[[NSBundle mainBundle]pathForResource:@"searchlist" ofType:@"plist"];
-        array =[[NSMutableArray alloc]initWithContentsOfFile:sysPath];
-        [array writeToFile:filePath atomically:YES];
-    }
-    return array;
-}
-/** 保存搜索栏数据 */
-+(BOOL)saveSearchArray:(NSMutableArray*)array{
-    if (array) {
-        NSString *DocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-        NSString *filePath = [DocumentPath stringByAppendingPathComponent:@"searchlist.plist"];
-        [array writeToFile:filePath atomically:YES];
-        return YES;
-    }else{
-        return NO;
-    }
-}
+//+(NSMutableArray*)getSearchArray{
+//    NSString *DocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+//    NSString *filePath = [DocumentPath stringByAppendingPathComponent:@"xx.plist"];
+//    NSMutableArray *array=[[NSMutableArray alloc]initWithContentsOfFile:filePath];
+//
+//    if(!array){
+//        NSString *sysPath=[[NSBundle mainBundle]pathForResource:@"searchlist" ofType:@"plist"];
+//        array =[[NSMutableArray alloc]initWithContentsOfFile:sysPath];
+//        [array writeToFile:filePath atomically:YES];
+//    }
+//    return array;
+//}
 /** 打印所有子视图 */
 +(void)getSub:(UIView *)view andLevel:(int)level{
     NSArray *subviews = [view subviews];

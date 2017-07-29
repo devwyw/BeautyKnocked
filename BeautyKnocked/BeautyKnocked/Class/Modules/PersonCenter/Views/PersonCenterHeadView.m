@@ -75,7 +75,7 @@
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.text = @"12345678900";
-    _nameLabel.font = [UIFont systemFontOfSize:GetPT(45)];
+    _nameLabel.font = [UIFont systemFontOfSize:15];
     
     
     _balanceBtn = [self setupCustomBtnWtihImageName:@"yue_03" title:@"余额"];
@@ -224,7 +224,7 @@
 
 -(UIButton *)setupCustomBtnWtihImageName:(NSString *)imageName title:(NSString *)title {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.titleLabel.font = [UIFont systemFontOfSize:GetPT(35)];
+    button.titleLabel.font = [UIFont systemFontOfSize:35/3.f];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     UIImage *image = [UIImage imageOriginalImageName:imageName];
     [button setImage:image forState:UIControlStateNormal];

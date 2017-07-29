@@ -11,34 +11,33 @@
 
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
-#define Make [UIScreen mainScreen].bounds
-
 #define Width_Pt(x) x / 1080.f * Width
 #define Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
-
-#define GetPT(x) x / 3.f
-
 #define Size_Change ((Height != 667) ? 667/Height : 1)
 #define Font_Size(x) Height == 480 ? x*3/8/Size_Change*1.19 : x*3/8/Size_Change
-
 #define Weakify(o)        __weak   typeof(self) mmwo = o;
 #define Strongify(o)      __strong typeof(self) o = mmwo;
-
-#import <AFNetworking.h>
-#import <SDWebImage/UIImageView+WebCache.h>
-#import <Masonry.h>
-#import <IQKeyboardManager.h>
-#import <MJRefresh.h>
-#import <ReactiveObjC.h>
-#import <WMPageController.h>
-#import <XLForm.h>
-#import <MJExtension.h>
+#define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
 
 #import "UIColor+help.h"
 #import "AdminManager.h"
 #import "UIViewController+Cloudox.h"
 
-#define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
+#import <Masonry.h>
+#import <IQKeyboardManager.h>
+#import <ReactiveObjC.h>
+
+#import <AFNetworking.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <MJRefresh.h>
+#import <MJExtension.h>
+
+
+
+
+
+
+
 
 #ifdef __OBJC__
 #ifdef DEBUG
@@ -47,6 +46,5 @@
 #define NSLog(...)
 #endif
 #endif
-
 
 #endif /* UserPrefixHeader_pch */

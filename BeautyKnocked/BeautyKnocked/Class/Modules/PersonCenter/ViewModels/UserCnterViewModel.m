@@ -18,7 +18,7 @@
 #import "IntegralMallController.h"
 #import "SusoensionFlowLayout.h"
 #import "MineFightgroupTableController.h"
-
+#import "MyGroupController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
@@ -53,7 +53,7 @@
         }];
     }else if (indexPath.section == 2) {
         
-        cell.textLabel.font = [UIFont systemFontOfSize:GetPT(45)];
+        cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.textLabel.text = [self.thirdSectionRows objectAtIndex:indexPath.row];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -130,18 +130,8 @@
                                        [MineFightgroupTableController class],
                                        [MineFightgroupTableController class],
                                        [MineFightgroupTableController class]];
-    
     NSArray *titles = @[@"全部",@"等待成团",@"拼团成功",@"拼团失败"];
-    WMPageController *pageController = [[WMPageController alloc] initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
-    pageController.title = @"我的拼团";
-    pageController.menuViewStyle = WMMenuViewStyleLine;
-    pageController.titleSizeSelected = 14;
-    pageController.titleSizeNormal = 14;
-    pageController.selectIndex = (int)index;
-    // you can post values
-    pageController.values = @[@22, @"Mark"].mutableCopy;
-    pageController.keys = @[@"age",@"name"].mutableCopy;
-
+    MyGroupController *pageController = [[MyGroupController alloc] initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
     pageController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:pageController animated:YES];
     
