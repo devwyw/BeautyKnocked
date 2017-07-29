@@ -236,7 +236,7 @@
         UIButton *emptyButton = [[UIButton alloc] init];
         emptyButton.titleLabel.font = self.searchHistoryHeader.font;
         [emptyButton setTitleColor:PYTextColor forState:UIControlStateNormal];
-        [emptyButton setTitle:[NSBundle py_localizedStringForKey:PYSearchEmptyButtonText] forState:UIControlStateNormal];
+        //[emptyButton setTitle:[NSBundle py_localizedStringForKey:PYSearchEmptyButtonText] forState:UIControlStateNormal];
         [emptyButton setImage:[NSBundle py_imageNamed:@"empty"] forState:UIControlStateNormal];
         [emptyButton addTarget:self action:@selector(emptySearchHistoryDidClick) forControlEvents:UIControlEventTouchUpInside];
         [emptyButton sizeToFit];
@@ -398,6 +398,7 @@
     [titleLabel sizeToFit];
     titleLabel.py_x = 0;
     titleLabel.py_y = 0;
+    titleLabel.py_width=150;
     return titleLabel;
 }
 
@@ -878,16 +879,21 @@
 
 - (void)emptySearchHistoryDidClick
 {
-    [self.searchHistories removeAllObjects];
-    [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
-    if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
-        [self.baseSearchTableView reloadData];
-    } else {
-        self.searchHistoryStyle = self.searchHistoryStyle;
-    }
-    if (YES == self.swapHotSeachWithSearchHistory) {
-        self.hotSearches = self.hotSearches;
-    }
+    UIAlertController *alter=[UIAlertController alertControllerWithTitle:@"确认删除全部历史记录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alter addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alter addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.searchHistories removeAllObjects];
+        [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
+        if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
+            [self.baseSearchTableView reloadData];
+        } else {
+            self.searchHistoryStyle = self.searchHistoryStyle;
+        }
+        if (YES == self.swapHotSeachWithSearchHistory) {
+            self.hotSearches = self.hotSearches;
+        }
+    }]];
+    [self presentViewController:alter animated:YES completion:nil];
     PYSEARCH_LOG(@"%@", [NSBundle py_localizedStringForKey:PYSearchEmptySearchHistoryLogText]);
 }
 

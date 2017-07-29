@@ -7,7 +7,7 @@
 //
 
 #import "BeauticianPageHeaderView.h"
-#import "RatingBar.h"
+#import "StarView.h"
 
 @interface BeauticianPageHeaderView ()
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) UILabel *nameLabel;
 
-@property (nonatomic, strong) RatingBar *starView;
+@property (nonatomic, strong) StarView *starView;
 
 @property (nonatomic, strong) UIView *line;
 
@@ -41,11 +41,10 @@
     _nameLabel.font = [UIFont systemFontOfSize:Font_Size(42)];
     [self addSubview:_nameLabel];
     
-    _starView = [[RatingBar alloc] init];
-    _starView.backgroundColor = [UIColor clearColor];
-    [_starView setIsIndicator:YES];
-    [_starView setImageDeselected:@"huisexingxing" halfSelected:@"huisexingxing" fullSelected:@"huangsexingxing" andDelegate:nil];
-    [_starView displayRating:5];
+    _starView = [StarView evaluationViewWithChooseStarBlock:nil];
+    _starView.starCount=5;
+    _starView.spacing = 0.1;
+    _starView.tapEnabled = NO;
     [self addSubview:_starView];
     
     _line = [[UIView alloc] init];
@@ -83,8 +82,6 @@
         make.left.and.right.and.bottom.equalTo(self);
         make.height.mas_equalTo(0.5f);
     }];
-    
-    
 }
 
 @end

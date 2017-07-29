@@ -7,7 +7,7 @@
 //
 
 #import "PJItemViewCell.h"
-#import "RatingBar.h"
+#import "StarView.h"
 
 @interface PJItemViewCell ()
 
@@ -15,7 +15,7 @@
 @property (nonatomic,strong) UIImageView * image;
 @property (nonatomic,strong) UILabel * title;
 @property (nonatomic,strong) UIView * line;
-@property (nonatomic,strong) RatingBar * starBar;
+@property (nonatomic,strong) StarView * starBar;
 
 @property (nonatomic,strong) UILabel * topTitle;
 @property (nonatomic,strong) UILabel * bottomTitle;
@@ -60,8 +60,12 @@
     _line.backgroundColor=[UIColor colorWithHexString:@"#EBEBEB"];
     [self.contentView addSubview:_line];
     
-    _starBar=[[RatingBar alloc]init];
-    [_starBar setImageDeselected:@"huixing" halfSelected:@"huixing" fullSelected:@"liangxing" andDelegate:nil];
+    //__weak __typeof(self)weakSelf = self;
+    _starBar = [StarView evaluationViewWithChooseStarBlock:^(NSUInteger count) {
+        // 做评星后点处理
+    }];
+    _starBar.spacing = 0.1;
+    _starBar.tapEnabled = YES;
     [self.contentView addSubview:_starBar];
     
     _textview=[[UITextView alloc]init];
@@ -123,7 +127,7 @@
     [_starBar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_line.mas_bottom).offset(Height_Pt(55));
         make.centerX.equalTo(_whiteView);
-        make.size.mas_equalTo(CGSizeMake([UIImage imageNamed:@"huixing"].size.width*5, Height_Pt(100)));
+        make.size.mas_equalTo(CGSizeMake([UIImage imageNamed:@"huixing"].size.width*5,[UIImage imageNamed:@"huixing"].size.height));
     }];
     
     [_textview mas_makeConstraints:^(MASConstraintMaker *make) {

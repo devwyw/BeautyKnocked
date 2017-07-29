@@ -83,20 +83,23 @@
 }
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
     [textField resignFirstResponder];
+    /** 搜索栏 */
     NSArray *hotSeaches = @[@"美白", @"补水", @"背部", @"清洁", @"化妆水", @"精油", @"按摩", @"养肤系列", @"长效系列", @"水光疗养"];
-    PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+    PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"关键词" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         [searchViewController dismissViewControllerAnimated:YES completion:nil];
         _searchField.text=searchText;
     }];
-    controller.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
-    controller.hotSearchTitle=@"关键词";
-    controller.cancelButton.tintColor=[UIColor lightGrayColor];
-    //controller setCancelButton:<#(UIBarButtonItem *)#>
-    //controller setSearchBar:<#(UISearchBar *)#>
-    
-    
-    controller.hotSearchStyle = PYHotSearchStyleDefault;
-    controller.searchHistoryStyle = PYSearchHistoryStyleNormalTag;
+    {
+        /** 配置 */
+        controller.hotSearchTitle=@"关键词搜索";
+        controller.searchHistoryHeader.text=@"历史搜索记录";
+        controller.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+        controller.searchBarBackgroundColor=controller.view.backgroundColor;
+        controller.searchBar.tintColor = [UIColor lightGrayColor];
+        controller.cancelButton.tintColor=controller.searchBar.tintColor;
+        controller.hotSearchStyle = PYHotSearchStyleDefault;
+        controller.searchHistoryStyle = PYSearchHistoryStyleNormalTag;
+    }
     
     UINavigationController *NewNavigation=[[UINavigationController alloc]initWithRootViewController:controller];
     [NewNavigation.navigationBar setBackgroundImage:[AdminManager GetImageWithColor:[UIColor colorWithHexString:@"#FCFCFC"] andHeight:64] forBarMetrics:UIBarMetricsDefault];

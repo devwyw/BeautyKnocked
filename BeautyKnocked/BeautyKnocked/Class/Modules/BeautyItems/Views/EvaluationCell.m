@@ -8,7 +8,7 @@
 
 #import "EvaluationCell.h"
 #import "EvaluationImageCell.h"
-#import "RatingBar.h"
+#import "StarView.h"
 
 static NSString *reuseIdentifier = @"EvaluationImageCell";
 @interface EvaluationCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -16,7 +16,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
 @property (nonatomic, strong) UIImageView *headImgView;
 @property (nonatomic, strong) UILabel *telLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) RatingBar * starRatingView;
+@property (nonatomic, strong) StarView * starRatingView;
 @property (nonatomic, strong) UILabel *textContentLabel;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILabel *beauticianLabel;
@@ -95,11 +95,11 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     _dateLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
     _dateLabel.textColor = [UIColor lightGrayColor];
     
-    _starRatingView = [[RatingBar alloc] init];
-    _starRatingView.backgroundColor = [UIColor clearColor];
-    [_starRatingView setIsIndicator:YES];
-    [_starRatingView setImageDeselected:@"huisexingxing" halfSelected:@"huisexingxing" fullSelected:@"huangsexingxing" andDelegate:nil];
-    [_starRatingView displayRating:3];
+    _starRatingView = [StarView evaluationViewWithChooseStarBlock:nil];
+    _starRatingView.starCount=5;
+    _starRatingView.spacing = 0.1;
+    _starRatingView.tapEnabled = NO;
+    
     
     _textContentLabel = [[UILabel alloc] init];
     _textContentLabel.font = [UIFont systemFontOfSize:Font_Size(39)];

@@ -7,6 +7,7 @@
 //
 
 #import "RecommendBeautyView.h"
+#import "StarView.h"
 
 @interface RecommendBeautyView ()
 
@@ -18,7 +19,7 @@
 
 @property (nonatomic, strong) UIImageView *optimalImgView;
 
-@property (nonatomic, strong) UIView *starRateview;
+@property (nonatomic, strong) StarView *starRateview;
 
 @end
 
@@ -51,11 +52,12 @@
     [_optimalImgView setImage:[UIImage imageNamed:@"jinpaijishi_03 (2)"]];
     [_flowerBasketsImgView addSubview:_optimalImgView];
     
-    _starRateview = [[UIView alloc] init];
+    _starRateview = [StarView evaluationViewWithChooseStarBlock:nil];
+    _starRateview.starCount=5;
+    _starRateview.spacing=0.1;
+    _starRateview.tapEnabled=NO;
     [self addSubview:_starRateview];
-    
 }
-
 -(void)configureConstraints {
     [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).with.offset(Width_Pt(12));
@@ -83,15 +85,10 @@
     
     [_starRateview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
-        make.top.equalTo(_flowerBasketsImgView.mas_bottom).with.offset(Height_Pt(10));
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(162), Height_Pt(32)));
+        make.top.equalTo(_flowerBasketsImgView.mas_bottom);
+        make.bottom.equalTo(self.mas_bottom);
+        make.width.mas_equalTo(Width_Pt(200));
     }];
-    for (int i = 0; i < 5; i++){
-        UIImageView *image= [[UIImageView alloc] initWithFrame:CGRectMake((Width_Pt(162)/5)*i, 0,Width_Pt(162)/5,Height_Pt(32))];
-        [image setImage:[UIImage imageNamed:@"xing_03"]];
-        [image setContentMode:UIViewContentModeScaleAspectFill];
-        [_starRateview addSubview:image];
-    }
 }
 
 @end
