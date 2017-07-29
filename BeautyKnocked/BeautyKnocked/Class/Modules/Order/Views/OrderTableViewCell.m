@@ -149,10 +149,10 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
     }];
     
     [_marginLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_bottomLine.mas_bottom).with.offset(10);
-        make.bottom.equalTo(self.contentView).with.offset(-10);
+        make.top.equalTo(_bottomLine.mas_bottom).with.offset(4);
+        make.bottom.equalTo(self.contentView).with.offset(-4);
         make.left.equalTo(_leftButton.mas_right);
-        make.width.mas_equalTo(0.5);
+        make.width.mas_equalTo(1);
     }];
     
     [_rightButton mas_makeConstraints:^(MASConstraintMaker *make) {

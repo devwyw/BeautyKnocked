@@ -45,9 +45,8 @@
         _addButton.layer.cornerRadius=5;
         _addButton.layer.masksToBounds=YES;
         
-        UIImage *addImage = [UIImage imageNamed:@"jiahao"];
-        [_addButton setImage:addImage forState:UIControlStateNormal];
-        [_addButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:addImage.size space:8];
+        [_addButton setImage:[UIImage imageNamed:@"jiahao1"] forState:UIControlStateNormal];
+        [_addButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiahao1"].size space:8];
         [[_addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIButton * _Nullable button) {
             if ([self.delegate respondsToSelector:@selector(wantAddMore:)]) {
                 [self.delegate wantAddMore:button.currentTitle];

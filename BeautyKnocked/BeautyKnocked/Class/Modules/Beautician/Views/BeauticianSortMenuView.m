@@ -31,10 +31,17 @@
 @property (nonatomic, assign) NSInteger todayWeekDay;
 @property (nonatomic,strong) UIButton * donBtn;
 
+@property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
+
 @end
 
 @implementation BeauticianSortMenuView
-
+-(NSMutableDictionary*)cellIdentifierDic{
+    if (!_cellIdentifierDic) {
+        _cellIdentifierDic=[[NSMutableDictionary alloc]init];
+    }
+    return _cellIdentifierDic;
+}
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -200,7 +207,6 @@
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:@"dateCell"];
         self.collectionView;
     });
     [self.backView addSubview:self.collectionView];
@@ -275,11 +281,21 @@
 }
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 35;
+    return self.dataSource.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"dateCell" forIndexPath:indexPath];
+    NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
+    if (identifier == nil) {
+        identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
+        [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
+
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
+    }
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    // 此处可以对Cell做你想做的操作了...
+    cell.contentView.layer.borderWidth = 0.5;
+    cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (indexPath.item + 1 == _todayWeekDay) {
         cell.dateNumber = @"今天";
@@ -300,8 +316,6 @@
         UIView *selectedView = [[UIView alloc] init];
         selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
         cell.selectedBackgroundView = selectedView;
-        cell.contentView.layer.borderWidth = 0.5;
-        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         [cell setBackgroundColor:[UIColor whiteColor]];
     }
     return cell;

@@ -8,7 +8,6 @@
 
 #import "AddressToDefaultView.h"
 
-
 @interface AddressToDefaultView ()
 @property (nonatomic, strong) UIButton *defaultButton;
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -26,8 +25,8 @@
 -(void)initializeViews {
     
     _defaultButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_defaultButton setImage:[UIImage imageNamed:@"address_weixuanzhong"] forState:UIControlStateNormal];
-    [_defaultButton setImage:[UIImage imageNamed:@"address_xuanzhong"] forState:UIControlStateSelected];
+    [_defaultButton setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+    [_defaultButton setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
     
     @weakify(self);
     [[_defaultButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIButton * _Nullable button) {

@@ -10,7 +10,6 @@
 #import "MLDateCollectionViewCell.h"
 #import "MLDateManager.h"
 
-static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectionViewCell";
 @interface MLChooseAppointTimeView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UIButton *backBtn;
@@ -21,11 +20,17 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 @property (nonatomic, strong) UIButton *confirmBtn;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
 
 @end
 
 @implementation MLChooseAppointTimeView
-
+-(NSMutableDictionary*)cellIdentifierDic{
+    if (!_cellIdentifierDic) {
+        _cellIdentifierDic=[[NSMutableDictionary alloc]init];
+    }
+    return _cellIdentifierDic;
+}
 -(instancetype)init {
     self = [super init];
     if (self) {
@@ -110,7 +115,6 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier];
         self.collectionView;
     });
     
@@ -118,6 +122,8 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
     _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
+    _confirmBtn.layer.cornerRadius=5;
+    _confirmBtn.layer.masksToBounds=YES;
     [_confirmBtn setBackgroundColor:ThemeColor];
     [[_confirmBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         // hide time and date
@@ -171,8 +177,8 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.backView);
-        make.top.equalTo(self.collectionView.mas_bottom).with.offset(8);
-        make.bottom.equalTo(self.backView).with.offset( - 8);
+        make.top.equalTo(self.collectionView.mas_bottom).with.offset(10);
+        make.bottom.equalTo(self.backView).with.offset( - 10);
         make.width.mas_equalTo(120);
     }];
 
@@ -183,15 +189,21 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-    // border
+    NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
+    if (identifier == nil) {
+        identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
+        [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
+        
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
+    }
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    // 此处可以对Cell做你想做的操作了...
     UIView *selectedView = [[UIView alloc] init];
     selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
     cell.selectedBackgroundView = selectedView;
     cell.contentView.layer.borderWidth = 0.5;
     cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [cell setBackgroundColor:[UIColor whiteColor]];
-    
     cell.dateNumber = self.dataSource[indexPath.item];
 
     return cell;

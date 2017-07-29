@@ -15,6 +15,7 @@ pod 'MJExtension', '3.0.13'
 pod 'SDCycleScrollView', '1.65'
 pod 'XLForm', '3.0'
 pod 'SVProgressHUD'
+pod 'PYSearch'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'

@@ -28,7 +28,7 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _dataSource = @[@"版本号",@"微信公众号",@"美丽敲敲门介绍",@"我们的承若"];
+    _dataSource = @[@"版本号",@"微信公众号",@"美丽敲敲门介绍",@"我们的承诺"];
     self.tableView.tableHeaderView = self.tableViewHeaderView;
     
 }

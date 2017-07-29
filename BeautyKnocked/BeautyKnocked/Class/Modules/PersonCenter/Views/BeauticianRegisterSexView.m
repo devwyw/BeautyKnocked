@@ -51,12 +51,12 @@
     [_femaleButton addTarget:self action:@selector(sexButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_maleButton addTarget:self action:@selector(sexButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    [_femaleButton setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
-    [_femaleButton setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
+    [_femaleButton setImage:[UIImage imageNamed:@"weixuanzhong1"] forState:UIControlStateNormal];
+    [_femaleButton setImage:[UIImage imageNamed:@"xuanzhong2"] forState:UIControlStateSelected];
     [_femaleButton setTitle:@"女" forState:UIControlStateNormal];
     
-    [_maleButton setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
-    [_maleButton setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
+    [_maleButton setImage:[UIImage imageNamed:@"weixuanzhong1"] forState:UIControlStateNormal];
+    [_maleButton setImage:[UIImage imageNamed:@"xuanzhong2"] forState:UIControlStateSelected];
     [_maleButton setTitle:@"男" forState:UIControlStateNormal];
     
 }

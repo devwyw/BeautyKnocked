@@ -126,8 +126,8 @@
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     
-    [button setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
+    [button setImage:[UIImage imageNamed:@"weixuanzhong1"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"xuanzhong2"] forState:UIControlStateSelected];
     [button setTitle:title forState:UIControlStateNormal];
     return button;
 }

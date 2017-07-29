@@ -49,12 +49,6 @@
     _contentLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     _contentLabel.textAlignment = NSTextAlignmentRight;
     
-//    // selected
-//    UIView *selectedView = [[UIView alloc] init];
-//    selectedView.backgroundColor = ThemeColor;
-//    self.selectedBackgroundView = selectedView;
-    
-    
     [self.contentView addSubview:_numberLabel];
     [self.contentView addSubview:_contentLabel];
     

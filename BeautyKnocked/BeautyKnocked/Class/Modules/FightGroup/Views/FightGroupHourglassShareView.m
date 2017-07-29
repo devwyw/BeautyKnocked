@@ -60,7 +60,7 @@
     _peopleLabel = [[UILabel alloc] init];
     _peopleLabel.font = [UIFont systemFontOfSize:Font_Size(60)];
     
-    _wchatShare = [self createShareButtonWithImageName:@"weixin" title:@"微信好友"];
+    _wchatShare = [self createShareButtonWithImageName:@"weixin2" title:@"微信好友"];
     _friendShare = [self createShareButtonWithImageName:@"pengyouquan" title:@"朋友圈"];
     _QQShare = [self createShareButtonWithImageName:@"QQ-" title:@"QQ好友"];
     _sinaShare = [self createShareButtonWithImageName:@"weibo" title:@"微博"];

@@ -11,9 +11,6 @@
 #import "MLDateManager.h"
 #import "MLChooseAppointTimeView.h"
 
-
-
-static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectionViewCell";
 @interface ConfirmOrderChooseDateView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MLChooseAppointTimeViewDelegate>
 
 @property (nonatomic, strong) UIView *backView;
@@ -28,11 +25,18 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
 @property (nonatomic, strong) NSArray *weekDays;
 
 @property (nonatomic, assign) NSInteger todayWeekDay;
+@property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
 
 @end
 
 @implementation ConfirmOrderChooseDateView
 
+-(NSMutableDictionary*)cellIdentifierDic{
+    if (!_cellIdentifierDic) {
+        _cellIdentifierDic=[[NSMutableDictionary alloc]init];
+    }
+    return _cellIdentifierDic;
+}
 -(instancetype)init {
     self = [super init];
     if (self) {
@@ -121,7 +125,6 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
         _collectionView.showsVerticalScrollIndicator = NO;
         //_collectionView.scrollEnabled = NO;
         _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier];
         self.collectionView;
     });
     
@@ -161,13 +164,22 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
     }];
     
 }
-
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 35;
+    return self.dataSource.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dateCollectionViewCellReuseIdentifier forIndexPath:indexPath];
+    NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
+    if (identifier == nil) {
+        identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
+        [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
+        
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
+    }
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    // 此处可以对Cell做你想做的操作了...
+    cell.contentView.layer.borderWidth = 0.5;
+    cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (indexPath.item + 1 == _todayWeekDay) {
         cell.dateNumber = @"今天";
@@ -188,8 +200,6 @@ static NSString *const dateCollectionViewCellReuseIdentifier = @"MLDateCollectio
         UIView *selectedView = [[UIView alloc] init];
         selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
         cell.selectedBackgroundView = selectedView;
-        cell.contentView.layer.borderWidth = 0.5;
-        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         [cell setBackgroundColor:[UIColor whiteColor]];
     }
     return cell;

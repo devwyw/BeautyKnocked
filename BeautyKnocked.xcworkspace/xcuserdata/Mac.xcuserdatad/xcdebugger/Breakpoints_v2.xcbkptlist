@@ -24,12 +24,12 @@
                   moduleName = "BeautyKnocked"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhongweiping/Desktop/MLQQM/BeautyKnocked/BeautyKnocked/Class/Modules/Order/Views/ConfirmOrderProductCell.m"
-                  timestampString = "522925525.499807"
+                  timestampString = "522990710.475786"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "12"
                   endingLineNumber = "12"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "20">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -39,12 +39,12 @@
                   moduleName = "BeautyKnocked"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhongweiping/Desktop/MLQQM/BeautyKnocked/BeautyKnocked/Class/Modules/Order/Views/ConfirmOrderProductCell.m"
-                  timestampString = "522925525.502813"
+                  timestampString = "522990710.477143"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "12"
                   endingLineNumber = "12"
-                  offsetFromSymbolStart = "49">
+                  offsetFromSymbolStart = "64">
                </Location>
             </Locations>
          </BreakpointContent>
