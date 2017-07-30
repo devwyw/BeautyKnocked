@@ -62,8 +62,7 @@
     _btn1.titleLabel.font=[UIFont systemFontOfSize:Font_Size(38)];
     _btn1.layer.borderWidth=0.5;
     _btn1.layer.borderColor=[UIColor colorWithHexString:@"#D7AE4D"].CGColor;
-    _btn1.layer.cornerRadius=8;
-    _btn1.layer.masksToBounds=YES;
+    [_btn1 makeCornerRadius:8];
     [_btn1 addTarget:self action:@selector(payinfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn1];
     
@@ -73,8 +72,7 @@
     _btn2.titleLabel.font=[UIFont systemFontOfSize:Font_Size(38)];
     _btn2.layer.borderWidth=0.5;
     _btn2.layer.borderColor=[UIColor colorWithHexString:@"#999999"].CGColor;
-    _btn2.layer.cornerRadius=8;
-    _btn2.layer.masksToBounds=YES;
+    [_btn2 makeCornerRadius:8];
     [_btn2 addTarget:self action:@selector(backinfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn2];
 }

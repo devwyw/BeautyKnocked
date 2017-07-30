@@ -7,15 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface AdminManager : NSObject
 /** 单例模式 */
 +(instancetype)shareManager;
++(void)getNetWork:(id)Weakself;
 
-
-
-/** 颜色转图片 */
-+(UIImage*)GetImageWithColor:(UIColor*)color andHeight:(CGFloat)height;
 /** 打印所有子视图 */
 +(void)getSub:(UIView *)view andLevel:(int)level;
 @end

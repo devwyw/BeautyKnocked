@@ -40,11 +40,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
-    self.title = @"项目详情";
     
     [self initializeViews];
     [self addConstraints];
-    [self addGView];
     /** 购物车 */
     {
         UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-111, 60, 60)];
@@ -62,6 +60,7 @@
         [_carCount.layer setMasksToBounds:YES];
         [Car addSubview:_carCount];
     }
+    [self addGView];
 }
 -(void)Car:(UIButton*)button{
     NSLog(@"1");
@@ -84,8 +83,7 @@
     [self.view addSubview:_addView];
     
     UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(Width_Pt(60), -Height_Pt(50), Width_Pt(305), Height_Pt(305))];
-    image.layer.masksToBounds=YES;
-    image.layer.cornerRadius=8;
+    [image makeCornerRadius:8];
     image.contentMode=UIViewContentModeScaleAspectFit;
     [image setImage:[UIImage imageNamed:@"jiaruchanpin"]];
     [_addView addSubview:image];
@@ -133,8 +131,7 @@
     _number.text=@"1";
     _number.backgroundColor=[UIColor colorWithHexString:@"#EEEEEE"];
     _number.textAlignment=NSTextAlignmentCenter;
-    _number.layer.cornerRadius=8;
-    _number.layer.masksToBounds=YES;
+    [_number makeCornerRadius:8];
     [_addView addSubview:_number];
     
     [Jlabel mas_makeConstraints:^(MASConstraintMaker *make) {

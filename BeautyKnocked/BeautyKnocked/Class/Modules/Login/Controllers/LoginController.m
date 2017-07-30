@@ -12,7 +12,7 @@
 #import "UIImage+Original.h"
 
 
-@interface LoginController ()
+@interface LoginController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIImageView *logoImgView;
 
@@ -34,10 +34,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    //去除 navigationBar 底部的细线
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
-    [self.navigationController.navigationBar setBackgroundColor:[UIColor clearColor]];
+    self.navBarBgAlpha=@"0";
 }
 
 - (void)viewDidLoad {
@@ -141,6 +138,9 @@
     if (!_usernameTextField) {
         _usernameTextField = [[UITextField alloc] init];
         _usernameTextField.placeholder = @"请输入账号/手机号码";
+        _usernameTextField.textColor=[UIColor whiteColor];
+        _usernameTextField.delegate=self;
+        _usernameTextField.keyboardType = UIKeyboardTypeNumberPad;
         [_usernameTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_usernameTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
         _usernameTextField.background = [UIImage imageNamed:@"shurukuang_03"];
@@ -150,11 +150,26 @@
     }
     return _usernameTextField;
 }
-
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField==_usernameTextField) {
+        if (textField.text.length >= 10) {
+            textField.text = [textField.text substringToIndex:10];
+        }
+    }else{
+        if (textField.text.length >= 17) {
+            textField.text = [textField.text substringToIndex:17];
+        }
+    }
+    return YES;
+}
 -(UITextField *)passwordTextField {
     if (!_passwordTextField) {
         _passwordTextField = [[UITextField alloc] init];
+        _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _passwordTextField.textColor=[UIColor whiteColor];
         _passwordTextField.placeholder = @"请输入密码";
+        _passwordTextField.delegate=self;
+        _passwordTextField.secureTextEntry=YES;
         [_passwordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_passwordTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
         _passwordTextField.background = [UIImage imageNamed:@"shurukuang_03"];
@@ -180,10 +195,13 @@
         _registerAccountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_registerAccountBtn setTitle:@"注册账号" forState:UIControlStateNormal];
         [_registerAccountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_registerAccountBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
         _registerAccountBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         
         [[_registerAccountBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            [self.navigationController pushViewController:[[RegisterController alloc] init] animated:YES];
+            RegisterController *controller=[[RegisterController alloc]init];
+            controller.isType=YES;
+            [self.navigationController pushViewController:controller animated:YES];
         }];
         
     }
@@ -195,7 +213,13 @@
         _forgetPasswordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_forgetPasswordBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
         [_forgetPasswordBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_forgetPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
         _forgetPasswordBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+        [[_forgetPasswordBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            RegisterController *controller=[[RegisterController alloc]init];
+            controller.isType=NO;
+            [self.navigationController pushViewController:controller animated:YES];
+        }];
     }
     return _forgetPasswordBtn;
 }

@@ -20,20 +20,17 @@
     if (self.navigationBar.isTranslucent) {
         if (backgroundImageView != nil && backgroundImageView.image != nil) {
             barBackgroundView.alpha = alpha;
-            [self.navigationBar setBackgroundColor:[ThemeColor colorWithAlphaComponent:alpha]];
         } else {
             UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];// UIVisualEffectView
             if (backgroundEffectView != nil) {
                 backgroundEffectView.alpha = alpha;
-                [self.navigationBar setBackgroundColor:[ThemeColor colorWithAlphaComponent:alpha]];
             }
         }
     } else {
         barBackgroundView.alpha = alpha;
-        [self.navigationBar setBackgroundColor:[ThemeColor colorWithAlphaComponent:alpha]];
     }
     // 对导航栏下面那条线做处理
-    self.navigationBar.clipsToBounds = alpha == 0.0;
+    //self.navigationBar.clipsToBounds = alpha == 0.0;
 }
 
 + (void)initialize {
@@ -70,9 +67,15 @@
     if (topVC != nil) {
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
         if (coor != nil) {
-            [coor notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
-                [self dealInteractionChanges:context];
-            }];
+            if (SystemVersion>=10.0) {
+                [coor notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+                    [self dealInteractionChanges:context];
+                }];
+            }else{
+                [coor notifyWhenInteractionEndsUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext> context){
+                    [self dealInteractionChanges:context];
+                }];
+            }
         }
     }
 }

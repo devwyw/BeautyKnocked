@@ -82,8 +82,7 @@
 }
 
 -(void)layoutSubviews{
-    _point.layer.cornerRadius=_point.frame.size.width/2;
-    _point.layer.masksToBounds=YES;
+    [_point makeCornerRadius:_point.frame.size.width/2];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

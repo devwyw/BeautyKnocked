@@ -39,7 +39,6 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
 }
 
 - (void)viewDidLoad {

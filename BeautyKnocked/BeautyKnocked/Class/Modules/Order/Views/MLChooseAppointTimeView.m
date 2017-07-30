@@ -122,8 +122,7 @@
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
     _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    _confirmBtn.layer.cornerRadius=5;
-    _confirmBtn.layer.masksToBounds=YES;
+    [_confirmBtn makeCornerRadius:5];
     [_confirmBtn setBackgroundColor:ThemeColor];
     [[_confirmBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         // hide time and date

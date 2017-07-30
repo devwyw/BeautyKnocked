@@ -43,8 +43,7 @@
     _signLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
     _signLabel.textColor = [UIColor whiteColor];
     _signLabel.layer.backgroundColor = [UIColor orangeColor].CGColor;
-    _signLabel.layer.cornerRadius = 4;
-    _signLabel.layer.masksToBounds = YES;
+    [_signLabel makeCornerRadius:4];
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(48)];

@@ -66,8 +66,8 @@
     self.scrollsToTop = NO;
     self.showsHorizontalScrollIndicator = NO;
     self.enablesReturnKeyAutomatically = YES;
+    [self makeCornerRadius:5];
     self.layer.borderWidth = 1;
-    self.layer.cornerRadius = 5;
     self.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
 }
@@ -84,7 +84,7 @@
 - (void)setCornerRadius:(NSUInteger)cornerRadius
 {
     _cornerRadius = cornerRadius;
-    self.layer.cornerRadius = cornerRadius;
+    [self makeCornerRadius:cornerRadius];;
 }
 
 - (void)setYz_textHeightChangeBlock:(void (^)(NSString *, CGFloat))yz_textChangeBlock

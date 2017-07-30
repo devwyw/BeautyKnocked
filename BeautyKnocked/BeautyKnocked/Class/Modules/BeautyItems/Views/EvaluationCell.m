@@ -69,7 +69,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(Width_Pt(200), Height_Pt(168));
+    return CGSizeMake(Width_Pt(200), Height_Pt(200));
 }
 
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -122,7 +122,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     _customerServiceReply = [[UILabel alloc] init];
     _customerServiceReply.font = [UIFont systemFontOfSize:Font_Size(34)];
     _customerServiceReply.numberOfLines = 0;
-    //UIImage *replyImage = [UIImage imageNamed:@"huifukuang"];
+    [_customerServiceReply makeCornerRadius:3];
     [_customerServiceReply setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     [self.contentView addSubview:_headImgView];
@@ -145,7 +145,6 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
 }
 
 -(void)addConstraints {
-    
     [_headImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(Width_Pt(62));
         make.top.equalTo(self.contentView).with.offset(Height_Pt(20));
@@ -179,7 +178,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_telLabel.mas_left);
         make.right.equalTo(_textContentLabel.mas_right);
-        make.height.mas_equalTo(Height_Pt(170));
+        make.height.mas_equalTo(Height_Pt(200));
     }];
 
     [_beauticianLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -191,7 +190,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     [_customerServiceReply mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_beauticianLabel.mas_bottom).with.offset(Height_Pt(25));
         make.left.equalTo(_telLabel.mas_left);
-        make.right.equalTo(self.contentView).with.offset( - Width_Pt(105));
+        //make.right.equalTo(self.contentView).with.offset( - Width_Pt(105));
         make.bottom.equalTo(self.contentView).with.offset( - Height_Pt(20));
     }];
     
@@ -211,7 +210,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
 }
 
 -(void)setImages:(NSArray *)images {
-    CGFloat collectionViewheight = images.count ? Height_Pt(170):0.0;
+    CGFloat collectionViewheight = images.count ? Height_Pt(200):0.0;
     [self.dataSource removeAllObjects];
     [self.dataSource addObjectsFromArray:images];
     

@@ -45,8 +45,7 @@
 -(void)setMyViews{
     _whiteView=[[UIView alloc]init];
     _whiteView.backgroundColor=[UIColor whiteColor];
-    _whiteView.layer.cornerRadius=5;
-    _whiteView.layer.masksToBounds=YES;
+    [_whiteView makeCornerRadius:5];
     [self.contentView addSubview:_whiteView];
     
     _image=[[UIImageView alloc]init];

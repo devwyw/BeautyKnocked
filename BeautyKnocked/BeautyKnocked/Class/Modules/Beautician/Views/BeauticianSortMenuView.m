@@ -216,8 +216,7 @@
     [canBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [canBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     [canBtn addTarget:self action:@selector(canBtn:) forControlEvents:UIControlEventTouchUpInside];
-    canBtn.layer.cornerRadius=5;
-    canBtn.layer.masksToBounds=YES;
+    [canBtn makeCornerRadius:5];
     [canBtn.layer setBorderWidth:0.5];//设置边界的宽度
     [canBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [_backView addSubview:canBtn];
@@ -228,8 +227,7 @@
     [_donBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
     [_donBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     [_donBtn addTarget:self action:@selector(donBtn:) forControlEvents:UIControlEventTouchUpInside];
-    _donBtn.layer.cornerRadius=5;
-    _donBtn.layer.masksToBounds=YES;
+    [_donBtn makeCornerRadius:5];
     [_backView addSubview:_donBtn];
     
     [views mas_makeConstraints:^(MASConstraintMaker *make) {

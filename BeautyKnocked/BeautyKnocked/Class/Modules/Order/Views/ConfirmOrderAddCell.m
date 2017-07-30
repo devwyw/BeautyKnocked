@@ -40,10 +40,10 @@
         [_addButton setTitleColor:[UIColor colorWithHexString:@"#E1BF6E"] forState:UIControlStateNormal];
         [_addButton.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(32)]];
         _addButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
+        [_addButton makeCornerRadius:5];
         _addButton.layer.borderWidth=0.5;
         _addButton.layer.borderColor=[UIColor colorWithHexString:@"#D7AE4D"].CGColor;
-        _addButton.layer.cornerRadius=5;
-        _addButton.layer.masksToBounds=YES;
+        
         
         [_addButton setImage:[UIImage imageNamed:@"jiahao1"] forState:UIControlStateNormal];
         [_addButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiahao1"].size space:8];

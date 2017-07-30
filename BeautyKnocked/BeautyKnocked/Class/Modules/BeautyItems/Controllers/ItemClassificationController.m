@@ -32,16 +32,16 @@
     }
     return _itemCategories;
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     self.navBarBgAlpha = @"1.0";
     
     [_carCount setText:@"99+"];
 
     UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
     [item setHidden:NO];
-    
     UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
     [field setHidden:NO];
 }
@@ -50,7 +50,6 @@
 
     UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
     [item setHidden:YES];
-    
     UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
     [field setHidden:YES];
 }
@@ -67,7 +66,7 @@
 
     UISearchBar *Sbar = [[UISearchBar alloc]initWithFrame:CGRectMake(85, 5, Width-100, 34)];
     [Sbar setTag:102];
-    [Sbar setSearchFieldBackgroundImage:[AdminManager GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andHeight:25] forState:UIControlStateNormal];
+    [Sbar setSearchFieldBackgroundImage:[UIImage GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andAlpha:1 andHeight:25] forState:UIControlStateNormal];
     [self.navigationController.navigationBar addSubview:Sbar];
     
     _searchField = [Sbar valueForKey:@"_searchField"];
@@ -91,6 +90,7 @@
     }];
     {
         /** 配置 */
+        controller.searchBar.text=_searchField.text;
         controller.hotSearchTitle=@"关键词搜索";
         controller.searchHistoryHeader.text=@"历史搜索记录";
         controller.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
@@ -102,12 +102,12 @@
     }
     
     UINavigationController *NewNavigation=[[UINavigationController alloc]initWithRootViewController:controller];
-    [NewNavigation.navigationBar setBackgroundImage:[AdminManager GetImageWithColor:[UIColor colorWithHexString:@"#FCFCFC"] andHeight:64] forBarMetrics:UIBarMetricsDefault];
+    [NewNavigation.navigationBar setBackgroundImage:[UIImage GetImageWithColor:[UIColor colorWithHexString:@"#FCFCFC"] andAlpha:1 andHeight:64] forBarMetrics:UIBarMetricsDefault];
     NewNavigation.navigationBar.shadowImage=[UIImage new];
     NewNavigation.hidesBottomBarWhenPushed = YES;
     NewNavigation.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
     [self presentViewController:NewNavigation animated:YES completion:nil];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     return NO;
 }
 -(void)locationClick:(UIButton*)button{

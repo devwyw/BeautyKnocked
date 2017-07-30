@@ -122,18 +122,35 @@ typedef void(^EvaluateViewDidChooseStarBlock)(NSUInteger count);
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
-    CGPoint point = [touch locationInView:self];
-    self.index = point.x / (self.frame.size.width / 5) + 1;
-    if (self.index == 6) {
-        self.index --;
-    }
-    [self setNeedsDisplay];
-    if (self.evaluateViewChooseStarBlock) {
-        self.evaluateViewChooseStarBlock(self.index);
+    CGPoint point = [[touches anyObject] locationInView:self];
+     NSInteger newStar = point.x / (self.frame.size.width / 5) + 1;
+    if (newStar!=self.index) {
+        self.index=newStar;
+        if (self.index == 6) {
+            self.index --;
+        }
+        [self setNeedsDisplay];
+        if (self.evaluateViewChooseStarBlock) {
+            self.evaluateViewChooseStarBlock(self.index);
+        }
     }
 }
 
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    CGPoint point = [[touches anyObject] locationInView:self];
+    NSInteger newStar= point.x / (self.frame.size.width / 5) + 1;
+    
+    if (newStar!=self.index) {
+        self.index=newStar;
+        if (self.index == 6) {
+            self.index --;
+        }
+        [self setNeedsDisplay];
+        if (self.evaluateViewChooseStarBlock) {
+            self.evaluateViewChooseStarBlock(self.index);
+        }
+    }
+}
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self touchesEnded:touches withEvent:event];
 }

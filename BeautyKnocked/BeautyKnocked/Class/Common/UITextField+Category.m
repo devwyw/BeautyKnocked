@@ -24,7 +24,7 @@
     textField.borderStyle = UITextBorderStyleNone;
     textField.placeholder = placeholder;
     textField.font = [UIFont systemFontOfSize:textSize];
-    textField.layer.cornerRadius = 6.0f;
+    [textField makeCornerRadius:6];
     textField.layer.borderWidth = 1.0f;
     textField.layer.borderColor = borderColor.CGColor;
     

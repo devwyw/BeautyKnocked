@@ -80,8 +80,7 @@
         self.inputHandler = inputHandler;
         self.actionItems = items;
         
-        self.layer.cornerRadius = config.cornerRadius;
-        self.clipsToBounds = YES;
+        [self makeCornerRadius:config.cornerRadius];
         self.backgroundColor = config.backgroundColor;
         self.layer.borderWidth = MM_SPLIT_WIDTH;
         self.layer.borderColor = config.splitColor.CGColor;

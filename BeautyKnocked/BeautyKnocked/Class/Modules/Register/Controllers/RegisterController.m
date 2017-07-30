@@ -10,13 +10,17 @@
 #import "UIImageView+Category.h"
 #import "UIImage+Original.h"
 
-@interface RegisterController ()
+@interface RegisterController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIImageView *logoImgView;
 
 @property (nonatomic, strong) UIImageView *backImgView;
 
 @property (nonatomic, strong) UITextField *phoneNumberTextField;
+@property (nonatomic, strong) UIButton * getCode;
+@property (nonatomic, assign) NSInteger time;
+@property (nonatomic, strong) NSTimer * timer;
+@property (nonatomic, strong)NSDate *beforeDate;
 
 @property (nonatomic, strong) UITextField *varificationCodeTextField;
 
@@ -26,32 +30,62 @@
 
 @property (nonatomic, strong) UIButton *registerBtn;
 
-@property (nonatomic, strong) UIButton *loginAccountBtn;
-
-@property (nonatomic, strong) UIButton *forgetPasswordBtn;
-
+//@property (nonatomic, strong) UIButton *loginAccountBtn;
+//@property (nonatomic, strong) UIButton *forgetPasswordBtn;
 @end
 
-@implementation RegisterController
+static int const Code = 60;
 
+@implementation RegisterController
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navBarBgAlpha=@"0";
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self stopTime];
+}
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [self stopTime];
+}
+-(void)setupNotification {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterBG) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterFG) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+-(void)enterBG {
+    _beforeDate = [NSDate date];
+}
+-(void)enterFG {
+    NSDate * now = [NSDate date];
+    int interval = (int)ceil([now timeIntervalSinceDate:_beforeDate]);
+    int val = (int)_time - interval;
+    if(val > 0){
+        _time -= interval;
+    }else{
+        _time = 0;
+        [self stopTime];
+        [_getCode setTitle:@"重新发送" forState:UIControlStateNormal];
+        _getCode.userInteractionEnabled=YES;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageOriginalImageName:@"quxiao_03"] style:UIBarButtonItemStylePlain target:self action:@selector(returnAction)];
     
     [self addSubViews];
     [self addConstraints];
-    
 }
 
--(void)returnAction {
+-(void)returnAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)addSubViews {
-    
     [self.view addSubview:self.backImgView];
     
     [self.backImgView addSubview:self.logoImgView];
@@ -62,8 +96,8 @@
     [self.backImgView addSubview:self.confirmPasswordTextField];
     [self.backImgView addSubview:self.registerBtn];
     
-    [self.backImgView addSubview:self.loginAccountBtn];
-    [self.backImgView addSubview:self.forgetPasswordBtn];
+//    [self.backImgView addSubview:self.loginAccountBtn];
+//    [self.backImgView addSubview:self.forgetPasswordBtn];
 }
 
 -(void)addConstraints {
@@ -115,20 +149,16 @@
         make.size.equalTo(_passwordTextField);
     }];
     
-    // login account
-    [_loginAccountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_registerBtn.mas_bottom).with.offset(Height_Pt(108));
-        make.left.equalTo(_registerBtn.mas_left);
-        make.height.mas_equalTo(Height_Pt(45));
-    }];
-    
-    // forget password
-    [_forgetPasswordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_loginAccountBtn);
-        make.right.equalTo(_registerBtn.mas_right);
-        make.height.mas_equalTo(Height_Pt(45));
-    }];
-
+//    [_loginAccountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_registerBtn.mas_bottom).with.offset(Height_Pt(108));
+//        make.left.equalTo(_registerBtn.mas_left);
+//        make.height.mas_equalTo(Height_Pt(45));
+//    }];
+//    [_forgetPasswordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(_loginAccountBtn);
+//        make.right.equalTo(_registerBtn.mas_right);
+//        make.height.mas_equalTo(Height_Pt(45));
+//    }];
 }
 
 #pragma mark setter && getter
@@ -155,20 +185,81 @@
 -(UITextField *)phoneNumberTextField {
     if (!_phoneNumberTextField) {
         _phoneNumberTextField = [[UITextField alloc] init];
+        _phoneNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _phoneNumberTextField.delegate=self;
+        _phoneNumberTextField.textColor=[UIColor whiteColor];
         _phoneNumberTextField.placeholder = @"手机号码";
         [_phoneNumberTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_phoneNumberTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
         _phoneNumberTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _phoneNumberTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"yonghu_03"];
         _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
+        
+        _getCode=[[UIButton alloc]initWithFrame:CGRectMake(0, 1, 80, Height_Pt(122)-2)];
+        [_getCode setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_getCode.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [_getCode setBackgroundImage:[UIImage imageNamed:@"huoquyanzhengma"] forState:UIControlStateNormal];
+        [_getCode addTarget:self action:@selector(getCode:) forControlEvents:UIControlEventTouchUpInside];
+        _phoneNumberTextField.rightView=_getCode;
+        _phoneNumberTextField.rightViewMode = UITextFieldViewModeAlways;
     }
     return _phoneNumberTextField;
 }
-
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField==_phoneNumberTextField) {
+        if (textField.text.length >= 10) {
+            textField.text = [textField.text substringToIndex:10];
+        }
+    }else if (textField==_varificationCodeTextField){
+        if (textField.text.length >= 5) {
+            textField.text = [textField.text substringToIndex:5];
+        }
+    }else{
+        if (textField.text.length >= 17) {
+            textField.text = [textField.text substringToIndex:17];
+        }
+    }
+    
+    return YES;
+}
+-(void)getCode:(UIButton*)btn{
+    btn.userInteractionEnabled=NO;
+    _time = Code;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+}
+-(void)timeCount{
+    if (_time==0)return;
+    
+    _time--;
+    NSLog(@"%ld",_time);
+    switch (_time) {
+        case 0:
+        {
+            [self stopTime];
+            [_getCode setTitle:@"重新发送" forState:UIControlStateNormal];
+            _getCode.userInteractionEnabled=YES;
+        }
+            break;
+        default:
+        {
+            [_getCode setTitle:[NSString stringWithFormat:@"已发送%lds",_time] forState:UIControlStateNormal];
+        }
+            break;
+    }
+}
+-(void)stopTime{
+    if (_timer) {
+        [_timer invalidate];
+    }
+}
 -(UITextField *)varificationCodeTextField {
     if (!_varificationCodeTextField) {
         _varificationCodeTextField = [[UITextField alloc] init];
+        _varificationCodeTextField.keyboardType = UIKeyboardTypeNumberPad;
         _varificationCodeTextField.placeholder = @"请输入验证码";
+        _varificationCodeTextField.delegate=self;
+        _varificationCodeTextField.textColor=[UIColor whiteColor];
         [_varificationCodeTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_varificationCodeTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
         _varificationCodeTextField.background = [UIImage imageNamed:@"shurukuang_03"];
@@ -181,6 +272,10 @@
 -(UITextField *)passwordTextField {
     if (!_passwordTextField) {
         _passwordTextField = [[UITextField alloc] init];
+        _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _passwordTextField.secureTextEntry=YES;
+        _passwordTextField.delegate=self;
+        _passwordTextField.textColor=[UIColor whiteColor];
         _passwordTextField.placeholder = @"请输入密码(6-18个数字)";
         [_passwordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_passwordTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
@@ -195,6 +290,10 @@
 -(UITextField *)confirmPasswordTextField {
     if (!_confirmPasswordTextField) {
         _confirmPasswordTextField = [[UITextField alloc] init];
+        _confirmPasswordTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _confirmPasswordTextField.secureTextEntry=YES;
+        _confirmPasswordTextField.delegate=self;
+        _confirmPasswordTextField.textColor=[UIColor whiteColor];
         _confirmPasswordTextField.placeholder = @"再次确认密码";
         [_confirmPasswordTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_confirmPasswordTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
@@ -208,31 +307,40 @@
 -(UIButton *)registerBtn {
     if (!_registerBtn) {
         _registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_registerBtn setImage:[UIImage imageNamed:@"zhuceanniu_03"] forState:UIControlStateNormal];
-        
+        if (_isType) {
+            [_registerBtn setImage:[UIImage imageNamed:@"zhuceanniu_03"] forState:UIControlStateNormal];
+        }else{
+            [_registerBtn setBackgroundImage:[UIImage imageNamed:@"zhucekuang"] forState:UIControlStateNormal];
+            [_registerBtn setTitle:@"重置密码" forState:UIControlStateNormal];
+            [_registerBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+            [_registerBtn setTitleColor:[UIColor colorWithHexString:@"#E8AB00"] forState:UIControlStateNormal];
+        }
     }
     return _registerBtn;
 }
 
--(UIButton *)loginAccountBtn {
-    if (!_loginAccountBtn) {
-        _loginAccountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_loginAccountBtn setTitle:@"登录账号" forState:UIControlStateNormal];
-        [_loginAccountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _loginAccountBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
-    }
-    return _loginAccountBtn;
-}
-
--(UIButton *)forgetPasswordBtn {
-    if (!_forgetPasswordBtn) {
-        _forgetPasswordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_forgetPasswordBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
-        [_forgetPasswordBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _forgetPasswordBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
-    }
-    return _forgetPasswordBtn;
-}
+//-(UIButton *)loginAccountBtn {
+//    if (!_loginAccountBtn) {
+//        _loginAccountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_loginAccountBtn setTitle:@"登录账号" forState:UIControlStateNormal];
+//        [_loginAccountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [_loginAccountBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+//        [_loginAccountBtn addTarget:self action:@selector(returnAction) forControlEvents:UIControlEventTouchUpInside];
+//        _loginAccountBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+//    }
+//    return _loginAccountBtn;
+//}
+//-(UIButton *)forgetPasswordBtn {
+//    if (!_forgetPasswordBtn) {
+//        _forgetPasswordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_forgetPasswordBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
+//        [_forgetPasswordBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [_forgetPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+//        [_forgetPasswordBtn addTarget:self action:@selector(removePush) forControlEvents:UIControlEventTouchUpInside];
+//        _forgetPasswordBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+//    }
+//    return _forgetPasswordBtn;
+//}
 
 
 - (void)didReceiveMemoryWarning {

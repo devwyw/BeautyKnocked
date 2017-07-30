@@ -83,18 +83,12 @@
 
 #pragma mark UITabBarControllerDelegate
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-
-//    NSString *login = [[NSUserDefaults standardUserDefaults] objectForKey:@"login"];
-//    if (![login isEqualToString:@"yes"]) {
-//        NSArray *navArray = [NSArray arrayWithObjects:self.viewControllers[3],self.viewControllers[4], nil];
-//        if ([navArray containsObject:viewController]) {
-//            //[[NSUserDefaults standardUserDefaults] setObject:@"yes" forKey:@"login"];
-//            LoginController *loginController = [[LoginController alloc] init];
-//            UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-//            [self presentViewController:loginNav animated:YES completion:nil];
-//        }
-//
-//    }
+        NSArray *navArray = [NSArray arrayWithObjects:self.viewControllers[3],self.viewControllers[4], nil];
+        if ([navArray containsObject:viewController]) {
+            LoginController *loginController = [[LoginController alloc] init];
+            UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+            [self presentViewController:loginNav animated:YES completion:nil];
+        }
 }
 
 @end

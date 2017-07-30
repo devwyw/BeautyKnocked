@@ -19,6 +19,8 @@
     if (self) {
         
         _imgView = [[UIImageView alloc] init];
+        _imgView.contentMode=UIViewContentModeScaleAspectFill;
+        _imgView.clipsToBounds=YES;
         [self.contentView addSubview:_imgView];
         
         [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -136,7 +136,7 @@
 {
     int length = 4;//限制的字数
     NSString *toBeString = textField.text;
-    NSString *lang = [[UITextInputMode currentInputMode] primaryLanguage];
+    NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage;
     if ([lang isEqualToString:@"zh-Hans"]) {
         UITextRange *selectedRange = [textField markedTextRange];
         UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];

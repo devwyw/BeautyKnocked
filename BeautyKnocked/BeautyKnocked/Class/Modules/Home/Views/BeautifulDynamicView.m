@@ -38,7 +38,7 @@
     
     _BlackSpots = [[UIView alloc] init];
     _BlackSpots.backgroundColor  = [UIColor grayColor];
-    _BlackSpots.layer.cornerRadius = 2.5;
+    [_BlackSpots makeCornerRadius:2.5];
     [self addSubview:_BlackSpots];
     
     _textBannerView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectZero delegate:self placeholderImage:nil];

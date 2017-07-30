@@ -40,8 +40,7 @@
 -(void)setMyViews{
     _whiteView=[[UIView alloc]init];
     _whiteView.backgroundColor=[UIColor whiteColor];
-    _whiteView.layer.cornerRadius=5;
-    _whiteView.layer.masksToBounds=YES;
+    [_whiteView makeCornerRadius:5];
     [self.contentView addSubview:_whiteView];
     
     _image=[[UIImageView alloc]init];
@@ -57,7 +56,7 @@
     
     //__weak __typeof(self)weakSelf = self;
     _starBar = [StarView evaluationViewWithChooseStarBlock:^(NSUInteger count) {
-        // 做评星后点处理
+        NSLog(@"%ld",count);
     }];
     _starBar.spacing = 0.1;
     _starBar.tapEnabled = YES;

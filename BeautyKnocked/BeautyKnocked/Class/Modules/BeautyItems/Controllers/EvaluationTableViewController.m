@@ -37,7 +37,6 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
     return 5;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     EvaluationCell *cell = [tableView dequeueReusableCellWithIdentifier:evaluationCellIdentifier forIndexPath:indexPath];
     

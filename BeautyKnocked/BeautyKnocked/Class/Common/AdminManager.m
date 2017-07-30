@@ -27,21 +27,49 @@ static AdminManager *instance=nil;
 +(instancetype)shareManager{
     return instance;
 }
-/** 颜色转图片 */
-+(UIImage*)GetImageWithColor:(UIColor*)color andHeight:(CGFloat)height
-{
-    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, height);
-    UIGraphicsBeginImageContext(r.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, r);
-    
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return img;
+
++(void)getNetWork:(id)Weakself{
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+            {
+                UIAlertController *alter=[UIAlertController alertControllerWithTitle:@"未识别网络" message:@"您正在使用地球之外的网络." preferredStyle:UIAlertControllerStyleAlert];
+                [alter addAction:[UIAlertAction actionWithTitle:@"网络设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [instance pushSystemSetting];
+                }]];
+                [alter addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:nil]];
+                [Weakself presentViewController:alter animated:YES completion:nil];
+            }
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+            {
+                UIAlertController *alter=[UIAlertController alertControllerWithTitle:@"网络未连接" message:@"我们未在地球上找到您的连接." preferredStyle:UIAlertControllerStyleAlert];
+                [alter addAction:[UIAlertAction actionWithTitle:@"网络设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [instance pushSystemSetting];
+                }]];
+                [alter addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:nil]];
+                [Weakself presentViewController:alter animated:YES completion:nil];
+            }
+                break;
+            default:
+                NSLog(@"网络正常");
+                break;
+        }
+    }];
+    [manager startMonitoring];
 }
+-(void)pushSystemSetting{
+    NSURL *Network=[NSURL URLWithString:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
+    if ([[UIApplication sharedApplication] canOpenURL:Network]) {
+        if (SystemVersion >= 10.0) {
+            [[UIApplication sharedApplication] openURL:Network options:@{} completionHandler:nil];
+        }else{
+            [[UIApplication sharedApplication] openURL:Network];
+        }
+    }
+}
+
 //+(NSMutableArray*)getSearchArray{
 //    NSString *DocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
 //    NSString *filePath = [DocumentPath stringByAppendingPathComponent:@"xx.plist"];
