@@ -25,7 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.view.backgroundColor =  [UIColor groupTableViewBackgroundColor];
+    self.view.backgroundColor =  [UIColor colorWithHexString:@"#F0F0F0"];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self createViews];

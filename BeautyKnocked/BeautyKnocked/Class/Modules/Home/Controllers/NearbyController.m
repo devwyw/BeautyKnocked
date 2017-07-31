@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"附近美容师"];
-    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#F0F0F0"]];
     
     UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"jingqingqidai"]];
     [image setContentMode:UIViewContentModeScaleAspectFill];

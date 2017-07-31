@@ -7,7 +7,7 @@
 //
 
 #import "BeauticianRegisterExpertiseView.h"
-
+#import "UIButton+Category.h"
 
 @interface BeauticianRegisterExpertiseView ()
 
@@ -128,6 +128,7 @@
     
     [button setImage:[UIImage imageNamed:@"weixuanzhong1"] forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"xuanzhong2"] forState:UIControlStateSelected];
+    [button setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"weixuanzhong1"].size space:5];
     [button setTitle:title forState:UIControlStateNormal];
     return button;
 }

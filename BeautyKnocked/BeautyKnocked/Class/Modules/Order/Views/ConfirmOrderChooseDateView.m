@@ -70,6 +70,7 @@
 
 -(void)initializeViews {
     self.type = MMPopupTypeAlert;
+    [MMPopupWindow sharedWindow].touchWildToHide = YES;
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
@@ -124,7 +125,7 @@
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         //_collectionView.scrollEnabled = NO;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
         self.collectionView;
     });
     
@@ -133,7 +134,7 @@
     _remarkLabel.text = @"  *最多可预约未来30天";
     _remarkLabel.textColor = [UIColor lightGrayColor];
     _remarkLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
-    _remarkLabel.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    _remarkLabel.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
 
     
     [self.backView addSubview:_cancelBtn];

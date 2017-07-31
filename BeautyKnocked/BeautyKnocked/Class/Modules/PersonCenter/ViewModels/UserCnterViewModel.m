@@ -19,6 +19,7 @@
 #import "SusoensionFlowLayout.h"
 #import "MineFightgroupTableController.h"
 #import "MyGroupController.h"
+#import "MessagePopView.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
@@ -60,13 +61,40 @@
 }
 
 -(void)configureTableView:(UITableView *)tableView didSelectedAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:2 inSection:2]]) {
-        UserAgreementController *userAgreementController = [[UserAgreementController alloc] init];
-        userAgreementController.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:userAgreementController animated:YES];
+    if (indexPath.section==2) {
+        switch (indexPath.row) {
+            case 0:
+            {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"我们将会为您拨打美丽热线电话" preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"拨打" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    NSURL *phone=[NSURL URLWithString:@"tel://4009158919"];
+                    if ([[UIApplication sharedApplication] canOpenURL:phone]) {
+                        if (SystemVersion>=10.0) {
+                            [[UIApplication sharedApplication] openURL:phone options:@{} completionHandler:nil];
+                        }else{
+                            [[UIApplication sharedApplication] openURL:phone];
+                        }
+                    }
+                }]];
+                [self.navigationController presentViewController:alertController animated:YES completion:nil];
+            }
+                break;
+               case 1:
+            {
+                MessagePopView *message=[[MessagePopView alloc]init];
+                [message show];
+            }
+                break;
+            default:
+            {
+                UserAgreementController *userAgreementController = [[UserAgreementController alloc] init];
+                userAgreementController.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:userAgreementController animated:YES];
+            }
+                break;
+        }
     }
-
 }
 
 -(CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -121,17 +149,19 @@
     [self.navigationController pushViewController:personInfoVC animated:YES];
 }
 -(void)didSelectedItemAtIndex:(NSUInteger)index {
-    NSLog(@"index == %lu",(unsigned long)index);
+    NSLog(@"index == %ld",index);
 }
--(void)didGroupClicked:(NSUInteger)index {
-    NSLog(@"index == %lu",(unsigned long)index);
+-(void)didGroupClicked:(NSUInteger)index{
+    NSLog(@"index == %ld",index);
     
     NSArray *viewControllerClasses = @[[MineFightgroupTableController class],
                                        [MineFightgroupTableController class],
                                        [MineFightgroupTableController class],
                                        [MineFightgroupTableController class]];
     NSArray *titles = @[@"全部",@"等待成团",@"拼团成功",@"拼团失败"];
+    
     MyGroupController *pageController = [[MyGroupController alloc] initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
+    pageController.selectIndex = (int)index;
     pageController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:pageController animated:YES];
     

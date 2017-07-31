@@ -34,7 +34,6 @@
     [super viewDidLoad];
     [self.navigationItem setTitle:@"预约美容师"];
     // Do any additional setup after loading the view.
-    
     self.beauticianViewModel.navigationController = self.navigationController;
     
     [self addSubItemviews];
@@ -50,12 +49,6 @@
     
     return [self.beauticianViewModel configureTableView:tableView cellForRowAtIndexPath:indexPath];
 }
-
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return 300;
-//}
-
-
 -(void)addSubItemviews {
     
     [self.view addSubview:self.sortMenu];
@@ -97,6 +90,7 @@
         _tableView.dataSource = self;
         _tableView.separatorStyle = 0;
         _tableView.estimatedRowHeight = 300;
+        _tableView.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
         _tableView.rowHeight = UITableViewAutomaticDimension;
         
         [BeauticianListViewModel registerTableViewCellWithTableView:self.tableView];

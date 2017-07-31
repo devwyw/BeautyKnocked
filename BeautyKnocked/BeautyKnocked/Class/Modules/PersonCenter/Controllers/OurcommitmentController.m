@@ -23,6 +23,7 @@
     // Do any additional setup after loading the view.
     
     self.title = @"承诺书";
+    self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     
     [self initializeViews];
     [self addViews];
@@ -34,9 +35,7 @@
     _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
     //scrollView.contentSize = CGSizeMake(Width, Height_Pt(3000));
     
-    _imgView = [[UIImageView alloc] init];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"letterOfCommitment" ofType:@"jpg"];
-    [_imgView setImage:[UIImage imageWithContentsOfFile:path]];
+    _imgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"book.jpg"]];
     [_scrollView addSubview:_imgView];
 }
 
@@ -64,13 +63,11 @@
         make.height.mas_equalTo(Height_Pt(3000));
         make.width.equalTo(_scrollView);
     }];
-    
 }
-
 -(UIView *)headTitleView {
     if (!_headTitleView) {
         _headTitleView = [[UIView alloc] init];
-        _headTitleView.backgroundColor = [UIColor whiteColor];
+        _headTitleView.backgroundColor = [UIColor clearColor];
         
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.font = [UIFont systemFontOfSize:Font_Size(52)];

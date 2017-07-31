@@ -83,8 +83,7 @@
 
 #pragma mark UITabBarControllerDelegate
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-        NSArray *navArray = [NSArray arrayWithObjects:self.viewControllers[3],self.viewControllers[4], nil];
-        if ([navArray containsObject:viewController]) {
+        if (self.viewControllers[3] ==viewController) {
             LoginController *loginController = [[LoginController alloc] init];
             UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
             [self presentViewController:loginNav animated:YES completion:nil];

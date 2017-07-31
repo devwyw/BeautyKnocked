@@ -128,7 +128,7 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
     }else if (section == 3) {
         
     }
-    return 10;
+    return Height_Pt(20);
 }
 -(CGFloat)ddcs_tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;

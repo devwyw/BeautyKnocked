@@ -7,6 +7,7 @@
 //
 
 #import "BeauticianRegisterSexView.h"
+#import "UIButton+Category.h"
 
 @interface BeauticianRegisterSexView ()
 
@@ -53,10 +54,12 @@
     
     [_femaleButton setImage:[UIImage imageNamed:@"weixuanzhong1"] forState:UIControlStateNormal];
     [_femaleButton setImage:[UIImage imageNamed:@"xuanzhong2"] forState:UIControlStateSelected];
+    [_femaleButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"weixuanzhong1"].size space:5];
     [_femaleButton setTitle:@"女" forState:UIControlStateNormal];
     
     [_maleButton setImage:[UIImage imageNamed:@"weixuanzhong1"] forState:UIControlStateNormal];
     [_maleButton setImage:[UIImage imageNamed:@"xuanzhong2"] forState:UIControlStateSelected];
+    [_maleButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"weixuanzhong1"].size space:5];
     [_maleButton setTitle:@"男" forState:UIControlStateNormal];
     
 }

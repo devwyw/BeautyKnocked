@@ -41,13 +41,12 @@
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
     return [self.integralViewModel ddcs_numberOfSectionsInCollectionView:collectionView];
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
+
     return [self.integralViewModel ddcs_collectionView:collectionView numberOfItemsInSection:section];
 }
 

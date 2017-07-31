@@ -9,5 +9,4 @@
 #import <WMPageController/WMPageController.h>
 
 @interface MyGroupController : WMPageController
-
 @end

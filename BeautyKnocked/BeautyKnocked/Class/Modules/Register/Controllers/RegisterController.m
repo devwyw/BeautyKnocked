@@ -9,6 +9,7 @@
 #import "RegisterController.h"
 #import "UIImageView+Category.h"
 #import "UIImage+Original.h"
+#import "UserAgreementController.h"
 
 @interface RegisterController ()<UITextFieldDelegate>
 
@@ -30,8 +31,8 @@
 
 @property (nonatomic, strong) UIButton *registerBtn;
 
-//@property (nonatomic, strong) UIButton *loginAccountBtn;
-//@property (nonatomic, strong) UIButton *forgetPasswordBtn;
+@property (nonatomic, strong) UIButton *bookBtn;
+
 @end
 
 static int const Code = 60;
@@ -95,9 +96,11 @@ static int const Code = 60;
     [self.backImgView addSubview:self.passwordTextField];
     [self.backImgView addSubview:self.confirmPasswordTextField];
     [self.backImgView addSubview:self.registerBtn];
+    [self.backImgView addSubview:self.bookBtn];
+    if (!_isType) {
+        self.bookBtn.hidden=YES;
+    }
     
-//    [self.backImgView addSubview:self.loginAccountBtn];
-//    [self.backImgView addSubview:self.forgetPasswordBtn];
 }
 
 -(void)addConstraints {
@@ -149,16 +152,13 @@ static int const Code = 60;
         make.size.equalTo(_passwordTextField);
     }];
     
-//    [_loginAccountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(_registerBtn.mas_bottom).with.offset(Height_Pt(108));
-//        make.left.equalTo(_registerBtn.mas_left);
-//        make.height.mas_equalTo(Height_Pt(45));
-//    }];
-//    [_forgetPasswordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerY.equalTo(_loginAccountBtn);
-//        make.right.equalTo(_registerBtn.mas_right);
-//        make.height.mas_equalTo(Height_Pt(45));
-//    }];
+    // 用户协议
+    [_bookBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-Height_Pt(120));
+        make.height.mas_equalTo(Height_Pt(35));
+        make.left.right.equalTo(self.view);
+    }];
 }
 
 #pragma mark setter && getter
@@ -195,7 +195,7 @@ static int const Code = 60;
         _phoneNumberTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"yonghu_03"];
         _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
         
-        _getCode=[[UIButton alloc]initWithFrame:CGRectMake(0, 1, 80, Height_Pt(122)-2)];
+        _getCode=[[UIButton alloc]initWithFrame:CGRectMake(0, 1.4, 80, Height_Pt(122)-2.8)];
         [_getCode setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_getCode.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [_getCode setBackgroundImage:[UIImage imageNamed:@"huoquyanzhengma"] forState:UIControlStateNormal];
@@ -319,29 +319,32 @@ static int const Code = 60;
     return _registerBtn;
 }
 
-//-(UIButton *)loginAccountBtn {
-//    if (!_loginAccountBtn) {
-//        _loginAccountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_loginAccountBtn setTitle:@"登录账号" forState:UIControlStateNormal];
-//        [_loginAccountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        [_loginAccountBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-//        [_loginAccountBtn addTarget:self action:@selector(returnAction) forControlEvents:UIControlEventTouchUpInside];
-//        _loginAccountBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
-//    }
-//    return _loginAccountBtn;
-//}
-//-(UIButton *)forgetPasswordBtn {
-//    if (!_forgetPasswordBtn) {
-//        _forgetPasswordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_forgetPasswordBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
-//        [_forgetPasswordBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        [_forgetPasswordBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-//        [_forgetPasswordBtn addTarget:self action:@selector(removePush) forControlEvents:UIControlEventTouchUpInside];
-//        _forgetPasswordBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
-//    }
-//    return _forgetPasswordBtn;
-//}
 
+-(UIButton *)bookBtn {
+    if (!_bookBtn) {
+        NSMutableAttributedString * normalStr = [[NSMutableAttributedString alloc] initWithString:@"注册即视为同意美丽敲敲门用户协议"];
+        [normalStr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:(NSRange){0,[normalStr length]}];
+        [normalStr addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor]  range:NSMakeRange(0,[normalStr length])];
+        [normalStr addAttribute:NSUnderlineColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,[normalStr length])];
+        [normalStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, normalStr.length)];
+        
+        NSMutableAttributedString * HighStr = [[NSMutableAttributedString alloc] initWithString:@"注册即视为同意美丽敲敲门用户协议"];
+        [HighStr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:(NSRange){0,[HighStr length]}];
+        [HighStr addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor]  range:NSMakeRange(0,[HighStr length])];
+        [HighStr addAttribute:NSUnderlineColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0,[HighStr length])];
+        [HighStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, HighStr.length)];
+        
+        _bookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_bookBtn setAttributedTitle:normalStr forState:UIControlStateNormal];
+        [_bookBtn setAttributedTitle:HighStr forState:UIControlStateHighlighted];
+        [_bookBtn addTarget:self action:@selector(bookPush:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _bookBtn;
+}
+-(void)bookPush:(UIButton*)btn{
+    UserAgreementController *controller=[[UserAgreementController alloc]init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

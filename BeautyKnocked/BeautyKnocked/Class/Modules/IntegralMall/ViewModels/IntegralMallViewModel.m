@@ -26,7 +26,7 @@ static NSString *const integralSectionHeaderViewReuseIdentifier = @"IntegralSect
 
 -(void)ddcs_configureCollectionView:(UICollectionView *)collectionView {
     
-    collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
     
     // register 
     [collectionView registerClass:[TitleCollectionViewCell class] forCellWithReuseIdentifier:titleCollectionViewCellReuseIdentifier];

@@ -32,7 +32,6 @@
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(disMissView)]];
     
     self.tableView = ({
-        
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -117,9 +116,6 @@
         self.alpha = 0.3;
         
         [self.tableView setFrame:CGRectMake(0, _top_heeight, Width, Height_Pt(90) * 3)];
-//        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.height.mas_equalTo(Height_Pt(90) * 3);
-//        }];
         
     } completion:nil];
     

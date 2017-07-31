@@ -7,16 +7,16 @@
 //
 
 #import "ModifyPasswordController.h"
-#import "UITextField+Category.h"
+#import "TextField.h"
 
 
 @interface ModifyPasswordController ()
 
-@property (nonatomic, strong) UITextField *currentPasswordTF;
+@property (nonatomic, strong) TextField *currentPasswordTF;
 
-@property (nonatomic, strong) UITextField *passwordTF;
+@property (nonatomic, strong) TextField *passwordTF;
 
-@property (nonatomic, strong) UITextField *confirmPasswordTF;
+@property (nonatomic, strong) TextField *confirmPasswordTF;
 
 @property (nonatomic, strong) UIButton *submitButton;
 
@@ -30,7 +30,7 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.title=@"修改密码";
     [self createViews];
     [self addViews];
     [self addConstraints];
@@ -43,25 +43,21 @@
 }
 
 -(void)createViews {
+    _currentPasswordTF = [TextField textFieldWithPlaceholder:@"当前密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
     
-    _currentPasswordTF = [UITextField textFieldWithPlaceholder:@"当前密码" textSize:Font_Size(48) borderColor:[UIColor orangeColor]];
+    _passwordTF = [TextField textFieldWithPlaceholder:@"新密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
     
-    _passwordTF = [UITextField textFieldWithPlaceholder:@"新密码" textSize:Font_Size(48) borderColor:[UIColor orangeColor]];
-    
-    _confirmPasswordTF = [UITextField textFieldWithPlaceholder:@"确认新密码" textSize:Font_Size(48) borderColor:[UIColor orangeColor]];
+    _confirmPasswordTF = [TextField textFieldWithPlaceholder:@"确认新密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
     
     _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_submitButton setTitle:@"确认提交" forState:UIControlStateNormal];
     _submitButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [_submitButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
 }
-
 -(void)addViews {
-    
     [self.view addSubview:_currentPasswordTF];
     [self.view addSubview:_passwordTF];
     [self.view addSubview:_confirmPasswordTF];
-    
     [self.view addSubview:_submitButton];
 }
 

@@ -29,7 +29,7 @@
 
 -(void)setupInterface {
     
-    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
     
     _imgView = [[UIImageView alloc] init];
     [_imgView setImage:[UIImage imageNamed:@"end-logo_03"]];

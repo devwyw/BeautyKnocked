@@ -25,6 +25,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     
     self.title = @"常用地址";
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     
     [self initializeViews];
     [self addConstraints];
@@ -66,6 +67,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.delegate  = self;
         _tableView.dataSource = self;
+        _tableView.backgroundColor=[UIColor clearColor];
         [_tableView registerClass:[CommonAddressCell class] forCellReuseIdentifier:addressCellReuseIdentifier];
         _tableView.estimatedRowHeight = Height_Pt(279);
         
@@ -77,7 +79,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         [_addNewAddressBtn setTitle:@"添加新地址" forState:UIControlStateNormal];
         _addNewAddressBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
         [_addNewAddressBtn setImage:[UIImage imageNamed:@"address_add"] forState:UIControlStateNormal];
-        [_addNewAddressBtn setBackgroundColor:[UIColor orangeColor]];
+        [_addNewAddressBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
         @weakify(self);
         [[_addNewAddressBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             @strongify(self);
@@ -103,7 +105,6 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 }
 
 -(void)pushToEditController:(AddressEditStyle)style {
-    
     EditAddressController *editController = [[EditAddressController alloc] init];
     editController.editStyle = style;
     [self.navigationController pushViewController:editController animated:YES];

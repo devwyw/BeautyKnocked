@@ -45,6 +45,7 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor=[UIColor whiteColor];
         [self setupInterface];
         [self setupConstraints];
     }
@@ -206,7 +207,7 @@
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
-        _collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
         self.collectionView;
     });
     [self.backView addSubview:self.collectionView];

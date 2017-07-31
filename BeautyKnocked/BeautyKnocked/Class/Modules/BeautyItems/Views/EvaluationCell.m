@@ -123,7 +123,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     _customerServiceReply.font = [UIFont systemFontOfSize:Font_Size(34)];
     _customerServiceReply.numberOfLines = 0;
     [_customerServiceReply makeCornerRadius:3];
-    [_customerServiceReply setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [_customerServiceReply setBackgroundColor:[UIColor colorWithHexString:@"#F0F0F0"]];
     
     [self.contentView addSubview:_headImgView];
     [self.contentView addSubview:_telLabel];

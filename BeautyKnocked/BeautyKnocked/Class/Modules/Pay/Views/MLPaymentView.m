@@ -26,7 +26,6 @@
 
 - (instancetype)init {
     self = [super init];
-    
     if (self) {
         [self setupUI];
     }
@@ -34,8 +33,8 @@
 }
 
 -(void)setupUI {
-    
     self.type = MMPopupTypeSheet;
+    [MMPopupWindow sharedWindow].touchWildToHide = YES;
     
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(Width, Height_Pt(207+180*4)));
@@ -67,7 +66,8 @@
     _confirmPayButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_confirmPayButton setTitle:@"确认支付" forState:UIControlStateNormal];
     _confirmPayButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    [_confirmPayButton setBackgroundColor:[UIColor greenColor]];
+    [_confirmPayButton makeCornerRadius:5];
+    [_confirmPayButton setBackgroundColor:[UIColor colorWithHexString:@"#67D75A"]];
     
     [_backView addSubview:_selectPaymentLabel];
     [_backView addSubview:_cancelButton];

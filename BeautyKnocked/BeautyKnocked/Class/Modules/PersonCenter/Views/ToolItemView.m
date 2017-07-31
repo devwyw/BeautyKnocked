@@ -32,7 +32,7 @@
 
 -(void)setupInterface {
     
-    self.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
     
     _collectBtn = [self configureWithTitle:@"收藏技师" image:@"shoucang_03"];
     [_collectBtn addTarget:self action:@selector(didClicked:) forControlEvents:UIControlEventTouchUpInside];

@@ -27,7 +27,7 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title=@"关于我们";
     _dataSource = @[@"版本号",@"微信公众号",@"美丽敲敲门介绍",@"我们的承诺"];
     self.tableView.tableHeaderView = self.tableViewHeaderView;
     
@@ -41,7 +41,6 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     return self.dataSource.count;
 }
 
@@ -93,8 +92,7 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
 
 -(NSArray *)detailText {
     if (!_detailText) {
-        
-        NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        NSString *version = [NSString stringWithFormat:@"v%@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
         NSString *weChatPublicNumber = @"mlqqm0791";
         
         _detailText = @[version,weChatPublicNumber];

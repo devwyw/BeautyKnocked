@@ -219,7 +219,6 @@
     }];
     
     [views1 mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:0 leadSpacing:0 tailSpacing:0];
-    
 }
 
 -(UIButton *)setupCustomBtnWtihImageName:(NSString *)imageName title:(NSString *)title {

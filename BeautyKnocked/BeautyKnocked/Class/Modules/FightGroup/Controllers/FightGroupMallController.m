@@ -33,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
     self.title = @"拼团商城";
 
     [MMPopupWindow sharedWindow].touchWildToHide = YES;
@@ -68,7 +68,6 @@
     return [self.viewModel ddcs_tableView:tableView heightForFooterInSection:section];
 }
 -(void)initializeViews {
-    
     self.viewModel.navigationController = self.navigationController;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
@@ -76,6 +75,7 @@
     _tableView.dataSource = self;
     _tableView.estimatedRowHeight = 120;
     [self.viewModel ddcs_registerClass:_tableView];
+    _tableView.backgroundColor=[UIColor clearColor];
     _tableView.tableHeaderView = self.tableViewHeaderImgView;
     
     _openGroupBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -112,7 +112,9 @@
     if (!_tableViewHeaderImgView) {
         _tableViewHeaderImgView = [[UIImageView alloc] init];
         _tableViewHeaderImgView.frame = CGRectMake(0, 0, Width, Height_Pt(675));
-        [_tableViewHeaderImgView setImage:[UIImage imageNamed:@"mote"]];
+        [_tableViewHeaderImgView setImage:[UIImage imageNamed:@"chanppic"]];
+        _tableViewHeaderImgView.clipsToBounds = YES;
+        _tableViewHeaderImgView.contentMode = UIViewContentModeScaleAspectFill;
         UIImageView *monthExclusive = [[UIImageView alloc] init];
         [monthExclusive setImage:[UIImage imageNamed:@"benyuezhaunxiang"]];
         [_tableViewHeaderImgView addSubview:monthExclusive];
@@ -127,8 +129,7 @@
 }
 
 -(void)fightGroupPayAction:(UIButton *)button {
-    MLPaymentView *paymentSheetView = [MLPaymentView new];
-    paymentSheetView.attachedView = self.view;
+    MLPaymentView *paymentSheetView = [[MLPaymentView alloc]init];
     [paymentSheetView show];
 }
 

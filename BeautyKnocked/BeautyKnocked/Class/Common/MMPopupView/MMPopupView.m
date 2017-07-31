@@ -240,34 +240,24 @@ static NSString * const MMPopupViewHideAllNotification = @"MMPopupViewHideAllNot
         if ( !self.superview )
         {
             [self.attachedView.mm_dimBackgroundView addSubview:self];
-            
-            [self mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self.attachedView);
-                make.bottom.equalTo(self.attachedView.mas_bottom).offset(self.attachedView.frame.size.height);
-            }];
-            [self layoutIfNeeded];
-        }
-        
-        [UIView animateWithDuration:self.animationDuration
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             
-                             [self mas_updateConstraints:^(MASConstraintMaker *make) {
-                                 make.bottom.equalTo(self.attachedView.mas_bottom).offset(0);
-                             }];
-                             
-                             [self.superview layoutIfNeeded];
-                             
-                         }
-                         completion:^(BOOL finished) {
-                             
-                             if ( self.showCompletionBlock )
-                             {
-                                 self.showCompletionBlock(self, finished);
+            [UIView animateWithDuration:self.animationDuration
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                             animations:^{
+                                 [self mas_updateConstraints:^(MASConstraintMaker *make) {
+                                     make.centerX.equalTo(self.attachedView);
+                                     make.bottom.equalTo(self.attachedView.mas_bottom);
+                                 }];
+                                 [self layoutIfNeeded];
                              }
-                             
-                         }];
+                             completion:^(BOOL finished) {
+                                 if (self.showCompletionBlock )
+                                 {
+                                     self.showCompletionBlock(self, finished);
+                                 }
+                                 
+                             }];
+        }
     };
     
     return block;

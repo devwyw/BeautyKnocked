@@ -44,7 +44,7 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 
     [self createViews];
@@ -71,7 +71,6 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [self.userCenterViewModel configureTableView:tableView didSelectedAtIndexPath:indexPath];
 }
 
@@ -92,6 +91,7 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        self.tableView.backgroundColor=[UIColor clearColor];
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
         self.tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:self.tableView];

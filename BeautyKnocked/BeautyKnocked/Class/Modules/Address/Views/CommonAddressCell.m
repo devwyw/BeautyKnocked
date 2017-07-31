@@ -50,7 +50,7 @@
     
 }
 
--(RACSignal *)addressEditSignal {
+-(RACSignal *)addressEditSignal{
     return [_updateBtn rac_signalForControlEvents:UIControlEventTouchUpInside];
 }
 -(RACSignal *)addressDeleteSignal {
@@ -70,10 +70,10 @@
     _addressLabel.numberOfLines = 0;
     
     _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_deleteBtn setImage:[UIImage imageNamed:@"address_shanchu"] forState:UIControlStateNormal];
+    [_deleteBtn setImage:[UIImage imageNamed:@"shanchu"] forState:UIControlStateNormal];
     
     _updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_updateBtn setImage:[UIImage imageNamed:@"address_bianji"] forState:UIControlStateNormal];
+    [_updateBtn setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
     
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_telLabel];
@@ -87,7 +87,6 @@
 }
 
 -(void)addConstraints {
-    
     [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(Height_Pt(55));
         make.left.equalTo(self.contentView).with.offset(Width_Pt(48));
@@ -110,7 +109,7 @@
     [_deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(Height_Pt(35));
         make.right.equalTo(self.contentView).with.offset( - Width_Pt(50));
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(55), Height_Pt(50)));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(66), Height_Pt(60)));
     }];
     
     [_updateBtn mas_makeConstraints:^(MASConstraintMaker *make) {

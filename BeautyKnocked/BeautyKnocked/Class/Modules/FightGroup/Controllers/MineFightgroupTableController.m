@@ -29,9 +29,7 @@
     
     [self.viewModel ddcs_registerClass:self.tableView];
     self.tableView.estimatedRowHeight = Height_Pt(620);
-    //self.tableView.rowHeight = Height_Pt(630);
     self.viewModel.navigationController = self.navigationController;
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,15 +40,17 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return [self.viewModel ddcs_numberOfSectionsInTableView:tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     return [self.viewModel ddcs_tableView:tableView numberOfRowsInSection:section];
 }
-
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(20))];
+    view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
+    return view;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     

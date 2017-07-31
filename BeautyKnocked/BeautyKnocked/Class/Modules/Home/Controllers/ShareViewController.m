@@ -59,6 +59,7 @@
     UIImageView *backgroundImage=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [backgroundImage setImage:[UIImage imageNamed:@"fenxiangbj"]];
     [backgroundImage setContentMode:UIViewContentModeScaleAspectFill];
+    backgroundImage.clipsToBounds=YES;
     [self.view addSubview:backgroundImage];
     
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(Width_Pt(55), Height-Height_Pt(750), Width-Width_Pt(55)*2, 50)];
