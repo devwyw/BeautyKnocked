@@ -67,8 +67,7 @@
     self.showsHorizontalScrollIndicator = NO;
     self.enablesReturnKeyAutomatically = YES;
     [self makeCornerRadius:5];
-    self.layer.borderWidth = 1;
-    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [self makeBorderWidth:1 withColor:[UIColor lightGrayColor]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange) name:UITextViewTextDidChangeNotification object:self];
 }
 
@@ -130,8 +129,7 @@
     }
 }
 
-- (void)dealloc
-{
+-(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

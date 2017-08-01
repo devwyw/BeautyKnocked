@@ -90,10 +90,8 @@
         
         _textView=[[UIView alloc]initWithFrame:CGRectMake(50, Height_Pt(4939)-Height_Pt(542), Width-100, Height_Pt(245))];
         [_textView setBackgroundColor:[UIColor whiteColor]];
-        [_textView.layer setCornerRadius:8];
-        [_textView.layer setMasksToBounds:YES];
-        _textView.layer.borderWidth = 1;
-        _textView.layer.borderColor =[[UIColor colorWithHexString:@"#F27D9B"]CGColor];
+        [_textView makeCornerRadius:8];
+        [_textView makeBorderWidth:1 withColor:[UIColor colorWithHexString:@"#F27D9B"]];
         [_Sview addSubview:_textView];
         
         _text1=[[UITextField alloc]initWithFrame:CGRectMake(5, 5, Width-110, Height_Pt(245)/2-10)];

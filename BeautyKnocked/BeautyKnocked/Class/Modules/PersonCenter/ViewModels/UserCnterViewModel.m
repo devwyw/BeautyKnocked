@@ -20,6 +20,7 @@
 #import "MineFightgroupTableController.h"
 #import "MyGroupController.h"
 #import "MessagePopView.h"
+#import "MoneyController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
@@ -149,7 +150,14 @@
     [self.navigationController pushViewController:personInfoVC animated:YES];
 }
 -(void)didSelectedItemAtIndex:(NSUInteger)index {
-    NSLog(@"index == %ld",index);
+    if (index==2) {
+        
+    }else{
+        MoneyController *controller = [[MoneyController alloc] init];
+        controller.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+    
 }
 -(void)didGroupClicked:(NSUInteger)index{
     NSLog(@"index == %ld",index);

@@ -7,27 +7,66 @@
 //
 
 #import "AdminManager.h"
+#import <FMDB.h>
+#import "Acount.h"
+#import "User.h"
 
 static AdminManager *instance=nil;
 
-@implementation AdminManager
+@interface AdminManager ()<NSCopying,NSMutableCopying>{
+    FMDatabase *Data;
+}
+@end
 
-+(void)load{
-    /** 每次加载第一个调用的方法 */
-    [super load];
-    instance=[AdminManager new];
-}
-+(instancetype)alloc{
-    if (instance) {
-        NSException *exp=[[NSException alloc]initWithName:@"单例模式警告" reason:@"只能有一个实例" userInfo:nil];
-        [exp raise];
+@implementation AdminManager
+#pragma mark ===== 单例模式 =====
++(instancetype)allocWithZone:(struct _NSZone *)zone{
+    if (!instance) {
+        instance = [super allocWithZone:zone];
     }
-    return [super alloc];
-}
-+(instancetype)shareManager{
     return instance;
 }
+-(id)copy{
+    return self;
+}
+-(id)mutableCopy{
+    return self;
+}
+-(id)copyWithZone:(NSZone *)zone{
+    return self;
+}
+-(id)mutableCopyWithZone:(NSZone *)zone{
+    return self;
+}
+-(void)initDataBase{
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"model.sqlite"];
+    
+    Data = [FMDatabase databaseWithPath:filePath];
+    [Data open];
 
+    NSString *acount = @"CREATE TABLE 'acount' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,'acount' VARCHAR(255),'name' VARCHAR(255))";
+    
+    NSString *user = @"CREATE TABLE 'user' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'phone' VARCHAR(255),'password' VARCHAR(255)) ";
+    
+    [Data executeUpdate:acount];
+    [Data executeUpdate:user];
+    
+    [Data close];
+}
++(instancetype)shareManager{
+    if (!instance) {
+        instance = [[AdminManager alloc]init];
+        [instance initDataBase];
+    }
+    return instance;
+}
+#pragma mark ===== 数据库接口 =====
+
+
+
+
+#pragma mark ===== 检测网络 =====
 +(void)getNetWork:(id)Weakself{
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
@@ -69,33 +108,16 @@ static AdminManager *instance=nil;
         }
     }
 }
-
-//+(NSMutableArray*)getSearchArray{
-//    NSString *DocumentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-//    NSString *filePath = [DocumentPath stringByAppendingPathComponent:@"xx.plist"];
-//    NSMutableArray *array=[[NSMutableArray alloc]initWithContentsOfFile:filePath];
-//
-//    if(!array){
-//        NSString *sysPath=[[NSBundle mainBundle]pathForResource:@"searchlist" ofType:@"plist"];
-//        array =[[NSMutableArray alloc]initWithContentsOfFile:sysPath];
-//        [array writeToFile:filePath atomically:YES];
-//    }
-//    return array;
-//}
-/** 打印所有子视图 */
-+(void)getSub:(UIView *)view andLevel:(int)level{
+ #pragma mark ===== 打印所有子视图 =====
+-(void)getSub:(UIView *)view andLevel:(int)level{
     NSArray *subviews = [view subviews];
-    // 如果没有子视图就直接返回
     if ([subviews count] == 0) return;
     for (UIView *subview in subviews) {
-        // 根据层级决定前面空格个数，来缩进显示
         NSString *blank = @"";
         for (int i = 1; i < level; i++) {
-            blank = [NSString stringWithFormat:@"  %@", blank];
+            blank = [NSString stringWithFormat:@"%@", blank];
         }
-        // 打印子视图类名
         NSLog(@"%@%d: %@", blank, level, subview.class);
-        // 递归获取此视图的子视图
         [self getSub:subview andLevel:(level+1)];
     }
 }

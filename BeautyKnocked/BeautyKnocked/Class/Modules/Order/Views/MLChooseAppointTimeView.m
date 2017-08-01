@@ -200,8 +200,7 @@
     UIView *selectedView = [[UIView alloc] init];
     selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
     cell.selectedBackgroundView = selectedView;
-    cell.contentView.layer.borderWidth = 0.5;
-    cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     [cell setBackgroundColor:[UIColor whiteColor]];
     cell.dateNumber = self.dataSource[indexPath.item];
 

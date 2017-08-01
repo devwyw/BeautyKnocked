@@ -19,12 +19,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    {
-//        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]}];
-//        [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-//        [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
-//        [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
-//    }
     {
         UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-Width_Pt(80)-15, 22-Height_Pt(80)/2, Width_Pt(80), Height_Pt(80))];
         [item setTag:104];
@@ -36,12 +30,6 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-//    {
-//        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:17.0]}];
-//        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-//        [self.navigationController.navigationBar setBarTintColor:ThemeColor];
-//        [self.navigationController.navigationBar setBackgroundColor:ThemeColor];
-//    }
     {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:104];
         [item removeFromSuperview];

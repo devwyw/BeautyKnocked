@@ -30,6 +30,9 @@
     [super awakeFromNib];
     // Initialization code
 }
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -70,12 +73,11 @@
     _textview=[[UITextView alloc]init];
     _textview.font=[UIFont systemFontOfSize:Font_Size(35)];
     _textview.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
-    _textview.layer.borderColor=[UIColor colorWithHexString:@"#E0E0E0"].CGColor;
-    _textview.layer.borderWidth=0.5;
+    [_textview makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#E0E0E0"]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ChangeText:) name:UITextViewTextDidChangeNotification object:nil];
     [self.contentView addSubview:_textview];
     
-    _topTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, (Width-20-Width_Pt(120))-10, Font_Size(35)*3)];
+    _topTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, (Width-20-Width_Pt(120))-10, Font_Size(35)*2)];
     _topTitle.font=[UIFont systemFontOfSize:Font_Size(35)];
     _topTitle.text=@"亲，产品使用是否满意？快来写出你的使用心得吧~";
     _topTitle.numberOfLines=0;
@@ -92,8 +94,7 @@
     _addImage=[[UIButton alloc]init];
     [_addImage setImage:[UIImage imageNamed:@"zhaopian"] forState:UIControlStateNormal];
     _addImage.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
-    _addImage.layer.borderColor=[UIColor colorWithHexString:@"#E0E0E0"].CGColor;
-    _addImage.layer.borderWidth=0.25;
+    [_addImage makeBorderWidth:0.25 withColor:[UIColor colorWithHexString:@"#E0E0E0"]];
     [self.contentView addSubview:_addImage];
     
     _imageTitle=[[UILabel alloc]init];

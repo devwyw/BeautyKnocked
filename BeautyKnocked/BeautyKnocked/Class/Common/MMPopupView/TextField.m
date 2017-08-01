@@ -16,8 +16,7 @@
     textField.placeholder = placeholder;
     textField.font = [UIFont systemFontOfSize:textSize];
     [textField makeCornerRadius:5];
-    textField.layer.borderWidth = 0.5f;
-    textField.layer.borderColor = borderColor.CGColor;
+    [textField makeBorderWidth:0.5 withColor:borderColor];
     return textField;
 }
 

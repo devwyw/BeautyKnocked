@@ -46,7 +46,7 @@
 }
 #pragma mark ===== NSLog =====
 -(void)getLog{
-    NSLog(@"%.2f",SystemVersion);
+    NSLog(@"系统:%.2f",SystemVersion);
 }
 #pragma mark ===== App管理 =====
 - (void)applicationWillResignActive:(UIApplication *)application {

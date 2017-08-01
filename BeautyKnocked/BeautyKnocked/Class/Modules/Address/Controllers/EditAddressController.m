@@ -22,6 +22,26 @@
 
 @implementation EditAddressController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    {
+        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-50, 2, 40, 40)];
+        [item setTag:101];
+        [item setTitle:@"保存" forState:UIControlStateNormal];
+        [item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [item setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [item addTarget:self action:@selector(saveDone:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar addSubview:item];
+    }
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
+    [item removeFromSuperview];
+}
+-(void)saveDone:(UIButton*)ben{
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

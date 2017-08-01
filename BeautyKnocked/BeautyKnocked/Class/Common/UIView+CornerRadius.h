@@ -10,4 +10,5 @@
 
 @interface UIView (CornerRadius)
 -(void)makeCornerRadius:(CGFloat)cornerRadius;
+-(void)makeBorderWidth:(CGFloat)width withColor:(UIColor*)color;
 @end

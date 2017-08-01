@@ -179,8 +179,7 @@
     }
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     // 此处可以对Cell做你想做的操作了...
-    cell.contentView.layer.borderWidth = 0.5;
-    cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (indexPath.item + 1 == _todayWeekDay) {
         cell.dateNumber = @"今天";

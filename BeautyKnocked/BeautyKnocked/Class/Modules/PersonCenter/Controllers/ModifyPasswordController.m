@@ -10,7 +10,7 @@
 #import "TextField.h"
 
 
-@interface ModifyPasswordController ()
+@interface ModifyPasswordController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) TextField *currentPasswordTF;
 
@@ -44,15 +44,30 @@
 
 -(void)createViews {
     _currentPasswordTF = [TextField textFieldWithPlaceholder:@"当前密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    _currentPasswordTF.keyboardType = UIKeyboardTypeNumberPad;
+    _currentPasswordTF.secureTextEntry=YES;
+    _currentPasswordTF.delegate=self;
     
     _passwordTF = [TextField textFieldWithPlaceholder:@"新密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    _passwordTF.keyboardType = UIKeyboardTypeNumberPad;
+    _passwordTF.secureTextEntry=YES;
+    _passwordTF.delegate=self;
     
     _confirmPasswordTF = [TextField textFieldWithPlaceholder:@"确认新密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    _confirmPasswordTF.keyboardType = UIKeyboardTypeNumberPad;
+    _confirmPasswordTF.secureTextEntry=YES;
+    _confirmPasswordTF.delegate=self;
     
     _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_submitButton setTitle:@"确认提交" forState:UIControlStateNormal];
     _submitButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [_submitButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.text.length >= 17) {
+        textField.text = [textField.text substringToIndex:17];
+    }
+    return YES;
 }
 -(void)addViews {
     [self.view addSubview:_currentPasswordTF];

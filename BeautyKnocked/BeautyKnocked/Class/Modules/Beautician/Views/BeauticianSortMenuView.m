@@ -218,8 +218,7 @@
     [canBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     [canBtn addTarget:self action:@selector(canBtn:) forControlEvents:UIControlEventTouchUpInside];
     [canBtn makeCornerRadius:5];
-    [canBtn.layer setBorderWidth:0.5];//设置边界的宽度
-    [canBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [canBtn makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     [_backView addSubview:canBtn];
     
     _donBtn=[[UIButton alloc]init];
@@ -293,8 +292,7 @@
     }
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     // 此处可以对Cell做你想做的操作了...
-    cell.contentView.layer.borderWidth = 0.5;
-    cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (indexPath.item + 1 == _todayWeekDay) {
         cell.dateNumber = @"今天";

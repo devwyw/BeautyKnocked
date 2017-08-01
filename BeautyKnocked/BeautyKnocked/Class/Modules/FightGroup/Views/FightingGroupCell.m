@@ -87,8 +87,7 @@
     
     _backView = [[UIView alloc] init];
     _backView.backgroundColor = [UIColor whiteColor];
-    _backView.layer.borderWidth = 1;
-    _backView.layer.borderColor = [UIColor orangeColor].CGColor;
+    [_backView makeBorderWidth:1 withColor:[UIColor colorWithHexString:@"#E1BF6E"]];
     
     [self.contentView addSubview:_backView];
     [self.contentView addSubview:_headImgView];

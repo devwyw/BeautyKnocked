@@ -50,7 +50,6 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
 }
 
 -(void)configTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.row == 1) {
         BeauticianRegistrationController *beauticianRegistrationVC = [[BeauticianRegistrationController alloc] init];
         [self.navigationController pushViewController:beauticianRegistrationVC animated:YES];
@@ -58,7 +57,6 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
         AboutUsTableViewController *aboutVC = [[AboutUsTableViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
     }
-    
 }
 
 -(void)configureCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
@@ -111,7 +109,6 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
 }
 
 -(void)configurePushMessageByStatus:(BOOL)status {
-    
     if (status) {
         NSLog(@"接收通知");
     } else {
@@ -121,19 +118,12 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
 
 -(void)loginOutButtonClicked {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗?" message:@"(退出后不会删除历史数据,下次登录仍可使用本账号)" preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
     [cancelAction setValue:[UIColor redColor] forKey:@"_titleTextColor"];
-    
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    
     [alertController addAction:cancelAction];
-    [alertController addAction:confirmAction];
-    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
     [self.navigationController presentViewController:alertController animated:YES completion:nil];
 }
 

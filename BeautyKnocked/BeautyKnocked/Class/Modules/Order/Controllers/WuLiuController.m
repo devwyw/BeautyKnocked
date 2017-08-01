@@ -102,7 +102,6 @@
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableview.backgroundColor=[UIColor colorWithHexString:@"#FAFAFA"];
         _tableview.estimatedRowHeight = 120;
-        [_tableview registerClass:[WuLiuCell class] forCellReuseIdentifier:@"WuLiuCell"];
     }
     return _tableview;
 }
@@ -110,7 +109,16 @@
     return 4;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WuLiuCell *cell=[tableView dequeueReusableCellWithIdentifier:@"WuLiuCell" forIndexPath:indexPath];
+    WuLiuCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (!cell) {
+        cell = [[WuLiuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WuLiuCell"];
+    }
+    if (indexPath.row==0) {
+        cell.isBegin=1;
+    }
+    if (indexPath.row==3) {
+        cell.isBegin=0;
+    }
     return cell;
 }
 

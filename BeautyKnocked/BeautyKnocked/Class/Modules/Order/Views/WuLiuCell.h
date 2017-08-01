@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface WuLiuCell : UITableViewCell
-
+@property (nonatomic,assign) NSInteger isBegin;
 @end

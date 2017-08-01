@@ -60,8 +60,7 @@
     [_btn1 setTitle:_btnName forState:UIControlStateNormal];
     [_btn1 setTitleColor:[UIColor colorWithHexString:@"#D7AE4D"] forState:UIControlStateNormal];
     _btn1.titleLabel.font=[UIFont systemFontOfSize:Font_Size(38)];
-    _btn1.layer.borderWidth=0.5;
-    _btn1.layer.borderColor=[UIColor colorWithHexString:@"#D7AE4D"].CGColor;
+    [_btn1 makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#D7AE4D"]];
     [_btn1 makeCornerRadius:8];
     [_btn1 addTarget:self action:@selector(payinfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn1];
@@ -70,8 +69,7 @@
     [_btn2 setTitle:@"查看订单" forState:UIControlStateNormal];
     [_btn2 setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
     _btn2.titleLabel.font=[UIFont systemFontOfSize:Font_Size(38)];
-    _btn2.layer.borderWidth=0.5;
-    _btn2.layer.borderColor=[UIColor colorWithHexString:@"#999999"].CGColor;
+    [_btn2 makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#999999"]];
     [_btn2 makeCornerRadius:8];
     [_btn2 addTarget:self action:@selector(backinfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn2];

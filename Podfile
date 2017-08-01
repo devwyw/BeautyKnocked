@@ -16,6 +16,7 @@ pod 'SDCycleScrollView', '1.65'
 pod 'XLForm', '3.0'
 pod 'SVProgressHUD'
 pod 'PYSearch'
+pod 'FMDB'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'

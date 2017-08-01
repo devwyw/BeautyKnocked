@@ -7,13 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+@class Acount;
+@class User;
 
 @interface AdminManager : NSObject
 /** 单例模式 */
 +(instancetype)shareManager;
+/** 检测网络 */
 +(void)getNetWork:(id)Weakself;
+#pragma mark ===== 接口 =====
+/** 账号组 */
 
-/** 打印所有子视图 */
-+(void)getSub:(UIView *)view andLevel:(int)level;
+/**  在线用户 */
+
+
 @end

@@ -46,10 +46,8 @@ static int const Code = 60;
     [super viewDidDisappear:animated];
     [self stopTime];
 }
--(void)dealloc {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-    
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self stopTime];
 }
 -(void)setupNotification {
@@ -219,7 +217,6 @@ static int const Code = 60;
             textField.text = [textField.text substringToIndex:17];
         }
     }
-    
     return YES;
 }
 -(void)getCode:(UIButton*)btn{

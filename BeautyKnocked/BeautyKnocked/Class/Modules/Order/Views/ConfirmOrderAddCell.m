@@ -41,10 +41,7 @@
         [_addButton.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(32)]];
         _addButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
         [_addButton makeCornerRadius:5];
-        _addButton.layer.borderWidth=0.5;
-        _addButton.layer.borderColor=[UIColor colorWithHexString:@"#D7AE4D"].CGColor;
-        
-        
+        [_addButton makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#D7AE4D"]];
         [_addButton setImage:[UIImage imageNamed:@"jiahao1"] forState:UIControlStateNormal];
         [_addButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiahao1"].size space:8];
         [[_addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIButton * _Nullable button) {

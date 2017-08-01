@@ -24,16 +24,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.title=@"资料设置";
     self.view.backgroundColor =  [UIColor colorWithHexString:@"#F0F0F0"];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self createViews];
     [self addConstraints];
     [self dealSignals];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    {
+        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-50, 2, 40, 40)];
+        [item setTag:101];
+        [item setTitle:@"保存" forState:UIControlStateNormal];
+        [item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [item setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        [item addTarget:self action:@selector(saveDone:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar addSubview:item];
+    }
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
+    [item removeFromSuperview];
+}
+-(void)saveDone:(UIButton*)ben{
     
 }
-
 -(void)createViews {
     self.modifyInfoView = [[ModifyPersonInfoView alloc] init];
     self.modifyInfoView.backgroundColor = [UIColor whiteColor];

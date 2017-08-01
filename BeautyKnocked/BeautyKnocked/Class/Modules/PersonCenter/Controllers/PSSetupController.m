@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.title=@"设置";
     self.setupViewModel.navigationController = self.navigationController;
     
     
