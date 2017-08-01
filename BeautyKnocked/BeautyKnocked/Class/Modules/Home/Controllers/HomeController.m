@@ -191,7 +191,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = 0;
-        _tableView.estimatedRowHeight = 300;
+        _tableView.estimatedRowHeight = 100;
         _tableView.rowHeight = UITableViewAutomaticDimension;
     }
     return _tableView;

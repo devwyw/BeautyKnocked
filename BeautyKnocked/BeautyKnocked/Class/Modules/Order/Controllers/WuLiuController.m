@@ -52,7 +52,7 @@
     [self.view addSubview:_Gslabel1];
     
     _Dhlabel1=[[UILabel alloc]init];
-    _Dhlabel1.text=@" DFC1212A22";
+    _Dhlabel1.text=@"DFC1212A22";
     [_Dhlabel1 setFont:[UIFont systemFontOfSize:Font_Size(40)]];
     [self.view addSubview:_Dhlabel1];
     
@@ -101,7 +101,7 @@
         _tableview.delegate=self;
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableview.backgroundColor=[UIColor colorWithHexString:@"#FAFAFA"];
-        _tableview.estimatedRowHeight = 120;
+        _tableview.estimatedRowHeight = 100;
     }
     return _tableview;
 }

@@ -10,8 +10,7 @@
 
 @interface NSString (Attribute)
 
+/** 折扣价格-原价 */
 -(NSMutableAttributedString *)setRedPrice:(NSString *)redPrice linePrice:(NSString *)linePrice;
-
-
 
 @end

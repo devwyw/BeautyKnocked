@@ -8,11 +8,7 @@
 
 #import "MLDateManager.h"
 
-
-
-
 @implementation MLDateManager
-
 
 +(NSArray *)fetchDate {
     

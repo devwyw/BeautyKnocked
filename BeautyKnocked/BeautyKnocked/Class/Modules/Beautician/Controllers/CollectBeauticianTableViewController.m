@@ -20,7 +20,7 @@ static NSString *const beauticianCellReuseIdentifier = @"BeauticianCell";
     [super viewDidLoad];
     
     self.title = @"收藏技师";
-    self.tableView.estimatedRowHeight = 120;
+    self.tableView.estimatedRowHeight = 100;
     [self.tableView registerClass:[BeauticianCell class] forCellReuseIdentifier:beauticianCellReuseIdentifier];
 }
 

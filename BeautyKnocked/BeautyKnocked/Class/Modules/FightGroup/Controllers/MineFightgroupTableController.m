@@ -28,7 +28,7 @@
     [super viewDidLoad];
     
     [self.viewModel ddcs_registerClass:self.tableView];
-    self.tableView.estimatedRowHeight = Height_Pt(620);
+    self.tableView.estimatedRowHeight = 100;
     self.viewModel.navigationController = self.navigationController;
 }
 

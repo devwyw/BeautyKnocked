@@ -1,22 +1,19 @@
 //
-//  TggAppraiseView.h
-//  StarAppraiseDemo
+//  StarView.h
+//  StarDemo
 //
-//  Created by 铁拳科技 on 16/7/15.
-//  Copyright © 2016年 铁拳科技. All rights reserved.
+//  Created by John++ on 16/7/15.
+//  Copyright © 2016年 John++. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @interface StarView : UIView
 
-
 /*
  *@pramas  evaluateViewDidChooseStarBlock 点击评价之后回调的星星数量
  */
 + (instancetype)evaluationViewWithChooseStarBlock:(void(^)(NSUInteger count))evaluateViewChoosedStarBlock;
-
-
 /*
  *@pramas  spacing 星星之间的间距
  ********  大小为：0～1，超过1则置为1
@@ -35,9 +32,6 @@
  *@pramas  tapEnabled 关闭星星点击手势，关闭就不能点击
  */
 @property (nonatomic, assign, readwrite, getter=isTapEnabled) BOOL tapEnabled;
-
-
-
 
 
 @end

@@ -1,9 +1,9 @@
 //
-//  TggAppraiseView.m
-//  StarAppraiseDemo
+//  StarView.h
+//  StarDemo
 //
-//  Created by 铁哥哥 on 16/7/15.
-//  Copyright © 2016年 铁拳科技. All rights reserved.
+//  Created by John++ on 16/7/15.
+//  Copyright © 2016年 John++. All rights reserved.
 //
 
 #import "StarView.h"
@@ -124,6 +124,7 @@ typedef void(^EvaluateViewDidChooseStarBlock)(NSUInteger count);
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     CGPoint point = [[touches anyObject] locationInView:self];
      NSInteger newStar = point.x / (self.frame.size.width / 5) + 1;
+    
     if (newStar!=self.index) {
         self.index=newStar;
         if (self.index == 6) {
@@ -154,20 +155,4 @@ typedef void(^EvaluateViewDidChooseStarBlock)(NSUInteger count);
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self touchesEnded:touches withEvent:event];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

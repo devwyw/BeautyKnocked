@@ -110,7 +110,6 @@ static NSString *const reuseIdentifier = @"MenuItemCollectionCell";
     
     cell.imageName = [[self.dataSource objectAtIndex:indexPath.item] objectForKey:@"image"];
     cell.menuItemName = [[self.dataSource objectAtIndex:indexPath.item] objectForKey:@"title"];
-    
 }
 
 @end

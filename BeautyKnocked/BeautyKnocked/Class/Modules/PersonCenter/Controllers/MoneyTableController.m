@@ -20,7 +20,7 @@
     self.title=@"余额明细";
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     self.tableView.backgroundColor=self.view.backgroundColor;
-    self.tableView.estimatedRowHeight=120;
+    self.tableView.estimatedRowHeight=100;
     [self.tableView registerClass:[MoneyCell class] forCellReuseIdentifier:@"MoneyCell"];
 }
 

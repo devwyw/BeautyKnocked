@@ -25,7 +25,7 @@ static NSString *const recordingCellIdentifier = @"ExchangeRecordingCell";
 
     self.title = @"兑换记录";
     [self.tableView registerClass:[ExchangeRecordingCell class] forCellReuseIdentifier:recordingCellIdentifier];
-    self.tableView.estimatedRowHeight = 120;
+    self.tableView.estimatedRowHeight = 100;
 }
 
 - (void)didReceiveMemoryWarning {

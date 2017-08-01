@@ -28,7 +28,6 @@
 }
 
 -(void)createInterface {
-    
     _menuItemLabel = [[UILabel alloc] init];
     _menuItemLabel.text = @"项目名称";
     [self.contentView addSubview:_menuItemLabel];
@@ -39,7 +38,6 @@
 }
 
 -(void)configureConstraints {
-    
     [_menuItemImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(_topDistance);
         make.centerX.equalTo(self.contentView);
@@ -51,11 +49,9 @@
         make.bottom.equalTo(self.contentView).with.offset( - _bottomDistance);
         make.centerX.equalTo(self.contentView);
     }];
-    
 }
 
 -(void)layoutSubviews {
-    
     [_menuItemImgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(_topDistance);
         make.centerX.equalTo(self.contentView);
@@ -67,9 +63,7 @@
         make.bottom.equalTo(self.contentView).with.offset( - _bottomDistance);
         make.centerX.equalTo(self.contentView);
     }];
-    
     [super layoutSubviews];
-
 }
 
 

@@ -27,7 +27,7 @@
     _tableview.delegate=self;
     _tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableview.backgroundColor=[UIColor colorWithHexString:@"#EBEBEB"];
-    _tableview.estimatedRowHeight = 120;
+    _tableview.estimatedRowHeight = 100;
     
     [_tableview registerClass:[PJBeautViewCell class] forCellReuseIdentifier:@"PJBeautViewCell"];
     [_tableview registerClass:[PJItemViewCell class] forCellReuseIdentifier:@"PJItemViewCell"];

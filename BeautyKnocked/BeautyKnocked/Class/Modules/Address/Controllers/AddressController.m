@@ -62,14 +62,13 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     return 1;
 }
 -(void)initializeViews {
-    
     self.tableView = ({
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.delegate  = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor=[UIColor clearColor];
         [_tableView registerClass:[CommonAddressCell class] forCellReuseIdentifier:addressCellReuseIdentifier];
-        _tableView.estimatedRowHeight = Height_Pt(279);
+        _tableView.estimatedRowHeight = 100;
         
         self.tableView;
     });

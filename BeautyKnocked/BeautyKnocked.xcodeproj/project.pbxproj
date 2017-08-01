@@ -713,6 +713,7 @@
 		150A04951F28C98100C66220 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04921F28C98100C66220 /* UINavigationController+Cloudox.m */; };
 		150A04961F28C98100C66220 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04941F28C98100C66220 /* UIViewController+Cloudox.m */; };
 		150A04A61F28DE6600C66220 /* CommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04A51F28DE6600C66220 /* CommentController.m */; };
+		152008AD1F30AFC4008A4A1C /* RechargeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152008AC1F30AFC4008A4A1C /* RechargeCell.m */; };
 		152863BC1F29DB2700AD55C7 /* PJBeautViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */; };
 		15360A7F1F2C9439008DD3BB /* AdminManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A601F2C9439008DD3BB /* AdminManager.m */; };
 		15360A801F2C9439008DD3BB /* WMPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A631F2C9439008DD3BB /* WMPanGestureRecognizer.m */; };
@@ -1635,6 +1636,8 @@
 		150A04941F28C98100C66220 /* UIViewController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Cloudox.m"; path = "../UIViewController+Cloudox.m"; sourceTree = "<group>"; };
 		150A04A41F28DE6600C66220 /* CommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentController.h; sourceTree = "<group>"; };
 		150A04A51F28DE6600C66220 /* CommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentController.m; sourceTree = "<group>"; };
+		152008AB1F30AFC4008A4A1C /* RechargeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeCell.h; sourceTree = "<group>"; };
+		152008AC1F30AFC4008A4A1C /* RechargeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeCell.m; sourceTree = "<group>"; };
 		152863BA1F29DB2700AD55C7 /* PJBeautViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJBeautViewCell.h; sourceTree = "<group>"; };
 		152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJBeautViewCell.m; sourceTree = "<group>"; };
 		15360A5F1F2C9439008DD3BB /* AdminManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdminManager.h; path = ../Common/AdminManager.h; sourceTree = "<group>"; };
@@ -2960,14 +2963,14 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		04E8C67B1F305FE0005566C4 /* Other */ = {
+		04E8C67B1F305FE0005566C4 /* OtherLib */ = {
 			isa = PBXGroup;
 			children = (
 				15360A671F2C9439008DD3BB /* PopView */,
 				15360A641F2C9439008DD3BB /* InputView */,
 				15360A611F2C9439008DD3BB /* Gesture */,
 			);
-			name = Other;
+			name = OtherLib;
 			sourceTree = "<group>";
 		};
 		04E8C67C1F306BCF005566C4 /* Master */ = {
@@ -2981,6 +2984,24 @@
 				04E8C6811F306C08005566C4 /* User.m */,
 			);
 			name = Master;
+			sourceTree = "<group>";
+		};
+		152008AE1F30B7AB008A4A1C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0413DB6B1F1F05F500357B27 /* UIColor+help.h */,
+				0413DB6A1F1F05F500357B27 /* UIColor+help.m */,
+				73869EE21ECADA1B00935F89 /* NSString+Attribute.h */,
+				73869EE31ECADA1B00935F89 /* NSString+Attribute.m */,
+				738406EC1EC044C3001CAFCD /* UIButton+Category.h */,
+				738406ED1EC044C3001CAFCD /* UIButton+Category.m */,
+				7382AC131EE8FD8D00FF4542 /* UIView+CornerRadius.h */,
+				7382AC141EE8FD8D00FF4542 /* UIView+CornerRadius.m */,
+				15D094C21F2DA0F900089A73 /* UIImage+Category */,
+				15D094C01F2DA0A100089A73 /* Navigation+Category */,
+			);
+			name = Category;
+			path = MMPopupView;
 			sourceTree = "<group>";
 		};
 		15360A611F2C9439008DD3BB /* Gesture */ = {
@@ -3022,7 +3043,7 @@
 			path = MMPopupView;
 			sourceTree = "<group>";
 		};
-		15D094C01F2DA0A100089A73 /* NavigationController */ = {
+		15D094C01F2DA0A100089A73 /* Navigation+Category */ = {
 			isa = PBXGroup;
 			children = (
 				15360A921F2CD357008DD3BB /* UINavigationController+StatusBarStyle.h */,
@@ -3032,38 +3053,29 @@
 				150A04931F28C98100C66220 /* UIViewController+Cloudox.h */,
 				150A04941F28C98100C66220 /* UIViewController+Cloudox.m */,
 			);
-			name = NavigationController;
+			name = "Navigation+Category";
 			sourceTree = "<group>";
 		};
-		15D094C21F2DA0F900089A73 /* UIImage */ = {
+		15D094C21F2DA0F900089A73 /* UIImage+Category */ = {
 			isa = PBXGroup;
 			children = (
+				7391D9821EC2ADB40020F3CE /* UIImageView+Category.h */,
+				7391D9831EC2ADB40020F3CE /* UIImageView+Category.m */,
 				738406E91EC0155E001CAFCD /* UIImage+Original.h */,
 				738406EA1EC0155E001CAFCD /* UIImage+Original.m */,
 				15D094C51F2DA54300089A73 /* UIImage+setColor.h */,
 				15D094C61F2DA54300089A73 /* UIImage+setColor.m */,
 			);
-			name = UIImage;
+			name = "UIImage+Category";
 			sourceTree = "<group>";
 		};
 		15D094C31F2DA12400089A73 /* MyClass */ = {
 			isa = PBXGroup;
 			children = (
-				15D094C41F2DA1A700089A73 /* OtherClass */,
-				15D094C21F2DA0F900089A73 /* UIImage */,
-				15D094C01F2DA0A100089A73 /* NavigationController */,
 				15360A8F1F2C98BE008DD3BB /* StarView.h */,
 				15360A901F2C98BE008DD3BB /* StarView.m */,
 				0484ABE41F2F01FA00213AB1 /* TextField.h */,
 				0484ABE51F2F01FA00213AB1 /* TextField.m */,
-				0413DB6B1F1F05F500357B27 /* UIColor+help.h */,
-				0413DB6A1F1F05F500357B27 /* UIColor+help.m */,
-				738406EC1EC044C3001CAFCD /* UIButton+Category.h */,
-				738406ED1EC044C3001CAFCD /* UIButton+Category.m */,
-				7382AC131EE8FD8D00FF4542 /* UIView+CornerRadius.h */,
-				7382AC141EE8FD8D00FF4542 /* UIView+CornerRadius.m */,
-				7391D9821EC2ADB40020F3CE /* UIImageView+Category.h */,
-				7391D9831EC2ADB40020F3CE /* UIImageView+Category.m */,
 			);
 			name = MyClass;
 			path = MMPopupView;
@@ -3076,12 +3088,11 @@
 				739D677F1EC6DCB000370DE6 /* ItemTitleView.m */,
 				734C6DE71EF8FD8C00F18FE4 /* MLDateManager.h */,
 				734C6DE81EF8FD8C00F18FE4 /* MLDateManager.m */,
-				73869EE21ECADA1B00935F89 /* NSString+Attribute.h */,
-				73869EE31ECADA1B00935F89 /* NSString+Attribute.m */,
 				737126051EE7E545001A02DC /* SusoensionFlowLayout.h */,
 				737126061EE7E545001A02DC /* SusoensionFlowLayout.m */,
 			);
 			name = OtherClass;
+			path = MMPopupView;
 			sourceTree = "<group>";
 		};
 		56E3F3E77585761D60429CF5 /* Pods */ = {
@@ -3675,8 +3686,10 @@
 		73A37D621EBD804800BE60C9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				04E8C67B1F305FE0005566C4 /* Other */,
+				152008AE1F30B7AB008A4A1C /* Category */,
 				15D094C31F2DA12400089A73 /* MyClass */,
+				15D094C41F2DA1A700089A73 /* OtherClass */,
+				04E8C67B1F305FE0005566C4 /* OtherLib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3964,6 +3977,8 @@
 				041E9C6B1F2F255100083744 /* MessagePopView.m */,
 				04E8C6771F3051E8005566C4 /* MoneyCell.h */,
 				04E8C6781F3051E8005566C4 /* MoneyCell.m */,
+				152008AB1F30AFC4008A4A1C /* RechargeCell.h */,
+				152008AC1F30AFC4008A4A1C /* RechargeCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4921,6 +4936,7 @@
 				7390F4AE1EE696F70059A168 /* EditAddressController.m in Sources */,
 				73A4851B1EF3B94F00FA9434 /* ConfirmOrderProductCell.m in Sources */,
 				045C7A061F1DACD400B9C9C4 /* BrandViewController.m in Sources */,
+				152008AD1F30AFC4008A4A1C /* RechargeCell.m in Sources */,
 				04E8C6791F3051E8005566C4 /* MoneyCell.m in Sources */,
 				15360A7F1F2C9439008DD3BB /* AdminManager.m in Sources */,
 				7387BCD21EF0CE400061C5A1 /* FightGroupHourglassShareView.m in Sources */,

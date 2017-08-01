@@ -228,7 +228,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = self.tableheaderView;
-    _tableView.estimatedRowHeight = 200;
+    _tableView.estimatedRowHeight = 100;
     _tableView.showsVerticalScrollIndicator = NO;
     [self.productDetailViewModel configRegisterTableView:_tableView];
     

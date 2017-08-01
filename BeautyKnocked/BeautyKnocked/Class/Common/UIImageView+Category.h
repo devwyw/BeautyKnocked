@@ -15,5 +15,6 @@
 +(UIImageView *)leftPasswordImgViewW;
 
 +(UIImageView *)createLeftImgViewWithImageName:(NSString *)imageName;
-
+/** 虚线 */
+-(UIImage *)drawLineImage:(NSInteger)length withLineHeight:(NSInteger)height withColor:(UIColor*)color;
 @end

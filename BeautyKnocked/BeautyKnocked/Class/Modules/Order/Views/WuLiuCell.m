@@ -55,6 +55,7 @@
     
     _point=[[UIView alloc]init];
     _point.backgroundColor=[UIColor lightGrayColor];
+    [_point makeCornerRadius:Width_Pt(25)/2];
     [self.contentView addSubview:_point];
     
     _label1=[[UILabel alloc]init];
@@ -99,18 +100,9 @@
         make.left.equalTo(_label1);
         make.bottom.equalTo(self.contentView).offset(-5);
     }];
-    
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-}
-
--(void)layoutSubviews{
-    [_point makeCornerRadius:_point.frame.size.width/2];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

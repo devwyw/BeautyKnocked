@@ -9,7 +9,7 @@
 #import "UIColor+help.h"
 
 @implementation UIColor (help)
-
+//color:支持@“#123456”、 @“0X123456”、 @“123456”三种格式
 + (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
 {
     //删除字符串中的空格
@@ -57,13 +57,10 @@
 }
 
 //默认alpha值为1
-+ (UIColor *)colorWithHexString:(NSString *)color
-{
++ (UIColor *)colorWithHexString:(NSString *)color{
     return [self colorWithHexString:color alpha:1.0f];
 }
-
-- (NSString *)toColorString
-{
+-(NSString *)toColorString{
     const CGFloat *cs=CGColorGetComponents(self.CGColor);
     NSString *r = [NSString stringWithFormat:@"%@",[self  ToHex:cs[0]*255]];
     NSString *g = [NSString stringWithFormat:@"%@",[self  ToHex:cs[1]*255]];
@@ -71,8 +68,7 @@
     return [NSString stringWithFormat:@"#%@%@%@",r,g,b];
 }
 //十进制转十六进制
--(NSString *)ToHex:(int)tmpid
-{
+-(NSString *)ToHex:(int)tmpid{
     NSString *endtmp=@"";
     NSString *nLetterValue;
     NSString *nStrat;

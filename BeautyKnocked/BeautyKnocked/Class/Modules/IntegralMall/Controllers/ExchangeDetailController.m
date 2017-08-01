@@ -66,7 +66,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.estimatedRowHeight = 120;
+    _tableView.estimatedRowHeight = 100;
     [self.viewModel ddcs_registerClassForTableView:_tableView];
     
     _exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];

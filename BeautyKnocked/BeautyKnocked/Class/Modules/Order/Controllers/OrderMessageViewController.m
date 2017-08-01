@@ -36,7 +36,7 @@
         _tableview.delegate=self;
         _tableview.dataSource=self;
         [_tableview setBackgroundColor:[UIColor clearColor]];
-        _tableview.estimatedRowHeight = 120;
+        _tableview.estimatedRowHeight = 100;
         _tableview.separatorInset=UIEdgeInsetsMake(0,10,0,10);
         [self registerCell:_tableview];
     }

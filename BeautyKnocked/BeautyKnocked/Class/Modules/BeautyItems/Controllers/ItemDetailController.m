@@ -212,7 +212,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.estimatedRowHeight = 200;
+    _tableView.estimatedRowHeight = 100;
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.showsVerticalScrollIndicator = NO;
     [self.itemDetailViewModel configRegisterTableView:_tableView];
