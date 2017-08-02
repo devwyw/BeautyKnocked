@@ -18,9 +18,10 @@ static NSString *const beauticianCellReuseIdentifier = @"BeauticianCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     self.title = @"收藏技师";
     self.tableView.estimatedRowHeight = 100;
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
     [self.tableView registerClass:[BeauticianCell class] forCellReuseIdentifier:beauticianCellReuseIdentifier];
 }
 

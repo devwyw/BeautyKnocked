@@ -11,7 +11,7 @@
 #import "MLDateManager.h"
 #import "OrderSubDay.h"
 
-@interface OrderSubTime ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface OrderSubTime ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIView * backview;
 @property (nonatomic, strong) UIButton *backBtn;
@@ -20,9 +20,8 @@
 @property (nonatomic, strong) UIButton *cancelBtn;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UIButton *confirmBtn;
-
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
+@property (nonatomic, strong) NSMutableDictionary * cellIdentifierDic;
 
 @end
 
@@ -38,7 +37,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self initializeViews];
-        self.backgroundColor=[UIColor whiteColor];
     }
     return self;
 }
@@ -94,7 +92,6 @@
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cancelBtn setImage:[UIImage imageNamed:@"quxiao"] forState:UIControlStateNormal];
     [[_cancelBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        // hide time and date
         [LEEAlert closeWithCompletionBlock:nil];
     }];
     [self addSubview:_cancelBtn];
@@ -126,7 +123,9 @@
         [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             MLDateCollectionViewCell *cell = obj;
             if (cell.selected) {
-                [LEEAlert closeWithCompletionBlock:nil];
+                [LEEAlert closeWithCompletionBlock:^{
+                    
+                }];
                 *stop = YES;
             }
         }];
@@ -167,8 +166,12 @@
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.top.equalTo(self.collectionView.mas_bottom).with.offset(10);
-        make.bottom.equalTo(self).with.offset( - 10);
-        make.width.mas_equalTo(120);
+        make.size.mas_equalTo(CGSizeMake(120, Height_Pt(110)));
+    }];
+    
+    [_backview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.equalTo(self);
+        make.bottom.equalTo(_confirmBtn.mas_bottom).offset(10);
     }];
     
 }

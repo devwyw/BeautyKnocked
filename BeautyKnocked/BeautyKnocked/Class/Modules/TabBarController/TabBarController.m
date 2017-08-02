@@ -21,9 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     [self setupTabBarItem];
-    
 }
 
 -(void)setupTabBarItem {
@@ -41,9 +39,7 @@
         navigationController.tabBarItem = [self.tabBarItems objectAtIndex:i];
         [viewControllers addObject:navigationController];
     }
-    
     self.delegate = self;
-    
     self.viewControllers = viewControllers;
 }
 

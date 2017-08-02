@@ -19,7 +19,7 @@
 #import "SusoensionFlowLayout.h"
 #import "MineFightgroupTableController.h"
 #import "MyGroupController.h"
-#import "MessagePopView.h"
+#import "MessageView.h"
 #import "MoneyController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
@@ -83,8 +83,15 @@
                 break;
                case 1:
             {
-                MessagePopView *message=[[MessagePopView alloc]init];
-                [message show];
+                MessageView *message=[[MessageView alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
+                [LEEAlert alert].config
+                .LeeCustomView(message)
+                .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+                .LeeHeaderColor([UIColor clearColor])
+                .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+                    return Width_Pt(1018);
+                })
+                .LeeShow();
             }
                 break;
             default:

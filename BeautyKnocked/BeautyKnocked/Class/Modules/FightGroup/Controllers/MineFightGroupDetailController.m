@@ -26,10 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"拼团详情";
-    
-
+    self.edgesForExtendedLayout=UIRectEdgeNone;
 }
 
 - (void)didReceiveMemoryWarning {

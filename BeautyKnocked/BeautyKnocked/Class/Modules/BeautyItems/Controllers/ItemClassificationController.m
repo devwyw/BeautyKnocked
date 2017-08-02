@@ -176,7 +176,6 @@
             [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // code in here I do it by cover headerView
                 // if you want change it,you can code here
-                
                 self.viewTop = targetPoint;
             } completion:nil];
             

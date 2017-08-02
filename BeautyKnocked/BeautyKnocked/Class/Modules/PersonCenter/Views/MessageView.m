@@ -1,14 +1,14 @@
 //
-//  MessagePopView.m
+//  MessageView.m
 //  BeautyKnocked
 //
-//  Created by Mac on 2017/7/31.
+//  Created by 王毅安 on 17/8/2.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
-#import "MessagePopView.h"
+#import "MessageView.h"
 
-@interface MessagePopView ()
+@interface MessageView ()
 @property (nonatomic,strong) UIView * backView;
 @property (nonatomic,strong) UILabel * title;
 @property (nonatomic,strong) UIButton * cancel;
@@ -17,14 +17,11 @@
 @property (nonatomic,strong) UIButton * done;
 @end
 
-@implementation MessagePopView
+@implementation MessageView
 
-- (instancetype)init
-{
-    self = [super init];
+- (instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
-        self.type = MMPopupTypeAlert;
-        [MMPopupWindow sharedWindow].touchWildToHide = YES;
         [self initializeViews];
         [self addConstraints];
     }
@@ -33,14 +30,10 @@
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
--(void)initializeViews {
-    [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(1018), Height_Pt(1186) + 20 ));
-    }];
-    
+-(void)initializeViews{
     _backView = [[UIView alloc]init];
     _backView.backgroundColor = [UIColor whiteColor];
-    [_backView makeCornerRadius:8];
+    [_backView makeCornerRadius:5];
     [self addSubview:_backView];
     
     _title=[[UILabel alloc]init];
@@ -51,7 +44,7 @@
     _cancel=[[UIButton alloc]init];
     [_cancel setImage:[UIImage imageNamed:@"qu-xiao"] forState:UIControlStateNormal];
     [[_cancel rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [self hide];
+        [LEEAlert closeWithCompletionBlock:nil];
     }];
     [_backView addSubview:_cancel];
     
@@ -62,7 +55,7 @@
     _textview.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     [_backView addSubview:_textview];
     
-    _toptitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, Width-Width_Pt(250)-25, Font_Size(35)*3)];
+    _toptitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, Width-Width_Pt(150)-25, Font_Size(35)*3)];
     _toptitle.font=[UIFont systemFontOfSize:Font_Size(35)];
     _toptitle.text=@"您对美丽敲敲门服务平台是否存在什么疑问或困惑，请写下您的宝贵意见...";
     _toptitle.numberOfLines=0;
@@ -87,8 +80,8 @@
 -(void)addConstraints {
     [_backView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
-        make.left.equalTo(self).offset(Width_Pt(85));
-        make.right.equalTo(self).offset(-Width_Pt(85));
+        make.left.equalTo(self).offset(Width_Pt(50));
+        make.right.equalTo(self).offset(-Width_Pt(50));
         make.height.mas_equalTo(Height_Pt(903));
     }];
     
@@ -117,7 +110,5 @@
         make.bottom.equalTo(_done.mas_top).offset(-Height_Pt(40));
     }];
 }
-
-
 
 @end

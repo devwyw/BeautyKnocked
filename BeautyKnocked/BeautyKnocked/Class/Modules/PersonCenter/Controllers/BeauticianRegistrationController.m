@@ -19,7 +19,7 @@
     [super viewDidLoad];
     self.title=@"美容师报名";
     // Do any additional setup after loading the view.
-    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     [self.viewModel configureRegisterTableView:self.tableView];
     
 }

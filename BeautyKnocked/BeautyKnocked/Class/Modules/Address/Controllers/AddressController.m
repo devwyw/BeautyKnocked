@@ -49,8 +49,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     cell.address = @"[默认]喜马拉雅省古怪市阳光滩新区沙迦路888号金久国际大厦";
     @weakify(self);
     [cell.addressEditSignal subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
-        [self pushToEditController:AddressEditStyleUpdate];
+        [self_weak_ pushToEditController:AddressEditStyleUpdate];
     }];
     
     return cell;

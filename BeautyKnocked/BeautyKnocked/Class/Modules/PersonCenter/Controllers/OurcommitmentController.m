@@ -21,8 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.title = @"承诺书";
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     
     [self initializeViews];

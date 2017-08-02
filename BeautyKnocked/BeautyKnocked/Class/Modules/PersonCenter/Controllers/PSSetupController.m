@@ -9,13 +9,9 @@
 #import "PSSetupController.h"
 #import "SetupViewModel.h"
 
-
-
 @interface PSSetupController ()
 
 @property (nonatomic, strong) SetupViewModel *setupViewModel;
-
-
 
 @end
 
@@ -25,8 +21,7 @@
     [super viewDidLoad];
     self.title=@"设置";
     self.setupViewModel.navigationController = self.navigationController;
-    
-    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
 }
 
 - (void)didReceiveMemoryWarning {

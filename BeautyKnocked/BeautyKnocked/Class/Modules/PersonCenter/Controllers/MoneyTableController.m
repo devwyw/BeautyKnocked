@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"余额明细";
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     self.tableView.backgroundColor=self.view.backgroundColor;
     self.tableView.estimatedRowHeight=100;

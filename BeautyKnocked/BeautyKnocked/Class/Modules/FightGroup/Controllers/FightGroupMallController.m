@@ -27,12 +27,11 @@
     }
     return _viewModel;
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     self.title = @"拼团商城";
 
     [self initializeViews];
@@ -130,9 +129,10 @@
     PaySheetView *paysheet=[[PaySheetView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(207+180*4))];
     [LEEAlert actionsheet].config
     .LeeCustomView(paysheet)
-    .LeeActionSheetBottomMargin(0.0f)
+    .LeeActionSheetBottomMargin(-5)
     .LeeCornerRadius(0.0f)
     .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+    .LeeHeaderColor([UIColor clearColor])
     .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
         return Width;
     })

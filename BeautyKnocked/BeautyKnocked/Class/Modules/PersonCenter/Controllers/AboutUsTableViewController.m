@@ -30,7 +30,7 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
     self.title=@"关于我们";
     _dataSource = @[@"版本号",@"微信公众号",@"美丽敲敲门介绍",@"我们的承诺"];
     self.tableView.tableHeaderView = self.tableViewHeaderView;
-    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
 }
 
 - (void)didReceiveMemoryWarning {
