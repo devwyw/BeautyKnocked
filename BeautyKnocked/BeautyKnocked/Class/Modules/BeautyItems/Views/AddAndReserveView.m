@@ -36,7 +36,6 @@
 }
 
 -(void)initializeButtons {
-    
     _addShoppingCart = [UIButton buttonWithType:UIButtonTypeCustom];
     [_addShoppingCart setImage:[UIImage imageNamed:@"jiarugouwuche"] forState:UIControlStateNormal];
     [_addShoppingCart setTitle:@"加入购物车" forState:UIControlStateNormal];
@@ -54,7 +53,6 @@
 }
 
 -(void)addConstraints {
-    
     [_addShoppingCart mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, Width/2));
     }];

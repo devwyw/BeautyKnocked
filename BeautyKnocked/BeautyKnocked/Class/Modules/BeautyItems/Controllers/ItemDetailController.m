@@ -11,6 +11,7 @@
 #import "ItemDetailViewModel.h"
 #import "ConfirmOrderController.h"
 #import "AddCarView.h"
+#import "CarItem.h"
 
 @interface ItemDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -18,8 +19,7 @@
 @property (nonatomic, strong) AddAndReserveView *addReserveView;
 @property (nonatomic, strong) ItemDetailViewModel *itemDetailViewModel;
 @property (nonatomic, strong) UIImageView *tableheaderView;
-
-@property (nonatomic,strong) UILabel * carCount;
+@property (nonatomic, strong) CarItem * carItem;
 @end
 
 @implementation ItemDetailController
@@ -33,33 +33,21 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navBarBgAlpha = @"0";
-    [_carCount setText:@"99+"];
+    _carItem.count=100;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
     [self initializeViews];
     [self addConstraints];
-    /** 购物车 */
+    /** 购物车Item */
     {
-        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-111, 60, 60)];
-        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10.5, 10.5)];
-        [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
-        [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:Car];
-        
-        _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
-        [_carCount setFont:[UIFont systemFontOfSize:10]];
-        [_carCount setTextAlignment:NSTextAlignmentCenter];
-        [_carCount setTextColor:[UIColor whiteColor]];
-        [_carCount setBackgroundColor:[UIColor blackColor]];
-        [_carCount.layer setCornerRadius:11];
-        [_carCount.layer setMasksToBounds:YES];
-        [Car addSubview:_carCount];
+        _carItem=[[CarItem alloc]initWithOriginY:Height-111];
+        [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
+            NSLog(@"购物车");
+        }];
+        [self.view addSubview:_carItem];
     }
-}
--(void)Car:(UIButton*)button{
-    NSLog(@"1");
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -84,6 +72,9 @@
 
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
         AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
+        [view.doneAction subscribeNext:^(id  _Nullable x) {
+            [LEEAlert closeWithCompletionBlock:nil];
+        }];
         [LEEAlert actionsheet].config
         .LeeHeaderColor([UIColor clearColor])
         .LeeCustomView(view)

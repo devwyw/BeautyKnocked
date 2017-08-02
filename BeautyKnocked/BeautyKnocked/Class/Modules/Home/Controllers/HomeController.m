@@ -10,14 +10,13 @@
 #import "HomePageViewModel.h"
 #import <SVProgressHUD.h>
 #import "UIButton+Category.h"
+#import "CarItem.h"
 
 @interface HomeController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) HomePageViewModel *homePageViewModel;
-
-@property (nonatomic,strong) UILabel * carCount;
+@property (nonatomic,strong) CarItem * carItem;
 
 @end
 
@@ -33,9 +32,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    [_carCount setText:@"99+"];
-    
+    _carItem.count=100;
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];
         [item setHidden:NO];
@@ -62,7 +59,7 @@
     [SVProgressHUD dismissWithDelay:1.85];
 }
 -(void)setHeaderView{
-    //顶部控件
+    /** 顶部控件 */
     {
         UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(15, 2, 60, 40)];
         [item setTag:101];
@@ -116,53 +113,30 @@
                                              selector:@selector(dismissHUD:)
                                                  name:SVProgressHUDDidReceiveTouchEventNotification
                                                object:nil];
-    // Do any additional setup after loading the view.
     [self setHeaderView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.homePageViewModel.navigationController = self.navigationController;
-    [self addSubItemviews];
-    [self configureConstraints];
-
-    /** 购物车 */
-    {
-        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-175, 60, 60)];
-        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10.5, 10.5)];
-        [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
-        [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:Car];
-        
-        _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
-        [_carCount setFont:[UIFont systemFontOfSize:10]];
-        [_carCount setTextAlignment:NSTextAlignmentCenter];
-        [_carCount setTextColor:[UIColor whiteColor]];
-        [_carCount setBackgroundColor:[UIColor blackColor]];
-        [_carCount.layer setCornerRadius:11];
-        [_carCount.layer setMasksToBounds:YES];
-        [Car addSubview:_carCount];
-    }
-}
--(void)Car:(UIButton*)button{
-    NSLog(@"1");
-}
--(void)addSubItemviews {
+    /** UITableView */
     [self.view addSubview:self.tableView];
-}
-
--(void)configureConstraints {
-    
+    /** 购物车Item */
+    {
+        _carItem=[[CarItem alloc]initWithOriginY:Height-175];
+        [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
+            NSLog(@"购物车");
+        }];
+        [self.view addSubview:_carItem];
+    }
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
-    
 }
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.homePageViewModel numberOfSectionsInHomePageTableView];
 }
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.homePageViewModel numberOfRowsInHomePageTableViewAtSection:section];
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.homePageViewModel configureTableView:tableView AtIndexPath:indexPath andObject:self];
 }
@@ -181,10 +155,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-
 -(UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
@@ -196,8 +167,5 @@
     }
     return _tableView;
 }
-
-
-
 
 @end

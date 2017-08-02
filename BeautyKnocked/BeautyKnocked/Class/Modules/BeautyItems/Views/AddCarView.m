@@ -12,6 +12,7 @@
 @property (nonatomic,strong) UILabel * number;
 @property (nonatomic,strong) UIButton * Lbtn;
 @property (nonatomic,strong) UIButton * Rbtn;
+@property (nonatomic,strong) UIButton * done;
 @end
 
 @implementation AddCarView
@@ -35,10 +36,10 @@
     [image setImage:[UIImage imageNamed:@"jiaruchanpin"]];
     [self addSubview:image];
     
-    UIButton *done=[[UIButton alloc]init];
-    [done setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
-    [done setTitle:@"确定" forState:UIControlStateNormal];
-    [self addSubview:done];
+    _done=[[UIButton alloc]init];
+    [_done setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
+    [_done setTitle:@"确定" forState:UIControlStateNormal];
+    [self addSubview:_done];
     
     UILabel *Jlabel=[[UILabel alloc]init];
     Jlabel.text=[NSString stringWithFormat:@"市场价：¥%d",45];
@@ -90,7 +91,7 @@
         make.size.mas_equalTo(CGSizeMake(Width_Pt(305), Height_Pt(305)));
     }];
     
-    [done mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_done mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
         make.height.mas_equalTo(Height_Pt(145));
         make.bottom.equalTo(self);
@@ -163,5 +164,8 @@
             _Lbtn.userInteractionEnabled=YES;
         }
     }
+}
+-(RACSignal*)doneAction{
+    return [_done rac_signalForControlEvents:UIControlEventTouchUpInside];
 }
 @end

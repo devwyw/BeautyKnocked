@@ -715,6 +715,7 @@
 		150A04951F28C98100C66220 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04921F28C98100C66220 /* UINavigationController+Cloudox.m */; };
 		150A04961F28C98100C66220 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04941F28C98100C66220 /* UIViewController+Cloudox.m */; };
 		150A04A61F28DE6600C66220 /* CommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04A51F28DE6600C66220 /* CommentController.m */; };
+		150F13371F321D1D00B42805 /* CarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 150F13361F321D1D00B42805 /* CarItem.m */; };
 		152008AD1F30AFC4008A4A1C /* RechargeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152008AC1F30AFC4008A4A1C /* RechargeCell.m */; };
 		152863BC1F29DB2700AD55C7 /* PJBeautViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */; };
 		15360A7F1F2C9439008DD3BB /* Master.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A601F2C9439008DD3BB /* Master.m */; };
@@ -1634,6 +1635,8 @@
 		150A04941F28C98100C66220 /* UIViewController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Cloudox.m"; path = "../UIViewController+Cloudox.m"; sourceTree = "<group>"; };
 		150A04A41F28DE6600C66220 /* CommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentController.h; sourceTree = "<group>"; };
 		150A04A51F28DE6600C66220 /* CommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentController.m; sourceTree = "<group>"; };
+		150F13351F321D1D00B42805 /* CarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarItem.h; sourceTree = "<group>"; };
+		150F13361F321D1D00B42805 /* CarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarItem.m; sourceTree = "<group>"; };
 		152008AB1F30AFC4008A4A1C /* RechargeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeCell.h; sourceTree = "<group>"; };
 		152008AC1F30AFC4008A4A1C /* RechargeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeCell.m; sourceTree = "<group>"; };
 		152863BA1F29DB2700AD55C7 /* PJBeautViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJBeautViewCell.h; sourceTree = "<group>"; };
@@ -2936,6 +2939,7 @@
 		04E8C67A1F305F12005566C4 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				150F13341F321CF400B42805 /* ItemCar */,
 				7390F4A51EE696670059A168 /* Address */,
 				7390F4C11EE6A3DA0059A168 /* IntegralMall */,
 				7382AC301EE947A100FF4542 /* FightGroup */,
@@ -2953,6 +2957,15 @@
 				04E8C67E1F306BF1005566C4 /* Acount.m */,
 			);
 			name = Master;
+			sourceTree = "<group>";
+		};
+		150F13341F321CF400B42805 /* ItemCar */ = {
+			isa = PBXGroup;
+			children = (
+				150F13351F321D1D00B42805 /* CarItem.h */,
+				150F13361F321D1D00B42805 /* CarItem.m */,
+			);
+			name = ItemCar;
 			sourceTree = "<group>";
 		};
 		152008AE1F30B7AB008A4A1C /* Category */ = {
@@ -4850,6 +4863,7 @@
 				737A1FE31EDFE3B300CD6FD2 /* NewsCenterCell.m in Sources */,
 				043212BE1F272D6B00F29D1B /* OrderHeaderView.m in Sources */,
 				737126011EE7DF8D001A02DC /* ExchangeRecordingController.m in Sources */,
+				150F13371F321D1D00B42805 /* CarItem.m in Sources */,
 				0439FF6D1F2B10C50087C314 /* PJItemViewCell.m in Sources */,
 				040442571F1F54D500E59CF1 /* NewUserController.m in Sources */,
 				738DAAC81EDE593E00F45DE3 /* BeauticianRegisterSexView.m in Sources */,

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RACSignal;
 
 @interface AddCarView : UIView
+
+@property (nonatomic,strong) RACSignal * doneAction;
 
 @end

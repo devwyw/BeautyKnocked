@@ -13,14 +13,16 @@
 #import <SDCycleScrollView.h>
 #import "UIButton+Category.h"
 #import <PYSearchViewController.h>
+#import "CarItem.h"
 
 @interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate>
+
 @property (nonatomic, strong) NSArray *itemCategories;
 @property (nonatomic, strong) WMPanGestureRecognizer *panGesture;
 @property (nonatomic, assign) CGPoint lastPoint;
 @property (nonatomic, strong) SDCycleScrollView *classBannerView;
-@property (nonatomic,strong) UILabel * carCount;
-@property (nonatomic,strong) UITextField * searchField;
+@property (nonatomic, strong) CarItem * carItem;
+@property (nonatomic, strong) UITextField * searchField;
 
 @end
 
@@ -37,8 +39,7 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     self.navBarBgAlpha = @"1.0";
-    
-    [_carCount setText:@"99+"];
+    _carItem.count=100;
 
     UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
     [item setHidden:NO];
@@ -54,7 +55,7 @@
     [field setHidden:YES];
 }
 -(void)setHeaderView{
-    //顶部控件
+    /** 顶部控件 */
     UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(15, 2, 60, 40)];
     [item setTag:101];
     [item setTitle:@"南昌" forState:UIControlStateNormal];
@@ -139,27 +140,14 @@
     [self.view addSubview:self.classBannerView];
     [self setViewTop:kNavigationBarHeight];
     
-    /** 购物车 */
+    /** 购物车Item */
     {
-        UIButton *Car=[[UIButton alloc]initWithFrame:CGRectMake(5, Height-111, 60, 60)];
-        [Car setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10.5, 10.5)];
-        [Car setImage:[UIImage imageNamed:@"gouwuche_03"] forState:UIControlStateNormal];
-        [Car addTarget:self action:@selector(Car:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:Car];
-        
-        _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
-        [_carCount setFont:[UIFont systemFontOfSize:10]];
-        [_carCount setTextAlignment:NSTextAlignmentCenter];
-        [_carCount setTextColor:[UIColor whiteColor]];
-        [_carCount setBackgroundColor:[UIColor blackColor]];
-        [_carCount.layer setCornerRadius:11];
-        [_carCount.layer setMasksToBounds:YES];
-        [Car addSubview:_carCount];
+        _carItem=[[CarItem alloc]initWithOriginY:Height-111];
+        [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
+            NSLog(@"购物车");
+        }];
+        [self.view addSubview:_carItem];
     }
-    //[self.view sendSubviewToBack:self.classBannerView];
-}
--(void)Car:(UIButton*)button{
-    NSLog(@"1");
 }
 - (void)panOnView:(WMPanGestureRecognizer *)recognizer {
     CGPoint currentPoint = [recognizer locationInView:self.view];
