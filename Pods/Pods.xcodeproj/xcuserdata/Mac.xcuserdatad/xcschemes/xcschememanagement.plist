@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>LEEAlert.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
 		<key>LXMButtonImagePosition.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -87,12 +92,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>01E884360EB68CCF679541F4ED7BEAE6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>026769163A10C494B08AEE7B2C0BCBC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>04CF549EBEEE7BC87AEAE35397184D94</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0CFD15DB81C1C4C85FEAA86E9B7727BA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>17FA7F37B8CE1665A529A3E46927D881</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,12 +147,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>39EF67980422BFFDE33050032E8A71BA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3D0AE8949C0F085F0E7E7E4689F00AD2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>41A4E9DF72FEF8C4BF34022F855939E0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4F05437524C894E68E997885C04BAA49</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>50BB2A8ED011B908AA9EF848D7709DF7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -153,6 +188,11 @@
 			<true/>
 		</dict>
 		<key>631D1DB44CE8890096A85FD19A270E7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>63C442A1BCA7D54FE4FD94167C3EDB1B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -183,6 +223,11 @@
 			<true/>
 		</dict>
 		<key>8372A8CC1BF13A6FAA619CDE908F27A4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>85722AF1A2EDD1825B9349C3F572431A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -257,6 +302,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>CF63D2ECA150C3E29777C5A1438CDB24</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D5BA15C1CB91F6C1F52B060E2DB95DAB</key>
 		<dict>
 			<key>primary</key>
@@ -273,6 +323,11 @@
 			<true/>
 		</dict>
 		<key>E0C39749AB1895C0B97505466F219800</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EBC3B110A3F845F5AB7B083DEC5937C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

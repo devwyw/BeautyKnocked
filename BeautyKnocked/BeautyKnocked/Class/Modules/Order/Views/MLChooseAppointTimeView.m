@@ -209,7 +209,6 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

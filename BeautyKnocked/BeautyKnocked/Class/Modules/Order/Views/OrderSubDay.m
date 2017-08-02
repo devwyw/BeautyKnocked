@@ -1,19 +1,17 @@
 //
-//  ConfirmOrderChooseDateView.m
+//  OrderSubDay.m
 //  BeautyKnocked
 //
-//  Created by zhongweiping on 2017/6/19.
+//  Created by Mac on 2017/8/2.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
-#import "ConfirmOrderChooseDateView.h"
+#import "OrderSubDay.h"
 #import "MLDateCollectionViewCell.h"
 #import "MLDateManager.h"
-#import "MLChooseAppointTimeView.h"
+#import "OrderSubTime.h"
 
-@interface ConfirmOrderChooseDateView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MLChooseAppointTimeViewDelegate>
-
-@property (nonatomic, strong) UIView *backView;
+@interface OrderSubDay ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIButton *cancelBtn;
@@ -29,7 +27,7 @@
 
 @end
 
-@implementation ConfirmOrderChooseDateView
+@implementation OrderSubDay
 
 -(NSMutableDictionary*)cellIdentifierDic{
     if (!_cellIdentifierDic) {
@@ -37,18 +35,17 @@
     }
     return _cellIdentifierDic;
 }
--(instancetype)init {
-    self = [super init];
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if (self) {
         [self initializeViews];
-        
+        self.backgroundColor=[UIColor whiteColor];
     }
     return self;
 }
 
 -(NSArray *)months {
     if (!_months) {
-        // add @"月份" atIndex 0, then monthIndex From index 1
         _months = @[@"月份",@"1月",@"2月",@"3月",@"4月",@"5月",@"6月",@"7月",@"8月",@"9月",@"10月",@"11月",@"12月"];
     }
     return _months;
@@ -69,37 +66,23 @@
 }
 
 -(void)initializeViews {
-    self.type = MMPopupTypeAlert;
-    [MMPopupWindow sharedWindow].touchWildToHide = YES;
-    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
     _todayWeekDay = nowCompoents.weekday;
     
-    [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(1018), Height_Pt(1186) + 20 ));
-    }];
-    
-    self.backView = [UIView new];
-    [self addSubview:self.backView];
-    [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self);
-    }];
-    self.backView.backgroundColor = [UIColor whiteColor];
-    
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     _titleLabel.text = @"请选择服务日期";
-    [self.backView addSubview:_titleLabel];
+    [self addSubview:_titleLabel];
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.backView);
-        make.top.equalTo(self.backView).with.offset(12);
+        make.centerX.equalTo(self);
+        make.top.equalTo(self).with.offset(12);
     }];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cancelBtn  setImage:[UIImage imageNamed:@"quxiao"] forState:UIControlStateNormal];
     [[_cancelBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [self hide];
+        [LEEAlert closeWithCompletionBlock:nil];
     }];
     
     NSMutableArray *views = [NSMutableArray arrayWithCapacity:7];
@@ -107,14 +90,12 @@
         UILabel *label = [[UILabel alloc] init];
         label.font = [UIFont systemFontOfSize:Font_Size(50)];
         label.text = [self.weekDays objectAtIndex:i];
-
         label.textAlignment =  NSTextAlignmentCenter;
-        [self.backView addSubview:label];
+        [self addSubview:label];
         [views addObject:label];
     }
     
     self.collectionView = ({
-        
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.itemSize = CGSizeMake((Width - 8*2-5*6)/7 - 3, (Width - 8*2-5*6)/7 + 5);
         flowLayout.minimumInteritemSpacing = 2.5;
@@ -124,7 +105,6 @@
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
-        //_collectionView.scrollEnabled = NO;
         _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
         self.collectionView;
     });
@@ -135,33 +115,32 @@
     _remarkLabel.textColor = [UIColor lightGrayColor];
     _remarkLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     _remarkLabel.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
-
     
-    [self.backView addSubview:_cancelBtn];
-    [self.backView addSubview:self.collectionView];
-    [self.backView addSubview:_remarkLabel];
+    [self addSubview:_cancelBtn];
+    [self addSubview:self.collectionView];
+    [self addSubview:_remarkLabel];
     
     [self.cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.backView).with.offset( - 15);
-        make.top.equalTo(self.backView).with.offset(20);
+        make.right.equalTo(self).with.offset( - 15);
+        make.top.equalTo(self).with.offset(20);
         make.size.mas_equalTo(CGSizeMake(Width_Pt(50), Height_Pt(50)));
     }];
-
+    
     [views mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_cancelBtn.mas_bottom).with.offset(8);
         make.height.mas_equalTo((Width - 21)/7);
         make.bottom.equalTo(self.collectionView.mas_top);
     }];
     [views mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:5 leadSpacing:8 tailSpacing:8];
-
+    
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.backView);
+        make.left.and.right.equalTo(self);
         make.height.mas_equalTo( ((Width - 16-30)/7 + 5) * 5 +4*5 + 8*2);
     }];
     
     [_remarkLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.collectionView.mas_bottom);
-        make.left.and.and.right.and.bottom.equalTo(self.backView);
+        make.left.and.and.right.and.bottom.equalTo(self);
     }];
     
 }
@@ -208,27 +187,26 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     NSLog(@"date == %@",dateModel.date);
-
+    
     if (!dateModel.isInThirtyDays) {
         return;
     }
     
-    MLChooseAppointTimeView *chooseAppointTimeView = [[MLChooseAppointTimeView alloc] init];
-    chooseAppointTimeView.selectedDate = [NSString stringWithFormat:@"%@(%@)",dateModel.date,self.weekDays[dateModel.week-1]];
-    chooseAppointTimeView.delegate = self;
-    
-    [chooseAppointTimeView show];
+    OrderSubTime *view=[[OrderSubTime alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
+    view.selectedDate = [NSString stringWithFormat:@"%@(%@)",dateModel.date,self.weekDays[dateModel.week-1]];
+    [LEEAlert alert].config
+    .LeeCustomView(view)
+    .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+    .LeeHeaderColor([UIColor clearColor])
+    .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+        return Width_Pt(1018);
+    })
+    .LeeShow();
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(8, 8, 8, 8);
-}
-
-#pragma mark MLChooseAppointTimeViewDelegate
--(void)shouldHideBackDetailDate:(NSString *)detailDate {
-    [self hide];
-    [_collectionView reloadData];
 }
 
 @end

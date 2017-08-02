@@ -1,4 +1,3 @@
-
 platform :ios, '8.0'
 
 workspace "BeautyKnocked"
@@ -17,6 +16,7 @@ pod 'XLForm', '3.0'
 pod 'SVProgressHUD'
 pod 'PYSearch'
 pod 'FMDB'
+pod 'LEEAlert'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'

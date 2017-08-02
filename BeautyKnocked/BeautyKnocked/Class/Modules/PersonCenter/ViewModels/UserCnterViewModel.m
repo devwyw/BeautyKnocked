@@ -78,7 +78,7 @@
                         }
                     }
                 }]];
-                [self.navigationController presentViewController:alertController animated:YES completion:nil];
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
             }
                 break;
                case 1:

@@ -28,7 +28,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

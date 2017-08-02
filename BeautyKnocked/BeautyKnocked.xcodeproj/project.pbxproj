@@ -26,6 +26,9 @@
 		0484ABF61F2F15F600213AB1 /* book.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0484ABEB1F2F15F600213AB1 /* book.jpg */; };
 		04B46E441F20872C007349F2 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E431F20872C007349F2 /* NearbyController.m */; };
 		04C576C91F31766700D1F188 /* RechargeInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C576C81F31766700D1F188 /* RechargeInfoController.m */; };
+		04CB6C181F31B73D0039B87C /* PaySheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C171F31B73D0039B87C /* PaySheetView.m */; };
+		04CB6C1B1F31C4610039B87C /* OrderSubDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C1A1F31C4610039B87C /* OrderSubDay.m */; };
+		04CB6C1E1F31CA7E0039B87C /* OrderSubTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C1D1F31CA7E0039B87C /* OrderSubTime.m */; };
 		04E40AD21F2C586900C4D665 /* MyGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E40AD11F2C586900C4D665 /* MyGroupController.m */; };
 		04E7C2631F2C392B00D03A79 /* ding0_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E7BF9B1F2C392A00D03A79 /* ding0_03@2x.png */; };
 		04E7C2641F2C392B00D03A79 /* ding0_03@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E7BF9C1F2C392A00D03A79 /* ding0_03@3x.png */; };
@@ -717,7 +720,6 @@
 		152863BC1F29DB2700AD55C7 /* PJBeautViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */; };
 		15360A7F1F2C9439008DD3BB /* Master.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A601F2C9439008DD3BB /* Master.m */; };
 		15360A801F2C9439008DD3BB /* WMPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A631F2C9439008DD3BB /* WMPanGestureRecognizer.m */; };
-		15360A811F2C9439008DD3BB /* YZInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A661F2C9439008DD3BB /* YZInputView.m */; };
 		15360A821F2C9439008DD3BB /* MMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A691F2C9439008DD3BB /* MMAlertView.m */; };
 		15360A831F2C9439008DD3BB /* MMPopupCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A6B1F2C9439008DD3BB /* MMPopupCategory.m */; };
 		15360A841F2C9439008DD3BB /* MMPopupItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A6E1F2C9439008DD3BB /* MMPopupItem.m */; };
@@ -812,7 +814,6 @@
 		7382AC2C1EE9327600FF4542 /* SuccessFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC2B1EE9327600FF4542 /* SuccessFooterView.m */; };
 		7382AC2F1EE9371100FF4542 /* ExchangeRecordingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC2E1EE9371100FF4542 /* ExchangeRecordingCell.m */; };
 		7382AC371EE94B3700FF4542 /* FightGroupMallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC361EE94B3700FF4542 /* FightGroupMallController.m */; };
-		7382AC541EEB89E000743546 /* MLPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC531EEB89E000743546 /* MLPaymentView.m */; };
 		7383EC461ECBE99F00C87A06 /* HomePageEnjoyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7383EC451ECBE99E00C87A06 /* HomePageEnjoyTableViewCell.m */; };
 		7383EC651ECC419200C87A06 /* HomePageEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7383EC641ECC419200C87A06 /* HomePageEndView.m */; };
 		738406E71EC00D9F001CAFCD /* PersonCenterHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 738406E61EC00D9F001CAFCD /* PersonCenterHeadView.m */; };
@@ -866,7 +867,6 @@
 		739F093A1EC941340023BF0B /* FeaturedRecommendationsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739F09391EC941340023BF0B /* FeaturedRecommendationsView.m */; };
 		739F093D1EC945E10023BF0B /* RecommendBeautyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739F093C1EC945E10023BF0B /* RecommendBeautyView.m */; };
 		739F43061EF769FD00D973E6 /* ConfirmOrderSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739F43051EF769FD00D973E6 /* ConfirmOrderSubmitView.m */; };
-		739F430C1EF7B93900D973E6 /* ConfirmOrderChooseDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 739F430B1EF7B93900D973E6 /* ConfirmOrderChooseDateView.m */; };
 		73A37CD21EBD6A3F00BE60C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A37CD11EBD6A3F00BE60C9 /* main.m */; };
 		73A37CD51EBD6A3F00BE60C9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A37CD41EBD6A3F00BE60C9 /* AppDelegate.m */; };
 		73A37CDB1EBD6A3F00BE60C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73A37CD91EBD6A3F00BE60C9 /* Main.storyboard */; };
@@ -940,6 +940,12 @@
 		04C53C701F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04C576C71F31766700D1F188 /* RechargeInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeInfoController.h; sourceTree = "<group>"; };
 		04C576C81F31766700D1F188 /* RechargeInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeInfoController.m; sourceTree = "<group>"; };
+		04CB6C161F31B73D0039B87C /* PaySheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySheetView.h; sourceTree = "<group>"; };
+		04CB6C171F31B73D0039B87C /* PaySheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySheetView.m; sourceTree = "<group>"; };
+		04CB6C191F31C4610039B87C /* OrderSubDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSubDay.h; sourceTree = "<group>"; };
+		04CB6C1A1F31C4610039B87C /* OrderSubDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSubDay.m; sourceTree = "<group>"; };
+		04CB6C1C1F31CA7E0039B87C /* OrderSubTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSubTime.h; sourceTree = "<group>"; };
+		04CB6C1D1F31CA7E0039B87C /* OrderSubTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSubTime.m; sourceTree = "<group>"; };
 		04E40AD01F2C586900C4D665 /* MyGroupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGroupController.h; sourceTree = "<group>"; };
 		04E40AD11F2C586900C4D665 /* MyGroupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGroupController.m; sourceTree = "<group>"; };
 		04E7BF9B1F2C392A00D03A79 /* ding0_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ding0_03@2x.png"; sourceTree = "<group>"; };
@@ -1644,8 +1650,6 @@
 		15360A601F2C9439008DD3BB /* Master.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Master.m; path = ../Common/Master.m; sourceTree = "<group>"; };
 		15360A621F2C9439008DD3BB /* WMPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPanGestureRecognizer.h; sourceTree = "<group>"; };
 		15360A631F2C9439008DD3BB /* WMPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPanGestureRecognizer.m; sourceTree = "<group>"; };
-		15360A651F2C9439008DD3BB /* YZInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZInputView.h; sourceTree = "<group>"; };
-		15360A661F2C9439008DD3BB /* YZInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZInputView.m; sourceTree = "<group>"; };
 		15360A681F2C9439008DD3BB /* MMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAlertView.h; sourceTree = "<group>"; };
 		15360A691F2C9439008DD3BB /* MMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAlertView.m; sourceTree = "<group>"; };
 		15360A6A1F2C9439008DD3BB /* MMPopupCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPopupCategory.h; sourceTree = "<group>"; };
@@ -1833,8 +1837,6 @@
 		7382AC2E1EE9371100FF4542 /* ExchangeRecordingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeRecordingCell.m; sourceTree = "<group>"; };
 		7382AC351EE94B3700FF4542 /* FightGroupMallController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FightGroupMallController.h; sourceTree = "<group>"; };
 		7382AC361EE94B3700FF4542 /* FightGroupMallController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FightGroupMallController.m; sourceTree = "<group>"; };
-		7382AC521EEB89E000743546 /* MLPaymentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPaymentView.h; sourceTree = "<group>"; };
-		7382AC531EEB89E000743546 /* MLPaymentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPaymentView.m; sourceTree = "<group>"; };
 		7383EC441ECBE99E00C87A06 /* HomePageEnjoyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageEnjoyTableViewCell.h; sourceTree = "<group>"; };
 		7383EC451ECBE99E00C87A06 /* HomePageEnjoyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageEnjoyTableViewCell.m; sourceTree = "<group>"; };
 		7383EC631ECC419200C87A06 /* HomePageEndView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageEndView.h; sourceTree = "<group>"; };
@@ -1940,8 +1942,6 @@
 		739F093C1EC945E10023BF0B /* RecommendBeautyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendBeautyView.m; sourceTree = "<group>"; };
 		739F43041EF769FC00D973E6 /* ConfirmOrderSubmitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderSubmitView.h; sourceTree = "<group>"; };
 		739F43051EF769FD00D973E6 /* ConfirmOrderSubmitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderSubmitView.m; sourceTree = "<group>"; };
-		739F430A1EF7B93900D973E6 /* ConfirmOrderChooseDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderChooseDateView.h; sourceTree = "<group>"; };
-		739F430B1EF7B93900D973E6 /* ConfirmOrderChooseDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderChooseDateView.m; sourceTree = "<group>"; };
 		73A37CCD1EBD6A3F00BE60C9 /* BeautyKnocked.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeautyKnocked.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73A37CD11EBD6A3F00BE60C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		73A37CD31EBD6A3F00BE60C9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -2967,7 +2967,6 @@
 			isa = PBXGroup;
 			children = (
 				15360A671F2C9439008DD3BB /* PopView */,
-				15360A641F2C9439008DD3BB /* InputView */,
 				15360A611F2C9439008DD3BB /* Gesture */,
 			);
 			name = OtherLib;
@@ -3009,15 +3008,6 @@
 				15360A631F2C9439008DD3BB /* WMPanGestureRecognizer.m */,
 			);
 			path = Gesture;
-			sourceTree = "<group>";
-		};
-		15360A641F2C9439008DD3BB /* InputView */ = {
-			isa = PBXGroup;
-			children = (
-				15360A651F2C9439008DD3BB /* YZInputView.h */,
-				15360A661F2C9439008DD3BB /* YZInputView.m */,
-			);
-			path = InputView;
 			sourceTree = "<group>";
 		};
 		15360A671F2C9439008DD3BB /* PopView */ = {
@@ -3308,8 +3298,8 @@
 		7382AC511EEB898D00743546 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7382AC521EEB89E000743546 /* MLPaymentView.h */,
-				7382AC531EEB89E000743546 /* MLPaymentView.m */,
+				04CB6C161F31B73D0039B87C /* PaySheetView.h */,
+				04CB6C171F31B73D0039B87C /* PaySheetView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3577,10 +3567,12 @@
 				737564CD1EF5031A0097367C /* DDCSTextView.m */,
 				739F43041EF769FC00D973E6 /* ConfirmOrderSubmitView.h */,
 				739F43051EF769FD00D973E6 /* ConfirmOrderSubmitView.m */,
-				739F430A1EF7B93900D973E6 /* ConfirmOrderChooseDateView.h */,
-				739F430B1EF7B93900D973E6 /* ConfirmOrderChooseDateView.m */,
+				04CB6C191F31C4610039B87C /* OrderSubDay.h */,
+				04CB6C1A1F31C4610039B87C /* OrderSubDay.m */,
 				737CF40B1EF8B9A60051614A /* MLDateCollectionViewCell.h */,
 				737CF40C1EF8B9A60051614A /* MLDateCollectionViewCell.m */,
+				04CB6C1C1F31CA7E0039B87C /* OrderSubTime.h */,
+				04CB6C1D1F31CA7E0039B87C /* OrderSubTime.m */,
 				738A2FD01EFA2605004133DB /* MLChooseAppointTimeView.h */,
 				738A2FD11EFA2605004133DB /* MLChooseAppointTimeView.m */,
 				043212BC1F272D6B00F29D1B /* OrderHeaderView.h */,
@@ -3628,8 +3620,6 @@
 				73A37CE11EBD6A3F00BE60C9 /* Info.plist */,
 				73A37CD31EBD6A3F00BE60C9 /* AppDelegate.h */,
 				73A37CD41EBD6A3F00BE60C9 /* AppDelegate.m */,
-				73A37CD91EBD6A3F00BE60C9 /* Main.storyboard */,
-				73A37CDE1EBD6A3F00BE60C9 /* LaunchScreen.storyboard */,
 				73A37CD01EBD6A3F00BE60C9 /* Supporting Files */,
 			);
 			path = BeautyKnocked;
@@ -3638,6 +3628,8 @@
 		73A37CD01EBD6A3F00BE60C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				73A37CD91EBD6A3F00BE60C9 /* Main.storyboard */,
+				73A37CDE1EBD6A3F00BE60C9 /* LaunchScreen.storyboard */,
 				73A37CD11EBD6A3F00BE60C9 /* main.m */,
 				73A4851C1EF3C3E900FA9434 /* UserHeader.h */,
 			);
@@ -4863,7 +4855,6 @@
 				7390F4B71EE697030059A168 /* AddressToDefaultView.m in Sources */,
 				736DE29A1ED0208400E32717 /* BeauticianItemTableViewController.m in Sources */,
 				738280151EF27ED60005DC28 /* ConfirmOrderAddressCell.m in Sources */,
-				739F430C1EF7B93900D973E6 /* ConfirmOrderChooseDateView.m in Sources */,
 				7391D9871EC2BEC20020F3CE /* UserCnterViewModel.m in Sources */,
 				737C1E731EEA2EC50020D342 /* FightGroupTitleView.m in Sources */,
 				737330941EE2553F00DF54AC /* EvaluationImageCell.m in Sources */,
@@ -4884,13 +4875,13 @@
 				737564CE1EF5031A0097367C /* DDCSTextView.m in Sources */,
 				7388F5331EDA72D900EB7EE4 /* SetupViewModel.m in Sources */,
 				738DAAD61EDE76B000F45DE3 /* BeauticianRegisterViewModel.m in Sources */,
+				04CB6C1E1F31CA7E0039B87C /* OrderSubTime.m in Sources */,
 				737CD3061EE13DF300B6A5DB /* ProductDetailController.m in Sources */,
 				737C1EA21EEA99200020D342 /* FightGroupRulesTitleView.m in Sources */,
 				7382AC2C1EE9327600FF4542 /* SuccessFooterView.m in Sources */,
 				7390F4C81EE6AA360059A168 /* IntegralMallController.m in Sources */,
 				73440A3A1ED2B893003807B8 /* BeauticianItemViewModel.m in Sources */,
 				043212D01F273B5800F29D1B /* WuLiuController.m in Sources */,
-				7382AC541EEB89E000743546 /* MLPaymentView.m in Sources */,
 				7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */,
 				043212C11F272F2000F29D1B /* TopMessageView.m in Sources */,
 				7383EC651ECC419200C87A06 /* HomePageEndView.m in Sources */,
@@ -4946,6 +4937,7 @@
 				736DE2941ECFE1EA00E32717 /* OrderBaseTableViewController.m in Sources */,
 				738280121EF279A00005DC28 /* ConfirmOrderViewModel.m in Sources */,
 				15D094C71F2DA54300089A73 /* UIImage+setColor.m in Sources */,
+				04CB6C181F31B73D0039B87C /* PaySheetView.m in Sources */,
 				739F09371EC93D060023BF0B /* NewPersonView.m in Sources */,
 				7382AC151EE8FD8D00FF4542 /* UIView+CornerRadius.m in Sources */,
 				737AEF891ED8029B0039E88A /* ModifyPasswordController.m in Sources */,
@@ -5002,7 +4994,6 @@
 				73869EE41ECADA1B00935F89 /* NSString+Attribute.m in Sources */,
 				043212BB1F26F9F400F29D1B /* OrderMessageViewController.m in Sources */,
 				737C1E761EEA2FD80020D342 /* FightingGroupCell.m in Sources */,
-				15360A811F2C9439008DD3BB /* YZInputView.m in Sources */,
 				7319866F1EC1A65300FA7DF0 /* RegisterController.m in Sources */,
 				737A1FE61EDFEAE800CD6FD2 /* NewsCenterModel.m in Sources */,
 				0413DB721F1F0DE000357B27 /* LightSonViewController.m in Sources */,
@@ -5026,6 +5017,7 @@
 				042DF05E1F2828CF00429D49 /* WuLiuCell.m in Sources */,
 				737C1E701EEA2CD50020D342 /* FightGroupRulesView.m in Sources */,
 				737CD3031EE13CC100B6A5DB /* ProductDetailViewModel.m in Sources */,
+				04CB6C1B1F31C4610039B87C /* OrderSubDay.m in Sources */,
 				7387BCE01EF11BB30061C5A1 /* FightGroupPeopleView.m in Sources */,
 				04E40AD21F2C586900C4D665 /* MyGroupController.m in Sources */,
 				738DAAD91EDEB39600F45DE3 /* IntroduceUsController.m in Sources */,

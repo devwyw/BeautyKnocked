@@ -8,8 +8,7 @@
 
 #import "FightGroupMallController.h"
 #import "FightGroupMallViewModel.h"
-#import "MLPaymentView.h"
-#import "MMPopupWindow.h"
+#import "PaySheetView.h"
 
 @interface FightGroupMallController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) FightGroupMallViewModel *viewModel;
@@ -36,7 +35,6 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
     self.title = @"拼团商城";
 
-    [MMPopupWindow sharedWindow].touchWildToHide = YES;
     [self initializeViews];
     [self addConstraints];
 }
@@ -129,8 +127,16 @@
 }
 
 -(void)fightGroupPayAction:(UIButton *)button {
-    MLPaymentView *paymentSheetView = [[MLPaymentView alloc]init];
-    [paymentSheetView show];
+    PaySheetView *paysheet=[[PaySheetView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(207+180*4))];
+    [LEEAlert actionsheet].config
+    .LeeCustomView(paysheet)
+    .LeeActionSheetBottomMargin(0.0f)
+    .LeeCornerRadius(0.0f)
+    .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+    .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+        return Width;
+    })
+    .LeeShow();
 }
 
 @end

@@ -13,7 +13,7 @@
 #import "ConfirmOrderProductCell.h"
 #import "ConfirmOrderItemCell.h"
 #import "ConfirmOrderRemarksCell.h"
-#import "ConfirmOrderChooseDateView.h"
+#import "OrderSubDay.h"
 #import <SVProgressHUD.h>
 
 
@@ -51,8 +51,6 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
     [tableview registerClass:[ConfirmOrderAddCell class] forCellReuseIdentifier:confirmOrderAddCellReuseIdentifier];
     
     [tableview registerClass:[ConfirmOrderRemarksCell class] forCellReuseIdentifier:confirmOrderRemarksCellReuseIdentifier];
-
-
 }
 
 -(NSInteger)ddcs_numberOfSectionsInTableView:(UITableView *)tableView {
@@ -122,8 +120,16 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
 
 -(void)ddcs_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath == [NSIndexPath indexPathForRow:1 inSection:1]) {
-        ConfirmOrderChooseDateView *dateView = [[ConfirmOrderChooseDateView alloc] init];
-        [dateView show];
+        OrderSubDay *view=[[OrderSubDay alloc]initWithFrame:CGRectMake(0, 0,Width_Pt(1018), Height_Pt(1186) + 20)];
+        [view makeCornerRadius:5];
+        [LEEAlert alert].config
+        .LeeCustomView(view)
+        .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+        .LeeHeaderColor([UIColor clearColor])
+        .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+            return Width_Pt(1018);
+        })
+        .LeeShow();
     }
 }
 
