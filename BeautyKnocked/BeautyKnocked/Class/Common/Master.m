@@ -1,24 +1,23 @@
 //
-//  AdminManager.m
+//  Master.m
 //  BeautyKnocked
 //
 //  Created by Mac on 2017/7/20.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
-#import "AdminManager.h"
+#import "Master.h"
 #import <FMDB.h>
 #import "Acount.h"
-#import "User.h"
 
-static AdminManager *instance=nil;
+static Master *instance=nil;
 
-@interface AdminManager ()<NSCopying,NSMutableCopying>{
+@interface Master ()<NSCopying,NSMutableCopying>{
     FMDatabase *Data;
 }
 @end
 
-@implementation AdminManager
+@implementation Master
 #pragma mark ===== 单例模式 =====
 +(instancetype)allocWithZone:(struct _NSZone *)zone{
     if (!instance) {
@@ -40,30 +39,60 @@ static AdminManager *instance=nil;
 }
 -(void)initDataBase{
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"model.sqlite"];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"acount.sqlite"];
     
     Data = [FMDatabase databaseWithPath:filePath];
     [Data open];
-
-    NSString *acount = @"CREATE TABLE 'acount' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL,'acount' VARCHAR(255),'name' VARCHAR(255))";
-    
-    NSString *user = @"CREATE TABLE 'user' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'phone' VARCHAR(255),'password' VARCHAR(255)) ";
-    
+    NSString *acount = @"CREATE TABLE 'acount' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'aid' VARCHAR(255),'phone' VARCHAR(255),'password' VARCHAR(255))";
     [Data executeUpdate:acount];
-    [Data executeUpdate:user];
-    
     [Data close];
 }
 +(instancetype)shareManager{
     if (!instance) {
-        instance = [[AdminManager alloc]init];
+        instance = [[Master alloc]init];
         [instance initDataBase];
     }
     return instance;
 }
-#pragma mark ===== 数据库接口 =====
-
-
+#pragma mark ===== 账号接口 =====
+-(void)addAcount:(Acount*)acount{
+    [Data open];
+    NSNumber *maxID = @(0);
+    FMResultSet *res = [Data executeQuery:@"SELECT * FROM acount"];
+    while ([res next]) {
+        if ([maxID integerValue] < [[res stringForColumn:@"aid"] integerValue]) {
+            maxID = @([[res stringForColumn:@"aid"] integerValue]);
+        }
+    }
+    maxID = @([maxID integerValue] + 1);
+    [Data executeUpdate:@"INSERT INTO acount(aid,phone,password)VALUES(?,?,?)",maxID,acount.phone,acount.password];
+    [Data close];
+}
+-(void)deleteAcount:(Acount*)acount{
+    [Data open];
+    [Data executeUpdate:@"DELETE FROM acount WHERE aid = ?",acount.aid];
+    [Data close];
+}
+-(void)updateAcount:(Acount*)acount{
+    [Data open];
+    [Data executeUpdate:@"UPDATE 'acount' SET phone = ?  WHERE aid = ? ",acount.phone,acount.aid];
+    [Data executeUpdate:@"UPDATE 'acount' SET password = ?  WHERE aid = ? ",acount.password,acount.aid];
+    [Data close];
+}
+-(NSMutableArray*)getAllAcount{
+    [Data open];
+    NSMutableArray *dataArray = [[NSMutableArray alloc]init];
+    FMResultSet *res = [Data executeQuery:@"SELECT * FROM acount"];
+    while ([res next]) {
+        Acount *acount = [[Acount alloc]init];
+        acount.aid= @([[res stringForColumn:@"aid"] integerValue]);
+        acount.phone = [res stringForColumn:@"phone"];
+        acount.password = [res stringForColumn:@"password"];
+        [dataArray addObject:acount];
+    }
+    [Data close];
+    return dataArray;
+}
 
 
 #pragma mark ===== 检测网络 =====

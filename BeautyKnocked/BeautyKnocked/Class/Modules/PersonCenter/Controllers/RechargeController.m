@@ -8,6 +8,7 @@
 
 #import "RechargeController.h"
 #import "RechargeCell.h"
+#import "RechargeInfoController.h"
 
 @interface RechargeController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITextField * textField;
@@ -97,6 +98,11 @@
     }
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    RechargeInfoController *controller=[[RechargeInfoController alloc]init];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return CGFLOAT_MIN;
 }

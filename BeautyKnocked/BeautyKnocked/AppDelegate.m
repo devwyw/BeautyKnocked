@@ -10,13 +10,13 @@
 #import "TabBarController.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic,strong) Master * master;
 @end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //[NSThread sleepForTimeInterval:3.0];//设置启动页面时间
+    //[NSThread sleepForTimeInterval:3.0];//设置启动页延迟时间
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[TabBarController alloc] init];
@@ -26,7 +26,6 @@
     /** 配置区 */
     [self getLog];
     
-
     return YES;
 }
 
@@ -56,7 +55,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [AdminManager getNetWork:self.window.rootViewController];
+    [Master getNetWork:self.window.rootViewController];
 }
 - (void)applicationWillTerminate:(UIApplication *)application {
 }

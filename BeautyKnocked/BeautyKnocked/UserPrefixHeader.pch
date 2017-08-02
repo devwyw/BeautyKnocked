@@ -21,7 +21,8 @@
 #define Strongify(o)      __strong typeof(self) o = mmwo;
 #define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
 
-#import "AdminManager.h"
+#import "Master.h"
+#import "Acount.h"
 #import "UIColor+help.h"
 #import "UIViewController+Cloudox.h"
 #import "UIView+CornerRadius.h"

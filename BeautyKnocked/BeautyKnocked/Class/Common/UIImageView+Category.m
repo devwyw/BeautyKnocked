@@ -40,9 +40,9 @@
     CGContextRef line = UIGraphicsGetCurrentContext();
     // 设置颜色
     CGContextSetStrokeColorWithColor(line, color.CGColor);
-    CGContextSetLineDash(line, 0, lengths, 2); //画虚线
-    CGContextMoveToPoint(line, 0.0, 2.0); //开始画线
-    CGContextAddLineToPoint(line, Width - 10, 2.0);
+    CGContextSetLineDash(line, 0, lengths, height); //画虚线
+    CGContextMoveToPoint(line, 0.0, height); //开始画线
+    CGContextAddLineToPoint(line, self.frame.size.width, height);
     CGContextStrokePath(line);
 
     return UIGraphicsGetImageFromCurrentImageContext();

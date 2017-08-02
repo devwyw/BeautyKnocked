@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Acount : NSObject
-
+@property (nonatomic,assign) NSNumber * aid;
+@property (nonatomic,strong) NSString * phone;
+@property (nonatomic,strong) NSString * password;
 @end

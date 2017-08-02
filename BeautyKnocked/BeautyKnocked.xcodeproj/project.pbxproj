@@ -25,6 +25,7 @@
 		0484ABE61F2F01FA00213AB1 /* TextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0484ABE51F2F01FA00213AB1 /* TextField.m */; };
 		0484ABF61F2F15F600213AB1 /* book.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0484ABEB1F2F15F600213AB1 /* book.jpg */; };
 		04B46E441F20872C007349F2 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E431F20872C007349F2 /* NearbyController.m */; };
+		04C576C91F31766700D1F188 /* RechargeInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C576C81F31766700D1F188 /* RechargeInfoController.m */; };
 		04E40AD21F2C586900C4D665 /* MyGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E40AD11F2C586900C4D665 /* MyGroupController.m */; };
 		04E7C2631F2C392B00D03A79 /* ding0_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E7BF9B1F2C392A00D03A79 /* ding0_03@2x.png */; };
 		04E7C2641F2C392B00D03A79 /* ding0_03@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E7BF9C1F2C392A00D03A79 /* ding0_03@3x.png */; };
@@ -708,14 +709,13 @@
 		04E8C6761F304E87005566C4 /* MoneyTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6751F304E87005566C4 /* MoneyTableController.m */; };
 		04E8C6791F3051E8005566C4 /* MoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6781F3051E8005566C4 /* MoneyCell.m */; };
 		04E8C67F1F306BF1005566C4 /* Acount.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C67E1F306BF1005566C4 /* Acount.m */; };
-		04E8C6821F306C08005566C4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6811F306C08005566C4 /* User.m */; };
 		04E8C6851F3073D5005566C4 /* RechargeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6841F3073D5005566C4 /* RechargeController.m */; };
 		150A04951F28C98100C66220 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04921F28C98100C66220 /* UINavigationController+Cloudox.m */; };
 		150A04961F28C98100C66220 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04941F28C98100C66220 /* UIViewController+Cloudox.m */; };
 		150A04A61F28DE6600C66220 /* CommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 150A04A51F28DE6600C66220 /* CommentController.m */; };
 		152008AD1F30AFC4008A4A1C /* RechargeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152008AC1F30AFC4008A4A1C /* RechargeCell.m */; };
 		152863BC1F29DB2700AD55C7 /* PJBeautViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */; };
-		15360A7F1F2C9439008DD3BB /* AdminManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A601F2C9439008DD3BB /* AdminManager.m */; };
+		15360A7F1F2C9439008DD3BB /* Master.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A601F2C9439008DD3BB /* Master.m */; };
 		15360A801F2C9439008DD3BB /* WMPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A631F2C9439008DD3BB /* WMPanGestureRecognizer.m */; };
 		15360A811F2C9439008DD3BB /* YZInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A661F2C9439008DD3BB /* YZInputView.m */; };
 		15360A821F2C9439008DD3BB /* MMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15360A691F2C9439008DD3BB /* MMAlertView.m */; };
@@ -938,6 +938,8 @@
 		04B46E431F20872C007349F2 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		04C53C6F1F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		04C53C701F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		04C576C71F31766700D1F188 /* RechargeInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeInfoController.h; sourceTree = "<group>"; };
+		04C576C81F31766700D1F188 /* RechargeInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeInfoController.m; sourceTree = "<group>"; };
 		04E40AD01F2C586900C4D665 /* MyGroupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGroupController.h; sourceTree = "<group>"; };
 		04E40AD11F2C586900C4D665 /* MyGroupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGroupController.m; sourceTree = "<group>"; };
 		04E7BF9B1F2C392A00D03A79 /* ding0_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ding0_03@2x.png"; sourceTree = "<group>"; };
@@ -1626,8 +1628,6 @@
 		04E8C6781F3051E8005566C4 /* MoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyCell.m; sourceTree = "<group>"; };
 		04E8C67D1F306BF1005566C4 /* Acount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Acount.h; sourceTree = "<group>"; };
 		04E8C67E1F306BF1005566C4 /* Acount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Acount.m; sourceTree = "<group>"; };
-		04E8C6801F306C08005566C4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		04E8C6811F306C08005566C4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		04E8C6831F3073D5005566C4 /* RechargeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeController.h; sourceTree = "<group>"; };
 		04E8C6841F3073D5005566C4 /* RechargeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeController.m; sourceTree = "<group>"; };
 		150A04911F28C98100C66220 /* UINavigationController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Cloudox.h"; path = "../UINavigationController+Cloudox.h"; sourceTree = "<group>"; };
@@ -1640,8 +1640,8 @@
 		152008AC1F30AFC4008A4A1C /* RechargeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeCell.m; sourceTree = "<group>"; };
 		152863BA1F29DB2700AD55C7 /* PJBeautViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJBeautViewCell.h; sourceTree = "<group>"; };
 		152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJBeautViewCell.m; sourceTree = "<group>"; };
-		15360A5F1F2C9439008DD3BB /* AdminManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdminManager.h; path = ../Common/AdminManager.h; sourceTree = "<group>"; };
-		15360A601F2C9439008DD3BB /* AdminManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdminManager.m; path = ../Common/AdminManager.m; sourceTree = "<group>"; };
+		15360A5F1F2C9439008DD3BB /* Master.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Master.h; path = ../Common/Master.h; sourceTree = "<group>"; };
+		15360A601F2C9439008DD3BB /* Master.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Master.m; path = ../Common/Master.m; sourceTree = "<group>"; };
 		15360A621F2C9439008DD3BB /* WMPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPanGestureRecognizer.h; sourceTree = "<group>"; };
 		15360A631F2C9439008DD3BB /* WMPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPanGestureRecognizer.m; sourceTree = "<group>"; };
 		15360A651F2C9439008DD3BB /* YZInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZInputView.h; sourceTree = "<group>"; };
@@ -2976,12 +2976,10 @@
 		04E8C67C1F306BCF005566C4 /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				15360A5F1F2C9439008DD3BB /* AdminManager.h */,
-				15360A601F2C9439008DD3BB /* AdminManager.m */,
+				15360A5F1F2C9439008DD3BB /* Master.h */,
+				15360A601F2C9439008DD3BB /* Master.m */,
 				04E8C67D1F306BF1005566C4 /* Acount.h */,
 				04E8C67E1F306BF1005566C4 /* Acount.m */,
-				04E8C6801F306C08005566C4 /* User.h */,
-				04E8C6811F306C08005566C4 /* User.m */,
 			);
 			name = Master;
 			sourceTree = "<group>";
@@ -3922,6 +3920,8 @@
 				04E8C6751F304E87005566C4 /* MoneyTableController.m */,
 				04E8C6831F3073D5005566C4 /* RechargeController.h */,
 				04E8C6841F3073D5005566C4 /* RechargeController.m */,
+				04C576C71F31766700D1F188 /* RechargeInfoController.h */,
+				04C576C81F31766700D1F188 /* RechargeInfoController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -4859,7 +4859,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04E8C6821F306C08005566C4 /* User.m in Sources */,
 				7385E0B71ED68E7A00561DB0 /* FilterCollectionReusableHeaderView.m in Sources */,
 				7390F4B71EE697030059A168 /* AddressToDefaultView.m in Sources */,
 				736DE29A1ED0208400E32717 /* BeauticianItemTableViewController.m in Sources */,
@@ -4938,7 +4937,7 @@
 				045C7A061F1DACD400B9C9C4 /* BrandViewController.m in Sources */,
 				152008AD1F30AFC4008A4A1C /* RechargeCell.m in Sources */,
 				04E8C6791F3051E8005566C4 /* MoneyCell.m in Sources */,
-				15360A7F1F2C9439008DD3BB /* AdminManager.m in Sources */,
+				15360A7F1F2C9439008DD3BB /* Master.m in Sources */,
 				7387BCD21EF0CE400061C5A1 /* FightGroupHourglassShareView.m in Sources */,
 				737A1FFC1EE00D5100CD6FD2 /* AddAndReserveView.m in Sources */,
 				7374313C1ECD44F700A617F3 /* ItemListBaseController.m in Sources */,
@@ -4979,6 +4978,7 @@
 				73440A401ED2D279003807B8 /* PSFooterReserveView.m in Sources */,
 				7388F5301EDA6B6500EB7EE4 /* AboutUsTableViewController.m in Sources */,
 				737C1E891EEA73570020D342 /* FightGroupSectionTitle.m in Sources */,
+				04C576C91F31766700D1F188 /* RechargeInfoController.m in Sources */,
 				73A485181EF3B93500FA9434 /* ConfirmOrderItemCell.m in Sources */,
 				04E8C6731F3023F6005566C4 /* MoneyController.m in Sources */,
 				737C5B231ED5776900C46128 /* PSRightFilterView.m in Sources */,
