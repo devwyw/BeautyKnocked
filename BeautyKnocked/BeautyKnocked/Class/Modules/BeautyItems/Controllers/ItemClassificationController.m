@@ -15,14 +15,15 @@
 #import <PYSearchViewController.h>
 #import "CarItem.h"
 
-@interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate>
+@interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,PYSearchViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *itemCategories;
 @property (nonatomic, strong) WMPanGestureRecognizer *panGesture;
 @property (nonatomic, assign) CGPoint lastPoint;
 @property (nonatomic, strong) SDCycleScrollView *classBannerView;
 @property (nonatomic, strong) CarItem * carItem;
-@property (nonatomic, strong) UITextField * searchField;
+@property (nonatomic, strong) UISearchBar * searchBar;
+@property (nonatomic,   strong) UIButton * item;
 
 @end
 
@@ -40,46 +41,40 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     self.navBarBgAlpha = @"1.0";
     _carItem.count=100;
-
-    UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
-    [item setHidden:NO];
-    UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
-    [field setHidden:NO];
+    [_item setHidden:NO];
+    [_searchBar setHidden:_item.isHidden];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-
-    UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:101];
-    [item setHidden:YES];
-    UISearchBar *field=(UISearchBar*)[self.navigationController.navigationBar viewWithTag:102];
-    [field setHidden:YES];
+    [_item setHidden:YES];
+    [_searchBar setHidden:_item.isHidden];
 }
 -(void)setHeaderView{
     /** 顶部控件 */
-    UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(15, 2, 60, 40)];
-    [item setTag:101];
-    [item setTitle:@"南昌" forState:UIControlStateNormal];
-    [item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [item setImage:[UIImage imageNamed:@"shouyelocation"] forState:UIControlStateNormal];
-    [item setImgViewStyle:ButtonImgViewStyleRight imageSize:[UIImage imageNamed:@"shouyelocation"].size space:5];
-    [item addTarget:self action:@selector(locationClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.navigationBar addSubview:item];
+    _item = [[UIButton alloc]initWithFrame:CGRectMake(15, 2, 60, 40)];
+    [_item setTitle:@"南昌" forState:UIControlStateNormal];
+    [_item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_item setImage:[UIImage imageNamed:@"shouyelocation"] forState:UIControlStateNormal];
+    [_item setImgViewStyle:ButtonImgViewStyleRight imageSize:[UIImage imageNamed:@"shouyelocation"].size space:5];
+    [[_item rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [SVProgressHUD showInfoWithStatus:@"目前只提供南昌地区的服务"];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD dismissWithDelay:1.85];
+    }];
+    [self.navigationController.navigationBar addSubview:_item];
 
-    UISearchBar *Sbar = [[UISearchBar alloc]initWithFrame:CGRectMake(85, 5, Width-100, 34)];
-    [Sbar setTag:102];
-    [Sbar setSearchFieldBackgroundImage:[UIImage GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andAlpha:1 andHeight:25] forState:UIControlStateNormal];
-    [self.navigationController.navigationBar addSubview:Sbar];
-    
-    _searchField = [Sbar valueForKey:@"_searchField"];
-    _searchField.textColor = [UIColor whiteColor];
-    [_searchField.layer setCornerRadius:3];
-    [_searchField setClipsToBounds:YES];
-    [_searchField setTextAlignment:NSTextAlignmentCenter];
-    [_searchField setClearButtonMode:UITextFieldViewModeNever];
-    [_searchField setDelegate:self];
+    _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(85, 5, Width-100, 34)];
+    [_searchBar setSearchFieldBackgroundImage:[UIImage GetImageWithColor:[UIColor colorWithHexString:@"#D2AE55"] andAlpha:1 andHeight:25] forState:UIControlStateNormal];
+    [self.navigationController.navigationBar addSubview:_searchBar];
+    UITextField * searchField = [_searchBar valueForKey:@"_searchField"];
+    searchField.textColor = [UIColor whiteColor];
+    [searchField makeCornerRadius:3];
+    [searchField setTextAlignment:NSTextAlignmentCenter];
+    [searchField setClearButtonMode:UITextFieldViewModeNever];
+    [searchField setDelegate:self];
     UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fenlei-sousou"]];
     iconView.frame = CGRectMake(0, 0, 13 , 13);
-    _searchField.leftView = iconView;
+    searchField.leftView = iconView;
 }
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
     [textField resignFirstResponder];
@@ -87,17 +82,18 @@
     NSArray *hotSeaches = @[@"美白", @"补水", @"背部", @"清洁", @"化妆水", @"精油", @"按摩", @"养肤系列", @"长效系列", @"水光疗养"];
     PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"关键词" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         [searchViewController dismissViewControllerAnimated:YES completion:nil];
-        _searchField.text=searchText;
+        _searchBar.text=searchText;
     }];
     {
         /** 配置 */
-        controller.searchBar.text=_searchField.text;
+        controller.delegate=self;
+        controller.searchBar.text=_searchBar.text;
         controller.hotSearchTitle=@"关键词搜索";
         controller.searchHistoryHeader.text=@"历史搜索记录";
         controller.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
         controller.searchBarBackgroundColor=controller.view.backgroundColor;
         controller.searchBar.tintColor = [UIColor lightGrayColor];
-        controller.cancelButton.tintColor=controller.searchBar.tintColor;
+        controller.cancelButton.tintColor=[UIColor blackColor];
         controller.hotSearchStyle = PYHotSearchStyleDefault;
         controller.searchHistoryStyle = PYSearchHistoryStyleNormalTag;
     }
@@ -110,11 +106,6 @@
     [self presentViewController:NewNavigation animated:YES completion:nil];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     return NO;
-}
--(void)locationClick:(UIButton*)button{
-    [SVProgressHUD showInfoWithStatus:@"目前只提供南昌地区的服务"];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD dismissWithDelay:1.85];
 }
 - (instancetype)init {
     if (self = [super init]) {

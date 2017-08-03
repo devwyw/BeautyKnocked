@@ -858,11 +858,12 @@
 - (void)cancelDidClick
 {
     [self.searchBar resignFirstResponder];
-    
-    if ([self.delegate respondsToSelector:@selector(didClickCancel:)]) {
-        [self.delegate didClickCancel:self];
-        return;
-    }
+    if (self.didSearchBlock) self.didSearchBlock(self, self.searchBar, self.searchBar.text);
+    [self saveSearchCacheAndRefreshView];
+    //    if ([self.delegate respondsToSelector:@selector(didClickCancel:)]) {
+    //        [self.delegate didClickCancel:self];
+    //        return;
+    //    }
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
