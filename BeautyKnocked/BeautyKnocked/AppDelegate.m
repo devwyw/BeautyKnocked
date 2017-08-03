@@ -40,7 +40,7 @@
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:17.0]}];
     [navigationBarAppearance setTranslucent:YES];
-    [navigationBarAppearance setBackgroundImage:[UIImage GetImageWithColor:[UIColor colorWithHexString:@"#E1BF6E"] andAlpha:1 andHeight:64] forBarMetrics:UIBarMetricsDefault];
+    [navigationBarAppearance setBackgroundImage:[UIImage GetImageWithColor:ThemeColor andAlpha:1 andHeight:64] forBarMetrics:UIBarMetricsDefault];
     [navigationBarAppearance setShadowImage:[UIImage new]];
 }
 #pragma mark ===== NSLog =====
