@@ -12,5 +12,6 @@
 @interface AddCarView : UIView
 
 @property (nonatomic,strong) RACSignal * doneAction;
+@property (nonatomic,copy) NSString * count;
 
 @end

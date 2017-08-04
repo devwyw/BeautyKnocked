@@ -7,6 +7,7 @@
 //
 
 #import "AddAndReserveView.h"
+#import "UIButton+Category.h"
 
 @interface AddAndReserveView ()
 
@@ -37,11 +38,12 @@
 
 -(void)initializeButtons {
     _addShoppingCart = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_addShoppingCart setImage:[UIImage imageNamed:@"jiarugouwuche"] forState:UIControlStateNormal];
-    [_addShoppingCart setTitle:@"加入购物车" forState:UIControlStateNormal];
     _addShoppingCart.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    [_addShoppingCart setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_addShoppingCart setBackgroundImage:[UIImage imageNamed:@"gouwuchekuang"] forState:UIControlStateNormal];
+    [_addShoppingCart setTitle:@"加入购物车" forState:UIControlStateNormal];
+    [_addShoppingCart setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_addShoppingCart setImage:[UIImage imageNamed:@"jiarugouwuche"] forState:UIControlStateNormal];
+    [_addShoppingCart setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiarugouwuche"].size space:5];
     [self addSubview:_addShoppingCart];
     
     _appointNow = [UIButton buttonWithType:UIButtonTypeCustom];

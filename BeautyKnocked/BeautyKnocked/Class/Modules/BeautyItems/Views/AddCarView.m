@@ -15,6 +15,11 @@
 @property (nonatomic,strong) UIButton * done;
 @end
 
+static NSString *reduces=@"kejian";
+static NSString *unReduce=@"bukejian";
+static NSString *addTos=@"kejia";
+static NSString *unAddTo=@"bukejia";
+
 @implementation AddCarView
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -62,19 +67,49 @@
     [self addSubview:line];
     
     _Lbtn=[[UIButton alloc]init];
-    [_Lbtn setImage:[UIImage imageNamed:@"bukejian"] forState:UIControlStateNormal];
-    [_Lbtn addTarget:self action:@selector(setNum:) forControlEvents:UIControlEventTouchUpInside];
     _Lbtn.userInteractionEnabled=NO;
+    [_Lbtn setImage:[UIImage imageNamed:@"bukejian"] forState:UIControlStateNormal];
+    [[_Lbtn rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if ([_number.text integerValue]>1) {
+            _number.text=[NSString stringWithFormat:@"%ld",[_number.text integerValue]-1];
+            if ([_number.text integerValue]==1) {
+                [_Lbtn setImage:[UIImage imageNamed:unReduce] forState:UIControlStateNormal];
+                _Lbtn.userInteractionEnabled=NO;
+            }else{
+                [_Lbtn setImage:[UIImage imageNamed:reduces] forState:UIControlStateNormal];
+                _Lbtn.userInteractionEnabled=YES;
+            }
+        }
+        self.count=_number.text;
+        [_Rbtn setImage:[UIImage imageNamed:addTos] forState:UIControlStateNormal];
+        _Rbtn.userInteractionEnabled=YES;
+    }];
+    
     [self addSubview:_Lbtn];
     
     _Rbtn=[[UIButton alloc]init];
-    [_Rbtn setImage:[UIImage imageNamed:@"kejia"] forState:UIControlStateNormal];
-    [_Rbtn addTarget:self action:@selector(setNum:) forControlEvents:UIControlEventTouchUpInside];
     _Rbtn.userInteractionEnabled=YES;
+    [_Rbtn setImage:[UIImage imageNamed:@"kejia"] forState:UIControlStateNormal];
+    [[_Rbtn rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if ([_number.text integerValue]<99) {
+            _number.text=[NSString stringWithFormat:@"%ld",[_number.text integerValue]+1];
+            if ([_number.text integerValue]==99) {
+                [_Rbtn setImage:[UIImage imageNamed:unAddTo] forState:UIControlStateNormal];
+                _Rbtn.userInteractionEnabled=NO;
+            }else{
+                [_Rbtn setImage:[UIImage imageNamed:addTos] forState:UIControlStateNormal];
+                _Rbtn.userInteractionEnabled=YES;
+            }
+        }
+        self.count=_number.text;
+        [_Lbtn setImage:[UIImage imageNamed:reduces] forState:UIControlStateNormal];
+        _Lbtn.userInteractionEnabled=YES;
+    }];
     [self addSubview:_Rbtn];
     
     _number=[[UILabel alloc]init];
     _number.text=@"1";
+    self.count=_number.text;
     _number.backgroundColor=[UIColor colorWithHexString:@"#EEEEEE"];
     _number.textAlignment=NSTextAlignmentCenter;
     [_number makeCornerRadius:8];
@@ -135,35 +170,6 @@
         make.height.equalTo(_Lbtn.mas_height);
         make.width.mas_equalTo(Width_Pt(135));
     }];
-}
--(void)setNum:(UIButton*)btn{
-    if (btn==_Lbtn) {
-        if ([_number.text integerValue]-1>0) {
-            _number.text=[NSString stringWithFormat:@"%ld",[_number.text integerValue]-1];
-            if ([_number.text integerValue]==1) {
-                [_Lbtn setImage:[UIImage imageNamed:@"bukejian"] forState:UIControlStateNormal];
-                _Lbtn.userInteractionEnabled=NO;
-            }else{
-                [_Lbtn setImage:[UIImage imageNamed:@"kejian"] forState:UIControlStateNormal];
-                _Lbtn.userInteractionEnabled=YES;
-            }
-            [_Rbtn setImage:[UIImage imageNamed:@"kejia"] forState:UIControlStateNormal];
-            _Rbtn.userInteractionEnabled=YES;
-        }
-    }else{
-        if ([_number.text integerValue]+1<100) {
-            _number.text=[NSString stringWithFormat:@"%ld",[_number.text integerValue]+1];
-            if ([_number.text integerValue]==99) {
-                [_Rbtn setImage:[UIImage imageNamed:@"bukejia"] forState:UIControlStateNormal];
-                _Rbtn.userInteractionEnabled=NO;
-            }else{
-                [_Rbtn setImage:[UIImage imageNamed:@"kejia"] forState:UIControlStateNormal];
-                _Rbtn.userInteractionEnabled=YES;
-            }
-            [_Lbtn setImage:[UIImage imageNamed:@"kejian"] forState:UIControlStateNormal];
-            _Lbtn.userInteractionEnabled=YES;
-        }
-    }
 }
 -(RACSignal*)doneAction{
     return [_done rac_signalForControlEvents:UIControlEventTouchUpInside];

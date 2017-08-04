@@ -13,7 +13,6 @@
 #import "EvaluationCell.h"
 #import "EvaluationHeaderView.h"
 #import "EvaluationFooterView.h"
-#import "EvaluationCell.h"
 #import "EvaluationTableViewController.h"
 #import "CommentController.h"
 
