@@ -18,14 +18,11 @@
 @implementation ConfirmOrderSubmitView
 
 -(void)setTotalPrice:(NSString *)totalPrice {
-    
     _totalPrice = totalPrice;
-    
     NSString *text = [NSString stringWithFormat:@"总价: ¥ %@",totalPrice];
     NSRange redRange = [text rangeOfString:[text substringFromIndex:4]];
     NSMutableAttributedString *muAttStr = [[NSMutableAttributedString alloc] initWithString:text];
     [muAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:redRange];
-    
     _totalPriceLabel.attributedText = muAttStr;
 }
 

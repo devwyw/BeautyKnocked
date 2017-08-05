@@ -68,7 +68,9 @@
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
         AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
         [view.doneAction subscribeNext:^(id  _Nullable x) {
-            [LEEAlert closeWithCompletionBlock:nil];
+            [LEEAlert closeWithCompletionBlock:^{
+                NSLog(@"%@",view.count);
+            }];
         }];
         [LEEAlert actionsheet].config
         .LeeHeaderColor([UIColor clearColor])
