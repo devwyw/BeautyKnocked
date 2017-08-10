@@ -38,9 +38,7 @@
     CGContextAddLineToPoint(context, Width, Height_Pt(147));
     //绘制完成
     CGContextStrokePath(context);
-    
 }
-
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -54,21 +52,34 @@
 -(void)setTextName:(NSString *)textName {
     _textLabel.text = textName;
 }
-
+-(void)setText:(NSString *)text{
+    _textField.text=text;
+}
 -(void)createViews {
-    
+    Acount *user=[Acount shareManager];
     _textLabel = [[UILabel alloc] init];
-    _textLabel.textColor = [UIColor lightGrayColor];
+    _textLabel.textColor = [UIColor grayColor];
     _textLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [self addSubview:_textLabel];
     
     _textField = [[UITextField alloc] init];
+    _textField.text=user.nickName;
+    [[_textField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if (![_textField.text isEqualToString:user.nickName] && _textField.text.length>0) {
+            [Master HttpPostRequestByParams:@{@"id":user.id,@"device":UUID,@"nickName":_textField.text} url:mlqqm serviceCode:ggnc Success:^(id json) {
+                if ([Master getSuccess:json]) {
+                    user.nickName=_textField.text;
+                    [user UpdateAcount];
+                }
+            } Failure:nil];
+        }else{
+            _textField.text=user.nickName;
+        }
+    }];
     [self addSubview:_textField];
-    
 }
 
 -(void)addConstraints {
-    
     [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).with.offset(Width_Pt(75));
         make.centerY.equalTo(self);

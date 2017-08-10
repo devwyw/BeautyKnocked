@@ -21,6 +21,9 @@
     }
     return _integralViewModel;
 }
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"积分商城";

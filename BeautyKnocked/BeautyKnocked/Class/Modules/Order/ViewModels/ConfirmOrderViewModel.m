@@ -14,7 +14,6 @@
 #import "ConfirmOrderItemCell.h"
 #import "ConfirmOrderRemarksCell.h"
 #import "OrderSubDay.h"
-#import <SVProgressHUD.h>
 
 
 static NSString *const addressCellReuseIdentifier = @"ConfirmOrderAddressCell";
@@ -143,9 +142,7 @@ static NSString *const confirmOrderRemarksCellReuseIdentifier = @"ConfirmOrderRe
 #pragma mark ConfirmOrderAddCellDelegate
 -(void)wantAddMore:(NSString *)currentTitle {
     if (_addArray.count>=4) {
-        [SVProgressHUD showInfoWithStatus:@"您已超过四个项目，考虑时间因素不可继续添加项目"];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD dismissWithDelay:1.85];
+        [Master showSVProgressHUD:@"您已超过四个项目，考虑时间因素不可继续添加项目" withType:ShowSVProgressTypeInfo withShowBlock:nil];
     }else{
         [_addArray addObject:currentTitle];
         [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count+1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];

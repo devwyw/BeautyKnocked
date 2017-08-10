@@ -23,7 +23,9 @@
     }
     return _viewModel;
 }
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"拼团详情";

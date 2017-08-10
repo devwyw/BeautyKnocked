@@ -21,7 +21,9 @@
 @end
 
 @implementation BeauticianController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 -(instancetype)init {
     self = [super init];
     if (self) {

@@ -11,5 +11,5 @@
 @interface PersonInfoTextField : UIView
 
 @property (nonatomic, copy) NSString *textName;
-
+@property (nonatomic, copy) NSString *text;
 @end

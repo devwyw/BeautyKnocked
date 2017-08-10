@@ -14,7 +14,9 @@
 
 @implementation MyGroupController
 
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (instancetype)initWithViewControllerClasses:(NSArray<Class> *)classes andTheirTitles:(NSArray<NSString *> *)titles
 {
     self = [super initWithViewControllerClasses:classes andTheirTitles:titles];

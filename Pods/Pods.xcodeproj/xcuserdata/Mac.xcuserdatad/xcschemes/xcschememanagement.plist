@@ -89,6 +89,11 @@
 			<key>orderHint</key>
 			<integer>14</integer>
 		</dict>
+		<key>ZLPhotoBrowser.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -157,6 +162,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3D57A963DF2C4863B1633C01269C395F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4172B554243F381A595D84AE2EE28FAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>41A4E9DF72FEF8C4BF34022F855939E0</key>
 		<dict>
 			<key>primary</key>
@@ -212,12 +227,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>710696D0D0A9A7B052E49A28746A10E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>740262FD31B721136D2DCDB4020FAB50</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>792BA86CBE5A99FBEDAB7C8BADC0698C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>82E1489D8BEA9D98A6AE051A2968D8D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -257,6 +282,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9C2A32785AC722AEBAB5B34A921E65D7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
 		<dict>
 			<key>primary</key>
@@ -272,6 +302,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A9FAEC698AD83AFC38640740CF68E151</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>AE584076B0FD9A9A34C3B9C75512023B</key>
 		<dict>
 			<key>primary</key>
@@ -283,6 +318,11 @@
 			<true/>
 		</dict>
 		<key>B35F1209D9C93E1BF1B30E4C410484F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B53A2300C8A4BD70EB09417C7F01BDB8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -337,12 +377,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>ED9C66BDA3071FFE1327A337285D3545</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F2BA4CA411C891971FA2046CC33B4C0C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>F2E2B8BA2C9202088079883193743427</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F4CEFA530918C1CE3DAAE4E2A49354F3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC6A6034DA41342B69CB92EF0538E289</key>
 		<dict>
 			<key>primary</key>
 			<true/>

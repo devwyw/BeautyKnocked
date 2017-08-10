@@ -13,7 +13,9 @@
 @end
 
 @implementation BrandViewController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"品牌甄选"];

@@ -32,6 +32,7 @@ PODS:
   - SVProgressHUD (2.1.2)
   - WMPageController (2.2.1)
   - XLForm (3.0.0)
+  - ZLPhotoBrowser (2.2.5)
 
 DEPENDENCIES:
   - AFNetworking (= 3.1.0)
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - WMPageController (= 2.2.1)
   - XLForm (= 3.0)
+  - ZLPhotoBrowser
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -64,7 +66,8 @@ SPEC CHECKSUMS:
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
   XLForm: 10fc7eb9e2d5df21a515fa3a794f4e26319abd0e
+  ZLPhotoBrowser: e3b90e4ab9ec5d19ba2ed2ef7c9ded654e1b1c8e
 
-PODFILE CHECKSUM: f8a5e6010a2b815b4dd46ed61feb719f44f371ef
+PODFILE CHECKSUM: c8ad4c9f9ba616679adb121e526e7035c50366d9
 
 COCOAPODS: 1.2.0

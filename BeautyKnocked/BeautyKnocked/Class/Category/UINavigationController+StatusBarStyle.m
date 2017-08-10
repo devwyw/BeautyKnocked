@@ -9,10 +9,13 @@
 #import "UINavigationController+StatusBarStyle.h"
 
 @implementation UINavigationController (StatusBarStyle)
--(UIViewController*)childViewControllerForStatusBarStyle{
-    return self.visibleViewController;
+- (BOOL)prefersStatusBarHidden {
+    return NO;
 }
--(UIViewController*)childViewControllerForStatusBarHidden{
-    return self.visibleViewController;
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationNone;
+}
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.topViewController.preferredStatusBarStyle;
 }
 @end

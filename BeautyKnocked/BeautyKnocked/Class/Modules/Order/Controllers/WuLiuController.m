@@ -20,7 +20,9 @@
 @end
 
 @implementation WuLiuController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"物流信息"];

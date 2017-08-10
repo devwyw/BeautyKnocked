@@ -13,7 +13,9 @@
 @end
 
 @implementation LightSonViewController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];[self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
     NSArray * titleArr=@[@"欧洲之星",@" ULTHERA超声刀",@"OPT冰点快速脱毛仪",@"水光针",@"热立塑LIPOSONIX",@"C6至尊祛斑王"];

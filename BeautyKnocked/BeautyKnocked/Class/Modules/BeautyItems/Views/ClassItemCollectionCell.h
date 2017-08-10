@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ItemClassModel;
 
 @interface ClassItemCollectionCell : UICollectionViewCell
+
++(instancetype)itemWithCollectionView:(UICollectionView*)collection WithIndexPath:(NSIndexPath*)indexPath WithModel:(ItemClassModel*)model;
 
 @end

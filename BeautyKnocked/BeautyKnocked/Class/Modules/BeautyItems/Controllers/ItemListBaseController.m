@@ -13,26 +13,26 @@
 #import "PSSortDropMenu.h"
 #import "ItemDetailController.h"
 #import "ProductDetailController.h"
+#import "ItemClassModel.h"
 
 static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
 
 @interface ItemListBaseController ()<ItemsSortViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-
 @property (nonatomic, strong) BeautyItemSortView *sortView;
-
 @property (nonatomic, strong) PSSortDropMenu *sortMenu;
 
-
+@property (nonatomic, strong) NSMutableArray * itemArray;
 @end
 
 @implementation ItemListBaseController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self createViews];
@@ -43,33 +43,34 @@ static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(NSMutableArray*)itemArray{
+    if (!_itemArray) {
+        _itemArray=[[NSMutableArray alloc]init];
+    }
+    return _itemArray;
+}
 -(void)didSelectedButton:(UIButton *)button{
     
 }
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    return 8;
-}
 
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.itemArray.count;
+}
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    ClassItemCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    //[self configureCell:cell indexPath:indexPath];
-    
+    ItemClassModel *model=[[ItemClassModel alloc]init];
+    model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+    ClassItemCollectionCell *cell = [ClassItemCollectionCell itemWithCollectionView:collectionView WithIndexPath:indexPath WithModel:model];
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
-    itemDetailController.hidesBottomBarWhenPushed = YES;
-    
-    ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
-    productDetailController.hidesBottomBarWhenPushed = YES;
-    
-    if (indexPath.item % 2 == 0) {
-        [self.navigationController pushViewController:itemDetailController animated:YES];
-    }else {
+    if (_index==5) {
+        ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
+        productDetailController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:productDetailController animated:YES];
+    }else {
+        ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
+        itemDetailController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:itemDetailController animated:YES];
     }
 }
 
@@ -88,16 +89,13 @@ static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
-
-
 -(void)addSubViews {
     [self.view addSubview:_sortView];
     [self.view addSubview:_collectionView];
 }
-
 -(void)createViews {
-
     _sortView = [[BeautyItemSortView alloc] init];
+    _sortView.delegate=self;
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
@@ -105,12 +103,9 @@ static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_collectionView registerClass:[ClassItemCollectionCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    
+    [self loadHttpData:_index];
 }
-
 -(void)configureConstraints {
-    
     [_sortView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.left.and.right.equalTo(self.view);
         make.height.mas_equalTo(Height_Pt(100));
@@ -123,7 +118,16 @@ static NSString *const reuseIdentifier = @"ClassItemCollectionCell";
     }];
     
 }
-
+-(void)loadHttpData:(NSInteger)index{
+    [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",index]} url:mlqqm serviceCode:xmlb Success:^(id json) {
+        if ([Master getSuccess:json]) {
+            for (NSDictionary *dict in json[@"info"]) {
+                [self.itemArray addObject:dict];
+            }
+            [_collectionView reloadData];
+        }
+    } Failure:nil];
+}
 
 
 @end

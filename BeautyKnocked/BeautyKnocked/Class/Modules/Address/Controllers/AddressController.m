@@ -18,7 +18,9 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 @end
 
 @implementation AddressController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -47,9 +49,9 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     CommonAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellReuseIdentifier forIndexPath:indexPath];
     
     cell.address = @"[默认]喜马拉雅省古怪市阳光滩新区沙迦路888号金久国际大厦";
-    @weakify(self);
+    Weakify(self);
     [cell.addressEditSignal subscribeNext:^(id  _Nullable x) {
-        [self_weak_ pushToEditController:AddressEditStyleUpdate];
+        [Wself pushToEditController:AddressEditStyleUpdate];
     }];
     
     return cell;
@@ -78,10 +80,9 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         _addNewAddressBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
         [_addNewAddressBtn setImage:[UIImage imageNamed:@"address_add"] forState:UIControlStateNormal];
         [_addNewAddressBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
-        @weakify(self);
+        Weakify(self);
         [[_addNewAddressBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            @strongify(self);
-            [self pushToEditController:AddressEditStyleAddNew];
+            [Wself pushToEditController:AddressEditStyleAddNew];
         }];
         
         self.addNewAddressBtn;

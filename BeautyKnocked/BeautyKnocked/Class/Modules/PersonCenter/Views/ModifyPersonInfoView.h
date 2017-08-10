@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) RACSignal *headIconPressSignal;
 
+@property (nonatomic, strong) UIImage * headerimage;
+
 @end

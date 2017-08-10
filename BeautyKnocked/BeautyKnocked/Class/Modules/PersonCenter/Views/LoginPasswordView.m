@@ -33,7 +33,7 @@
 -(void)createViews {
     
     _textLabel = [[UILabel alloc] init];
-    _textLabel.textColor = [UIColor lightGrayColor];
+    _textLabel.textColor = [UIColor grayColor];
     _textLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [self addSubview:_textLabel];
     

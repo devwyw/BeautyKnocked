@@ -33,20 +33,19 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-
+    self.userCenterViewModel.headView.nickName=@"获取账号";
+    self.userCenterViewModel.headView.imageUrl=@"获取头像";
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-
     [self createViews];
 }
 
@@ -80,14 +79,9 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 20/3.f;
 }
-
-
 -(void)createViews {
-    
     self.userCenterViewModel.navigationController = self.navigationController;
-    
     self.tableView = ({
-        
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;

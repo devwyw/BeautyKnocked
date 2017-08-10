@@ -7,6 +7,7 @@
 //
 
 #import "ServiceContentCollectionViewCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface ServiceContentCollectionViewCell ()
 

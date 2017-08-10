@@ -18,7 +18,6 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame]) {
-        
         [self setupContent];
     }
     return self;

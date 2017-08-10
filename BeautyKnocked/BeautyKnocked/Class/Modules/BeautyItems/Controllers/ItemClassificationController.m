@@ -9,11 +9,11 @@
 #import "ItemClassificationController.h"
 #import "ItemListBaseController.h"
 #import "WMPanGestureRecognizer.h"
-#import <SVProgressHUD.h>
 #import <SDCycleScrollView.h>
 #import "UIButton+Category.h"
 #import <PYSearchViewController.h>
 #import "CarItem.h"
+#import "SearchController.h"
 
 @interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,PYSearchViewControllerDelegate>
 
@@ -28,17 +28,17 @@
 @end
 
 @implementation ItemClassificationController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (NSArray *)musicCategories {
     if (!_itemCategories) {
-        _itemCategories = @[@"推荐",@"特惠",@"美容", @"美甲", @"美发", @"套餐", @"商城", @"养生"];
+        _itemCategories = @[@"推荐",@"特惠",@"美甲",@"美容",@"美发",@"商城",@"套餐"];
     }
     return _itemCategories;
 }
-
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     self.navBarBgAlpha = @"1.0";
     _carItem.count=100;
     [_item setHidden:NO];
@@ -57,9 +57,7 @@
     [_item setImage:[UIImage imageNamed:@"shouyelocation"] forState:UIControlStateNormal];
     [_item setImgViewStyle:ButtonImgViewStyleRight imageSize:[UIImage imageNamed:@"shouyelocation"].size space:5];
     [[_item rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [SVProgressHUD showInfoWithStatus:@"目前只提供南昌地区的服务"];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD dismissWithDelay:1.85];
+        [Master showSVProgressHUD:@"目前只提供南昌地区的服务" withType:ShowSVProgressTypeInfo withShowBlock:nil];
     }];
     [self.navigationController.navigationBar addSubview:_item];
 
@@ -80,7 +78,7 @@
     [textField resignFirstResponder];
     /** 搜索栏 */
     NSArray *hotSeaches = @[@"美白", @"补水", @"背部", @"清洁", @"化妆水", @"精油", @"按摩", @"养肤系列", @"长效系列", @"水光疗养"];
-    PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"关键词" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+    SearchController *controller = [SearchController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"关键词" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         [searchViewController dismissViewControllerAnimated:YES completion:nil];
         _searchBar.text=searchText;
     }];
@@ -104,7 +102,6 @@
     NewNavigation.hidesBottomBarWhenPushed = YES;
     NewNavigation.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
     [self presentViewController:NewNavigation animated:YES completion:nil];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     return NO;
 }
 - (instancetype)init {
@@ -118,6 +115,7 @@
         self.menuBGColor = [UIColor whiteColor];
         self.titleColorSelected = [UIColor colorWithHexString:@"#ECBD4E"];
         self.titleColorNormal = [UIColor blackColor];
+        self.preloadPolicy=1;
     }
     return self;
 }
@@ -151,18 +149,14 @@
         NSTimeInterval duration = fabs((targetPoint - self.viewTop) / velocity.y);
         
         if (fabs(velocity.y) * 1.0 > fabs(targetPoint - self.viewTop)) {
-            NSLog(@"velocity: %lf", velocity.y);
             [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // code in here I do it by cover headerView
                 // if you want change it,you can code here
                 self.viewTop = targetPoint;
             } completion:nil];
-            
             return;
         }
-        
     }
-    
     CGFloat yChange = currentPoint.y - self.lastPoint.y;
     self.viewTop += yChange;
     self.lastPoint = currentPoint;
@@ -197,6 +191,7 @@
 
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
     ItemListBaseController *vc = [[ItemListBaseController alloc] init];
+    vc.index=index;
     return vc;
 }
 

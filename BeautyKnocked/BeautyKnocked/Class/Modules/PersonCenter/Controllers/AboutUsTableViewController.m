@@ -24,7 +24,9 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
 @end
 
 @implementation AboutUsTableViewController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"关于我们";

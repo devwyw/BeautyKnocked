@@ -42,6 +42,9 @@
     MoneyTableController *table=[[MoneyTableController alloc]init];
     [self.navigationController pushViewController:table animated:YES];
 }
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"我的钱包";

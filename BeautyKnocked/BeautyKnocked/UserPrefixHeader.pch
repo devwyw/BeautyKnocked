@@ -8,42 +8,63 @@
 
 #ifndef UserPrefixHeader_pch
 #define UserPrefixHeader_pch
-
-#define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
-
+/** 约束宏 */
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
 #define Width_Pt(x) x / 1080.f * Width
 #define Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
 #define Size_Change ((Height != 667) ? 667/Height : 1)
 #define Font_Size(x) Height == 480 ? x*3/8/Size_Change*1.19 : x*3/8/Size_Change
-#define Weakify(o)        __weak   typeof(self) mmwo = o;
-#define Strongify(o)      __strong typeof(self) o = mmwo;
+#define Weakify(o)        __weak   typeof(self) Wself = o;
 #define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
-
+/** Pods头文件 */
+#import <Masonry.h>
+#import <IQKeyboardManager.h>
+#import <ReactiveObjC.h>
+#import <LEEAlert.h>
+#import <SVProgressHUD.h>
+#import <MJExtension.h>
+/** 工程头文件 */
 #import "Master.h"
 #import "Acount.h"
 #import "UIColor+help.h"
 #import "UIViewController+Cloudox.h"
 #import "UIView+CornerRadius.h"
 #import "UIImage+setColor.h"
-
-#import <Masonry.h>
-#import <IQKeyboardManager.h>
-#import <ReactiveObjC.h>
-#import <LEEAlert.h>
-
-#import <AFNetworking.h>
-#import <SDWebImage/UIImageView+WebCache.h>
-#import <MJRefresh.h>
-#import <MJExtension.h>
-
-
+/** info */
+#define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
+#define AppVersion [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+#define UUID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
+/** 空值判断 */
+#define isStringEmpty(a) ([a isEqual:[NSNull null]] || a == nil || [a isEqualToString:@""])
+#define isObjectEmpty(a) ([a isEqual:[NSNull null]] || a == nil)
+#define isArrayEmpty(a) ([a isEqual:[NSNull null]] || a == nil || a.count == 0)
+/** 服务器请求Code->简写拼音 */
+#define zc @"/manager/client/base/registerManager/register"
+#define zcyzm @"/manager/client/base/smsVerificationManager/sendVerification"
+#define ptyzm @"/manager/client/base/smsVerificationManager/sendCode"
+#define dl @"/manager/client/base/loginManager/login"
+#define js @"/manager/client/base/loginManager/unlock"
+#define wjmm @"/manager/client/base/loginManager/forgetPassword"
+#define lbt @"/manager/client/base/bannerManager/queryList"
+#define ghtx @"/manager/client/base/clientManager/updateHeadPath"
+#define ggnc @"/manager/client/base/clientManager/updateNickName"
+#define ggmm @"/manager/client/base/clientManager/updatePassword"
+#define xmlb @"/manager/client/goods/projectManager/queryList"
+#define xmlbpx @"/manager/client/goods/projectManager/queryListSort"
+#define bqlb @"/manager/client/goods/labelManager/queryList"
+#define xmxq @"/manager/client/goods/projectManager/queryDetail"
+#define pllb @"/manager/client/goods/commentManager/queryListByCommId"
+/** 调试模式 */
 #ifdef __OBJC__
 #ifdef DEBUG
+#define mlqqm @"http://47.90.84.69/mlqqm"
+//#define mlqqm @"http://0f47889b.ngrok.io/mlqqm"
 #define NSLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
+#define mlqqm @"http://47.90.84.69/mlqqm"
 #define NSLog(...)
 #endif
 #endif
+
 #endif /* UserPrefixHeader_pch */

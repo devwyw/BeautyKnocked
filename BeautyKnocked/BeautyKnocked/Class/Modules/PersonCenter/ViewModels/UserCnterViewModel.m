@@ -21,10 +21,9 @@
 #import "MyGroupController.h"
 #import "MessageView.h"
 #import "MoneyController.h"
+#import "LoginController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
-
-@property (nonatomic, strong) PersonCenterHeadView *headView;
 
 @property (nonatomic, strong) ToolItemView *toolItemView;
 
@@ -113,7 +112,6 @@
     }    
     return Height_Pt(125);
 }
-
 -(PersonCenterHeadView *)headView {
     if (!_headView) {
         _headView = [[PersonCenterHeadView alloc] init];
@@ -142,7 +140,6 @@
     }
     return _toolItemView;
 }
-
 -(NSArray *)thirdSectionRows {
     if (!_thirdSectionRows) {
         _thirdSectionRows = @[@"联系我们",@"意见反馈",@"用户协议"];
@@ -152,9 +149,15 @@
 
 #pragma mark PSheaderViewDelegate
 -(void)headIconDidClicked {
-    PersonInfoViewController *personInfoVC = [[PersonInfoViewController alloc] init];
-    personInfoVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:personInfoVC animated:YES];
+    if ([[Acount shareManager] isSignIn]) {
+        PersonInfoViewController *personInfoVC = [[PersonInfoViewController alloc] init];
+        personInfoVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:personInfoVC animated:YES];
+    }else{
+        LoginController *loginController = [[LoginController alloc] init];
+        UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+        [self.navigationController presentViewController:loginNav animated:YES completion:nil];
+    }
 }
 -(void)didSelectedItemAtIndex:(NSUInteger)index {
     if (index==2) {

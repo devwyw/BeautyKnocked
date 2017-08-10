@@ -28,11 +28,10 @@
     [_defaultButton setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
     [_defaultButton setImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
     
-    @weakify(self);
+    Weakify(self);
     [[_defaultButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIButton * _Nullable button) {
-        @strongify(self);
         button.selected = !button.selected;
-        self.isDefaultAddress = button.selected;
+        Wself.isDefaultAddress = button.selected;
     }];
     
     _titleLabel = [[UILabel alloc] init];

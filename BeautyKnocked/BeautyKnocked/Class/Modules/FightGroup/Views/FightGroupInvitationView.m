@@ -47,9 +47,8 @@
     
     Weakify(self)
     [_inviteView setFightGroupShareBlock:^(NSUInteger shareIndex){
-        Strongify(self)
-        if ([self.delegate respondsToSelector:@selector(didSelectShareStyle:)]) {
-            [self.delegate didSelectShareStyle:shareIndex];
+        if ([Wself.delegate respondsToSelector:@selector(didSelectShareStyle:)]) {
+            [Wself.delegate didSelectShareStyle:shareIndex];
         }
     }];
     

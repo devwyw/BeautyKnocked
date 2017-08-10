@@ -166,10 +166,9 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 -(EvaluationHeaderView *)evaluationHeader {
     if (!_evaluationHeader) {
         _evaluationHeader = [[EvaluationHeaderView alloc] init];
-        @weakify(self);
+        Weakify(self);
         [_evaluationHeader.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
-            @strongify(self);
-            [self.navigationController pushViewController:self.pageController animated:YES];
+            [Wself.navigationController pushViewController:Wself.pageController animated:YES];
         }];
     }
     return _evaluationHeader;
@@ -177,10 +176,9 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 -(EvaluationFooterView *)evaluationFooter {
     if (!_evaluationFooter) {
         _evaluationFooter = [[EvaluationFooterView alloc] init];
-        @weakify(self);
+        Weakify(self);
         [_evaluationFooter.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
-            @strongify(self);
-            [self.navigationController pushViewController:self.pageController animated:YES];
+            [Wself.navigationController pushViewController:Wself.pageController animated:YES];
         }];
     }
     return _evaluationFooter;

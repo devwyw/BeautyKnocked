@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+@class PersonCenterHeadView;
 
 @interface UserCnterViewModel : NSObject
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) PersonCenterHeadView *headView;
 
 -(NSUInteger)numberForRowsInSection:(NSUInteger)section;
 

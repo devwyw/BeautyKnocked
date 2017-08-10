@@ -7,6 +7,8 @@
 //
 
 #import "EvaluationImageCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @interface EvaluationImageCell ()
 @property (nonatomic, strong) UIImageView *imgView;

@@ -12,5 +12,5 @@
 
 /** 折扣价格-原价 */
 -(NSMutableAttributedString *)setRedPrice:(NSString *)redPrice linePrice:(NSString *)linePrice;
-
+-(BOOL)isMobileNumber;
 @end

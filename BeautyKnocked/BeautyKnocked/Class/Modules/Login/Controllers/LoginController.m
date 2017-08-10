@@ -10,7 +10,8 @@
 #import "RegisterController.h"
 #import "UIImageView+Category.h"
 #import "UIImage+Original.h"
-
+#import "UITextField+Length.h"
+#import "NSString+Attribute.h"
 
 @interface LoginController ()<UITextFieldDelegate>
 
@@ -24,7 +25,7 @@
 
 @property (nonatomic, strong) UIButton *loginBtn;
 
-@property (nonatomic, strong) UIButton *registerAccountBtn;
+@property (nonatomic, strong) UIButton *registerselfBtn;
 
 @property (nonatomic, strong) UIButton *forgetPasswordBtn;
 
@@ -36,18 +37,15 @@
     [super viewWillAppear:animated];
     self.navBarBgAlpha=@"0";
 }
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageOriginalImageName:@"quxiao_03"] style:UIBarButtonItemStylePlain target:self action:@selector(returnAction)];
-    
     [self addSubViews];
-    
     [self addConstraints];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -62,12 +60,10 @@
     [self.view addSubview:self.backImgView];
     
     [self.backImgView addSubview:self.logoImgView];
-    
     [self.backImgView addSubview:self.usernameTextField];
     [self.backImgView addSubview:self.passwordTextField];
     [self.backImgView addSubview:self.loginBtn];
-    
-    [self.backImgView addSubview:self.registerAccountBtn];
+    [self.backImgView addSubview:self.registerselfBtn];
     [self.backImgView addSubview:self.forgetPasswordBtn];
 }
 
@@ -101,14 +97,14 @@
         make.size.mas_equalTo(CGSizeMake(Width_Pt(794), Height_Pt(122)));
     }];
 
-    [_registerAccountBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_registerselfBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_loginBtn.mas_bottom).with.offset(Height_Pt(108));
         make.left.equalTo(_loginBtn.mas_left);
         make.height.mas_equalTo(Height_Pt(45));
     }];
     
     [_forgetPasswordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_registerAccountBtn);
+        make.centerY.equalTo(_registerselfBtn);
         make.right.equalTo(_loginBtn.mas_right);
         make.height.mas_equalTo(Height_Pt(45));
     }];
@@ -141,26 +137,24 @@
         _usernameTextField.textColor=[UIColor whiteColor];
         _usernameTextField.delegate=self;
         _usernameTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _usernameTextField.clearButtonMode=UITextFieldViewModeWhileEditing;
         [_usernameTextField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
         [_usernameTextField setValue:[UIFont systemFontOfSize:14.f] forKeyPath:@"_placeholderLabel.font"];
         _usernameTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _usernameTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"yonghu_03"];
         _usernameTextField.leftViewMode = UITextFieldViewModeAlways;
-        
+        [[_usernameTextField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_usernameTextField setFieldtext:11];
+        }];
     }
     return _usernameTextField;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if (textField==_usernameTextField) {
-        if (textField.text.length >= 10) {
-            textField.text = [textField.text substringToIndex:10];
-        }
+        return [textField setRange:range whitString:string whitCount:11];
     }else{
-        if (textField.text.length >= 17) {
-            textField.text = [textField.text substringToIndex:17];
-        }
+        return [textField setRange:range whitString:string whitCount:18];
     }
-    return YES;
 }
 -(UITextField *)passwordTextField {
     if (!_passwordTextField) {
@@ -175,37 +169,63 @@
         _passwordTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _passwordTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"mima_03"];
         _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
-        
+        [[_passwordTextField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_passwordTextField setFieldtext:18];
+        }];
     }
     return _passwordTextField;
 }
-
+#pragma mark ===== 登录 =====
 -(UIButton *)loginBtn {
     if (!_loginBtn) {
         _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        //[_loginBtn setBackgroundImage:[UIImage imageNamed:@"denglu-anniu_03"] forState:UIControlStateNormal];
         [_loginBtn setImage:[UIImage imageNamed:@"denglu-anniu_03"] forState:UIControlStateNormal];
-        
+        Weakify(self);
+        [[_loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            if (_usernameTextField.text.length==11&&_passwordTextField.text.length>=6){
+                [Master HttpPostRequestByParams:@{@"account":_usernameTextField.text,
+                                                  @"password":_passwordTextField.text,
+                                                  @"device":UUID}
+                                            url:mlqqm serviceCode:dl Success:^(id json) {
+                    if ([Master getSuccess:json]) {
+                        Acount *user=[Acount shareManager];
+                        user=[Acount mj_objectWithKeyValues:json[@"info"]];
+                        [user SignInAcount];
+                        [Master showSVProgressHUD:@"登陆成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                            [Wself dismissViewControllerAnimated:YES completion:^{
+                                UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                                root.selectedIndex=0;
+                            }];
+                        }];
+                    }
+                } Failure:nil];
+            }else{
+                if (_usernameTextField.text.length!=11) {
+                    [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else if (_passwordTextField.text.length<6){
+                    [Master showSVProgressHUD:@"您的密码小于6位" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }
+            }
+        }];
     }
     return _loginBtn;
 }
 
--(UIButton *)registerAccountBtn {
-    if (!_registerAccountBtn) {
-        _registerAccountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_registerAccountBtn setTitle:@"注册账号" forState:UIControlStateNormal];
-        [_registerAccountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_registerAccountBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-        _registerAccountBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
-        
-        [[_registerAccountBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+-(UIButton *)registerselfBtn {
+    if (!_registerselfBtn) {
+        _registerselfBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_registerselfBtn setTitle:@"注册账号" forState:UIControlStateNormal];
+        [_registerselfBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_registerselfBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+        _registerselfBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+        [[_registerselfBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             RegisterController *controller=[[RegisterController alloc]init];
             controller.isType=YES;
             [self.navigationController pushViewController:controller animated:YES];
         }];
         
     }
-    return _registerAccountBtn;
+    return _registerselfBtn;
 }
 
 -(UIButton *)forgetPasswordBtn {
@@ -223,7 +243,6 @@
     }
     return _forgetPasswordBtn;
 }
-
 /*
 #pragma mark - Navigation
 

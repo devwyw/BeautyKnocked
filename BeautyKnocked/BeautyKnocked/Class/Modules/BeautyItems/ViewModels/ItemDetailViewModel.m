@@ -150,10 +150,9 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
 -(EvaluationHeaderView *)evaluationHeader {
     if (!_evaluationHeader) {
         _evaluationHeader = [[EvaluationHeaderView alloc] init];
-        @weakify(self);
+        Weakify(self);
         [_evaluationHeader.checkAllEvaluationSignal subscribeNext:^(id  _Nullable x) {
-            @strongify(self);
-            [self.navigationController pushViewController:self.pageController animated:YES];
+            [Wself.navigationController pushViewController:Wself.pageController animated:YES];
         }];
     }
     return _evaluationHeader;

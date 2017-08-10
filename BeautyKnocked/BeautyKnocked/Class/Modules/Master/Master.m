@@ -7,14 +7,12 @@
 //
 
 #import "Master.h"
-#import <FMDB.h>
-#import "Acount.h"
+#import <AFNetworking.h>
+#import <CommonCrypto/CommonDigest.h>
 
 static Master *instance=nil;
 
-@interface Master ()<NSCopying,NSMutableCopying>{
-    FMDatabase *Data;
-}
+@interface Master ()<NSCopying,NSMutableCopying>
 @end
 
 @implementation Master
@@ -37,64 +35,12 @@ static Master *instance=nil;
 -(id)mutableCopyWithZone:(NSZone *)zone{
     return self;
 }
--(void)initDataBase{
-    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"acount.sqlite"];
-    
-    Data = [FMDatabase databaseWithPath:filePath];
-    [Data open];
-    NSString *acount = @"CREATE TABLE 'acount' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'aid' VARCHAR(255),'phone' VARCHAR(255),'password' VARCHAR(255))";
-    [Data executeUpdate:acount];
-    [Data close];
-}
 +(instancetype)shareManager{
     if (!instance) {
         instance = [[Master alloc]init];
-        [instance initDataBase];
     }
     return instance;
 }
-#pragma mark ===== 账号接口 =====
--(void)addAcount:(Acount*)acount{
-    [Data open];
-    NSNumber *maxID = @(0);
-    FMResultSet *res = [Data executeQuery:@"SELECT * FROM acount"];
-    while ([res next]) {
-        if ([maxID integerValue] < [[res stringForColumn:@"aid"] integerValue]) {
-            maxID = @([[res stringForColumn:@"aid"] integerValue]);
-        }
-    }
-    maxID = @([maxID integerValue] + 1);
-    [Data executeUpdate:@"INSERT INTO acount(aid,phone,password)VALUES(?,?,?)",maxID,acount.phone,acount.password];
-    [Data close];
-}
--(void)deleteAcount:(Acount*)acount{
-    [Data open];
-    [Data executeUpdate:@"DELETE FROM acount WHERE aid = ?",acount.aid];
-    [Data close];
-}
--(void)updateAcount:(Acount*)acount{
-    [Data open];
-    [Data executeUpdate:@"UPDATE 'acount' SET phone = ?  WHERE aid = ? ",acount.phone,acount.aid];
-    [Data executeUpdate:@"UPDATE 'acount' SET password = ?  WHERE aid = ? ",acount.password,acount.aid];
-    [Data close];
-}
--(NSMutableArray*)getAllAcount{
-    [Data open];
-    NSMutableArray *dataArray = [[NSMutableArray alloc]init];
-    FMResultSet *res = [Data executeQuery:@"SELECT * FROM acount"];
-    while ([res next]) {
-        Acount *acount = [[Acount alloc]init];
-        acount.aid= @([[res stringForColumn:@"aid"] integerValue]);
-        acount.phone = [res stringForColumn:@"phone"];
-        acount.password = [res stringForColumn:@"password"];
-        [dataArray addObject:acount];
-    }
-    [Data close];
-    return dataArray;
-}
-
-
 #pragma mark ===== 检测网络 =====
 +(void)getNetWork:(id)Weakself{
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
@@ -130,14 +76,94 @@ static Master *instance=nil;
 -(void)pushSystemSetting{
     NSURL *Network=[NSURL URLWithString:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
     if ([[UIApplication sharedApplication] canOpenURL:Network]) {
-        if (SystemVersion >= 10.0) {
+        if (SystemVersion>=10.0) {
             [[UIApplication sharedApplication] openURL:Network options:@{} completionHandler:nil];
         }else{
             [[UIApplication sharedApplication] openURL:Network];
         }
     }
 }
- #pragma mark ===== 打印所有子视图 =====
+#pragma mark ===== 所有网络请求 =====
++(NSString *)gettTimes{
+    NSDate * senddate = [NSDate date];
+    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *timeString = [dateformatter stringFromDate:senddate];
+    return timeString;
+}
++(NSString *)md5:(NSString *)string{
+    const char *cStr = [string UTF8String];
+    //加密规则
+    unsigned char result[16]= "0123456789abcdef";
+    CC_MD5(cStr, (CC_LONG)strlen(cStr), result);
+    //这里的x是小写则产生的md5也是小写，x是大写则md5是大写
+    return [NSString stringWithFormat:
+            @"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ];
+}
++(NSString *)get32bitString{
+    char data[32];
+    for (int x=0;x<32;data[x++] = (char)('A' + (arc4random_uniform(26))));
+    return [[NSString alloc] initWithBytes:data length:32 encoding:NSUTF8StringEncoding];
+}
+/**
+ @param params 请求参数
+ @param url 公共链接头
+ @param serviceCode 当前请求片段
+ @param success 成功回调
+ @param failure 失败回调
+ */
++(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure{
+    /** 拼接 */
+    url = [NSString stringWithFormat:@"%@%@",url,serviceCode];
+    {/** 菊花 */
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD setMinimumDismissTimeInterval:3];
+    }
+    /** Post网络请求 */
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer.timeoutInterval = 5;
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
+    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [SVProgressHUD dismiss];
+        NSData *data = responseObject;
+        NSString *string = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"json数据: %@",string);
+        if (!isObjectEmpty(success)) {
+            NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers  error:nil];
+            success(resultDic);
+        }else{
+            return;
+        }
+    }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        NSLog(@"json错误: %@",error);
+        switch (error.code) {
+            case -1009:
+                [SVProgressHUD showErrorWithStatus:@"我们未在地球上找到您的连接，请检查您的网络设置~~"];
+                break;
+            case -1004:
+                [SVProgressHUD showErrorWithStatus:@"您正在使用地球之外的网络，我们未能与您连接~~"];
+                break;
+            default:
+                break;
+        }
+        if (!isObjectEmpty(failure)){
+            failure(error);
+        }else{
+            return;
+        }
+    }];
+}
+#pragma mark ===== Other =====
 -(void)getSub:(UIView *)view andLevel:(int)level{
     NSArray *subviews = [view subviews];
     if ([subviews count] == 0) return;
@@ -148,6 +174,40 @@ static Master *instance=nil;
         }
         NSLog(@"%@%d: %@", blank, level, subview.class);
         [self getSub:subview andLevel:(level+1)];
+    }
+}
++(void)showSVProgressHUD:(NSString*)string withType:(ShowSVProgressType)type withShowBlock:(ShowSVProgressBlock)block{
+    switch (type) {
+        case ShowSVProgressTypeInfo:
+            [SVProgressHUD showInfoWithStatus:string];
+            break;
+        case ShowSVProgressTypeSuccess:
+            [SVProgressHUD showSuccessWithStatus:string];
+            break;
+        case ShowSVProgressTypeError:
+            [SVProgressHUD showErrorWithStatus:string];
+            break;
+        default:
+            [SVProgressHUD show];
+            [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+            break;
+    }
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD dismissWithDelay:1.75 completion:^{
+        if (!isObjectEmpty(block)) {
+            block();
+        }else{
+            return;
+        }
+    }];
+}
++(BOOL)getSuccess:(id)json{
+    switch ([json[@"status"] integerValue]) {
+        case 200:
+            return YES;
+        default:
+            [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:nil];
+            return NO;
     }
 }
 @end

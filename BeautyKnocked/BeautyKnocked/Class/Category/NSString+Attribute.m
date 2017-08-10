@@ -22,5 +22,15 @@
     
     return attributeStr;
 }
-
+-(BOOL)isMobileNumber{
+    //正则表达式匹配11位手机号码
+    NSString *regex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch = [pred evaluateWithObject:self];
+    if(isMatch) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 @end

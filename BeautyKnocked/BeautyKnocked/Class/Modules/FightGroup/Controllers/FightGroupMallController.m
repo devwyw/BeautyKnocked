@@ -20,7 +20,9 @@
 @end
 
 @implementation FightGroupMallController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 -(FightGroupMallViewModel *)viewModel {
     if (!_viewModel) {
         _viewModel = [[FightGroupMallViewModel alloc] init];

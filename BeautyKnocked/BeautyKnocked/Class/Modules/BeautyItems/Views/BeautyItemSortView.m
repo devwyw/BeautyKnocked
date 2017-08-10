@@ -38,8 +38,6 @@
     }
     return self;
 }
-
-
 #pragma mark PSSortDropMenuDelegate
 -(void)haveDismiss {
     _entireSortBtn.selected = NO;
@@ -47,8 +45,6 @@
 -(void)didSelectAtRow:(NSUInteger)row{
     
 }
-
-
 -(void)filterButtonClicked {
     _rightFullView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
     _rightFullView.backgroundColor=[UIColor colorWithWhite:0 alpha:0.3];
@@ -90,13 +86,11 @@
 
 #pragma mark Initialize
 -(void)setupInterface {
-    
     _entireSortBtn = [self setupCustomBtnWtihImageName:@"paixu-weixuanze" selectedImageName:@"paixuheshang" title:@"综合排序"];
     [_entireSortBtn addTarget:self action:@selector(clickedAtIndexButton:) forControlEvents:UIControlEventTouchUpInside];
     [_entireSortBtn setTitleColor:[UIColor colorWithHexString:@"#E0C070"] forState:UIControlStateSelected];
     _entireSortBtn.tag = 500;
     [self addSubview:_entireSortBtn];
-    
     
     _saleSortBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _saleSortBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
@@ -112,7 +106,6 @@
     
     
 }
-
 -(PSSortDropMenu *)sortMenu {
     if (!_sortMenu) {
         CGRect frame = self.superview.frame;

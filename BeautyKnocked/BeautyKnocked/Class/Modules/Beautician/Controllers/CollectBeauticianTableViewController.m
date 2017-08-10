@@ -15,7 +15,9 @@ static NSString *const beauticianCellReuseIdentifier = @"BeauticianCell";
 @end
 
 @implementation CollectBeauticianTableViewController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout=UIRectEdgeNone;

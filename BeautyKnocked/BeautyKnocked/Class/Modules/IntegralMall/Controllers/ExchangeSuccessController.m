@@ -21,7 +21,9 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
 -(instancetype)initWithStyle:(UITableViewStyle)style{
     return [super initWithStyle:UITableViewStyleGrouped];
 }
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

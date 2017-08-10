@@ -28,12 +28,13 @@
     
     return YES;
 }
-
 -(void)setupGlobalAppearance{
+    //[UIApplication sharedApplication].applicationIconBadgeNumber = 4;
+    //[UIApplication sharedApplication].networkActivityIndicatorVisible =YES;
+    
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
      [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"fanhui2"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 25, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 
@@ -45,7 +46,12 @@
 }
 #pragma mark ===== NSLog =====
 -(void)getLog{
-    NSLog(@"系统:%.2f",SystemVersion);
+    NSLog(@"\n系统:%.2f\n版本:%@\nUUID:%@\n账号ID:%@",
+          SystemVersion,
+          AppVersion,
+          UUID,
+          [Acount shareManager].id
+          );
 }
 #pragma mark ===== App管理 =====
 - (void)applicationWillResignActive:(UIApplication *)application {

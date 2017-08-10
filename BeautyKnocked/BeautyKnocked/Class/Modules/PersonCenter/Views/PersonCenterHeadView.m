@@ -10,6 +10,7 @@
 #import "FightGroupsView.h"
 #import "UIButton+Category.h"
 #import "UIImage+Original.h"
+#import <UIImageView+WebCache.h>
 
 
 @interface PersonCenterHeadView ()
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) UIImageView *backImgView;
 
 @property (nonatomic, strong) UIButton *headIconBtn;
+@property (nonatomic, strong) UIImageView * headIcon;
 
 @property (nonatomic, strong) UILabel *nameLabel;
 
@@ -29,7 +31,6 @@
 @property (nonatomic, strong) UIButton *levelBtn;
 
 @property (nonatomic, strong) UIButton *couponBtn;
-
 
 @property (nonatomic, strong) UILabel *groupsLabel;
 
@@ -40,6 +41,8 @@
 @property (nonatomic, strong) UIButton *successGroup;
 
 @property (nonatomic, strong) UIButton *failGroup;
+
+@property (nonatomic,strong) Acount * user;
 
 @end
 
@@ -53,9 +56,19 @@
     }
     return self;
 }
-
+-(Acount*)user{
+    if (!_user) {
+        _user=[Acount shareManager];
+    }
+    return _user;
+}
+-(void)setNickName:(NSString *)nickName{
+    _nameLabel.text = self.user.account;
+}
+-(void)setImageUrl:(NSString *)imageUrl{
+    [_headIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.user.headPath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+}
 -(void)setupInterface {
-    
     _backImgView = [[UIImageView alloc] init];
     _backImgView.image = [UIImage imageNamed:@"top-bj_01"];
     _backImgView.userInteractionEnabled = YES;
@@ -70,20 +83,19 @@
     
     
     _headIconBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_headIconBtn setImage:[UIImage imageOriginalImageName:@"touxiang_03"] forState:UIControlStateNormal];
-     
-    
+    _headIcon=[[UIImageView alloc]init];
+    [_headIcon setContentMode:UIViewContentModeScaleAspectFill];
+    [_headIcon setClipsToBounds:YES];
+    [_headIcon makeCornerRadius:Width_Pt(228)/2];
+    [_headIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.user.headPath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [_headIconBtn addSubview:_headIcon];
+
     _nameLabel = [[UILabel alloc] init];
-    _nameLabel.text = @"12345678900";
+    _nameLabel.text = [Acount shareManager].account;
     _nameLabel.font = [UIFont systemFontOfSize:15];
-    
-    
+
     _balanceBtn = [self setupCustomBtnWtihImageName:@"yue_03" title:@"余额"];
-    
-    
     _levelBtn = [self setupCustomBtnWtihImageName:@"VIP_03" title:@"等级"];
-    
-    
     _couponBtn = [self setupCustomBtnWtihImageName:@"youhuiquan_03" title:@"优惠券"];
     
     [_balanceBtn addTarget:self action:@selector(itemButtonclicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -145,12 +157,8 @@
             [self.delegate headIconDidClicked];
         }
     }];
-    
-    
 }
-
 -(void)setupConstraints {
-    
     [_backImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.left.and.right.equalTo(self);
         make.height.mas_equalTo(Height_Pt(682));
@@ -173,6 +181,9 @@
         make.centerX.equalTo(_backImgView);
         make.size.mas_equalTo(CGSizeMake(Width_Pt(228), Height_Pt(228)));
     }];
+    [_headIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_headIconBtn);
+    }];
     
     [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_headIconBtn.mas_bottom).with.offset(Height_Pt(20.f));
@@ -180,11 +191,10 @@
     }];
     
     NSArray *views = @[_balanceBtn,_levelBtn,_couponBtn];
-    
     [views mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_nameLabel.mas_bottom).with.offset(Height_Pt(60));
+        make.top.equalTo(_nameLabel.mas_bottom).with.offset(Height_Pt(100));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(80), Height_Pt(110)));
     }];
-    
     [views mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:Width_Pt(115) leadSpacing:Width_Pt(219) tailSpacing:Width_Pt(219)];
     
     // groupView
@@ -228,7 +238,7 @@
     UIImage *image = [UIImage imageOriginalImageName:imageName];
     [button setImage:image forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setImgViewStyle:ButtonImgViewStyleTop imageSize:image.size space:6];
+    [button setImgViewStyle:ButtonImgViewStyleTop imageSize:image.size space:5];
     return button;
 }
 

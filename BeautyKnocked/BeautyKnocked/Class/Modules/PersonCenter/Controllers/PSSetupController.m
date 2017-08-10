@@ -16,7 +16,9 @@
 @end
 
 @implementation PSSetupController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"设置";

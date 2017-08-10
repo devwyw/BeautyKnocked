@@ -123,9 +123,7 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         }
         return cell;
     }
-    
     return nil;
-    
 }
 
 
@@ -168,30 +166,32 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         return Height_Pt(5);
     }
     return Height_Pt(12);
-    
 }
 
 -(void)configureCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == 0) {
         [cell.contentView addSubview:self.sdCycleBannerView];
     }else if (indexPath.section == 1){
         [cell.contentView addSubview:self.hotItemsView];
-        
     }
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"index == %ld",(long)index);
 }
-
-
-
 -(SDCycleScrollView *)sdCycleBannerView {
     if (!_sdCycleBannerView) {
         _sdCycleBannerView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, Width, Height_Pt(453)) delegate:self placeholderImage:[UIImage imageNamed:@""]];
         _sdCycleBannerView.autoScrollTimeInterval = 4.f;
-        _sdCycleBannerView.localizationImageNamesGroup = @[@"banner1.jpg",@"banner1.jpg",@"banner1.jpg"];
+        [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
+            if ([Master getSuccess:json]) {
+                NSMutableArray *imageArray=[[NSMutableArray alloc]init];
+                for (NSDictionary *dict in json[@"info"]) {
+                    [imageArray addObject:[NSString stringWithFormat:@"%@%@",mlqqm,dict[@"path"]]];
+                }
+                _sdCycleBannerView.imageURLStringsGroup=imageArray;
+            }
+        } Failure:nil];
     }
     return _sdCycleBannerView;
 }

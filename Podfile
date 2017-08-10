@@ -17,6 +17,7 @@ pod 'SVProgressHUD'
 pod 'PYSearch'
 pod 'FMDB'
 pod 'LEEAlert'
+pod 'ZLPhotoBrowser'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'

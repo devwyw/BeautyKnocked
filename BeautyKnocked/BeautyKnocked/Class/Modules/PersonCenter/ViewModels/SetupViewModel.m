@@ -103,7 +103,24 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
         _loginOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_loginOutButton setTitle:@"退出当前账号" forState:UIControlStateNormal];
         [_loginOutButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
-        [_loginOutButton addTarget:self action:@selector(loginOutButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        Weakify(self);
+        [[_loginOutButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+            if (![[Acount shareManager] isSignIn]) {
+                [Master showSVProgressHUD:@"请登录您的账号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+            }else{
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗?" message:@"(退出后不会删除历史数据,下次登录仍可使用本账号)" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+                [cancelAction setValue:[UIColor redColor] forKey:@"_titleTextColor"];
+                [alertController addAction:cancelAction];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[Acount shareManager] SignOutAcount];
+                    [Master showSVProgressHUD:@"退出成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                        [Wself.navigationController popViewControllerAnimated:YES];
+                    }];
+                }]];
+                [Wself.navigationController presentViewController:alertController animated:YES completion:nil];
+            }
+        }];
     }
     return _loginOutButton;
 }
@@ -115,17 +132,4 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
         NSLog(@"关闭通知");
     }
 }
-
--(void)loginOutButtonClicked {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗?" message:@"(退出后不会删除历史数据,下次登录仍可使用本账号)" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
-    [cancelAction setValue:[UIColor redColor] forKey:@"_titleTextColor"];
-    [alertController addAction:cancelAction];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }]];
-    [self.navigationController presentViewController:alertController animated:YES completion:nil];
-}
-
-
 @end

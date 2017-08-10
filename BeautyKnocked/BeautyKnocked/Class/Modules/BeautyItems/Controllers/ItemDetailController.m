@@ -23,7 +23,9 @@
 @end
 
 @implementation ItemDetailController
-
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
 -(ItemDetailViewModel *)itemDetailViewModel {
     if (!_itemDetailViewModel) {
         _itemDetailViewModel = [[ItemDetailViewModel alloc] init];

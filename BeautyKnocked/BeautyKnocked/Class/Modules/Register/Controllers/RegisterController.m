@@ -10,6 +10,8 @@
 #import "UIImageView+Category.h"
 #import "UIImage+Original.h"
 #import "UserAgreementController.h"
+#import "UITextField+Length.h"
+#import "NSString+Attribute.h"
 
 @interface RegisterController ()<UITextFieldDelegate>
 
@@ -35,7 +37,7 @@
 
 @end
 
-static int const Code = 60;
+static int const timeCode = 60;
 
 @implementation RegisterController
 -(void)viewWillAppear:(BOOL)animated{
@@ -69,6 +71,9 @@ static int const Code = 60;
         [_getCode setTitle:@"重新发送" forState:UIControlStateNormal];
         _getCode.userInteractionEnabled=YES;
     }
+}
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -192,6 +197,9 @@ static int const Code = 60;
         _phoneNumberTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _phoneNumberTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"yonghu_03"];
         _phoneNumberTextField.leftViewMode = UITextFieldViewModeAlways;
+        [[_phoneNumberTextField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_phoneNumberTextField setFieldtext:11];
+        }];
         
         _getCode=[[UIButton alloc]initWithFrame:CGRectMake(0, 1.4, 80, Height_Pt(122)-2.8)];
         [_getCode setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -205,31 +213,35 @@ static int const Code = 60;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if (textField==_phoneNumberTextField) {
-        if (textField.text.length >= 10) {
-            textField.text = [textField.text substringToIndex:10];
-        }
+        return [textField setRange:range whitString:string whitCount:11];
     }else if (textField==_varificationCodeTextField){
-        if (textField.text.length >= 5) {
-            textField.text = [textField.text substringToIndex:5];
-        }
+        return [textField setRange:range whitString:string whitCount:4];
     }else{
-        if (textField.text.length >= 17) {
-            textField.text = [textField.text substringToIndex:17];
-        }
+       return [textField setRange:range whitString:string whitCount:18];
     }
-    return YES;
 }
+#pragma mark ===== 获取验证码 =====
 -(void)getCode:(UIButton*)btn{
-    btn.userInteractionEnabled=NO;
-    _time = Code;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+    if (_phoneNumberTextField.text.length==11&&[_phoneNumberTextField.text isMobileNumber]) {
+        btn.userInteractionEnabled=NO;
+        {
+            _time = timeCode;
+            _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+        }
+        NSString *code=_isType ? zcyzm : ptyzm ;
+        [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text} url:mlqqm serviceCode:code Success:^(id json) {
+            if ([Master getSuccess:json]) {
+                [Master showSVProgressHUD:@"验证码获取成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
+            }
+        } Failure:nil];
+    }else{
+        [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+    }
 }
 -(void)timeCount{
     if (_time==0)return;
-    
     _time--;
-    NSLog(@"%ld",_time);
     switch (_time) {
         case 0:
         {
@@ -262,6 +274,9 @@ static int const Code = 60;
         _varificationCodeTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _varificationCodeTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"yanzhengma_03"];
         _varificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
+        [[_varificationCodeTextField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_varificationCodeTextField setFieldtext:4];
+        }];
     }
     return _varificationCodeTextField;
 }
@@ -279,7 +294,9 @@ static int const Code = 60;
         _passwordTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _passwordTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"mima_03"];
         _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
-        
+        [[_passwordTextField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_passwordTextField setFieldtext:18];
+        }];
     }
     return _passwordTextField;
 }
@@ -297,10 +314,13 @@ static int const Code = 60;
         _confirmPasswordTextField.background = [UIImage imageNamed:@"shurukuang_03"];
         _confirmPasswordTextField.leftView = [UIImageView createLeftImgViewWithImageName:@"mima_03"];
         _confirmPasswordTextField.leftViewMode = UITextFieldViewModeAlways;
+        [[_confirmPasswordTextField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_confirmPasswordTextField setFieldtext:18];
+        }];
     }
     return _confirmPasswordTextField;
 }
-
+#pragma mark ===== 注册密码/忘记密码 =====
 -(UIButton *)registerBtn {
     if (!_registerBtn) {
         _registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -312,11 +332,58 @@ static int const Code = 60;
             [_registerBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
             [_registerBtn setTitleColor:[UIColor colorWithHexString:@"#E8AB00"] forState:UIControlStateNormal];
         }
+        Weakify(self);
+        [[_registerBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            if (_phoneNumberTextField.text.length==11
+                &&_varificationCodeTextField.text.length==4
+                &&_passwordTextField.text.length>=6
+                &&[_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]
+                ) {
+                if (_isType) {
+                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"password":_passwordTextField.text} url:mlqqm serviceCode:zc Success:^(id json) {
+                        if ([Master getSuccess:json]) {
+                            [Master showSVProgressHUD:@"注册成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                                [Wself dismissViewControllerAnimated:YES completion:^{
+                                    [Master HttpPostRequestByParams:@{@"account":_phoneNumberTextField.text,
+                                                                      @"password":_passwordTextField.text,
+                                                                      @"device":UUID}
+                                                                url:mlqqm serviceCode:dl Success:^(id json) {
+                                                                    if ([Master getSuccess:json]) {
+                                                                        Acount *user=[Acount shareManager];
+                                                                        user=[Acount mj_objectWithKeyValues:json[@"info"]];
+                                                                        [user SignInAcount];
+                                                                        UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                                                                        root.selectedIndex=0;
+                                                                    }
+                                                                } Failure:nil];
+                                }];
+                            }];
+                        }
+                    } Failure:nil];
+                }else{
+                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"device":UUID,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
+                        if ([Master getSuccess:json]) {
+                            [Master showSVProgressHUD:@"重置成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                                [Wself.navigationController popViewControllerAnimated:YES];
+                            }];
+                        }
+                    } Failure:nil];
+                }
+            }else{
+                if (_phoneNumberTextField.text.length!=11) {
+                    [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else if (_varificationCodeTextField.text.length!=4){
+                    [Master showSVProgressHUD:@"请输入有效的4位验证码" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else if (_passwordTextField.text.length<6){
+                    [Master showSVProgressHUD:@"您的密码小于6位" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else if (![_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]){
+                    [Master showSVProgressHUD:@"确认密码与密码不相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }
+            }
+        }];
     }
     return _registerBtn;
 }
-
-
 -(UIButton *)bookBtn {
     if (!_bookBtn) {
         NSMutableAttributedString * normalStr = [[NSMutableAttributedString alloc] initWithString:@"注册即视为同意美丽敲敲门用户协议"];

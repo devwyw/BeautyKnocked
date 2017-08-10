@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ItemListBaseController : UIViewController
+@property (nonatomic,assign) NSInteger index;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "HomeController.h"
 #import "HomePageViewModel.h"
-#import <SVProgressHUD.h>
 #import "UIButton+Category.h"
 #import "CarItem.h"
 
@@ -54,9 +53,7 @@
     }
 }
 -(void)locationClick:(UIButton*)button{
-    [SVProgressHUD showInfoWithStatus:@"目前只提供南昌地区的服务"];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD dismissWithDelay:1.85];
+    [Master showSVProgressHUD:@"目前只提供南昌地区的服务" withType:ShowSVProgressTypeInfo withShowBlock:nil];
 }
 -(void)setHeaderView{
     /** 顶部控件 */
@@ -96,23 +93,16 @@
                 [[UIApplication sharedApplication] openURL:phone];
             }
         }
-
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
--(void)dismissHUD:(NSNotificationCenter*)not{
-    [SVProgressHUD dismiss];
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dismissHUD:)
-                                                 name:SVProgressHUDDidReceiveTouchEventNotification
-                                               object:nil];
+
     [self setHeaderView];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.homePageViewModel.navigationController = self.navigationController;
