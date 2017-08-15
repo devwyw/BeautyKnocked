@@ -51,9 +51,7 @@ static NSString *const reuseIdentifierHeader = @"FilterCollectionReusableHeaderV
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     FilterCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
     cell.itemName = self.dataSource[indexPath.section][indexPath.item];
     
     return cell;
@@ -63,7 +61,6 @@ static NSString *const reuseIdentifierHeader = @"FilterCollectionReusableHeaderV
     FilterCollectionReusableHeaderView *headerReusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseIdentifierHeader forIndexPath:indexPath];
     NSArray *titles = @[@"热卖爆款",@"美肤秘籍"];
     headerReusableView.title = [titles objectAtIndex:indexPath.section];
-    
     return headerReusableView;
 }
 
@@ -71,11 +68,7 @@ static NSString *const reuseIdentifierHeader = @"FilterCollectionReusableHeaderV
     FilterCollectionViewCell *cell = (FilterCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     cell.highLight = !cell.highLight;
     NSLog(@"highLight == %d",cell.highLight);
-    
-    // 需要改变数据,刷新该 item.
-    
 }
-
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     CGFloat width = Width_Pt(250);
@@ -99,9 +92,6 @@ static NSString *const reuseIdentifierHeader = @"FilterCollectionReusableHeaderV
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(Height_Pt(42), Width_Pt(105), Height_Pt(50), Width_Pt(95));
 }
-
-
-
 -(void)createViews {
     _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cancelButton setBackgroundImage:[UIImage imageNamed:@"quxiaojian"] forState:UIControlStateNormal];

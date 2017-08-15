@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *priceLabel;
+
 @end
 
 @implementation ProductTitlePriceView
@@ -24,7 +25,12 @@
     }
     return self;
 }
-
+-(void)setTitle:(NSString *)title{
+    _titleLabel.text = [NSString stringWithFormat:@"【%@】",title];
+}
+-(void)setPrice:(NSString *)price{
+    _priceLabel.text = [NSString stringWithFormat:@"VIP价: ¥%@",price];
+}
 -(void)initializeViews {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
@@ -35,9 +41,6 @@
     
     [self addSubview:_titleLabel];
     [self addSubview:_priceLabel];
-    
-    _titleLabel.text = @"【紫根护唇膏】";
-    _priceLabel.text = @"市场价: ¥45";
 }
 
 -(void)addConstraints {

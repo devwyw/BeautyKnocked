@@ -7,6 +7,7 @@
 //
 
 #import "CommentController.h"
+#import "EvaluationTableViewController.h"
 
 @interface CommentController ()
 
@@ -20,24 +21,49 @@
     [super viewWillAppear:animated];
     self.navBarBgAlpha=@"1.0";
 }
-- (instancetype)initWithViewControllerClasses:(NSArray<Class> *)classes andTheirTitles:(NSArray<NSString *> *)titles
-{
-    self = [super initWithViewControllerClasses:classes andTheirTitles:titles];
-    if (self) {
-        self.title = @"用户评论";
-        self.menuViewStyle = WMMenuViewStyleLine;
+-(NSArray*)listArray{
+    if (!_listArray) {
+        _listArray=[[NSArray alloc]init];
+    }
+    return _listArray;
+}
+- (instancetype)init{
+    if (self = [super init]) {
         self.titleSizeSelected = 14;
         self.titleSizeNormal = 14;
-        self.values = @[@22, @"Mark"].mutableCopy;
-        self.keys = @[@"age",@"name"].mutableCopy;
+        self.menuViewStyle = WMMenuViewStyleLine;
     }
     return self;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"用户评论";
     // Do any additional setup after loading the view.
 }
-
+- (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
+    return 2;
+}
+- (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
+    EvaluationTableViewController *controller = [[EvaluationTableViewController alloc] init];
+    if (index==0) {
+        controller.listArray=[[NSArray alloc]initWithArray:self.listArray];
+    }else{
+        NSMutableArray *array=[[NSMutableArray alloc]init];
+        for (NSDictionary *model in self.listArray) {
+            if (!isStringEmpty(model[@"imagesPaht"])) {
+                NSArray *imageArray = [model[@"imagesPaht"] componentsSeparatedByString:@","];
+                if (!isArrayEmpty(imageArray)) {
+                    [array addObject:model];
+                }
+            }
+        }
+        controller.listArray=[[NSArray alloc]initWithArray:array];
+    }
+    return controller;
+}
+- (NSString *)pageController:(WMPageController *)pageController titleAtIndex:(NSInteger)index {
+    return @[@"全部评论",@"有图"][index];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

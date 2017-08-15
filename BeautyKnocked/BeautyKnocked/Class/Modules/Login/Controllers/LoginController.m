@@ -183,21 +183,20 @@
         Weakify(self);
         [[_loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             if (_usernameTextField.text.length==11&&_passwordTextField.text.length>=6){
+                [Master shareManager].rootController=Wself.navigationController;
                 [Master HttpPostRequestByParams:@{@"account":_usernameTextField.text,
                                                   @"password":_passwordTextField.text,
                                                   @"device":UUID}
                                             url:mlqqm serviceCode:dl Success:^(id json) {
-                    if ([Master getSuccess:json]) {
-                        Acount *user=[Acount shareManager];
-                        user=[Acount mj_objectWithKeyValues:json[@"info"]];
-                        [user SignInAcount];
-                        [Master showSVProgressHUD:@"登陆成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-                            [Wself dismissViewControllerAnimated:YES completion:^{
-                                UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
-                                root.selectedIndex=0;
-                            }];
-                        }];
-                    }
+                                                Acount *user=[Acount shareManager];
+                                                user=[Acount mj_objectWithKeyValues:json[@"info"]];
+                                                [user SignInAcount];
+                                                [Master showSVProgressHUD:@"登陆成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                                                    [Wself dismissViewControllerAnimated:YES completion:^{
+                                                        UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                                                        root.selectedIndex=0;
+                                                    }];
+                                                }];
                 } Failure:nil];
             }else{
                 if (_usernameTextField.text.length!=11) {
@@ -223,7 +222,6 @@
             controller.isType=YES;
             [self.navigationController pushViewController:controller animated:YES];
         }];
-        
     }
     return _registerselfBtn;
 }

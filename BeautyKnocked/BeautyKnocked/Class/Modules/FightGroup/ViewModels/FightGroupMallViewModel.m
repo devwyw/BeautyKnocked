@@ -103,11 +103,6 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
             }];
         }else {
             EvaluationCell *evaluationCell =  [tableView dequeueReusableCellWithIdentifier:evaluationCellReuseIdentifier forIndexPath:indexPath];
-            
-            NSArray *names = @[@"美容师-李荣萍",@"美容师-吴思雨",@"美容师-平平",@"",@"美容师-楚留香"];
-            NSArray *images = @[@"touxiang_03",@"touxiang_03",@"touxiang_03"];
-            evaluationCell.images = images;
-            evaluationCell.beauticianName =  names[indexPath.row];
             return evaluationCell;
         }
 

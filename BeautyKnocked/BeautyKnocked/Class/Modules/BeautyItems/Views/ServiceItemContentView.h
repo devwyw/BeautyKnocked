@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ServiceItemContentView : UIView
-
+@property (nonatomic,strong) NSArray * dataArray;
+@property (nonatomic,copy) NSString * reloadData;
 @end

@@ -42,7 +42,6 @@
         self.tableView;
     });
     self.tableView.frame = CGRectMake(0, _top_heeight, Width, 0);
-    
 }
 
 -(void)setTop_heeight:(CGFloat)top_heeight {
@@ -52,11 +51,9 @@
 -(void)setDataSource:(NSArray *)dataSource {
     _dataSource = dataSource;
 }
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell;
@@ -72,8 +69,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     // delete all accessoryView
+    [self.delegate didSelectAtRow:indexPath.row];
+    
     for (UITableViewCell *cell in tableView.visibleCells) {
         cell.accessoryView = nil;
         [cell.textLabel setTextColor:[UIColor blackColor]];
@@ -86,9 +84,8 @@
     [imgView setImage:[UIImage imageNamed:@"paixuxialaxuanzhong"]];
     cell.accessoryView = imgView;
     [cell.textLabel setTextColor:[UIColor colorWithHexString:@"#E0C070"]];
-    
+
     [self disMissView];
-    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

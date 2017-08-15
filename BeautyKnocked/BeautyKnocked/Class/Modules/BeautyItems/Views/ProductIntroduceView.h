@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ProductIntroduceView : UIView
-
+@property (nonatomic,copy) NSString * capacitys;
+@property (nonatomic,copy) NSString * address;
+@property (nonatomic,copy) NSString * dateLength;
+@property (nonatomic,copy) NSString * effects;
 @end

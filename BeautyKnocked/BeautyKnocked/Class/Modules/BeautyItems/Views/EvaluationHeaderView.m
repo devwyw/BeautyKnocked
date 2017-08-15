@@ -25,7 +25,9 @@
     }
     return self;
 }
-
+-(void)setListCount:(NSString *)listCount{
+    _evalutionCountLabel.text = [NSString stringWithFormat:@"用户评论(%@)",listCount];
+}
 -(void)initializeViews {
     _evalutionCountLabel = [[UILabel alloc] init];
     _evalutionCountLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
@@ -39,8 +41,6 @@
     _checkAllEvalutionButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [self addSubview:_evalutionCountLabel];
     [self addSubview:_checkAllEvalutionButton];
-    
-    _evalutionCountLabel.text = @"用户评论(2)";
     
 }
 -(void)addConstraints {

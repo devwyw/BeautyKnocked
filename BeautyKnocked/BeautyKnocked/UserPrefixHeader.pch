@@ -55,14 +55,24 @@
 #define bqlb @"/manager/client/goods/labelManager/queryList"
 #define xmxq @"/manager/client/goods/projectManager/queryDetail"
 #define pllb @"/manager/client/goods/commentManager/queryListByCommId"
+#define tjpl @"/manager/client/goods/commentManager/submitProjectComment"//
+#define tjxmlb @"/manager/client/goods/recommendManager/queryRecommendProject"
+#define tclb @"/manager/client/goods/packageManager/queryList"
+#define tclbpx @"/manager/client/goods/packageManager/queryListSort"
+#define tcxq @"/manager/client/goods/packageManager/queryDetail"
+#define cplb @"/manager/client/goods/productManager/queryList"
+#define cplbpx @"/manager/client/goods/productManager/queryListSort"
+#define cpxq @"/manager/client/goods/productManager/queryDetail"
+#define czlb @"/manager/client/recharge/rechargeManager/queryList"
+#define czxq @"/manager/client/recharge/rechargeManager/queryDetail"
+#define czdd @"/manager/client/bill/rechargeBill/insert"
+#define khyhqlb @"/manager/client/personal/clientCouponManager/queryList"
 /** 调试模式 */
 #ifdef __OBJC__
 #ifdef DEBUG
-#define mlqqm @"http://47.90.84.69/mlqqm"
-//#define mlqqm @"http://0f47889b.ngrok.io/mlqqm"
+#define mlqqm @"http://106.14.97.148/mlqqm"
 #define NSLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
-#define mlqqm @"http://47.90.84.69/mlqqm"
 #define NSLog(...)
 #endif
 #endif

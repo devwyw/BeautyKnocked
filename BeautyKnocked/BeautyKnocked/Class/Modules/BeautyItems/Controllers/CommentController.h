@@ -9,5 +9,5 @@
 #import <WMPageController/WMPageController.h>
 
 @interface CommentController : WMPageController
-
+@property (nonatomic,strong) NSArray * listArray;
 @end

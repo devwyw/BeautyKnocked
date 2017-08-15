@@ -7,21 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+@class ProductModel;
 
 @interface ProductDetailViewModel : NSObject
 
 @property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic,strong) ProductModel * model;
+@property (nonatomic,strong) NSArray * listArray;
 
 -(NSUInteger)numberOfSectionInForTableView:(UITableView *)tableView;
-
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section;
-
--(void)configRegisterTableView:(UITableView *)tableView;
-
 -(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-
-//-(void)configTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-//
-//-(CGFloat)configTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

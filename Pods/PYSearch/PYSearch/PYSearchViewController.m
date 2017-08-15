@@ -883,6 +883,7 @@
     UIAlertController *alter=[UIAlertController alertControllerWithTitle:@"确认删除全部历史记录？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alter addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [alter addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        PYSEARCH_LOG(@"%@", [NSBundle py_localizedStringForKey:PYSearchEmptySearchHistoryLogText]);
         [self.searchHistories removeAllObjects];
         [NSKeyedArchiver archiveRootObject:self.searchHistories toFile:self.searchHistoriesCachePath];
         if (PYSearchHistoryStyleCell == self.searchHistoryStyle) {
@@ -895,7 +896,6 @@
         }
     }]];
     [self presentViewController:alter animated:YES completion:nil];
-    PYSEARCH_LOG(@"%@", [NSBundle py_localizedStringForKey:PYSearchEmptySearchHistoryLogText]);
 }
 
 - (void)tagDidCLick:(UITapGestureRecognizer *)gr

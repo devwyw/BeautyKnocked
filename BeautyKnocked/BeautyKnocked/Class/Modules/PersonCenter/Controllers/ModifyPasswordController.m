@@ -88,11 +88,9 @@
                                                   @"device":UUID,
                                                   @"oldPassword":_currentPasswordTF.text,
                                                   @"newPassword":_passwordTF.text} url:mlqqm serviceCode:ggmm Success:^(id json) {
-                                                      if ([Master getSuccess:json]) {
-                                                          [Master showSVProgressHUD:@"修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-                                                              [Wself.navigationController popViewControllerAnimated:YES];
-                                                          }];
-                                                      }
+                                                      [Master showSVProgressHUD:@"修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                                                          [Wself.navigationController popViewControllerAnimated:YES];
+                                                      }];
                                                       
                                                   } Failure:nil];
             }

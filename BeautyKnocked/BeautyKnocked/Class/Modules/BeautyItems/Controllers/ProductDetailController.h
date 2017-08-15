@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ProductDetailController : UIViewController
-
+@property (nonatomic,copy) NSString * alpha;
+@property (nonatomic,copy) NSString * productID;
 @end

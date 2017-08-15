@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class TitleClassModel;
 
 @interface ItemListBaseController : UIViewController
-@property (nonatomic,assign) NSInteger index;
-
+@property (nonatomic,strong) TitleClassModel * model;
 @end

@@ -14,5 +14,5 @@
 @property (nonatomic, copy) NSString *serviceTime;
 @property (nonatomic, copy) NSString *firstPrice;
 @property (nonatomic, copy) NSString *secondPrice;
-
+@property (nonatomic, copy) NSString *packPrice;
 @end

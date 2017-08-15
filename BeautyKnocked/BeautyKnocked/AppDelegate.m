@@ -61,7 +61,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [Master getNetWork:self.window.rootViewController];
+    [Master getNetWork];
 }
 - (void)applicationWillTerminate:(UIApplication *)application {
 }

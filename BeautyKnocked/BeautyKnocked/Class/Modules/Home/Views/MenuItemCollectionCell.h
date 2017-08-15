@@ -10,11 +10,11 @@
 
 @interface MenuItemCollectionCell : UICollectionViewCell
 
-@property (nonatomic, strong) NSString *imageName;
+@property (nonatomic, copy) NSString *imageName;
 
-@property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, copy) NSString *imageUrl;
 
-@property (nonatomic, strong) NSString *menuItemName;
+@property (nonatomic, copy) NSString *menuItemName;
 
 @property (nonatomic, strong) UIFont *titleFont;
 

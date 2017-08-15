@@ -8,11 +8,12 @@
 
 #import "EvaluationTableViewController.h"
 #import "EvaluationCell.h"
+#import "CommentModel.h"
 
 static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 
 @interface EvaluationTableViewController ()
-
+@property (nonatomic,strong) NSArray * list;
 @end
 
 @implementation EvaluationTableViewController
@@ -21,35 +22,33 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.tableView.estimatedRowHeight = 100;
-    [self.tableView registerClass:[EvaluationCell class] forCellReuseIdentifier:evaluationCellIdentifier];
-    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
+-(NSArray*)list{
+    if (!_list) {
+        _list=[[NSArray alloc]init];
+    }
+    return _list;
+}
+-(void)setListArray:(NSArray *)listArray{
+    self.list=[[NSArray alloc]initWithArray:listArray];
+    [self.tableView reloadData];
+}
 #pragma mark - Table view data source
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.list.count;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EvaluationCell *cell = [tableView dequeueReusableCellWithIdentifier:evaluationCellIdentifier forIndexPath:indexPath];
-    
-    NSArray *names = @[@"美容师-李荣萍",@"美容师-吴思雨",@"美容师-平平",@"",@"美容师-楚留香"];
-    NSArray *images = @[@[@"touxiang_03"],
-                        @[@"touxiang_03",@"touxiang_03"],
-                        @[@"touxiang_03",@"touxiang_03",@"touxiang_03"],
-                        @[],
-                        @[@"touxiang_03",@"touxiang_03",@"touxiang_03"]];
-    cell.images = images[indexPath.row];
-    cell.beauticianName = self.name ? names[indexPath.row] : @"";
-    
+    CommentModel *model=[[CommentModel alloc]init];
+    model=[CommentModel mj_objectWithKeyValues:self.list[indexPath.row]];
+    EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (!cell) {
+        cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];
+    }
+    cell.model=model;
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -58,5 +57,4 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
-
 @end

@@ -7,11 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class CommentModel;
 
 @interface EvaluationCell : UITableViewCell
-
-@property (nonatomic, copy) NSString *telephone;
-@property (nonatomic, copy) NSString *beauticianName;
-@property (nonatomic, strong) NSArray *images;
-
+@property (nonatomic,strong) CommentModel * model;
 @end

@@ -84,16 +84,13 @@ static int const timeCode = 60;
     [self addSubViews];
     [self addConstraints];
 }
-
 -(void)returnAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)addSubViews {
     [self.view addSubview:self.backImgView];
-    
     [self.backImgView addSubview:self.logoImgView];
-    
     [self.backImgView addSubview:self.phoneNumberTextField];
     [self.backImgView addSubview:self.varificationCodeTextField];
     [self.backImgView addSubview:self.passwordTextField];
@@ -103,11 +100,8 @@ static int const timeCode = 60;
     if (!_isType) {
         self.bookBtn.hidden=YES;
     }
-    
 }
-
 -(void)addConstraints {
-    
     // background Image
     [_backImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -131,29 +125,40 @@ static int const timeCode = 60;
     [_varificationCodeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_phoneNumberTextField.mas_bottom).with.offset(Height_Pt(45));
         make.centerX.equalTo(_backImgView);
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(794), Height_Pt(122)));
+        make.size.equalTo(_phoneNumberTextField);
     }];
     
     // password
     [_passwordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_varificationCodeTextField.mas_bottom).with.offset(Height_Pt(45));
         make.centerX.equalTo(_backImgView);
-        make.size.equalTo(_varificationCodeTextField);
+        make.size.equalTo(_phoneNumberTextField);
     }];
     
     // confirm password
     [_confirmPasswordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_passwordTextField.mas_bottom).with.offset(Height_Pt(45));
         make.centerX.equalTo(_backImgView);
-        make.size.equalTo(_passwordTextField);
+        make.size.equalTo(_phoneNumberTextField);
     }];
     
     // register
-    [_registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_confirmPasswordTextField.mas_bottom).with.offset(Height_Pt(45));
-        make.centerX.equalTo(_backImgView);
-        make.size.equalTo(_passwordTextField);
-    }];
+    
+    if (_isLock) {
+        _passwordTextField.hidden=YES;
+        _confirmPasswordTextField.hidden=_passwordTextField.isHidden;
+        [_registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_varificationCodeTextField.mas_bottom).with.offset(Height_Pt(45));
+            make.centerX.equalTo(_backImgView);
+            make.size.equalTo(_phoneNumberTextField);
+        }];
+    }else{
+        [_registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_confirmPasswordTextField.mas_bottom).with.offset(Height_Pt(45));
+            make.centerX.equalTo(_backImgView);
+            make.size.equalTo(_phoneNumberTextField);
+        }];
+    }
     
     // 用户协议
     [_bookBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -223,17 +228,13 @@ static int const timeCode = 60;
 #pragma mark ===== 获取验证码 =====
 -(void)getCode:(UIButton*)btn{
     if (_phoneNumberTextField.text.length==11&&[_phoneNumberTextField.text isMobileNumber]) {
-        btn.userInteractionEnabled=NO;
-        {
+        NSString *code=_isType ? zcyzm : ptyzm ;
+        [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text} url:mlqqm serviceCode:code Success:^(id json) {
+            btn.userInteractionEnabled=NO;
             _time = timeCode;
             _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
             [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-        }
-        NSString *code=_isType ? zcyzm : ptyzm ;
-        [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text} url:mlqqm serviceCode:code Success:^(id json) {
-            if ([Master getSuccess:json]) {
-                [Master showSVProgressHUD:@"验证码获取成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
-            }
+            [Master showSVProgressHUD:@"验证码获取成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
         } Failure:nil];
     }else{
         [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
@@ -328,20 +329,39 @@ static int const timeCode = 60;
             [_registerBtn setImage:[UIImage imageNamed:@"zhuceanniu_03"] forState:UIControlStateNormal];
         }else{
             [_registerBtn setBackgroundImage:[UIImage imageNamed:@"zhucekuang"] forState:UIControlStateNormal];
-            [_registerBtn setTitle:@"重置密码" forState:UIControlStateNormal];
             [_registerBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
             [_registerBtn setTitleColor:[UIColor colorWithHexString:@"#E8AB00"] forState:UIControlStateNormal];
+            if (_isLock) {
+                [_registerBtn setTitle:@"解锁" forState:UIControlStateNormal];
+            }else{
+                [_registerBtn setTitle:@"重置密码" forState:UIControlStateNormal];
+            }
         }
         Weakify(self);
         [[_registerBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            if (_phoneNumberTextField.text.length==11
-                &&_varificationCodeTextField.text.length==4
-                &&_passwordTextField.text.length>=6
-                &&[_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]
-                ) {
-                if (_isType) {
-                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"password":_passwordTextField.text} url:mlqqm serviceCode:zc Success:^(id json) {
-                        if ([Master getSuccess:json]) {
+            if (_isLock) {
+                if (_phoneNumberTextField.text.length==11
+                    &&_varificationCodeTextField.text.length==4) {
+                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"device":UUID} url:mlqqm serviceCode:js Success:^(id json) {
+                        [Master showSVProgressHUD:@"解锁成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                            [Wself.navigationController popViewControllerAnimated:YES];
+                        }];
+                    } Failure:nil];
+                }else{
+                    if (_phoneNumberTextField.text.length!=11) {
+                        [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                    }else if (_varificationCodeTextField.text.length!=4){
+                        [Master showSVProgressHUD:@"请输入有效的4位验证码" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                    }
+                }
+            }else{
+                if (_phoneNumberTextField.text.length==11
+                    &&_varificationCodeTextField.text.length==4
+                    &&_passwordTextField.text.length>=6
+                    &&[_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]
+                    ) {
+                    if (_isType) {
+                        [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"password":_passwordTextField.text} url:mlqqm serviceCode:zc Success:^(id json) {
                             [Master showSVProgressHUD:@"注册成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                                 [Wself dismissViewControllerAnimated:YES completion:^{
                                     [Master HttpPostRequestByParams:@{@"account":_phoneNumberTextField.text,
@@ -358,26 +378,24 @@ static int const timeCode = 60;
                                                                 } Failure:nil];
                                 }];
                             }];
-                        }
-                    } Failure:nil];
-                }else{
-                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"device":UUID,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
-                        if ([Master getSuccess:json]) {
+                        } Failure:nil];
+                    }else{
+                        [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"device":UUID,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
                             [Master showSVProgressHUD:@"重置成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                                 [Wself.navigationController popViewControllerAnimated:YES];
                             }];
-                        }
-                    } Failure:nil];
-                }
-            }else{
-                if (_phoneNumberTextField.text.length!=11) {
-                    [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
-                }else if (_varificationCodeTextField.text.length!=4){
-                    [Master showSVProgressHUD:@"请输入有效的4位验证码" withType:ShowSVProgressTypeInfo withShowBlock:nil];
-                }else if (_passwordTextField.text.length<6){
-                    [Master showSVProgressHUD:@"您的密码小于6位" withType:ShowSVProgressTypeInfo withShowBlock:nil];
-                }else if (![_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]){
-                    [Master showSVProgressHUD:@"确认密码与密码不相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                        } Failure:nil];
+                    }
+                }else{
+                    if (_phoneNumberTextField.text.length!=11) {
+                        [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                    }else if (_varificationCodeTextField.text.length!=4){
+                        [Master showSVProgressHUD:@"请输入有效的4位验证码" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                    }else if (_passwordTextField.text.length<6){
+                        [Master showSVProgressHUD:@"您的密码小于6位" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                    }else if (![_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]){
+                        [Master showSVProgressHUD:@"确认密码与密码不相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                    }
                 }
             }
         }];

@@ -7,7 +7,8 @@
 //
 
 #import "ServiceContentCollectionViewCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "ImageModel.h"
+#import <UIImageView+WebCache.h>
 
 @interface ServiceContentCollectionViewCell ()
 
@@ -39,16 +40,13 @@
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
-    
-    
+
     [self.contentView addSubview:_imgView];
     [self.contentView addSubview:_titleLabel];
     [_imgView addSubview:_serialNumberLabel];
-    
 }
 
 -(void)addConstraints {
-    
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.left.and.right.equalTo(self.contentView);
         make.height.mas_equalTo(Height_Pt(256));
@@ -66,19 +64,11 @@
         make.height.mas_equalTo(Height_Pt(64));
     }];
 }
-
--(void)setTitleName:(NSString *)titleName {
-    _titleLabel.text = titleName;
+-(void)setModel:(ImageModel *)model{
+    _titleLabel.text=model.name;
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,model.imagePath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
 }
-
--(void)setSerialNumber:(NSUInteger)serialNumber {
-    _serialNumberLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)serialNumber];
-}
-
--(void)setImgName:(NSString *)imgName {
-    [_imgView setImage:[UIImage imageNamed:imgName]];
-}
--(void)setImgURL:(NSString *)imgURL {
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:imgURL]];
+-(void)setSerialNumber:(NSInteger)serialNumber {
+    _serialNumberLabel.text = [NSString stringWithFormat:@"%ld",serialNumber];
 }
 @end

@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ItemDetailController : UIViewController
-
+@property (nonatomic,copy) NSString * detailID;
+@property (nonatomic,copy) NSString * projectId;
+@property (nonatomic,copy) NSString * code;
+@property (nonatomic,copy) NSString * alpha;
 @end

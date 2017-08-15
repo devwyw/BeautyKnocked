@@ -8,6 +8,7 @@
 
 #import "ServiceItemContentView.h"
 #import "ServiceContentCollectionViewCell.h"
+#import "ImageModel.h"
 
 static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
 @interface ServiceItemContentView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -19,10 +20,9 @@ static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
 
 @end
 
-
 @implementation ServiceItemContentView
 
--(instancetype)initWithFrame:(CGRect)frame {
+-(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         [self initializeViews];
@@ -30,31 +30,35 @@ static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
     }
     return self;
 }
-
-
+-(NSArray*)dataArray{
+    if (!_dataArray) {
+        _dataArray=[[NSArray alloc]init];
+    }
+    return _dataArray;
+}
+-(void)setReloadData:(NSString *)reloadData{
+    _titleLabel.text = [NSString stringWithFormat:@"服务内容(%ld)",self.dataArray.count];
+    if (![reloadData isEqualToString:@"hidden"]) {
+        _timeLabel.text = [NSString stringWithFormat:@"约%@分钟",reloadData];
+    }
+    [_collectionView reloadData];
+}
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    return 4;
+    return self.dataArray.count;
 }
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     ServiceContentCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    [self configureCell:cell indexPath:indexPath];
+    cell.serialNumber = indexPath.item+1;
+    cell.model=self.dataArray[indexPath.item];
     return cell;
 }
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-}
-
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(Width_Pt(256), Height_Pt(348));
 }
-
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return Width_Pt(40);
 }
-
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return Height_Pt(40);
 }
@@ -62,15 +66,7 @@ static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(Height_Pt(20), Width_Pt(62), 0, 0);
 }
-
--(void)configureCell:(ServiceContentCollectionViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-    cell.serialNumber = indexPath.item;
-    cell.titleName = @"芳香开背";
-    cell.imgName = @"touxiang_03";
-}
-
 -(void)initializeViews {
-    
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
@@ -86,7 +82,6 @@ static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_collectionView registerClass:[ServiceContentCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
-    
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     _timeLabel.textColor = [UIColor lightGrayColor];
@@ -95,10 +90,6 @@ static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
     [self addSubview:_line];
     [self addSubview:_collectionView];
     [self addSubview:_timeLabel];
-    
-    _titleLabel.text = @"服务内容(4)";
-    _timeLabel.text = @"约90分钟";
-    
 }
 
 -(void)addConstraints {

@@ -10,11 +10,11 @@
 
 @interface ItemTitleView : UIView
 
-@property (nonatomic, strong) NSString *leftImageName;
+@property (nonatomic, copy) NSString *leftImageName;
 
-@property (nonatomic, strong) NSString *titleName;
+@property (nonatomic, copy) NSString *titleName;
 
-@property (nonatomic, strong) NSString *rightImageName;
+@property (nonatomic, copy) NSString *rightImageName;
 
 @property (nonatomic, strong) UIColor *titleColor;
 

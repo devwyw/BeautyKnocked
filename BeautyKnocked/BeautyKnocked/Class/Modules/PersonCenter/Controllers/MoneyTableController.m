@@ -36,7 +36,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 6;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MoneyCell" forIndexPath:indexPath];
     return cell;

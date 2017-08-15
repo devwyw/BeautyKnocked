@@ -12,6 +12,8 @@
 #import "ConfirmOrderController.h"
 #import "AddCarView.h"
 #import "CarItem.h"
+#import <UIImageView+WebCache.h>
+#import "ProductModel.h"
 
 @interface ProductDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -26,13 +28,25 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat OffsetY=scrollView.contentOffset.y;
+    if (OffsetY >= 0 && OffsetY <= 64) {
+        _alpha = [NSString stringWithFormat:@"%f",OffsetY/64];
+    }else if(OffsetY > 64){
+        _alpha = @"1";
+    }else{
+        _alpha=@"0";
+    }
+    self.navBarBgAlpha = _alpha;
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"0";
+    self.navBarBgAlpha = _alpha;
     _carItem.count=100;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title=@"产品详情";
     [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
     [self initializeViews];
     [self addConstraints];
@@ -44,6 +58,7 @@
         }];
         [self.view addSubview:_carItem];
     }
+    [self loadHttpData:self.productID];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -56,8 +71,7 @@
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.estimatedRowHeight = 100;
     _tableView.showsVerticalScrollIndicator = NO;
-    [self.productDetailViewModel configRegisterTableView:_tableView];
-    
+
     self.productDetailViewModel.navigationController = self.navigationController;
     
     _addReserveView = [[AddAndReserveView alloc] init];
@@ -123,7 +137,6 @@
         _tableheaderView.clipsToBounds = YES;
         _tableheaderView.contentMode = UIViewContentModeScaleAspectFill;
         _tableheaderView.frame = CGRectMake(0, 0, Width, Height_Pt(675));
-        _tableheaderView.image = [UIImage imageNamed:@"chanppic"];
     }
     return _tableheaderView;
 }
@@ -133,5 +146,16 @@
     }
     return _productDetailViewModel;
 }
-
+#pragma mark ===== 产品详情 =====
+-(void)loadHttpData:(NSString*)productID{
+    [Master HttpPostRequestByParams:@{@"id":productID} url:mlqqm serviceCode:cpxq Success:^(id json) {
+        self.productDetailViewModel.model=[ProductModel mj_objectWithKeyValues:json[@"info"]];
+        [self.tableheaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.productDetailViewModel.model.imagePath]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+        /** 评论列表 */
+        [Master HttpPostRequestByParams:@{@"id":productID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
+            self.productDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
+            [_tableView reloadData];
+        } Failure:nil];
+    } Failure:nil];
+}
 @end

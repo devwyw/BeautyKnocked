@@ -61,30 +61,24 @@
         actionSheet.maxSelectCount = 1;
         actionSheet.showSelectBtn=YES;
         [actionSheet setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
-            {/** 菊花 */
-                [SVProgressHUD show];
-                [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-                [SVProgressHUD setMinimumDismissTimeInterval:3];
-            }
-            NSData *imageData=[[NSData alloc]init];;
-            if (!isObjectEmpty(UIImagePNGRepresentation(images.firstObject))) {
-                imageData = UIImageJPEGRepresentation(images.firstObject, 1);
-            }else{
-                imageData = UIImagePNGRepresentation(images.firstObject);
-            }
+            NSData *imageData=UIImageJPEGRepresentation(images.firstObject, 1.0);
             if (!isObjectEmpty(imageData)) {
-            NSString *imageBase = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                [SVProgressHUD dismiss];
+                if (imageData.length>1024*1024) {
+                    imageData = UIImageJPEGRepresentation(images.firstObject, 0.2);
+                }else if (imageData.length>512*1024){
+                    imageData = UIImageJPEGRepresentation(images.firstObject, 0.25);
+                }else if (imageData.length>256*1024){
+                    imageData = UIImageJPEGRepresentation(images.firstObject, 0.5);
+                }
+                NSLog(@"压缩后:%fK",imageData.length/1024.0f);
+                NSString *imageBase = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                 [Master HttpPostRequestByParams:@{@"id":user.id,@"device":UUID,@"imgStr":imageBase} url:mlqqm serviceCode:ghtx Success:^(id json) {
-                    if ([Master getSuccess:json]) {
-                        Wself.modifyInfoView.headerimage=images.firstObject;
-                        [Master showSVProgressHUD:@"头像修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
-                    }
+                    Wself.modifyInfoView.headerimage=images.firstObject;
+                    user.headPath=json[@"info"];
+                    [Master showSVProgressHUD:@"头像修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
                 } Failure:nil];
             }else{
-                [SVProgressHUD dismiss];
-                [Master showSVProgressHUD:@"头像修改失败" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
+                [Master showSVProgressHUD:@"请重新选择头像图片" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
             }
         }];
         [actionSheet showPreviewAnimated:YES sender:Wself];

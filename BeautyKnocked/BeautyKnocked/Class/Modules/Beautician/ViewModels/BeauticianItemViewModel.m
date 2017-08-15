@@ -30,7 +30,6 @@ static NSString *const beautyItemsCellReuseIdentifier = @"BeautyItemsCell";
 
 -(UITableViewCell *)configureBeauticianItemTableView:(UITableView *)tableView AtIndexPath:(NSIndexPath *)indexPath {
     BeautyItemsCell *cell = [tableView dequeueReusableCellWithIdentifier:beautyItemsCellReuseIdentifier forIndexPath:indexPath];
-    
     return cell;
 }
 

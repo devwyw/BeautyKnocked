@@ -29,7 +29,6 @@
 }
 
 -(void)initializeButtons {
-    
     _lateToUpgrade = [self createButtonWithImageName:@"chidaoshengji" title:@"迟到升级"];
     _indemnity = [self createButtonWithImageName:@"shaungyuepeichang" title:@"爽约赔款"];
     _changeReserve = [self createButtonWithImageName:@"yuyuebiangeng" title:@"预约变更"];
@@ -40,9 +39,7 @@
     [self addSubview:_changeReserve];
     [self addSubview:_more];
 }
-
 -(void)addConstraints {
-    
     NSArray *views = @[_lateToUpgrade,_indemnity,_changeReserve,_more];
     [views mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);

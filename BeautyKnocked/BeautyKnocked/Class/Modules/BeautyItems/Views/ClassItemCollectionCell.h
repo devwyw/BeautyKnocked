@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @class ItemClassModel;
+@class PackageModel;
 
 @interface ClassItemCollectionCell : UICollectionViewCell
 
-+(instancetype)itemWithCollectionView:(UICollectionView*)collection WithIndexPath:(NSIndexPath*)indexPath WithModel:(ItemClassModel*)model;
-
+@property (nonatomic,strong) ItemClassModel * model;
+@property (nonatomic,strong) PackageModel * Pmodel;
 @end

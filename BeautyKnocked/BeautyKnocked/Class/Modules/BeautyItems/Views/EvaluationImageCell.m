@@ -7,7 +7,7 @@
 //
 
 #import "EvaluationImageCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+WebCache.h>
 
 
 @interface EvaluationImageCell ()
@@ -19,7 +19,6 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        
         _imgView = [[UIImageView alloc] init];
         _imgView.contentMode=UIViewContentModeScaleAspectFill;
         _imgView.clipsToBounds=YES;
@@ -28,19 +27,12 @@
         [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.contentView);
         }];
-        
     }
     return self;
 }
 
--(void)setImageURL:(NSURL *)imageURL {
-    if (imageURL) {
-        [_imgView sd_setImageWithURL:imageURL];
-    }
-}
-
 -(void)setImageName:(NSString *)imageName {
-    [_imgView setImage:[UIImage imageNamed:imageName]];
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,imageName]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
 }
 
 @end

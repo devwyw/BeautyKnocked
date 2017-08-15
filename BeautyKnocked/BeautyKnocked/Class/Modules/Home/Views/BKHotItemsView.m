@@ -68,7 +68,6 @@
     _menuItemView.titleFont = [UIFont systemFontOfSize:Font_Size(42)];
     
     [self addSubview:_menuItemView];
-    
 }
 
 -(void)configureConstraints {

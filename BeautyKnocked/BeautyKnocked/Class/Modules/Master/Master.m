@@ -9,6 +9,7 @@
 #import "Master.h"
 #import <AFNetworking.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "RegisterController.h"
 
 static Master *instance=nil;
 
@@ -42,28 +43,22 @@ static Master *instance=nil;
     return instance;
 }
 #pragma mark ===== 检测网络 =====
-+(void)getNetWork:(id)Weakself{
++(void)getNetWork{
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
-            {
-                UIAlertController *alter=[UIAlertController alertControllerWithTitle:@"未识别网络" message:@"您正在使用地球之外的网络." preferredStyle:UIAlertControllerStyleAlert];
-                [alter addAction:[UIAlertAction actionWithTitle:@"网络设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [instance pushSystemSetting];
-                }]];
-                [alter addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:nil]];
-                [Weakself presentViewController:alter animated:YES completion:nil];
-            }
-                break;
             case AFNetworkReachabilityStatusNotReachable:
             {
-                UIAlertController *alter=[UIAlertController alertControllerWithTitle:@"网络未连接" message:@"我们未在地球上找到您的连接." preferredStyle:UIAlertControllerStyleAlert];
-                [alter addAction:[UIAlertAction actionWithTitle:@"网络设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [instance pushSystemSetting];
-                }]];
-                [alter addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:nil]];
-                [Weakself presentViewController:alter animated:YES completion:nil];
+                [LEEAlert alert].config
+                .LeeTitle(@"网络未连接")
+                .LeeContent(@"我们未在地球上找到您的连接")
+                .LeeCancelAction(@"网络设置", ^{
+                    [Master pushSystemSetting];
+                })
+                .LeeAction(@"确定", ^{
+                })
+                .LeeShow();
             }
                 break;
             default:
@@ -73,7 +68,7 @@ static Master *instance=nil;
     }];
     [manager startMonitoring];
 }
--(void)pushSystemSetting{
++(void)pushSystemSetting{
     NSURL *Network=[NSURL URLWithString:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
     if ([[UIApplication sharedApplication] canOpenURL:Network]) {
         if (SystemVersion>=10.0) {
@@ -128,8 +123,8 @@ static Master *instance=nil;
     }
     /** Post网络请求 */
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer.timeoutInterval = 5;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 20;
     manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -139,27 +134,26 @@ static Master *instance=nil;
         NSLog(@"json数据: %@",string);
         if (!isObjectEmpty(success)) {
             NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers  error:nil];
-            success(resultDic);
-        }else{
-            return;
+            if ([Master getSuccess:resultDic]) {
+                success(resultDic);
+            }
         }
     }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
         NSLog(@"json错误: %@",error);
         switch (error.code) {
             case -1009:
-                [SVProgressHUD showErrorWithStatus:@"我们未在地球上找到您的连接，请检查您的网络设置~~"];
+                [SVProgressHUD showErrorWithStatus:@"我们未在地球上找到您的连接，请检查您的网络设置~"];
                 break;
             case -1004:
-                [SVProgressHUD showErrorWithStatus:@"您正在使用地球之外的网络，我们未能与您连接~~"];
+                [SVProgressHUD showErrorWithStatus:@"您正在使用地球之外的网络，我们未能与您连接~"];
                 break;
             default:
+                [SVProgressHUD showErrorWithStatus:@"网络错误，请您再试一试~"];
                 break;
         }
         if (!isObjectEmpty(failure)){
             failure(error);
-        }else{
-            return;
         }
     }];
 }
@@ -193,11 +187,9 @@ static Master *instance=nil;
             break;
     }
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD dismissWithDelay:1.75 completion:^{
+    [SVProgressHUD dismissWithDelay:1.66 completion:^{
         if (!isObjectEmpty(block)) {
             block();
-        }else{
-            return;
         }
     }];
 }
@@ -205,6 +197,18 @@ static Master *instance=nil;
     switch ([json[@"status"] integerValue]) {
         case 200:
             return YES;
+            case 7:
+        {
+            [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:^{
+                if (!isObjectEmpty(instance.rootController)) {
+                    RegisterController *controller=[[RegisterController alloc]init];
+                    controller.isType=NO;
+                    controller.isLock=YES;
+                    [instance.rootController pushViewController:controller animated:YES];
+                }
+            }];
+            return NO;
+        }
         default:
             [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:nil];
             return NO;

@@ -7,21 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class DetailModel;
+@class PackageInfoModel;
 @interface ItemDetailViewModel : NSObject
 
-@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic,strong) UINavigationController *navigationController;
+@property (nonatomic,strong) NSArray * listArray;
+@property (nonatomic,strong) DetailModel * model;
+@property (nonatomic,strong) PackageInfoModel * Pmodel;
 
 -(NSUInteger)numberOfSectionInForTableView:(UITableView *)tableView;
-
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section;
-
--(void)configRegisterTableView:(UITableView *)tableView;
-
 -(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-
-//-(void)configTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-//
-//-(CGFloat)configTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-
 @end

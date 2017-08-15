@@ -12,5 +12,6 @@
 @interface EvaluationHeaderView : UIView
 
 @property (nonatomic, strong) RACSignal *checkAllEvaluationSignal;
+@property (nonatomic,copy) NSString * listCount;
 
 @end

@@ -11,7 +11,7 @@
 @protocol ItemsSortViewDelegate <NSObject>
 
 -(void)didSelectedButton:(UIButton *)button;
-
+-(void)didSelectWithRow:(NSUInteger)row;
 @end
 
 @interface BeautyItemSortView : UIView

@@ -30,7 +30,6 @@
 }
 
 -(void)initializeViews {
-    
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     
@@ -38,6 +37,7 @@
     [_alarmImgView setImage:[UIImage imageNamed:@"fuwushijian"]];
     
     UIFont *textFont = [UIFont systemFontOfSize:Font_Size(38)];
+    
     _serviceTimeLengthLabel = [[UILabel alloc] init];
     _serviceTimeLengthLabel.font = textFont;
     _serviceTimeLengthLabel.textColor = [UIColor lightGrayColor];
@@ -57,15 +57,9 @@
     [self addSubview:_serviceTimeLengthLabel];
     [self addSubview:_firstPriceLabel];
     [self addSubview:_secondPriceLabel];
-    
-    _nameLabel.text = @"【水漾海洋特润】";
-    _serviceTimeLengthLabel.text = @"服务时长90分钟";
-    _firstPriceLabel.text  = @"VIP : ¥ 158";
-    _secondPriceLabel.text = @"市场价: ¥ 380";
 }
 
 -(void)addConstraints {
-    
     [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(Height_Pt(30));
         make.left.equalTo(self).with.offset(Height_Pt(62));
@@ -106,8 +100,11 @@
     _firstPriceLabel.text = [NSString stringWithFormat:@"VIP : ¥ %@",firstPrice];
 }
 -(void)setSecondPrice:(NSString *)secondPrice {
-    _firstPriceLabel.text = [NSString stringWithFormat:@"市场价: ¥%@",secondPrice];
+    _secondPriceLabel.text = [NSString stringWithFormat:@"市场价: ¥%@",secondPrice];
 }
-                             
+-(void)setPackPrice:(NSString *)packPrice{
+    _alarmImgView.hidden=YES;
+    _firstPriceLabel.text = [NSString stringWithFormat:@"套餐价 : ¥ %@",packPrice];
+}
 
 @end

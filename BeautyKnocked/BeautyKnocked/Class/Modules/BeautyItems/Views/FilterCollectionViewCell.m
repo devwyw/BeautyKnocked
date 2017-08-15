@@ -19,7 +19,6 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        
         self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wenzikuang"]];
         
         _titleLabel = [[UILabel alloc] init];

@@ -9,8 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface EvaluationImageCell : UICollectionViewCell
-
-@property (nonatomic, strong) NSURL *imageURL;
-@property (nonatomic, strong) NSString *imageName;
-
+@property (nonatomic, copy) NSString *imageName;
 @end

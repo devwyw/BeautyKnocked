@@ -9,20 +9,18 @@
 #import "HomePageMuduleCell.h"
 #import "HomePageItemCollectionViewCell.h"
 #import "UIButton+Category.h"
+#import "ItemClassModel.h"
 
 static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 
 @interface HomePageMuduleCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UILabel *titleLabel;
-
 @property (nonatomic, strong) UIView *line;
-
 @property (nonatomic, strong) UIButton *moreBtn;
-
 @property (nonatomic, strong) UICollectionView *collectionView;
-
 @property (nonatomic, assign) NSInteger section;
+@property (nonatomic, strong) NSMutableArray * itemArray;
 
 @end
 
@@ -33,13 +31,20 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 
     // Configure the view for the selected state
 }
-
+-(NSMutableArray*)itemArray{
+    if (!_itemArray) {
+        _itemArray=[[NSMutableArray alloc]init];
+    }
+    return _itemArray;
+}
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andSection:(NSInteger)section{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _section=section;
+        self.section=section;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupInterface];
         [self setupConstraints];
+        [self loadHttpData:section];
     }
     return self;
 }
@@ -83,14 +88,12 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_collectionView registerClass:[HomePageItemCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [self.contentView addSubview:_collectionView];
-    
 }
 //更多
 -(void)moreBtn:(UIButton*)button{
     [_cellDelegate more:button];
 }
 -(void)setupConstraints {
-    
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(Height_Pt(15));
         make.left.equalTo(self.contentView).with.offset(Width_Pt(25));
@@ -117,46 +120,51 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
         //make.height.mas_equalTo(Height_Pt(447));
         make.bottom.equalTo(self.contentView);
     }];
-    
 }
-
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     switch (_section) {
         case 5:
-            return 5;
+            return self.itemArray.count;
         case 6:
-            return 6;
+            return self.itemArray.count;
         case 7:
-            return 7;
+            return self.itemArray.count;
         default:
             return 0;
     }
 }
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    ItemClassModel * model=[[ItemClassModel alloc]init];
+    model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
     HomePageItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    //[self configureCell:cell indexPath:indexPath];
-    
+    cell.model=model;
     return cell;
 }
-
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    ItemClassModel * model=[[ItemClassModel alloc]init];
+    model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
+    [self.cellDelegate didSection:_section withSelectedItem:model.id];
+}
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake((Width - Width_Pt(52)*2 -Width_Pt(42) * 2) / 3, Height_Pt(442));
 }
-
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return Width_Pt(52);
 }
-
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return Height_Pt(52);
 }
-
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, Width_Pt(42), 0, Width_Pt(42));
 }
-
+-(void)loadHttpData:(NSInteger)index{
+    [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",index-4]} url:mlqqm serviceCode:tjxmlb Success:^(id json) {
+        [self.itemArray removeAllObjects];
+        for (NSDictionary *dict in json[@"info"]) {
+            [self.itemArray addObject:dict];
+        }
+        [_collectionView reloadData];
+    } Failure:nil];
+}
 
 @end

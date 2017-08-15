@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RechargeModel;
 
 @interface RechargeCell : UITableViewCell
-
+@property (nonatomic,strong) RechargeModel * model;
 @end

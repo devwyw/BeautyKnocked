@@ -15,7 +15,8 @@
 #import "EvaluationFooterView.h"
 #import "EvaluationTableViewController.h"
 #import "CommentController.h"
-
+#import "CommentModel.h"
+#import "ProductModel.h"
 
 static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
@@ -31,22 +32,41 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
 @end
 
 @implementation ProductDetailViewModel
-
--(void)configRegisterTableView:(UITableView *)tableView {
-    [tableView registerClass:[EvaluationCell class] forCellReuseIdentifier:evaluationCellReuseIdentifier];
+-(NSArray*)listArray{
+    if (!_listArray) {
+        _listArray=[[NSArray alloc]init];
+    }
+    return _listArray;
 }
-
 -(NSUInteger)numberOfSectionInForTableView:(UITableView *)tableView {
     return 4;
 }
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section {
     if (section == 3) {
-        return 4;
+        if (self.listArray.count<4) {
+            return 2+self.listArray.count;
+        }else{
+            return 5;
+        }
     }
     return 1;
 }
--(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)setModel:(ProductModel *)model{
+    self.titleView.title=model.name;
+    self.titleView.price=model.vipPrice;
+
+    self.introduceView.capacitys=model.capacity;
+    self.introduceView.address=model.address;
+    self.introduceView.dateLength=model.dateLength;
+    self.introduceView.effects=model.effect;
     
+    self.decriptionView.titleName=@"产品说明";
+    self.decriptionView.firstTitle=@"适用人群";
+    self.decriptionView.secondTitle=@"使用方法";
+    self.decriptionView.firstContent=model.forPeople;
+    self.decriptionView.secondContent=model.useMethod;
+}
+-(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
@@ -71,35 +91,39 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
             make.edges.equalTo(cell.contentView);
         }];
     }else if (section == 3) {
-        
+        NSInteger foot=1;
+        {
+            /** 查看全部评论 */
+            if (self.listArray.count<4) {
+                foot=foot+self.listArray.count;
+            }else{
+                foot=foot+3;
+            }
+        }
         if (row == 0) {
             [cell.contentView addSubview:self.evaluationHeader];
+            self.evaluationHeader.listCount=[NSString stringWithFormat:@"%ld",self.listArray.count];
             [self.evaluationHeader mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(cell.contentView);
             }];
-        }else if (row == 3) {
+        }else if (row == foot) {
             [cell.contentView addSubview:self.evaluationFooter];
             [self.evaluationFooter mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(cell.contentView);
             }];
         }else {
-            EvaluationCell *evaluationCell =  [tableView dequeueReusableCellWithIdentifier:evaluationCellReuseIdentifier forIndexPath:indexPath];
-            
-            NSArray *names = @[@"美容师-李荣萍",@"美容师-吴思雨",@"美容师-平平",@"",@"美容师-楚留香"];
-            NSArray *images = @[@"touxiang_03",@"touxiang_03",@"touxiang_03"];
-            evaluationCell.images = images;
-            evaluationCell.beauticianName =  names[indexPath.row];
-            
-            return evaluationCell;
+            CommentModel *model=[[CommentModel alloc]init];
+            model=[CommentModel mj_objectWithKeyValues:self.listArray[indexPath.row-1]];
+            EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if (!cell) {
+                cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];
+            }
+            cell.model=model;
+            return cell;
         }
-        
     }
-    
     return cell;
-    
 }
-
-
 -(ProductTitlePriceView *)titleView {
     if (!_titleView) {
         _titleView = [[ProductTitlePriceView alloc] init];
@@ -141,9 +165,8 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
 
 -(CommentController *)pageController{
     if (!_pageController) {
-        NSArray *viewControllerClasses = @[[EvaluationTableViewController class],[EvaluationTableViewController class]];
-        NSArray *titles = @[@"全部评论",@"晒图"];
-        _pageController = [[CommentController alloc]initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
+        _pageController = [[CommentController alloc]init];
+        _pageController.listArray=[[NSArray alloc]initWithArray:self.listArray];
     }
     return _pageController;
 }

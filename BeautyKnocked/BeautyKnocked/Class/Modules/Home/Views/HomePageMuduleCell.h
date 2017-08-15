@@ -11,6 +11,7 @@
 @protocol HomePageMuduleCellDelegate <NSObject>
 
 -(void)more:(UIButton *)button;
+-(void)didSection:(NSInteger)section withSelectedItem:(NSString*)itemID;
 
 @end
 

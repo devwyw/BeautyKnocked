@@ -9,6 +9,8 @@
 #import "EvaluationCell.h"
 #import "EvaluationImageCell.h"
 #import "StarView.h"
+#import "CommentModel.h"
+#import "ComListModel.h"
 
 static NSString *reuseIdentifier = @"EvaluationImageCell";
 @interface EvaluationCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -20,54 +22,77 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
 @property (nonatomic, strong) UILabel *textContentLabel;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UILabel *beauticianLabel;
+@property (nonatomic, strong) UIImageView * backimage;
 @property (nonatomic, strong) UILabel *customerServiceReply;
-
-@property (nonatomic, strong) NSMutableArray *dataSource;
-
+@property (nonatomic, strong) NSArray *imageList;
 @end
-
 @implementation EvaluationCell
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-}
-
--(NSMutableArray *)dataSource {
-    if (!_dataSource) {
-        _dataSource = [NSMutableArray array];
+-(NSArray *)imageList {
+    if (!_imageList) {
+        _imageList = [NSArray array];
     }
-    return _dataSource;
+    return _imageList;
 }
-
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
++(UIImage*)imageWithimage:(UIImage*)image{
+    image=[image stretchableImageWithLeftCapWidth:image.size.width/2 topCapHeight:image.size.height/2];
+    return image;
+}
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self initializeViews];
         [self addConstraints];
     }
     return self;
 }
-
+-(void)setModel:(CommentModel *)model{
+    [_headImgView setImage:[UIImage imageNamed:@"touxiang_03"]];
+    _telLabel.text = [model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+    _dateLabel.text = @"2017-05-15";
+    _starRatingView.starCount=[model.score integerValue];
+    _textContentLabel.text = model.content;
+    _beauticianLabel.text = model.beauticianName;
+    self.imageList = [model.imagesPaht componentsSeparatedByString:@","];//评论图片
+    
+    for (ComListModel *list in model.replys) {
+        if (isStringEmpty(_customerServiceReply.text)) {
+            _customerServiceReply.text = [NSString stringWithFormat:@"%@: %@",list.account,list.content];
+        }else{
+            _customerServiceReply.text = [NSString stringWithFormat:@"%@\n%@: %@",_customerServiceReply.text,list.account,list.content];
+        }
+    }
+    
+    CGFloat collectionViewheight = self.imageList.count ? Height_Pt(200):0.0;
+    CGFloat beauticianHeight = _beauticianLabel.text.length > 0  ? Height_Pt(36) : 0.0f;
+    CGFloat beauticianTopHeight = beauticianHeight > 0 ? Height_Pt(20) : 0.f;
+    CGSize size = [_customerServiceReply.text boundingRectWithSize:CGSizeMake(Width-Width_Pt(170)-10, Height/2) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:Font_Size(35)]} context:nil].size;
+    CGFloat ReplyHeight = _customerServiceReply.text.length > 0 ? size.height+15 : 0.f;
+    
+    [_collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(collectionViewheight);
+    }];
+    [_beauticianLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_collectionView.mas_bottom).with.offset(beauticianTopHeight);
+        make.height.mas_equalTo(beauticianHeight);
+    }];
+    [_backimage mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(ReplyHeight);
+    }];
+    [_collectionView reloadData];
+}
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    return self.dataSource.count;
+    return self.imageList.count;
 }
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     EvaluationImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    cell.imageName = self.dataSource[indexPath.item];
-    
+    cell.imageName = self.imageList[indexPath.item];
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 }
-
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(Width_Pt(200), Height_Pt(200));
 }
@@ -79,30 +104,25 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return Height_Pt(40);
 }
-
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
-
 -(void)initializeViews {
-    
     _headImgView = [[UIImageView alloc] init];
     
     _telLabel = [[UILabel alloc] init];
-    _telLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
+    _telLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
     _dateLabel = [[UILabel alloc] init];
-    _dateLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
+    _dateLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     _dateLabel.textColor = [UIColor lightGrayColor];
     
     _starRatingView = [StarView evaluationViewWithChooseStarBlock:nil];
-    _starRatingView.starCount=5;
     _starRatingView.spacing = 0.1;
     _starRatingView.tapEnabled = NO;
     
-    
     _textContentLabel = [[UILabel alloc] init];
-    _textContentLabel.font = [UIFont systemFontOfSize:Font_Size(39)];
+    _textContentLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     _textContentLabel.numberOfLines = 0;
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -117,13 +137,17 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     
     _beauticianLabel = [[UILabel alloc] init];
     _beauticianLabel.textColor = [UIColor lightGrayColor];
-    _beauticianLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
+    _beauticianLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
+    
+    UIImage *image=[UIImage imageNamed:@"huifukuang"];
+    image=[EvaluationCell imageWithimage:image];
+    _backimage=[[UIImageView alloc]initWithImage:image];
+    [self.contentView addSubview:_backimage];
     
     _customerServiceReply = [[UILabel alloc] init];
-    _customerServiceReply.font = [UIFont systemFontOfSize:Font_Size(34)];
+    _customerServiceReply.font = [UIFont systemFontOfSize:Font_Size(35)];
     _customerServiceReply.numberOfLines = 0;
-    [_customerServiceReply makeCornerRadius:3];
-    [_customerServiceReply setBackgroundColor:[UIColor colorWithHexString:@"#F0F0F0"]];
+    [_backimage addSubview:_customerServiceReply];
     
     [self.contentView addSubview:_headImgView];
     [self.contentView addSubview:_telLabel];
@@ -132,16 +156,6 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     [self.contentView addSubview:_textContentLabel];
     [self.contentView addSubview:_collectionView];
     [self.contentView addSubview:_beauticianLabel];
-    [self.contentView addSubview:_customerServiceReply];
-    
-    // debug code
-    _telLabel.text = @"156****5626";
-    [_headImgView setImage:[UIImage imageNamed:@"touxiang_03"]];
-    _dateLabel.text = @"2017-05-15";
-    _textContentLabel.text = @"回复数款福克斯的空间里水电费看看说大富科技接口生成女婿看了家是否登录卡萨;的脸孔; 拉的卡卡拉收到了卡拉斯科; 佛山东方考虑到索拉卡";
-    //_beauticianLabel.text = @"美容师-李荣萍";
-    _customerServiceReply.text = @"客服回复:亲,您的满意是平台前进的最大动力.";
-    
 }
 
 -(void)addConstraints {
@@ -162,7 +176,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     }];
     
     [_starRatingView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_headImgView.mas_bottom).with.offset(3);
+        make.top.equalTo(_headImgView.mas_bottom).with.offset(2.5);
         make.left.equalTo(_telLabel.mas_left);
         make.width.mas_equalTo(Width_Pt(255));
         make.height.mas_equalTo(Height_Pt(50));
@@ -187,35 +201,15 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
         make.height.mas_equalTo(Height_Pt(36));
     }];
     
-    [_customerServiceReply mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_beauticianLabel.mas_bottom).with.offset(Height_Pt(25));
+    [_backimage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_beauticianLabel.mas_bottom).with.offset(5);
         make.left.equalTo(_telLabel.mas_left);
-        //make.right.equalTo(self.contentView).with.offset( - Width_Pt(105));
+        make.right.equalTo(_textContentLabel.mas_right);
         make.bottom.equalTo(self.contentView).with.offset( - Height_Pt(20));
+        make.height.mas_equalTo(0);
     }];
-    
-}
-
-
--(void)setBeauticianName:(NSString *)beauticianName {
-    _beauticianLabel.text = beauticianName;
-    
-    CGFloat beauticianHeight = beauticianName.length > 0  ? Height_Pt(36) : 0.0f;
-    CGFloat beauticianTopHeight = beauticianHeight > 0 ? Height_Pt(20) : 0.f;
-    
-    [_beauticianLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_collectionView.mas_bottom).with.offset(beauticianTopHeight);
-        make.height.mas_equalTo(beauticianHeight);
-    }];
-}
-
--(void)setImages:(NSArray *)images {
-    CGFloat collectionViewheight = images.count ? Height_Pt(200):0.0;
-    [self.dataSource removeAllObjects];
-    [self.dataSource addObjectsFromArray:images];
-    
-    [_collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(collectionViewheight);
+    [_customerServiceReply mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_backimage).mas_equalTo(UIEdgeInsetsMake(5, 5, 5, 5));
     }];
 }
 

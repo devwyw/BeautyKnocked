@@ -22,8 +22,10 @@
 #import "LightViewController.h"
 #import "NewUserController.h"
 #import "NearbyController.h"
-
-
+#import "SonItemController.h"
+#import "ItemDetailController.h"
+#import "ProductDetailController.h"
+#import "RechargeController.h"
 
 static NSString *const sectionZeroReuseIdentifier = @"sectionZeroReuseIdentifier";
 static NSString *const homePageMuduleCellReuseIdentifier = @"HomePageMuduleCell";
@@ -49,7 +51,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
 }
 
 -(NSUInteger)numberOfRowsInHomePageTableViewAtSection:(NSUInteger)section {
-    
     return 1;
 }
 -(UITableViewCell *)configureTableView:(UITableView *)tableView AtIndexPath:(NSIndexPath *)indexPath andObject:(id)Cself{
@@ -58,7 +59,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         UITableViewCell *cell = nil;
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:sectionZeroReuseIdentifier];
-            
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (section == 0) {
@@ -101,9 +101,7 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
             [self.endView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(cell.contentView);
             }];
-            
         }
-
         return cell;
 
     }else if (section == 5 || section == 6 || section == 7) {
@@ -113,7 +111,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
             cell = [[HomePageMuduleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homePageMuduleCellReuseIdentifier andSection:section];
         }
         [cell setCellDelegate:self];
-        cell.selectionStyle = 0;
         return cell;
     }else if (section == 9 || section == 10 || section == 11 || section == 12) {
         /** 感兴趣的课程等 */
@@ -175,7 +172,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         [cell.contentView addSubview:self.hotItemsView];
     }
 }
-
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     NSLog(@"index == %ld",(long)index);
 }
@@ -184,13 +180,11 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         _sdCycleBannerView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, Width, Height_Pt(453)) delegate:self placeholderImage:[UIImage imageNamed:@""]];
         _sdCycleBannerView.autoScrollTimeInterval = 4.f;
         [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
-            if ([Master getSuccess:json]) {
-                NSMutableArray *imageArray=[[NSMutableArray alloc]init];
-                for (NSDictionary *dict in json[@"info"]) {
-                    [imageArray addObject:[NSString stringWithFormat:@"%@%@",mlqqm,dict[@"path"]]];
-                }
-                _sdCycleBannerView.imageURLStringsGroup=imageArray;
+            NSMutableArray *imageArray=[[NSMutableArray alloc]init];
+            for (NSDictionary *dict in json[@"info"]) {
+                [imageArray addObject:[NSString stringWithFormat:@"%@%@",mlqqm,dict[@"path"]]];
             }
+            _sdCycleBannerView.imageURLStringsGroup=imageArray;
         } Failure:nil];
     }
     return _sdCycleBannerView;
@@ -226,7 +220,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 BrandViewController *controller = [[BrandViewController alloc] init];
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
-
             }
                 break;
             case 1:
@@ -251,23 +244,21 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }else{
         switch (index) {
             case 0:
-            {
-                /** 上门美甲等 */
-                
-            }
-                break;
             case 1:
-            {
-                
-            }
-                break;
             case 2:
             {
-                
+                /** 上门服务 */
+                SonItemController *controller=[[SonItemController alloc]init];
+                controller.index=index+3;
+                controller.code=xmlb;
+                controller.sort=xmlbpx;
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
                 break;
             case 3:
             {
+                /** 光电中心 */
                 LightViewController *controller=[[LightViewController alloc]init];
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
@@ -275,21 +266,37 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 break;
             case 4:
             {
-                
+                /** 套餐 */
+                SonItemController *controller=[[SonItemController alloc]init];
+                controller.index=7;
+                controller.code=tclb;
+                controller.sort=tclbpx;
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
                 break;
             case 5:
             {
-                
+                /** 商城 */
+                SonItemController *controller=[[SonItemController alloc]init];
+                controller.index=6;
+                controller.code=cplb;
+                controller.sort=cplbpx;
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
             }
                 break;
             case 6:
             {
-                
+                RechargeController *controller=[[RechargeController alloc]init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
+                /** 会员充值 */
             }
                 break;
             case 7:
             {
+                /** 附近技师 */
                 NearbyController *controller=[[NearbyController alloc]init];
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
@@ -299,11 +306,27 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 break;
         }
     }
-    
 }
-#pragma mark ##### 每日推荐 #####
+#pragma mark ##### 每日推荐等#####
+-(void)didSection:(NSInteger)section withSelectedItem:(NSString*)itemID{
+    if (section==7) {
+        ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
+        productDetailController.alpha=@"0";
+        productDetailController.hidesBottomBarWhenPushed = YES;
+        productDetailController.productID=itemID;
+        [self.navigationController pushViewController:productDetailController animated:YES];
+    }else {
+        ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
+        itemDetailController.alpha=@"0";
+        itemDetailController.hidesBottomBarWhenPushed = YES;
+        itemDetailController.detailID=itemID;
+        itemDetailController.code=xmxq;
+        [self.navigationController pushViewController:itemDetailController animated:YES];
+    }
+}
 -(void)more:(UIButton *)button{
-    NSLog(@"更多: %ld",(long)button.tag);
+    UITabBarController *controller=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+    controller.selectedIndex=1;
 }
 -(HomePageEndView *)endView {
     if (!_endView) {
@@ -311,7 +334,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
     return _endView;
 }
-
 -(BKHotItemsView *)hotItemsView {
     if (!_hotItemsView) {
         _hotItemsView = [[BKHotItemsView alloc] initWithFrame:CGRectZero andFself:self];

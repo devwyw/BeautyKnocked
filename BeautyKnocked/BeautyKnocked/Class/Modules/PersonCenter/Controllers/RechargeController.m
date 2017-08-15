@@ -9,15 +9,23 @@
 #import "RechargeController.h"
 #import "RechargeCell.h"
 #import "RechargeInfoController.h"
+#import "RechargeModel.h"
 
 @interface RechargeController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITextField * textField;
 @property (nonatomic,strong) UITableView * tableview;
+@property (nonatomic,strong) NSArray * rechargeArray;
 @end
 
 @implementation RechargeController
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+-(NSArray*)rechargeArray{
+    if (!_rechargeArray) {
+        _rechargeArray=[[NSArray alloc]init];
+    }
+    return _rechargeArray;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,10 +102,12 @@
     return 5;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    RechargeModel *model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
     RechargeCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell=[[RechargeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RechargeCell"];
     }
+    cell.model=model;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -111,7 +121,12 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return Height_Pt(40);
 }
-
+#pragma mark ===== 充值列表 =====
+-(void)loadHttpData{
+    [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:czlb Success:^(id json) {
+        self.rechargeArray=[[NSArray alloc]initWithArray:json[@"info"]];
+    } Failure:nil];
+}
 
 
 - (void)didReceiveMemoryWarning {

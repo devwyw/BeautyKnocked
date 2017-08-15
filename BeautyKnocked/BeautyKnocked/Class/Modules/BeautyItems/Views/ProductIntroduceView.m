@@ -92,16 +92,22 @@
     [self addSubview:_effectLabel];
     
     _titleLabel.text = @"产品介绍";
-    
     _capacity.text = @"容量";
     _origin.text = @"产地";
     _shelfLife.text = @"保质期";
     _effect.text = @"产品功效";
-    
-    _capacityLabel.text = @"50g";
-    _originLabel.text = @" 美国进口";
-    _shelfLifeLabel.text = @"四年";
-    _effectLabel.text = @"胡思偶发黑丝布搜if圣诞快乐可伶可俐哦哦及囧技师接单减肥搜if就是发考虑考虑封建时代大嫁风尚考虑到付款了打开了空间 is多付就是看到了分克里斯快递费卡拉斯科浪费克莱斯勒看脸看快速的扣分克里斯克劳福德开了房";
+}
+-(void)setCapacitys:(NSString *)capacitys{
+    _capacityLabel.text = capacitys;
+}
+-(void)setAddress:(NSString *)address{
+    _originLabel.text = address;
+}
+-(void)setDateLength:(NSString *)dateLength{
+    _shelfLifeLabel.text = dateLength;
+}
+-(void)setEffects:(NSString *)effects{
+    _effectLabel.text = effects;
 }
 -(void)addConstraints {
     

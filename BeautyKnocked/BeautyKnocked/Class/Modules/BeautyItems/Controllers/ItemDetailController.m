@@ -8,21 +8,36 @@
 
 #import "ItemDetailController.h"
 #import "AddAndReserveView.h"
-#import "ItemDetailViewModel.h"
 #import "ConfirmOrderController.h"
 #import "AddCarView.h"
 #import "CarItem.h"
+#import "ItemDetailViewModel.h"
+#import <UIImageView+WebCache.h>
+#import "DetailModel.h"
+#import "PackageInfoModel.h"
 
 @interface ItemDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) AddAndReserveView *addReserveView;
-@property (nonatomic, strong) ItemDetailViewModel *itemDetailViewModel;
 @property (nonatomic, strong) UIImageView *tableheaderView;
 @property (nonatomic, strong) CarItem * carItem;
+@property (nonatomic, strong) ItemDetailViewModel *itemDetailViewModel;
+
 @end
 
 @implementation ItemDetailController
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat OffsetY=scrollView.contentOffset.y;
+    if (OffsetY >= 0 && OffsetY <= 64) {
+        _alpha = [NSString stringWithFormat:@"%f",OffsetY/64];
+    }else if(OffsetY > 64){
+        _alpha = @"1";
+    }else{
+        _alpha=@"0";
+    }
+    self.navBarBgAlpha = _alpha;
+}
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -34,11 +49,16 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"0";
+    self.navBarBgAlpha = _alpha;
     _carItem.count=100;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (isStringEmpty(self.projectId)) {
+        self.title=@"项目详情";
+    }else{
+        self.title=@"套餐详情";
+    }
     [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
     [self initializeViews];
     [self addConstraints];
@@ -49,6 +69,11 @@
             NSLog(@"购物车");
         }];
         [self.view addSubview:_carItem];
+    }
+    if (isStringEmpty(self.projectId)) {
+        [self loadHttpData:self.detailID withProjectId:@"" withCode:self.code];
+    }else{
+        [self loadHttpData:self.detailID withProjectId:self.projectId withCode:self.code];
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -62,7 +87,6 @@
     _tableView.estimatedRowHeight = 100;
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.showsVerticalScrollIndicator = NO;
-    [self.itemDetailViewModel configRegisterTableView:_tableView];
     
     /** 立即预约  购物车 */
     _addReserveView = [[AddAndReserveView alloc] init];
@@ -105,7 +129,6 @@
         make.left.and.right.and.bottom.equalTo(self.view);
     }];
 }
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.itemDetailViewModel numberOfSectionInForTableView:tableView];
 }
@@ -121,16 +144,30 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return Height_Pt(20);
 }
-
 -(UIImageView *)tableheaderView {
     if (!_tableheaderView) {
         _tableheaderView = [[UIImageView alloc] init];
         _tableheaderView.clipsToBounds = YES;
         _tableheaderView.contentMode = UIViewContentModeScaleAspectFill;
         _tableheaderView.frame = CGRectMake(0, 0, Width, Height_Pt(675));
-        _tableheaderView.image = [UIImage imageNamed:@"chanppic"];
     }
     return _tableheaderView;
 }
-
+#pragma mark ===== 项目详情 =====
+-(void)loadHttpData:(NSString*)detailID withProjectId:(NSString*)projectId withCode:(NSString*)code{
+    [Master HttpPostRequestByParams:@{@"id":detailID,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
+        if (isStringEmpty(projectId)) {
+            self.itemDetailViewModel.model=[DetailModel mj_objectWithKeyValues:json[@"info"]];
+            [self.tableheaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.itemDetailViewModel.model.imagePath]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+        }else{
+            self.itemDetailViewModel.Pmodel=[PackageInfoModel mj_objectWithKeyValues:json[@"info"]];
+            [self.tableheaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.itemDetailViewModel.Pmodel.imagePath]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+        }
+        /** 评论列表 */
+        [Master HttpPostRequestByParams:@{@"id":detailID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
+            self.itemDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
+            [_tableView reloadData];
+        } Failure:nil];
+    } Failure:nil];
+}
 @end

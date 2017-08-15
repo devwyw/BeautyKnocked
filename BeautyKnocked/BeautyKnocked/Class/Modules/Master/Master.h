@@ -22,7 +22,7 @@ typedef void(^ShowSVProgressBlock)();
 /** 单例模式 */
 +(instancetype)shareManager;
 /** 检测网络 */
-+(void)getNetWork:(id)Weakself;
++(void)getNetWork;
 /** 提示框 */
 +(void)showSVProgressHUD:(NSString*)string withType:(ShowSVProgressType)type withShowBlock:(ShowSVProgressBlock)block;
 /** 调用服务成功 */
@@ -36,4 +36,6 @@ typedef void(^ShowSVProgressBlock)();
 +(NSString *)get32bitString;
 /** Post请求 */
 +(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure;
+/** Root */
+@property (nonatomic,strong) UINavigationController * rootController;
 @end

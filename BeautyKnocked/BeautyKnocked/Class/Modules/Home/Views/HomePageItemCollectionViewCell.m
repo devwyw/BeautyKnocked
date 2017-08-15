@@ -8,6 +8,8 @@
 
 #import "HomePageItemCollectionViewCell.h"
 #import "NSString+Attribute.h"
+#import "ItemClassModel.h"
+#import <UIImageView+WebCache.h>
 
 @interface HomePageItemCollectionViewCell ()
 
@@ -24,36 +26,30 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        
         [self setupInterface];
         [self setupConstraints];
-        
     }
     return self;
 }
-
 -(void)setupInterface {
-    
     _imgView = [[UIImageView alloc] init];
-    [_imgView setImage:[UIImage imageNamed:@"meirongshi_03"]];
     [self.contentView addSubview:_imgView];
     
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.text = @"驻养焕颜课程";
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     [self.contentView addSubview:_titleLabel];
     
     _priceLabel = [[UILabel alloc] init];
     _priceLabel.font = [UIFont systemFontOfSize:Font_Size(32)];
-    
-    NSString *text = @"VIP: ¥980 ¥1980";
-    _priceLabel.attributedText = [text setRedPrice:@"¥980" linePrice:@"¥1980"];
     [self.contentView addSubview:_priceLabel];
-    
 }
-
+-(void)setModel:(ItemClassModel *)model{
+    _titleLabel.text = model.name;
+    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,model.imagePath]] placeholderImage:[UIImage imageNamed:@"meirongshi_03"]];
+    NSString *text = [NSString stringWithFormat:@"VIP: ¥%@ ¥%@",model.vipPrice,model.price];
+    _priceLabel.attributedText = [text setRedPrice:[NSString stringWithFormat:@"¥%@",model.vipPrice] linePrice:[NSString stringWithFormat:@"¥%@",model.price]];
+}
 -(void)setupConstraints {
-    
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.left.and.right.equalTo(self.contentView);
         make.height.mas_equalTo(Height_Pt(300));
@@ -72,9 +68,6 @@
         make.right.equalTo(self.contentView);
         make.bottom.equalTo(self.contentView).with.offset( - Height_Pt(20));
     }];
-    
-    
-    
 }
 
 @end

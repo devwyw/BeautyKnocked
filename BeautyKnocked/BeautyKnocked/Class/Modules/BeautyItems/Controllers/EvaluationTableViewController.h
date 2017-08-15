@@ -9,8 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface EvaluationTableViewController : UITableViewController
-
-@property (nonatomic, copy) NSString *age;
-@property (nonatomic, copy) NSString *name;
-
+@property (nonatomic,strong) NSArray * listArray;
 @end
