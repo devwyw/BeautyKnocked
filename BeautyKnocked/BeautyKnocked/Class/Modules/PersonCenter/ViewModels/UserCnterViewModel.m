@@ -22,6 +22,7 @@
 #import "MessageView.h"
 #import "MoneyController.h"
 #import "LoginController.h"
+#import "CouponController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
@@ -160,14 +161,21 @@
     }
 }
 -(void)didSelectedItemAtIndex:(NSUInteger)index {
-    if (index==2) {
-        
+    if ([[Acount shareManager] isSignIn]) {
+        if (index==2) {
+            CouponController *controller=[[CouponController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }else{
+            MoneyController *controller=[[MoneyController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     }else{
-        MoneyController *controller = [[MoneyController alloc] init];
-        controller.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:controller animated:YES];
+        LoginController *loginController = [[LoginController alloc] init];
+        UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+        [self.navigationController presentViewController:loginNav animated:YES completion:nil];
     }
-    
 }
 -(void)didGroupClicked:(NSUInteger)index{
     NSLog(@"index == %ld",index);

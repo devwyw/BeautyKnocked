@@ -34,6 +34,7 @@
         self.menuHeight = 35;
         self.titleColorSelected = [UIColor colorWithHexString:@"#E1BF6E"];
         self.titleColorNormal = [UIColor blackColor];
+        self.menuViewBottomSpace=0.6;
     }
     return self;
 }
@@ -43,15 +44,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     self.navigationItem.title=@"确认订单";
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 #pragma mark - Datasource & Delegate
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
     return self.orderStatus.count;

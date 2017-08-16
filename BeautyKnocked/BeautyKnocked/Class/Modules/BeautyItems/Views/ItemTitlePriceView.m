@@ -70,6 +70,7 @@
         make.left.equalTo(_nameLabel.mas_left);
         make.top.equalTo(_nameLabel.mas_bottom).with.offset(Height_Pt(36));
         make.size.mas_equalTo(CGSizeMake(Width_Pt(45), Height_Pt(45)));
+        make.bottom.equalTo(self).with.offset(- 8);
     }];
     
     [_serviceTimeLengthLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,7 +87,6 @@
     [_secondPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_firstPriceLabel.mas_right);
         make.centerY.equalTo(_serviceTimeLengthLabel);
-        make.bottom.equalTo(self).with.offset(- 8);
     }];
 }
 
@@ -105,6 +105,14 @@
 -(void)setPackPrice:(NSString *)packPrice{
     _alarmImgView.hidden=YES;
     _firstPriceLabel.text = [NSString stringWithFormat:@"套餐价 : ¥ %@",packPrice];
+    
+    [_nameLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self);
+    }];
+    [_firstPriceLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self);
+    }];
+    
 }
 
 @end

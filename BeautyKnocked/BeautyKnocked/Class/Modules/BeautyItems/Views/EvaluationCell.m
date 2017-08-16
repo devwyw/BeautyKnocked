@@ -67,7 +67,7 @@ static NSString *reuseIdentifier = @"EvaluationImageCell";
     CGFloat collectionViewheight = self.imageList.count ? Height_Pt(200):0.0;
     CGFloat beauticianHeight = _beauticianLabel.text.length > 0  ? Height_Pt(36) : 0.0f;
     CGFloat beauticianTopHeight = beauticianHeight > 0 ? Height_Pt(20) : 0.f;
-    CGSize size = [_customerServiceReply.text boundingRectWithSize:CGSizeMake(Width-Width_Pt(170)-10, Height/2) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:Font_Size(35)]} context:nil].size;
+    CGSize size = [_customerServiceReply.text boundingRectWithSize:CGSizeMake(Width-Width_Pt(170)-10, 150) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:Font_Size(35)]} context:nil].size;
     CGFloat ReplyHeight = _customerServiceReply.text.length > 0 ? size.height+15 : 0.f;
     
     [_collectionView mas_updateConstraints:^(MASConstraintMaker *make) {

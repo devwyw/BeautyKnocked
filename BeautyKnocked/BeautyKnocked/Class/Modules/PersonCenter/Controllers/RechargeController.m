@@ -102,19 +102,18 @@
     return 5;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    RechargeModel *model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
+    //RechargeModel *model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
     RechargeCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell=[[RechargeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RechargeCell"];
     }
-    cell.model=model;
+    //cell.model=model;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     RechargeInfoController *controller=[[RechargeInfoController alloc]init];
     [self.navigationController pushViewController:controller animated:YES];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return CGFLOAT_MIN;
 }
@@ -127,8 +126,6 @@
         self.rechargeArray=[[NSArray alloc]initWithArray:json[@"info"]];
     } Failure:nil];
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -37,7 +37,7 @@
     UIImage *image = [UIImage imageNamed:@"gengduo"];
     [_checkAllEvalutionButton setImage:image forState:UIControlStateNormal];
     [_checkAllEvalutionButton setImgViewStyle:ButtonImgViewStyleRight imageSize:image.size space:5];
-    [_checkAllEvalutionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [_checkAllEvalutionButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     _checkAllEvalutionButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [self addSubview:_evalutionCountLabel];
     [self addSubview:_checkAllEvalutionButton];

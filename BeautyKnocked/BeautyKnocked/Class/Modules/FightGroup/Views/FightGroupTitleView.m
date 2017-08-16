@@ -7,6 +7,7 @@
 //
 
 #import "FightGroupTitleView.h"
+#import "NSString+Attribute.h"
 
 @interface FightGroupTitleView ()
 
@@ -40,17 +41,18 @@
     
     _numberOfTimesLabel = [[UILabel alloc] init];
     _numberOfTimesLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
-    _numberOfTimesLabel.textColor = [UIColor lightGrayColor];
+    _numberOfTimesLabel.textColor = [UIColor grayColor];
     
     _groupImgview = [[UIImageView alloc] init];
     [_groupImgview setImage:[UIImage imageNamed:@"rentou"]];
     
     _peopleLabel = [[UILabel alloc] init];
     _peopleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
-    _peopleLabel.textColor = [UIColor lightGrayColor];
+    _peopleLabel.textColor = [UIColor grayColor];
     
     _priceLabel = [[UILabel alloc] init];
-    _priceLabel.textColor = [UIColor lightGrayColor];
+    _priceLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
+    _priceLabel.textColor = [UIColor grayColor];
     
     
     [self addSubview:_titleLabel];
@@ -64,7 +66,7 @@
     _rangeLabel.text = @"该项目所有用户均可开团,开团后快邀请好友一起参团吧!";
     _numberOfTimesLabel.text = @"#每人限购1次#";
     _peopleLabel.text = @"5人团";
-    _priceLabel.text = @"¥108 市场价 ¥385";
+    _priceLabel.attributedText = [@"¥108 市场价¥385" setRedPrice:@"¥108" linePrice:@"市场价¥385"];
 }
 -(void)addConstraints {
     

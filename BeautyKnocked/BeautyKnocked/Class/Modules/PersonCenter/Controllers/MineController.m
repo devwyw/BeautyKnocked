@@ -59,9 +59,7 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    
     [self.userCenterViewModel configureCell:cell indexPath:indexPath];
-    
     return cell;
 }
 

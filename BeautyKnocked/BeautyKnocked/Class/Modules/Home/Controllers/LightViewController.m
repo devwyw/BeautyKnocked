@@ -8,6 +8,7 @@
 
 #import "LightViewController.h"
 #import "LightSonViewController.h"
+#import "UITextField+Length.h"
 
 @interface LightViewController ()<UITextFieldDelegate>
 
@@ -35,6 +36,7 @@
     _Sview=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [_Sview setContentSize:CGSizeMake(Width_Pt(1080), Height_Pt(4939))];
     _Sview.delaysContentTouches = NO;
+    _Sview.showsVerticalScrollIndicator=NO;
     [self.view addSubview:_Sview];
     
     UIImageView * image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1080), Height_Pt(4939))];
@@ -111,26 +113,14 @@
         _text2.clearButtonMode = UITextFieldViewModeWhileEditing;
         _text2.placeholder = @"请输入电话号码";
         _text2.borderStyle = UITextBorderStyleRoundedRect;
+        [[_text2 rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
+            [_text2 setFieldtext:11];
+        }];
         [_textView addSubview:_text2];
     }
 }
--(void)pushSon:(UIButton*)button{
-    LightSonViewController *controller=[[LightSonViewController alloc]init];
-    [controller setMtag:button.tag];
-    [self.navigationController pushViewController:controller animated:YES];
-}
--(void)pushOk:(UIButton*)button{
-    NSLog(@"%@-%@",_text1.text,_text2.text);
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"预约成功" message:@"非常感谢您的预约，我们会尽快处理" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }]];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if (textField.text.length >= 10) {
-            textField.text = [textField.text substringToIndex:10];
-    }
-    return YES;
+    return [textField setRange:range whitString:string whitCount:11];
 }
 - (void)textFieldDidChange:(UITextField *)textField
 {
@@ -161,6 +151,18 @@
             textField.text=[textField.text substringToIndex:11];
         }
     }
+}
+-(void)pushSon:(UIButton*)button{
+    LightSonViewController *controller=[[LightSonViewController alloc]init];
+    [controller setMtag:button.tag];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+-(void)pushOk:(UIButton*)button{
+    NSLog(@"%@-%@",_text1.text,_text2.text);
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"预约成功" message:@"非常感谢您的预约，我们会尽快处理" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

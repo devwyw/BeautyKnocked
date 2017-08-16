@@ -31,10 +31,11 @@
     
     _explainButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_explainButton setTitle:@"规则说明" forState:UIControlStateNormal];
+    [_explainButton setTitleColor:[UIColor colorWithHexString:@"#4390CD"] forState:UIControlStateNormal];
     _explainButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     UIImage *moreImage = [UIImage imageNamed:@"gengduo-lan"];
     [_explainButton setImage:moreImage forState:UIControlStateNormal];
-    [_explainButton setImgViewStyle:ButtonImgViewStyleRight imageSize:moreImage.size space:7];
+    [_explainButton setImgViewStyle:ButtonImgViewStyleRight imageSize:moreImage.size space:5];
     
     _descriLabel = [[UILabel alloc] init];
     _descriLabel.font = [UIFont systemFontOfSize:Font_Size(40)];

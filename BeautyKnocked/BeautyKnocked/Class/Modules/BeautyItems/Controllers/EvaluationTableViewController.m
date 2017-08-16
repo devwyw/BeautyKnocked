@@ -23,6 +23,7 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.estimatedRowHeight = 100;
+    self.tableView.backgroundColor=[UIColor clearColor];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

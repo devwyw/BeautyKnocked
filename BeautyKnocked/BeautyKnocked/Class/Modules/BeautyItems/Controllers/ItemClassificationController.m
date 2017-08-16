@@ -25,7 +25,10 @@
 @property (nonatomic, strong) UISearchBar * searchBar;
 @property (nonatomic, strong) UIButton * item;
 
+@property (nonatomic, assign) CGFloat viewTop;
 @end
+static CGFloat const kWMHeaderViewHeight = 124;
+static CGFloat const kNavigationBarHeight = 64;
 
 @implementation ItemClassificationController
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -104,8 +107,10 @@
     [self presentViewController:NewNavigation animated:YES completion:nil];
     return NO;
 }
-- (instancetype)init{
-    if (self = [super init]) {
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
         self.titleSizeNormal = Font_Size(38);
         self.titleSizeSelected = Font_Size(40);
         self.menuViewStyle = WMMenuViewStyleLine;
@@ -114,12 +119,14 @@
         self.menuBGColor = [UIColor whiteColor];
         self.titleColorSelected = [UIColor colorWithHexString:@"#ECBD4E"];
         self.titleColorNormal = [UIColor blackColor];
+        self.menuViewBottomSpace=0.6;
     }
     return self;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setHeaderView];
+    self.view.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     // Do any additional setup after loading the view.
     self.panGesture = [[WMPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnView:)];
     [self.view addGestureRecognizer:self.panGesture];

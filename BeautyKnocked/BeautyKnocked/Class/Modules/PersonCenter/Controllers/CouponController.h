@@ -1,13 +1,13 @@
 //
-//  ItemClassificationController.h
+//  CouponController.h
 //  BeautyKnocked
 //
-//  Created by zhongweiping on 2017/5/18.
+//  Created by Mac on 2017/8/16.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
 #import <WMPageController/WMPageController.h>
 
-@interface ItemClassificationController : WMPageController
+@interface CouponController : WMPageController
 
 @end

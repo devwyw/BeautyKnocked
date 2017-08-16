@@ -25,7 +25,8 @@
 #import "SonItemController.h"
 #import "ItemDetailController.h"
 #import "ProductDetailController.h"
-#import "RechargeController.h"
+#import "MoneyController.h"
+#import "LoginController.h"
 
 static NSString *const sectionZeroReuseIdentifier = @"sectionZeroReuseIdentifier";
 static NSString *const homePageMuduleCellReuseIdentifier = @"HomePageMuduleCell";
@@ -288,10 +289,17 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 break;
             case 6:
             {
-                RechargeController *controller=[[RechargeController alloc]init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
                 /** 会员充值 */
+                if ([[Acount shareManager] isSignIn]) {
+                    MoneyController *controller=[[MoneyController alloc]init];
+                    controller.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }else{
+                    LoginController *loginController = [[LoginController alloc] init];
+                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+                    [self.navigationController presentViewController:loginNav animated:YES completion:nil];
+                }
+                
             }
                 break;
             case 7:
@@ -353,15 +361,26 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         case 1:
         {
             /** 新人领券 */
-            NewUserController *controller=[[NewUserController alloc]init];
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
+            if ([[Acount shareManager] isSignIn]) {
+                NewUserController *controller=[[NewUserController alloc]init];
+                controller.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:controller animated:YES];
+            }else{
+                LoginController *loginController = [[LoginController alloc] init];
+                UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+                [self.navigationController presentViewController:loginNav animated:YES completion:nil];
+            }
         }
             break;
         case 2:
         {
             /** 产品商城 */
-            NSLog(@"2");
+            SonItemController *controller=[[SonItemController alloc]init];
+            controller.index=6;
+            controller.code=cplb;
+            controller.sort=cplbpx;
+            controller.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:controller animated:YES];
         }
             break;
         default:

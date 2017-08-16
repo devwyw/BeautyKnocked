@@ -77,7 +77,7 @@ static int const timeCode = 60;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.view.backgroundColor=[UIColor whiteColor];
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageOriginalImageName:@"quxiao_03"] style:UIBarButtonItemStylePlain target:self action:@selector(returnAction)];
     
@@ -87,7 +87,6 @@ static int const timeCode = 60;
 -(void)returnAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 -(void)addSubViews {
     [self.view addSubview:self.backImgView];
     [self.backImgView addSubview:self.logoImgView];

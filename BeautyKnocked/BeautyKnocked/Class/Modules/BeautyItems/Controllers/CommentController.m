@@ -27,17 +27,25 @@
     }
     return _listArray;
 }
-- (instancetype)init{
-    if (self = [super init]) {
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
         self.titleSizeSelected = 14;
         self.titleSizeNormal = 14;
         self.menuViewStyle = WMMenuViewStyleLine;
+        self.menuBGColor=[UIColor whiteColor];
+        self.menuViewBottomSpace=0.6;
+        self.progressColor=[UIColor colorWithHexString:@"#E1BF6E"];
+        self.titleColorNormal=[UIColor blackColor];
+        self.titleColorSelected=self.titleColorNormal;
     }
     return self;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"用户评论";
+    self.view.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     // Do any additional setup after loading the view.
 }
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {

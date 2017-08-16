@@ -39,7 +39,7 @@
     _line.backgroundColor = [UIColor lightGrayColor];
     
     _firstLabel = [[UILabel alloc] init];
-    _firstLabel.textColor = [UIColor lightGrayColor];
+    _firstLabel.textColor = [UIColor grayColor];
     _firstLabel.font = [UIFont systemFontOfSize:Font_Size(33)];
     
     _firstContentlabel = [[UILabel alloc] init];
@@ -47,7 +47,7 @@
     _firstContentlabel.numberOfLines = 0;
     
     _secondLabel = [[UILabel alloc] init];
-    _secondLabel.textColor = [UIColor lightGrayColor];
+    _secondLabel.textColor = [UIColor grayColor];
     _secondLabel.font = [UIFont systemFontOfSize:Font_Size(33)];
     
     _secondContentLabel = [[UILabel alloc] init];

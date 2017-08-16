@@ -50,7 +50,6 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.viewModel ddcs_numberOfSectionsInTableView:tableView];
 }
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.viewModel ddcs_tableView:tableView numberOfRowsInSection:section];
 }
@@ -68,7 +67,7 @@
 }
 -(void)initializeViews {
     self.viewModel.navigationController = self.navigationController;
-    
+
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -114,6 +113,7 @@
         [_tableViewHeaderImgView setImage:[UIImage imageNamed:@"chanppic"]];
         _tableViewHeaderImgView.clipsToBounds = YES;
         _tableViewHeaderImgView.contentMode = UIViewContentModeScaleAspectFill;
+        
         UIImageView *monthExclusive = [[UIImageView alloc] init];
         [monthExclusive setImage:[UIImage imageNamed:@"benyuezhaunxiang"]];
         [_tableViewHeaderImgView addSubview:monthExclusive];
@@ -122,7 +122,6 @@
             make.top.and.left.equalTo(_tableViewHeaderImgView).with.offset(12);
             make.size.mas_equalTo(CGSizeMake(Width_Pt(193), Height_Pt(183)));
         }];
-        
     }
     return _tableViewHeaderImgView;
 }

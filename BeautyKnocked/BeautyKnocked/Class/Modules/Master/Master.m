@@ -187,7 +187,7 @@ static Master *instance=nil;
             break;
     }
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD dismissWithDelay:1.66 completion:^{
+    [SVProgressHUD dismissWithDelay:1.6 completion:^{
         if (!isObjectEmpty(block)) {
             block();
         }

@@ -51,7 +51,10 @@
     
     UIButton *button=[[UIButton alloc]init];
     [button setImage:[UIImage imageNamed:@"lijilingqu"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(lingqu:) forControlEvents:UIControlEventTouchUpInside];
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [button setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
+    }];
+    
     [self.view addSubview:button];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,9 +62,6 @@
         make.bottom.equalTo(self.view.mas_bottom).offset(-Height_Pt(140));
         make.width.height.mas_equalTo(CGSizeMake(Width_Pt(920),Height_Pt(200)));
     }];
-}
--(void)lingqu:(UIButton*)button{
-    [button setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

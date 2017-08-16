@@ -42,7 +42,6 @@
     [super viewDidLoad];
     [self setTitle:@"分享有礼"];
     [self loadBackGroundView];
-    
 }
 #pragma mark ##### SetView #####
 -(void)loadBackGroundView{
@@ -55,8 +54,7 @@
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(Width_Pt(55), Height-Height_Pt(750), Width-Width_Pt(55)*2, 50)];
     label.numberOfLines=0;
     label.text=@"送给闺蜜25元新人优惠券, 当Ta首次下单后";
-    [label setTextColor:[UIColor darkGrayColor]];
-    [label setFont:[UIFont italicSystemFontOfSize:Font_Size(36)]];
+    [label setFont:[UIFont italicSystemFontOfSize:Font_Size(40)]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -72,7 +70,7 @@
     [AttributedStr addAttribute:NSForegroundColorAttributeName
                           value:[UIColor redColor]
                           range:NSMakeRange(4, 3)];
-    [AttributedStr addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:Font_Size(52)] range:NSMakeRange(0, AttributedStr.length)];
+    [AttributedStr addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:Font_Size(50)] range:NSMakeRange(0, AttributedStr.length)];
     [AttributedStr addAttribute:NSKernAttributeName value:@(3) range:NSMakeRange(0, AttributedStr.length)];
     [label1 setAttributedText:AttributedStr];
     [self.view addSubview:label1];
@@ -88,13 +86,13 @@
     [normalStr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:(NSRange){0,[normalStr length]}];
     [normalStr addAttribute:NSForegroundColorAttributeName value:[UIColor brownColor]  range:NSMakeRange(0,[normalStr length])];
     [normalStr addAttribute:NSUnderlineColorAttributeName value:[UIColor brownColor] range:NSMakeRange(0,[normalStr length])];
-    [normalStr addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:Font_Size(30)] range:NSMakeRange(0, normalStr.length)];
+    [normalStr addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:Font_Size(35)] range:NSMakeRange(0, normalStr.length)];
     
     NSMutableAttributedString* HighStr = [[NSMutableAttributedString alloc] initWithString:@"奖励细则"];
     [HighStr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:(NSRange){0,[HighStr length]}];
     [HighStr addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor]  range:NSMakeRange(0,[HighStr length])];
     [HighStr addAttribute:NSUnderlineColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0,[HighStr length])];
-    [HighStr addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:Font_Size(30)] range:NSMakeRange(0, HighStr.length)];
+    [HighStr addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:Font_Size(35)] range:NSMakeRange(0, HighStr.length)];
     
     [button setAttributedTitle:normalStr forState:UIControlStateNormal];
     [button setAttributedTitle:HighStr forState:UIControlStateHighlighted];
@@ -108,19 +106,19 @@
     NSArray *imageArr=@[@"weixin-fenxiang",@"pengyouquan-fenxiang",@"QQ-fenxiang",@"duanxinfenxiang"];
     NSArray *titleArr=@[@"微信好友",@"朋友圈",@"QQ好友",@"手机短信"];
     for (int i=1; i<=4; i++) {
-        UIButton *Sbutton=[[UIButton alloc]initWithFrame:CGRectMake((Width-Width_Pt(180)*4)/5*i+(i-1)*Width_Pt(180),Height-Height_Pt(210)-10, Width_Pt(180), Height_Pt(210))];
+        UIButton *Sbutton=[[UIButton alloc]initWithFrame:CGRectMake((Width-Width_Pt(180)*4)/5*i+(i-1)*Width_Pt(180),Height-Height_Pt(210)-30, Width_Pt(180), Height_Pt(210))];
         
         [Sbutton setTag:104+i];
         [Sbutton addTarget:self action:@selector(shareButton:) forControlEvents:UIControlEventTouchUpInside];
-        [Sbutton.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        [Sbutton.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(35)]];
         [Sbutton setTitle:titleArr[i-1] forState:UIControlStateNormal];
         [Sbutton setImage:[UIImage imageNamed:imageArr[i-1]] forState:UIControlStateNormal];
         [Sbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [Sbutton setImgViewStyle:ButtonImgViewStyleTop imageSize:[UIImage imageNamed:imageArr[i-1]].size space:5];
+        [Sbutton setImgViewStyle:ButtonImgViewStyleTop imageSize:[UIImage imageNamed:imageArr[i-1]].size space:10];
         [self.view addSubview:Sbutton];
     }
     
-//    /** 奖励细则弹框 */
+    /** 奖励细则弹框 */
     _Jview =[[UIView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [_Jview setBackgroundColor:[[UIColor grayColor]colorWithAlphaComponent:0.3]];
     [self.view addSubview:_Jview];
@@ -152,6 +150,7 @@
 
     UITextView *textview=[[UITextView alloc]init];
     [textview setTextColor:[UIColor blackColor]];
+    textview.font=[UIFont systemFontOfSize:Font_Size(35)];
     [textview setEditable:NO];
     [textview setText:@"1.如果您的闺蜜从未在美丽敲敲门APP平台下单，则可以领取您分享的“闺蜜25元优惠券”，优惠券有效期为一个月；\n\n2.您的闺蜜只要完成领券后在一个月内消费并使用了本次活动优惠券，您可以领取25元代金券，该优惠券实时到账，可在“我的优惠券”中查看，使用期限为一个月；\n\n3.分享有礼可根据人数进行累加；\n\n4.拥有相同账户（手机号、设备、银行卡、支付账户）均视为同一用户，仅对首次在APP下单的闺蜜及分享者进行返券活动；\n\n5.一经发现任何违规获取美丽敲敲门优惠券的行为， 不予发放任何优惠券，追究法律责任。"];
     [_Jview addSubview:textview];

@@ -42,6 +42,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageOriginalImageName:@"quxiao_03"] style:UIBarButtonItemStylePlain target:self action:@selector(returnAction)];
     [self addSubViews];
     [self addConstraints];
@@ -56,7 +57,6 @@
 }
 
 -(void)addSubViews {
-    
     [self.view addSubview:self.backImgView];
     
     [self.backImgView addSubview:self.logoImgView];

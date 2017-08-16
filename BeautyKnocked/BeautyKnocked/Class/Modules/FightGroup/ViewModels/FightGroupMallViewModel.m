@@ -18,10 +18,11 @@
 #import "FightingGroupCell.h"
 #import "FightGroupRulesController.h"
 #import "CommentController.h"
+#import "CommentModel.h"
 
 static NSString *const cellReuseIdentifier = @"UITableViewCellStyleDefault";
 static NSString *const fightingGroupCellReuseIdentifier = @"FightingGroupCell";
-static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
+
 @interface FightGroupMallViewModel ()
 
 @property (nonatomic, strong) FightGroupTitleView *titleView;
@@ -38,20 +39,17 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 
 -(void)ddcs_registerClass:(UITableView *)tableView {
     [tableView registerClass:[FightingGroupCell class] forCellReuseIdentifier:fightingGroupCellReuseIdentifier];
-    [tableView registerClass:[EvaluationCell class] forCellReuseIdentifier:evaluationCellReuseIdentifier];
 }
 
 -(NSInteger)ddcs_numberOfSectionsInTableView:(UITableView *)tableView {
     return 5;
 }
-
 -(NSInteger)ddcs_tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 4) {
-        return 4;
+        return 5;
     }else if (section == 2) {
         return 2;
     }
-    
     return 1;
 }
 
@@ -87,41 +85,64 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
         return fightGroupCell;
     }else if (section == 3) {
         [cell.contentView addSubview:self.descripView];
+        /*
+         @property (nonatomic, copy) NSString *titleName;
+         @property (nonatomic, copy) NSString *firstTitle;
+         @property (nonatomic, copy) NSString *firstContent;
+         @property (nonatomic, copy) NSString *secondTitle;
+         @property (nonatomic, copy) NSString *secondContent;
+         */
+        self.descripView.titleName=@"项目说明";
+        self.descripView.firstTitle=@"适用人群";
+        self.descripView.firstContent=@"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦";
+        self.descripView.secondTitle=@"注意事项";
+        self.descripView.secondContent=@"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦";
         [self.descripView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(cell.contentView);
         }];
     }else if (section == 4) {
         if (row == 0) {
             [cell.contentView addSubview:self.evaluationHeader];
+            self.evaluationHeader.listCount=@"136";
             [self.evaluationHeader mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(cell.contentView);
             }];
-        }else if (row == 3) {
+        }else if (row == 4) {
             [cell.contentView addSubview:self.evaluationFooter];
             [self.evaluationFooter mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(cell.contentView);
             }];
         }else {
-            EvaluationCell *evaluationCell =  [tableView dequeueReusableCellWithIdentifier:evaluationCellReuseIdentifier forIndexPath:indexPath];
-            return evaluationCell;
+            CommentModel *model=[[CommentModel alloc]init];
+            model.id=@"1";
+            model.account=@"15079244845";
+            model.score=@"3";
+            model.content=@"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦";
+            model.imagesPaht=@"text";
+            model.beauticianName=@"游客";
+            model.replys=[[NSArray alloc]init];
+            EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if (!cell) {
+                cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];
+            }
+            cell.model=model;
+            return cell;
         }
-
     }
     
     return cell;
 }
 -(UIView *)ddcs_tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
     if (section == 2) {
         return self.sectionOneTitleView;
     }
     return nil;
 }
 -(CGFloat)ddcs_tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 2) {
+    if (section==0) {
+        return CGFLOAT_MIN;
+    }else if (section == 2) {
         return Height_Pt(120);
-    }else if (section == 3) {
-        
     }
     return Height_Pt(20);
 }
@@ -131,7 +152,6 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 -(FightGroupSectionTitle *)sectionOneTitleView {
     if (!_sectionOneTitleView) {
         _sectionOneTitleView = [[FightGroupSectionTitle alloc] init];
-        //_sectionOneTitleView.frame = CGRectMake(0, 0, Width, Height_Pt(120));
         _sectionOneTitleView.title = @"以下小伙伴正在开团,您可以直接参与";
     }
     return _sectionOneTitleView;
@@ -180,9 +200,7 @@ static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 }
 -(CommentController *)pageController{
     if (!_pageController) {
-        NSArray *viewControllerClasses = @[[EvaluationTableViewController class],[EvaluationTableViewController class]];
-        NSArray *titles = @[@"全部评论",@"晒图"];
-        _pageController = [[CommentController alloc]initWithViewControllerClasses:viewControllerClasses andTheirTitles:titles];
+        _pageController = [[CommentController alloc]init];
     }
     return _pageController;
 }

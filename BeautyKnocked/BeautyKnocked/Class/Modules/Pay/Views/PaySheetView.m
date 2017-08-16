@@ -48,7 +48,6 @@
     _tableView.scrollEnabled = NO;
     [self addSubview:_tableView];
     
-    
     _confirmPayButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_confirmPayButton setTitle:@"确认支付" forState:UIControlStateNormal];
     _confirmPayButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
@@ -109,20 +108,20 @@
     
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
     
-    if (indexPath.row == 0) {
-        cell.textLabel.textColor = [UIColor lightGrayColor];
-        cell.detailTextLabel.text = @"本次交易不支持";
-        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-    }
+//    if (indexPath.row == 0) {
+//        cell.textLabel.textColor = [UIColor lightGrayColor];
+//        cell.detailTextLabel.text = @"本次交易不支持";
+//        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+//    }
     
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 0) {
-        return;
-    }
-    
+//    if (indexPath.row == 0) {
+//        return;
+//    }
+
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     for (UITableViewCell *cell in tableView.visibleCells) {
         UIImageView *accessoryImgView = (UIImageView *)cell.accessoryView;
@@ -153,12 +152,11 @@
 }
 - (void)actionClose
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要放弃当前支付操作吗?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要放弃当前支付操作吗？" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"继续支付" style:UIAlertActionStyleDefault handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"放弃" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:@"放弃" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [LEEAlert closeWithCompletionBlock:nil];
     }]];
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
-    
 }
 @end
