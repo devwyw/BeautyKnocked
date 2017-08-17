@@ -142,11 +142,8 @@ static Master *instance=nil;
         [SVProgressHUD dismiss];
         NSLog(@"json错误: %@",error);
         switch (error.code) {
-            case -1009:
-                [SVProgressHUD showErrorWithStatus:@"我们未在地球上找到您的连接，请检查您的网络设置~"];
-                break;
             case -1004:
-                [SVProgressHUD showErrorWithStatus:@"您正在使用地球之外的网络，我们未能与您连接~"];
+                [SVProgressHUD showErrorWithStatus:@"我们未能与您连接，请您再试一试~"];
                 break;
             default:
                 [SVProgressHUD showErrorWithStatus:@"网络错误，请您再试一试~"];
@@ -205,6 +202,8 @@ static Master *instance=nil;
                     controller.isType=NO;
                     controller.isLock=YES;
                     [instance.rootController pushViewController:controller animated:YES];
+                }else{
+                    NSLog(@"未设置Root控制器");
                 }
             }];
             return NO;

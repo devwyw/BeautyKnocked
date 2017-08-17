@@ -46,11 +46,11 @@
 }
 #pragma mark ===== NSLog =====
 -(void)getLog{
-    NSLog(@"\n系统:%.2f\n版本:%@\nUUID:%@\n账号ID:%@",
+    NSLog(@"\n系统:%.2f\n版本:%@\nUUID:%@\n账号:%@",
           SystemVersion,
           AppVersion,
           UUID,
-          [Acount shareManager].id
+          [Acount shareManager].account
           );
 }
 #pragma mark ===== App管理 =====

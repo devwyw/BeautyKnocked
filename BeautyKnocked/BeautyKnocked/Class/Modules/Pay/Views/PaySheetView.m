@@ -48,6 +48,10 @@
     _tableView.scrollEnabled = NO;
     [self addSubview:_tableView];
     
+    UIView *line = [UIView new];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [self addSubview:line];
+    
     _confirmPayButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_confirmPayButton setTitle:@"确认支付" forState:UIControlStateNormal];
     _confirmPayButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
@@ -72,10 +76,6 @@
         make.left.and.right.equalTo(self);
         make.height.mas_equalTo(Height_Pt(180*3));
     }];
-    
-    UIView *line = [UIView new];
-    line.backgroundColor = [UIColor lightGrayColor];
-    [self addSubview:line];
     
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_tableView.mas_bottom);

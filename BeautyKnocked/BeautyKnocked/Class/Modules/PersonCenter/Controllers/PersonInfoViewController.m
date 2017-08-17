@@ -73,8 +73,10 @@
                 NSLog(@"压缩后:%fK",imageData.length/1024.0f);
                 NSString *imageBase = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                 [Master HttpPostRequestByParams:@{@"id":user.id,@"device":UUID,@"imgStr":imageBase} url:mlqqm serviceCode:ghtx Success:^(id json) {
+                    /** 修改头像 */
                     Wself.modifyInfoView.headerimage=images.firstObject;
                     user.headPath=json[@"info"];
+                    [user UpdateAcount];
                     [Master showSVProgressHUD:@"头像修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
                 } Failure:nil];
             }else{

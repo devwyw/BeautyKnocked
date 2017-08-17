@@ -1,13 +1,13 @@
 //
-//  SonCouponController.h
+//  CouponInfoController.h
 //  BeautyKnocked
 //
-//  Created by Mac on 2017/8/16.
+//  Created by Mac on 2017/8/17.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface SonCouponController : UIViewController
+@interface CouponInfoController : UIViewController
 
 @end

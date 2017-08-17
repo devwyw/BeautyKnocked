@@ -16,19 +16,19 @@
 @property (nonatomic,copy) NSString * id;
 /** 账号 */
 @property (nonatomic,copy) NSString * account;
-/** 昵称 */
+/** #昵称# */
 @property (nonatomic,copy) NSString * nickName;
-/** 头像路径 */
+/** #头像路径# */
 @property (nonatomic,copy) NSString * headPath;
-/** Vip等级 */
+/** #Vip等级# */
 @property (nonatomic,copy) NSString * rank;
-/** 余额 */
+/** #余额# */
 @property (nonatomic,copy) NSString * money;
-/** 积分 */
+/** #积分# */
 @property (nonatomic,copy) NSString * score;
-/** 经度 */
+/** #经度# */
 @property (nonatomic,copy) NSString * longitude;
-/** 纬度 */
+/** #纬度# */
 @property (nonatomic,copy) NSString * latitude;
 /** token标识符 */
 @property (nonatomic,copy) NSString * token;

@@ -61,6 +61,14 @@ static Acount *instance=nil;
 /** 账号登录 */
 -(void)SignInAcount{
     [Data open];
+    FMResultSet *res = [Data executeQuery:@"SELECT * FROM acount"];
+    NSString *aid=[[NSString alloc]init];
+    while ([res next]) {
+        aid=[res stringForColumn:@"aid"];
+    }
+    if (!isStringEmpty(aid)) {
+        [Data executeUpdate:@"DELETE FROM acount WHERE aid = ?",aid];
+    }
     [Data executeUpdate:@"INSERT INTO acount(aid,account,nickName,headPath,rank,money,score,longitude,latitude,token) VALUES(?,?,?,?,?,?,?,?,?,?)",self.id,self.account,self.nickName,self.headPath,self.rank,self.money,self.score,self.longitude,self.latitude,self.token];
     [Data close];
 }

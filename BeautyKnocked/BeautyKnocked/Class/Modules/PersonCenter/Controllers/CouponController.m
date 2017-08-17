@@ -7,7 +7,7 @@
 //
 
 #import "CouponController.h"
-#import "SonCouponController.h"
+#import "SonCouponTableController.h"
 
 @interface CouponController ()
 
@@ -43,11 +43,11 @@
     return 3;
 }
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
-    SonCouponController *controller=[[SonCouponController alloc]init];
+    SonCouponTableController *controller=[[SonCouponTableController alloc]init];
     return controller;
 }
 - (NSString *)pageController:(WMPageController *)pageController titleAtIndex:(NSInteger)index {
-    return @[@"已使用",@"未使用",@"已过期"][index];
+    return @[@"已使用 3",@"未使用 2",@"已过期 1"][index];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

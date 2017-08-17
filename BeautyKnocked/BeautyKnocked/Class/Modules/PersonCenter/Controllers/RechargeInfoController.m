@@ -54,7 +54,6 @@ static NSInteger indexSelect=1;
         _tableview.dataSource=self;
         _tableview.estimatedRowHeight=Height_Pt(100);
         _tableview.backgroundColor=[UIColor clearColor];
-        _tableview.separatorInset=UIEdgeInsetsZero;
         _tableview.bounces=NO;
     }
     return _tableview;
