@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AddressModel;
 
 typedef NS_ENUM(NSUInteger, AddressEditStyle) {
     AddressEditStyleAddNew, // add
@@ -17,5 +18,5 @@ typedef NS_ENUM(NSUInteger, AddressEditStyle) {
 @interface EditAddressController : UIViewController
 
 @property (nonatomic, assign) AddressEditStyle editStyle;
-
+@property (nonatomic, strong) AddressModel * model;
 @end

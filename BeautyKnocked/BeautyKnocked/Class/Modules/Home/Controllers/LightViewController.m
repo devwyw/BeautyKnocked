@@ -147,8 +147,8 @@
             }
         }
     }else{
-        if (textField.text.length >=11) {
-            textField.text=[textField.text substringToIndex:11];
+        if (textField.text.length >=20) {
+            textField.text=[textField.text substringToIndex:20];
         }
     }
 }

@@ -8,7 +8,6 @@
 
 #import "ServiceContentCollectionViewCell.h"
 #import "ImageModel.h"
-#import <UIImageView+WebCache.h>
 
 @interface ServiceContentCollectionViewCell ()
 
@@ -28,7 +27,6 @@
     }
     return self;
 }
-
 -(void)initializeViews {
     _imgView = [[UIImageView alloc] init];
     
@@ -45,7 +43,6 @@
     [self.contentView addSubview:_titleLabel];
     [_imgView addSubview:_serialNumberLabel];
 }
-
 -(void)addConstraints {
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.and.left.and.right.equalTo(self.contentView);
@@ -66,7 +63,7 @@
 }
 -(void)setModel:(ImageModel *)model{
     _titleLabel.text=model.name;
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,model.imagePath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [Master GetWebImage:_imgView withUrl:model.imagePath];
 }
 -(void)setSerialNumber:(NSInteger)serialNumber {
     _serialNumberLabel.text = [NSString stringWithFormat:@"%ld",serialNumber];

@@ -49,8 +49,6 @@ static NSString *const recordingCellIdentifier = @"ExchangeRecordingCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ExchangeRecordingCell *cell = [tableView dequeueReusableCellWithIdentifier:recordingCellIdentifier forIndexPath:indexPath];
-    
-    
     return cell;
 }
 

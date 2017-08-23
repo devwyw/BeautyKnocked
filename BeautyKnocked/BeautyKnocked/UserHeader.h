@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSUInteger, MLOrderStyle) {
     MLProduct,
     MLItem,
+    MLPackage,
 };
 
 

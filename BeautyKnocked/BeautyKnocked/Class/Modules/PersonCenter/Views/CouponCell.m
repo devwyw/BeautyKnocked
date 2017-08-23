@@ -7,14 +7,18 @@
 //
 
 #import "CouponCell.h"
+#import "CouponModel.h"
 
 @interface CouponCell ()
 @property (nonatomic,strong) UIImageView * backImage;
 @property (nonatomic,strong) UIImageView * leftImage;
 @property (nonatomic,strong) UIImageView * rightImage;
 @property (nonatomic,strong) UILabel * type;
+
+@property (nonatomic,strong) UIView * centerview;
 @property (nonatomic,strong) UILabel * RMB;
 @property (nonatomic,strong) UILabel * money;
+
 @property (nonatomic,strong) UILabel * title;
 @property (nonatomic,strong) UILabel * message;
 @property (nonatomic,strong) UILabel * time;
@@ -36,8 +40,37 @@
     }
     return self;
 }
+-(void)setModel:(CouponModel *)model{
+    switch ([model.status integerValue]) {
+        case 0:
+            _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
+            break;
+        case 1:
+            _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
+            _rightImage.image=[UIImage imageNamed:@"yishiyong"];
+            break;
+        default:
+            _backImage.image=[UIImage imageNamed:@"youhuiquan-bukeyong"];
+            _rightImage.image=[UIImage imageNamed:@"yiguoqi"];
+            break;
+    }
+    _title.text=model.name;
+    _type.text=model.type;
+    _money.text=model.money;
+    _message.text=[NSString stringWithFormat:@"• %@",model.commName];
+    _time.text=[NSString stringWithFormat:@"有效期: %@-%@",[self getWebTime:model.startTime],[self getWebTime:model.endTime]];
+    
+}
+-(NSString*)getWebTime:(NSString*)time{
+    NSTimeInterval interval=[[time substringToIndex:10] doubleValue];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"yyyy.MM.dd"];
+    NSString *timeString = [dateformatter stringFromDate:date];
+    return timeString;
+}
 -(void)initializeViews {
-    _backImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"youhuiquan-keyong"]];
+    _backImage=[[UIImageView alloc]init];
     [self.contentView addSubview:_backImage];
     
     _leftImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"biaoqian"]];
@@ -45,50 +78,48 @@
 
     _type=[[UILabel alloc]init];
     _type.font=[UIFont systemFontOfSize:Font_Size(20)];
-    _type.text=@"积分兑换";
     _type.textAlignment=NSTextAlignmentCenter;
     _type.transform = CGAffineTransformMakeRotation(-M_PI_4);
     [_leftImage addSubview:_type];
+    
+    _centerview=[[UIView alloc]init];
+    [_backImage addSubview:_centerview];
     
     _RMB=[[UILabel alloc]init];
     _RMB.font=[UIFont systemFontOfSize:Font_Size(50)];
     _RMB.textColor=[UIColor whiteColor];
     _RMB.text=@"¥";
-    [_backImage addSubview:_RMB];
+    [_centerview addSubview:_RMB];
     
     _money=[[UILabel alloc]init];
     _money.font=[UIFont boldSystemFontOfSize:Font_Size(100)];
     _money.textColor=[UIColor whiteColor];
-    _money.text=@"88";
-    [_backImage addSubview:_money];
+    [_centerview addSubview:_money];
     
     _title=[[UILabel alloc]init];
-    _title.font=[UIFont boldSystemFontOfSize:Font_Size(45)];
-    _title.text=@"指定项目红包券";
+    _title.font=[UIFont boldSystemFontOfSize:Font_Size(50)];
     [_backImage addSubview:_title];
     
     _message=[[UILabel alloc]init];
     _message.textColor=[UIColor darkGrayColor];
     _message.font=[UIFont systemFontOfSize:Font_Size(37.5)];
-    _message.text=@"• 仅限抵用水美人护理项目";
     [_backImage addSubview:_message];
     
     _time=[[UILabel alloc]init];
     _time.textColor=[UIColor darkGrayColor];
     _time.font=[UIFont systemFontOfSize:Font_Size(32.5)];
-    _time.text=@"有效期: 2017.01.01-2017.01.01";
     [_backImage addSubview:_time];
     
-    _rightImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"yishiyong"]];
+    _rightImage=[[UIImageView alloc]init];
     [_backImage addSubview:_rightImage];
 }
 -(void)addConstraints {
     [_backImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).offset(Height_Pt(40));
-        make.left.equalTo(self.contentView).offset(Width_Pt(77));
+        make.left.equalTo(self.contentView).offset(Width_Pt(40));
         make.bottom.equalTo(self.contentView);
-        make.right.equalTo(self.contentView).offset(-Width_Pt(70));
-        make.height.mas_equalTo(Height_Pt(255));
+        make.right.equalTo(self.contentView).offset(-Width_Pt(40));
+        make.height.mas_equalTo(Height_Pt(300));
     }];
     
     [_leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -101,27 +132,30 @@
         make.centerX.equalTo(_leftImage.mas_left).offset(Width_Pt(40));
     }];
     
-    [_RMB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_backImage).offset(Width_Pt(80));
-        make.bottom.equalTo(_money.mas_bottom).offset(-Height_Pt(15));
+    [_centerview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.equalTo(_backImage);
+        make.right.equalTo(_title.mas_left).offset(-Width_Pt(30));
     }];
     [_money mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_RMB.mas_right).offset(Width_Pt(15));
-        make.centerY.equalTo(_backImage);
+        make.center.equalTo(_centerview);
+    }];
+    [_RMB mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_money.mas_bottom).offset(-Height_Pt(15));
+        make.right.equalTo(_money.mas_left).offset(-Width_Pt(10));
     }];
     
     [_title mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_backImage).offset(Height_Pt(40));
-        make.left.equalTo(_backImage).offset(Width_Pt(385));
+        make.left.equalTo(_backImage).offset(Width_Pt(400));
     }];
     
     [_message mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_title.mas_bottom).offset(Height_Pt(35));
+        make.top.equalTo(_title.mas_bottom).offset(Height_Pt(40));
         make.left.equalTo(_title);
     }];
     
     [_time mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_message.mas_bottom).offset(Height_Pt(15));
+        make.top.equalTo(_message.mas_bottom).offset(Height_Pt(30));
         make.left.equalTo(_title);
     }];
 

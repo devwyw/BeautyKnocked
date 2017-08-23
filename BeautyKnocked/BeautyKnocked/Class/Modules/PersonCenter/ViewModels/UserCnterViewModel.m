@@ -54,7 +54,6 @@
             make.edges.equalTo(cell.contentView);
         }];
     }else if (indexPath.section == 2) {
-        
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.textLabel.text = [self.thirdSectionRows objectAtIndex:indexPath.row];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -150,18 +149,14 @@
 
 #pragma mark PSheaderViewDelegate
 -(void)headIconDidClicked {
-    if ([[Acount shareManager] isSignIn]) {
+    if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
         PersonInfoViewController *personInfoVC = [[PersonInfoViewController alloc] init];
         personInfoVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:personInfoVC animated:YES];
-    }else{
-        LoginController *loginController = [[LoginController alloc] init];
-        UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-        [self.navigationController presentViewController:loginNav animated:YES completion:nil];
     }
 }
 -(void)didSelectedItemAtIndex:(NSUInteger)index {
-    if ([[Acount shareManager] isSignIn]) {
+    if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
         if (index==2) {
             CouponController *controller=[[CouponController alloc]init];
             controller.hidesBottomBarWhenPushed = YES;
@@ -171,10 +166,6 @@
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }
-    }else{
-        LoginController *loginController = [[LoginController alloc] init];
-        UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-        [self.navigationController presentViewController:loginNav animated:YES completion:nil];
     }
 }
 -(void)didGroupClicked:(NSUInteger)index{
@@ -190,25 +181,26 @@
     pageController.selectIndex = (int)index;
     pageController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:pageController animated:YES];
-    
 }
 
 #pragma mark ToolItemViewDelegate
 -(void)didChooseToolAtIndex:(NSUInteger)index {
-    if (index == 1) {
-        CollectBeauticianTableViewController *collectVC = [[CollectBeauticianTableViewController alloc] init];
-        collectVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:collectVC animated:YES];
-    }else if (index == 2) {
-        
-    }else if (index == 3) {
-        AddressController *addressVC = [[AddressController alloc] init];
-        addressVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:addressVC animated:YES];
-    }else if (index == 4) {
-        IntegralMallController *integralMallVC = [[IntegralMallController alloc] initWithCollectionViewLayout:[[SusoensionFlowLayout alloc] init]];
-        integralMallVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:integralMallVC animated:YES];
+    if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
+        if (index == 1) {
+            CollectBeauticianTableViewController *collectVC = [[CollectBeauticianTableViewController alloc] init];
+            collectVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:collectVC animated:YES];
+        }else if (index == 2) {
+            
+        }else if (index == 3) {
+            AddressController *addressVC = [[AddressController alloc] init];
+            addressVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:addressVC animated:YES];
+        }else if (index == 4) {
+            IntegralMallController *integralMallVC = [[IntegralMallController alloc] initWithCollectionViewLayout:[[SusoensionFlowLayout alloc] init]];
+            integralMallVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:integralMallVC animated:YES];
+        }
     }
 }
 @end

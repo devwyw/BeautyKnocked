@@ -7,17 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol BeauticianCellDelegate <NSObject>
-
--(void)reserveBeautician;
-
-@end
+@class RACSignal;
+@class BeauticianModel;
 
 @interface BeauticianCell : UITableViewCell
 
-@property (nonatomic, weak) id<BeauticianCellDelegate> delegate;
-
-@property (nonatomic, assign) NSUInteger number;
-
+@property (nonatomic,strong) RACSignal * collect;
+@property (nonatomic,strong) RACSignal * reserve;
+@property (nonatomic,strong) RACSignal * beaSelect;
+@property (nonatomic,strong) BeauticianModel * model;
+@property (nonatomic,assign) BOOL isBeauticianSelect;
 @end

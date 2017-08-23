@@ -12,7 +12,6 @@
 #import "AddCarView.h"
 #import "CarItem.h"
 #import "ItemDetailViewModel.h"
-#import <UIImageView+WebCache.h>
 #import "DetailModel.h"
 #import "PackageInfoModel.h"
 
@@ -88,15 +87,22 @@
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.showsVerticalScrollIndicator = NO;
     
-    /** 立即预约  购物车 */
     _addReserveView = [[AddAndReserveView alloc] init];
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
+        //立即预约
         ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
-        confirmController.orderStyle = MLItem;
+        if (isStringEmpty(self.projectId)) {
+            confirmController.orderStyle = MLItem;
+            confirmController.detailModel=self.itemDetailViewModel.model;
+        }else{
+            confirmController.orderStyle = MLPackage;
+            confirmController.packageInfoModel=self.itemDetailViewModel.Pmodel;
+        }
         [self.navigationController pushViewController:confirmController animated:YES];
     }];
 
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
+        //购物车
         AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
         [view.doneAction subscribeNext:^(id  _Nullable x) {
             [LEEAlert closeWithCompletionBlock:^{
@@ -158,10 +164,10 @@
     [Master HttpPostRequestByParams:@{@"id":detailID,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
         if (isStringEmpty(projectId)) {
             self.itemDetailViewModel.model=[DetailModel mj_objectWithKeyValues:json[@"info"]];
-            [self.tableheaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.itemDetailViewModel.model.imagePath]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+            [Master GetWebImage:self.tableheaderView withUrl:self.itemDetailViewModel.model.imagePath];
         }else{
             self.itemDetailViewModel.Pmodel=[PackageInfoModel mj_objectWithKeyValues:json[@"info"]];
-            [self.tableheaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.itemDetailViewModel.Pmodel.imagePath]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+            [Master GetWebImage:self.tableheaderView withUrl:self.itemDetailViewModel.Pmodel.imagePath];
         }
         /** 评论列表 */
         [Master HttpPostRequestByParams:@{@"id":detailID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {

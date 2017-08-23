@@ -59,12 +59,11 @@
 
 -(NSMutableArray *)dataSource {
     if (!_dataSource) {
-        _dataSource = [NSMutableArray arrayWithCapacity:35];
+        _dataSource = [[NSMutableArray alloc]init];
         [_dataSource addObjectsFromArray:[MLDateManager fetchDate]];
     }
     return _dataSource;
 }
-
 -(void)initializeViews {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
@@ -159,54 +158,49 @@
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     // 此处可以对Cell做你想做的操作了...
     [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
+
     MLDateModel *dateModel = self.dataSource[indexPath.item];
-    if (indexPath.item + 1 == _todayWeekDay) {
-        cell.dateNumber = @"今天";
-        cell.content = @"约满";
-        cell.numberColor = ThemeColor;
-        cell.contentColor = ThemeColor;
-    }else {
-        cell.dateNumber = [NSString stringWithFormat:@"%ld",(long)dateModel.day];
-    }
-    
-    if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
-        cell.content = self.months[dateModel.month];
-    }
-    
-    // border
     if (dateModel.isInThirtyDays) {
-        // selected
         UIView *selectedView = [[UIView alloc] init];
         selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
         cell.selectedBackgroundView = selectedView;
         [cell setBackgroundColor:[UIColor whiteColor]];
     }
-    return cell;
-}
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MLDateModel *dateModel = self.dataSource[indexPath.item];
-    NSLog(@"date == %@",dateModel.date);
     
-    if (!dateModel.isInThirtyDays) {
-        return;
+    cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
+    
+    if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
+        cell.content = self.months[dateModel.month];
     }
     
-    OrderSubTime *view=[[OrderSubTime alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
-    view.selectedDate = [NSString stringWithFormat:@"%@(%@)",dateModel.date,self.weekDays[dateModel.week-1]];
-    [LEEAlert alert].config
-    .LeeCustomView(view)
-    .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-    .LeeHeaderColor([UIColor clearColor])
-    .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-        return Width_Pt(1018);
-    })
-    .LeeShow();
+//    if (indexPath.item + 1 == _todayWeekDay) {
+//        cell.dateNumber = @"今天";
+//        cell.content = @"约满";
+//        cell.numberColor = ThemeColor;
+//        cell.contentColor = ThemeColor;
+//        cell.userInteractionEnabled=NO;
+//    }
+    return cell;
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MLDateModel *dateModel = self.dataSource[indexPath.item];
+    if (dateModel.isInThirtyDays) {
+        OrderSubTime *view=[[OrderSubTime alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
+        view.selectedDate = [NSString stringWithFormat:@"%@(%@)",dateModel.date,self.weekDays[dateModel.week-1]];
+        view.selectedDay=dateModel.date;
+        [LEEAlert alert].config
+        .LeeCustomView(view)
+        .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+        .LeeHeaderColor([UIColor clearColor])
+        .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+            return Width_Pt(1018);
+        })
+        .LeeShow();
+    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(8, 8, 8, 8);
 }
-
 @end

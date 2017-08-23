@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RACSignal;
 
 @interface ConfirmOrderSubmitView : UIView
 
 @property (nonatomic, copy) NSString *totalPrice;
-
+@property (nonatomic,strong) RACSignal * payInfo;
 @end

@@ -9,7 +9,6 @@
 #import "ClassItemCollectionCell.h"
 #import "NSString+Attribute.h"
 #import "ItemClassModel.h"
-#import <UIImageView+WebCache.h>
 #import "PackageModel.h"
 
 @interface ClassItemCollectionCell ()
@@ -37,14 +36,14 @@
     return self;
 }
 -(void)setModel:(ItemClassModel *)model{
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,model.imagePath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [Master GetWebImage:_imgView withUrl:model.imagePath];
     _titleLabel.text = model.name;
     NSString *text = [NSString stringWithFormat:@"VIP: ¥%@ ¥%@",model.vipPrice,model.price];
     _priceLabel.attributedText = [text setRedPrice:[NSString stringWithFormat:@"¥%@",model.vipPrice] linePrice:[NSString stringWithFormat:@"¥%@",model.price]];
     _monthSaleLabel.text = [NSString stringWithFormat:@"%@人购买",model.buySecond];
 }
 -(void)setPmodel:(PackageModel *)Pmodel{
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,Pmodel.imagePath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [Master GetWebImage:_imgView withUrl:Pmodel.imagePath];
     _titleLabel.text = Pmodel.name;
     
     NSString *text = [NSString stringWithFormat:@"套餐价: ¥%@",Pmodel.price];

@@ -7,8 +7,6 @@
 //
 
 #import "EvaluationImageCell.h"
-#import <UIImageView+WebCache.h>
-
 
 @interface EvaluationImageCell ()
 @property (nonatomic, strong) UIImageView *imgView;
@@ -32,7 +30,7 @@
 }
 
 -(void)setImageName:(NSString *)imageName {
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,imageName]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+    [Master GetWebImage:_imgView withUrl:imageName];
 }
 
 @end

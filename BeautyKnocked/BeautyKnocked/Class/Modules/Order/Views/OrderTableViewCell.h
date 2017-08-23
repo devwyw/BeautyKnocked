@@ -7,17 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class RACSignal;
 @protocol OrderTableViewCellDelegate <NSObject>
-
 -(void)cellPush;
-
 @end
 
 @interface OrderTableViewCell : UITableViewCell
-
-@property (nonatomic, strong) UIButton *beauticianBtn;
-@property (nonatomic, strong) UIButton *leftButton;
-@property (nonatomic, strong) UIButton *rightButton;
 @property (nonatomic,strong) id<OrderTableViewCellDelegate> cellDelegate;
+@property (nonatomic,strong) RACSignal * leftPush;
+@property (nonatomic,strong) RACSignal * rightPush;
 @end

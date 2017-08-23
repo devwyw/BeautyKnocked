@@ -34,7 +34,6 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     [self.view setBackgroundColor:[UIColor colorWithHexString:@"#F7F7F7"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[OrderTableViewCell class] forCellReuseIdentifier:orderTableViewCellIdentifier];
-    
 
         _nilView=[[UIView alloc]init];
         _nilView.hidden=YES;
@@ -94,9 +93,17 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:orderTableViewCellIdentifier forIndexPath:indexPath];
     cell.cellDelegate=self;
-    
-    [cell.leftButton addTarget:self action:@selector(leftPush:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.rightButton addTarget:self action:@selector(rightPush:) forControlEvents:UIControlEventTouchUpInside];
+    Weakify(self);
+    [[cell.leftPush takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+        OrderPJController *controller=[[OrderPJController alloc]init];
+        controller.hidesBottomBarWhenPushed=YES;
+        [Wself.navigationController pushViewController:controller animated:YES];
+    }];
+    [[cell.rightPush takeUntil:cell.rac_prepareForReuseSignal] subscribeNext:^(id  _Nullable x) {
+        WuLiuController *controller=[[WuLiuController alloc]init];
+        controller.hidesBottomBarWhenPushed=YES;
+        [Wself.navigationController pushViewController:controller animated:YES];
+    }];
     /*
      查看评价 再次购买
      技师定位 联系技师 - 查看物流 确认收货
@@ -110,15 +117,8 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     controller.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
--(void)leftPush:(UIButton*)btn{
-    OrderPJController *controller=[[OrderPJController alloc]init];
-    controller.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:controller animated:YES];
-}
--(void)rightPush:(UIButton*)btn{
-    WuLiuController *controller=[[WuLiuController alloc]init];
-    controller.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:controller animated:YES];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self cellPush];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return Height_Pt(110)*2+Height_Pt(300)*2;

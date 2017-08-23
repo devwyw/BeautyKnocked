@@ -8,6 +8,7 @@
 
 #import "Acount.h"
 #import <FMDB.h>
+#import "LoginController.h"
 
 static Acount *instance=nil;
 
@@ -118,10 +119,13 @@ static Acount *instance=nil;
     [Data close];
 }
 /** 账号是否登录 */
--(BOOL)isSignIn{
+-(BOOL)isSignInWithNavigationController:(UINavigationController*)navigationController{
     if (!isStringEmpty(self.id)) {
         return YES;
     }else{
+        LoginController *loginController = [[LoginController alloc] init];
+        UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+        [navigationController presentViewController:loginNav animated:YES completion:nil];
         return NO;
     }
 }

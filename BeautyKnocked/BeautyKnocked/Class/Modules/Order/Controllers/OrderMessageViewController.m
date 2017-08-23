@@ -96,7 +96,7 @@
             if (indexPath.section==1 && indexPath.row==3) {
                 NSMutableAttributedString *AttStr=[[NSMutableAttributedString alloc]initWithString:@"¥468.0"];
                 [AttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, AttStr.length)];
-                cell.contentLabel.attributedText = AttStr;
+                cell.attributed = AttStr;
             }else{
                 cell.content=@"李军晴";
             }

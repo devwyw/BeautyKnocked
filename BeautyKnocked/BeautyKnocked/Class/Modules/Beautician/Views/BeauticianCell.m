@@ -7,6 +7,7 @@
 //
 
 #import "BeauticianCell.h"
+#import "BeauticianModel.h"
 
 @interface BeauticianCell ()
 
@@ -14,43 +15,23 @@
 
 @property (nonatomic, strong) UIImageView *imgView;
 @property (nonatomic, strong) UILabel *numberLabel;
-/**
- head icon
- */
-@property (nonatomic, strong) UIImageView *headImgView;
 
+@property (nonatomic, strong) UIImageView *headImgView;
 @property (nonatomic, strong) UILabel *nameLabel;
 
 @property (nonatomic, strong) UIImageView *verticalLine;
-
 @property (nonatomic, strong) UIImageView *horizonLine;
-
 @property (nonatomic, strong) UILabel *collectionLabel;
-
-/**
- collection count
- */
 @property (nonatomic, strong) UILabel *collectionCount;
 
 @property (nonatomic, strong) UILabel *scoreLabel;
-
-/**
- score number
- */
 @property (nonatomic, strong) UILabel *scoreNumber;
 
 @property (nonatomic, strong) UILabel *descrLabel;
 
-/**
- collect button
- */
 @property (nonatomic, strong) UIButton *collectBtn;
-
-/**
- reserve button
- */
 @property (nonatomic, strong) UIButton *reserveBtn;
-
+@property (nonatomic, strong) UIButton *selectedBtn;
 @end
 
 @implementation BeauticianCell
@@ -66,16 +47,28 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
-        
         [self setupCellInterface];
         [self configureConstraints];
-        
     }
     return self;
 }
-
+-(void)setModel:(BeauticianModel *)model{
+    _numberLabel.text=model.id;
+    _nameLabel.text = model.name;
+    _collectionCount.text = model.collects;
+    _scoreNumber.text = model.score;
+    _descrLabel.text = model.introduce;
+    _collectBtn.selected=[model.is_collect integerValue]==1 ? YES : NO;
+}
+-(void)setIsBeauticianSelect:(BOOL)isBeauticianSelect{
+    _isBeauticianSelect=isBeauticianSelect;
+    if (_isBeauticianSelect) {
+        _selectedBtn.hidden=!_isBeauticianSelect;
+        _collectBtn.hidden=_isBeauticianSelect;
+        _reserveBtn.hidden=_isBeauticianSelect;
+    }
+}
 -(void)setupCellInterface {
-    
     _backView = [[UIView alloc] init];
     _backView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_backView];
@@ -89,14 +82,12 @@
     _numberLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     [_imgView addSubview:_numberLabel];
     
-    
     _headImgView = [[UIImageView alloc] init];
     [_headImgView setImage:[UIImage imageNamed:@"touxiang_03"]];
     [self.backView addSubview:_headImgView];
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:15];
-    _nameLabel.text = @"刘亦菲";
     [self.backView addSubview:_nameLabel];
     
     _verticalLine = [[UIImageView alloc] init];
@@ -109,37 +100,36 @@
     
     _collectionLabel = [[UILabel alloc] init];
     _collectionLabel.font = [UIFont systemFontOfSize:13];
-    _collectionLabel.textColor = [UIColor lightGrayColor];
+    _collectionLabel.textColor = [UIColor darkGrayColor];
     _collectionLabel.text = @"总收藏数";
     [self.backView addSubview:_collectionLabel];
     
     _collectionCount = [[UILabel alloc] init];
     _collectionCount.font = [UIFont systemFontOfSize:10];
-    _collectionCount.text = @"55";
     _collectionCount.textColor = [UIColor redColor];
     [self.backView addSubview:_collectionCount];
     
     _scoreLabel = [[UILabel alloc] init];
     _scoreLabel.font = [UIFont systemFontOfSize:13];
-    _scoreLabel.textColor = [UIColor lightGrayColor];
+    _scoreLabel.textColor = [UIColor darkGrayColor];
     _scoreLabel.text = @"总评分";
     [self.backView addSubview:_scoreLabel];
     
     _scoreNumber = [[UILabel alloc] init];
     _scoreNumber.font = [UIFont systemFontOfSize:10];
     _scoreNumber.textColor = [UIColor redColor];
-    _scoreNumber.text = @"5.0";
     [self.backView addSubview:_scoreNumber];
     
     _descrLabel = [[UILabel alloc] init];
     _descrLabel.numberOfLines = 0;
     _descrLabel.font = [UIFont systemFontOfSize:15];
-    _descrLabel.text = @"本人从事美容1000年,擅长各种美容,能把丑女变美女,能让仙女变巫婆,能让男人变女人,能让女人变男人,找我,一切都不是问题,请拨打123466498778";
     [self.backView addSubview:_descrLabel];
     
     _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_collectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_collectBtn setTitle:@"收藏美容师" forState:UIControlStateNormal];
+    [_collectBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
+    [_collectBtn setTitle:@"已收藏" forState:UIControlStateSelected];
     _collectBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_collectBtn setBackgroundImage:[UIImage imageNamed:@"shoucangkuang_19"] forState:UIControlStateNormal];
     [self.backView addSubview:_collectBtn];
@@ -150,18 +140,23 @@
     _reserveBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.backView addSubview:_reserveBtn];
     
-    // event
-    [[_reserveBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        if ([self.delegate respondsToSelector:@selector(reserveBeautician)]) {
-            [self.delegate reserveBeautician];
-        }
-    }];
-    
-    
+    _selectedBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_selectedBtn setBackgroundImage:[UIImage imageNamed:@"yuyuekuang_19"] forState:UIControlStateNormal];
+    [_selectedBtn setTitle:@"选择美容师" forState:UIControlStateNormal];
+    _selectedBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    _selectedBtn.hidden=YES;
+    [self.backView addSubview:_selectedBtn];
 }
-
+-(RACSignal*)collect{
+    return [_collectBtn rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
+-(RACSignal*)reserve{
+    return [_reserveBtn rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
+-(RACSignal*)beaSelect{
+    return [_selectedBtn rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
 -(void)configureConstraints {
-    
     [_backView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(30.f);
         make.left.equalTo(self.contentView).with.offset(7.f);
@@ -229,15 +224,14 @@
         make.height.mas_equalTo(Height_Pt(8));
     }];
     
-    // beautician decrible
     [_descrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_horizonLine.mas_bottom).with.offset(Height_Pt(33));
+        make.top.equalTo(_horizonLine.mas_bottom).with.offset(Height_Pt(30));
         make.left.equalTo(_horizonLine.mas_left);
         make.right.equalTo(_horizonLine.mas_right);
     }];
     
     [_collectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_descrLabel.mas_bottom).with.offset(Height_Pt(33));
+        make.top.equalTo(_descrLabel.mas_bottom).with.offset(Height_Pt(30));
         make.left.and.bottom.equalTo(_backView);
         make.bottom.equalTo(_backView);
         make.width.equalTo(_reserveBtn);
@@ -251,10 +245,12 @@
         make.height.equalTo(_collectBtn);
     }];
     
+    [_selectedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_backView);
+        make.top.equalTo(_descrLabel.mas_bottom).offset(Height_Pt(30));
+        make.bottom.equalTo(_backView).offset(-Height_Pt(30));
+        make.width.offset(Width/3);
+        make.height.offset(Height_Pt(200));
+    }];
 }
-
--(void)setNumber:(NSUInteger)number {
-    _numberLabel.text = [NSString stringWithFormat:@"%02lu",(unsigned long)number];
-}
-
 @end

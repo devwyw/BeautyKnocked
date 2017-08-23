@@ -9,7 +9,6 @@
 #import "HomePageItemCollectionViewCell.h"
 #import "NSString+Attribute.h"
 #import "ItemClassModel.h"
-#import <UIImageView+WebCache.h>
 
 @interface HomePageItemCollectionViewCell ()
 
@@ -45,7 +44,7 @@
 }
 -(void)setModel:(ItemClassModel *)model{
     _titleLabel.text = model.name;
-    [_imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,model.imagePath]] placeholderImage:[UIImage imageNamed:@"meirongshi_03"]];
+    [Master GetWebImage:_imgView withUrl:model.imagePath];
     NSString *text = [NSString stringWithFormat:@"VIP: ¥%@ ¥%@",model.vipPrice,model.price];
     _priceLabel.attributedText = [text setRedPrice:[NSString stringWithFormat:@"¥%@",model.vipPrice] linePrice:[NSString stringWithFormat:@"¥%@",model.price]];
 }

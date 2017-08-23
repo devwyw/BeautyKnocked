@@ -7,9 +7,10 @@
 //
 
 #import "Master.h"
+#import "RegisterController.h"
 #import <AFNetworking.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "RegisterController.h"
+#import <UIImageView+WebCache.h>
 
 static Master *instance=nil;
 
@@ -80,6 +81,7 @@ static Master *instance=nil;
 }
 #pragma mark ===== 所有网络请求 =====
 +(NSString *)gettTimes{
+    //时间戳
     NSDate * senddate = [NSDate date];
     NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
     [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -130,10 +132,9 @@ static Master *instance=nil;
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         NSData *data = responseObject;
-        NSString *string = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"json数据: %@",string);
+        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers  error:nil];
+        NSLog(@"%@",resultDic);
         if (!isObjectEmpty(success)) {
-            NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers  error:nil];
             if ([Master getSuccess:resultDic]) {
                 success(resultDic);
             }
@@ -153,6 +154,9 @@ static Master *instance=nil;
             failure(error);
         }
     }];
+}
++(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url{
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,Url]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
 }
 #pragma mark ===== Other =====
 -(void)getSub:(UIView *)view andLevel:(int)level{

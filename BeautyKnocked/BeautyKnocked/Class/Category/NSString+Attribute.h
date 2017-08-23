@@ -12,5 +12,8 @@
 
 /** 折扣价格-原价 */
 -(NSMutableAttributedString *)setRedPrice:(NSString *)redPrice linePrice:(NSString *)linePrice;
+/** 手机号判断 */
 -(BOOL)isMobileNumber;
+/** Min&Max字体 */
+-(NSMutableAttributedString *)setMinString:(NSString*)minStr withMinFont:(CGFloat)min andMaxString:(NSString*)maxStr withMaxFont:(CGFloat)max;
 @end

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AddressModel;
 
 @interface ConfirmOrderAddressCell : UITableViewCell
-
+@property (nonatomic,strong) AddressModel * model;
+@property (nonatomic,assign) BOOL isNull;
 @end

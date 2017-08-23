@@ -10,8 +10,8 @@
 
 @interface AddressEditView : UIView
 
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *content;
-@property (nonatomic, copy) NSString *placeholder;
-
+@property (nonatomic,copy) NSString *title;
+@property (nonatomic,copy) NSString *content;
+@property (nonatomic,copy) NSString *placeholder;
+-(UITextField *)textField;
 @end

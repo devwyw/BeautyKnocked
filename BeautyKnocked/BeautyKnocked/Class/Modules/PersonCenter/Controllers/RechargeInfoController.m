@@ -15,7 +15,7 @@
 @property (nonatomic,strong) UIButton * payDone;
 
 @end
-static NSInteger indexSelect=1;
+NSInteger indexSelect=1;
 
 @implementation RechargeInfoController
 - (UIStatusBarStyle)preferredStatusBarStyle {

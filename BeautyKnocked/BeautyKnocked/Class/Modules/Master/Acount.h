@@ -41,6 +41,6 @@
 -(void)UpdateAcount;
 /** 获取账号信息 */
 -(void)GetAcount;
-/** 账号是否登录 */
--(BOOL)isSignIn;
+/** 账号是否登录->一级页面 */
+-(BOOL)isSignInWithNavigationController:(UINavigationController*)navigationController;
 @end

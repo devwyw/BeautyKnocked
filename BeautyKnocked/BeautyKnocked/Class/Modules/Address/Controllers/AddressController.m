@@ -9,51 +9,90 @@
 #import "AddressController.h"
 #import "CommonAddressCell.h"
 #import "EditAddressController.h"
+#import "AddressModel.h"
 
 static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 @interface AddressController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton *addNewAddressBtn;
+@property (nonatomic, strong) NSMutableArray * listArray;
 @end
 
 @implementation AddressController
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+-(NSMutableArray*)listArray{
+    if (!_listArray) {
+        _listArray=[[NSMutableArray alloc]init];
+    }
+    return _listArray;
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self loadHttpData];
+}
+-(void)setIsSelected:(BOOL)isSelected{
+    _isSelected=isSelected;
+    if (_isSelected) {
+        self.addNewAddressBtn.hidden=YES;
+        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_isSelected) {
+        AddressModel *model=[[AddressModel alloc]init];
+        model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+        [self.addressId sendNext:model];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.title = @"常用地址";
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     
     [self initializeViews];
     [self addConstraints];
-    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.listArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AddressModel *model=[[AddressModel alloc]init];
+    model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     
     CommonAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellReuseIdentifier forIndexPath:indexPath];
-    
-    cell.address = @"[默认]喜马拉雅省古怪市阳光滩新区沙迦路888号金久国际大厦";
+    cell.model=model;
     Weakify(self);
-    [cell.addressEditSignal subscribeNext:^(id  _Nullable x) {
-        [Wself pushToEditController:AddressEditStyleUpdate];
+    [[cell.addressEditSignal takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+        EditAddressController *editController = [[EditAddressController alloc] init];
+        editController.editStyle = AddressEditStyleUpdate;
+        editController.model=model;
+        [Wself.navigationController pushViewController:editController animated:YES];
     }];
-    
+    [[cell.addressDeleteSignal takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+        [LEEAlert alert].config
+        .LeeAddCustomView(^(LEECustomView *custom) {
+            UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"kulian"]];
+            custom.view=image;
+        })
+        .LeeTitle(@"您确定要删除当前地址吗？")
+        .LeeCancelAction(@"取消", nil)
+        .LeeAction(@"确认", ^{
+            [_listArray removeObjectAtIndex:indexPath.row];
+            [_tableView reloadData];
+        })
+        .LeeShow();
+    }];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -63,18 +102,22 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     return 1;
 }
 -(void)initializeViews {
-    self.tableView = ({
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.addNewAddressBtn];
+}
+-(UITableView*)tableView{
+    if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.delegate  = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor=[UIColor clearColor];
-        [_tableView registerClass:[CommonAddressCell class] forCellReuseIdentifier:addressCellReuseIdentifier];
         _tableView.estimatedRowHeight = 100;
-        
-        self.tableView;
-    });
-    
-    self.addNewAddressBtn = ({
+        [_tableView registerClass:[CommonAddressCell class] forCellReuseIdentifier:addressCellReuseIdentifier];
+    }
+    return _tableView;
+}
+-(UIButton*)addNewAddressBtn{
+    if (!_addNewAddressBtn) {
         _addNewAddressBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_addNewAddressBtn setTitle:@"添加新地址" forState:UIControlStateNormal];
         _addNewAddressBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
@@ -82,15 +125,12 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         [_addNewAddressBtn setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
         Weakify(self);
         [[_addNewAddressBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            [Wself pushToEditController:AddressEditStyleAddNew];
+            EditAddressController *editController = [[EditAddressController alloc] init];
+            editController.editStyle = AddressEditStyleAddNew;
+            [Wself.navigationController pushViewController:editController animated:YES];
         }];
-        
-        self.addNewAddressBtn;
-    });
-    
-    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.addNewAddressBtn];
-    
+    }
+    return _addNewAddressBtn;
 }
 -(void)addConstraints {
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -102,11 +142,18 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         make.top.equalTo(self.tableView.mas_bottom);
     }];
 }
-
--(void)pushToEditController:(AddressEditStyle)style {
-    EditAddressController *editController = [[EditAddressController alloc] init];
-    editController.editStyle = style;
-    [self.navigationController pushViewController:editController animated:YES];
+-(void)loadHttpData{
+    [Master HttpPostRequestByParams:@{@"device":UUID,@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:fwdzlb Success:^(id json) {
+        self.listArray=json[@"info"];
+        for (int i=0; i<_listArray.count; i++) {
+            if ([_listArray[i][@"isDefault"] integerValue]==1) {
+                NSDictionary *defaultAddress=[[NSDictionary alloc]initWithDictionary:_listArray[i]];
+                [_listArray replaceObjectAtIndex:i withObject:_listArray[0]];
+                [_listArray replaceObjectAtIndex:0 withObject:defaultAddress];
+                break;
+            }
+        }
+        [_tableView reloadData];
+    } Failure:nil];
 }
-
 @end

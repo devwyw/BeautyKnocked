@@ -11,7 +11,7 @@
 @interface ConfirmOrderFillCell ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
-
+@property (nonatomic, strong) UILabel *contentLabel;
 @end
 
 @implementation ConfirmOrderFillCell
@@ -28,7 +28,9 @@
 -(void)setContent:(NSString *)content {
     _contentLabel.text = content;
 }
-
+-(void)setAttributed:(NSMutableAttributedString *)attributed{
+    _contentLabel.attributedText=attributed;
+}
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {

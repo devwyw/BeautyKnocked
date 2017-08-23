@@ -23,7 +23,6 @@
     [super viewDidLoad];
     self.title=@"设置";
     self.setupViewModel.navigationController = self.navigationController;
-    self.edgesForExtendedLayout=UIRectEdgeNone;
 }
 
 - (void)didReceiveMemoryWarning {

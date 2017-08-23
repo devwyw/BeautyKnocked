@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AddressModel;
 
 @interface CommonAddressCell : UITableViewCell
 
-@property (nonatomic, copy) NSString *address;
-
-@property (nonatomic, strong) RACSignal *addressEditSignal;
-@property (nonatomic, strong) RACSignal *addressDeleteSignal;
+@property (nonatomic,strong) AddressModel * model;
+@property (nonatomic,strong) RACSignal *addressEditSignal;
+@property (nonatomic,strong) RACSignal *addressDeleteSignal;
 
 @end

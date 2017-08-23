@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AddressModel;
+@class RACSubject;
 
 @interface AddressController : UIViewController
-
+@property (nonatomic,assign) BOOL isSelected;
+@property (nonatomic,strong) RACSubject * addressId;
 @end

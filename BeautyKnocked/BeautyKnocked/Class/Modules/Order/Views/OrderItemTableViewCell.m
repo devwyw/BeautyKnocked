@@ -43,10 +43,9 @@
 }
 
 -(void)setupInterface {
-    
     self.backgroundColor =[UIColor colorWithHexString:@"#F7F7F7"];
 
-    UIFont *font = [UIFont systemFontOfSize:Font_Size(42)];
+    UIFont *font = [UIFont systemFontOfSize:Font_Size(35)];
     
     UIView *topline=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
     [topline setBackgroundColor:[UIColor whiteColor]];
@@ -95,7 +94,6 @@
 }
 
 -(void)setupConstraints {
-    
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(Height_Pt(30));
         make.left.equalTo(self.contentView).with.offset(Width_Pt(40));
@@ -106,7 +104,7 @@
     [_orderNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(Height_Pt(44));
         make.left.equalTo(_imgView.mas_right).with.offset(Width_Pt(15));
-        make.height.mas_equalTo(Height_Pt(42));
+        make.height.mas_equalTo(Height_Pt(40));
     }];
     
     [_serviceTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -124,7 +122,7 @@
     
     [_unitPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_orderNameLabel);
-        make.right.equalTo(self.contentView).with.offset( - Width_Pt(15));
+        make.right.equalTo(self.contentView).with.offset( - Width_Pt(20));
         make.height.equalTo(_orderNameLabel.mas_height);
     }];
     

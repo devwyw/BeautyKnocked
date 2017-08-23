@@ -9,14 +9,11 @@
 #import "PersonInfoViewController.h"
 #import "ModifyPersonInfoView.h"
 #import "ModifyPasswordController.h"
-#import "PersonInfoViewModel.h"
 #import <ZLPhotoActionSheet.h>
 
 @interface PersonInfoViewController ()
 
 @property (nonatomic, strong) ModifyPersonInfoView *modifyInfoView;
-
-@property (nonatomic, strong) PersonInfoViewModel *personInfoViewModel;
 
 @end
 
@@ -29,14 +26,10 @@
     // Do any additional setup after loading the view from its nib.
     self.title=@"资料设置";
     self.view.backgroundColor =  [UIColor colorWithHexString:@"#F0F0F0"];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self createViews];
     [self addConstraints];
     [self dealSignals];
-}
--(void)saveDone:(UIButton*)ben{
-    
 }
 -(void)createViews {
     self.modifyInfoView = [[ModifyPersonInfoView alloc] init];
@@ -45,17 +38,18 @@
 }
 -(void)addConstraints {
     [self.modifyInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.and.left.and.right.equalTo(self.view);
+        make.top.equalTo(self.view).offset(64);
+        make.left.right.equalTo(self.view);
         make.height.mas_equalTo(Height_Pt(809));
     }];
 }
 -(void)dealSignals {
     Acount *user=[Acount shareManager];
+    Weakify(self);
     [self.modifyInfoView.passwordPressSignal subscribeNext:^(id  _Nullable x) {
-        [self.navigationController pushViewController:[[ModifyPasswordController alloc] init] animated:YES];
+        [Wself.navigationController pushViewController:[[ModifyPasswordController alloc] init] animated:YES];
     }];
     
-    Weakify(self);
     [self.modifyInfoView.headIconPressSignal subscribeNext:^(id  _Nullable x) {
         ZLPhotoActionSheet *actionSheet = [[ZLPhotoActionSheet alloc] init];
         actionSheet.maxSelectCount = 1;
@@ -89,13 +83,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(PersonInfoViewModel *)personInfoViewModel {
-    if (!_personInfoViewModel) {
-        _personInfoViewModel = [PersonInfoViewModel new];
-    }
-    return _personInfoViewModel;
 }
 
 @end

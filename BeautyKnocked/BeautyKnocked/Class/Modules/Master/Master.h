@@ -36,6 +36,8 @@ typedef void(^ShowSVProgressBlock)();
 +(NSString *)get32bitString;
 /** Post请求 */
 +(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure;
-/** Root */
++(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url;
+#pragma mark ===== RootController =====
+/** RootController */
 @property (nonatomic,strong) UINavigationController * rootController;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CommonAddressCell.h"
+#import "AddressModel.h"
 
 @interface CommonAddressCell ()
 
@@ -36,20 +37,21 @@
     }
     return self;
 }
-
--(void)setAddress:(NSString *)address {
-    if (address) {
+-(void)setModel:(AddressModel *)model{
+    if ([model.isDefault integerValue]==1) {
         NSString *defaultSign = @"[默认]";
-        NSRange defaultRange = [address rangeOfString:defaultSign];
+        NSString *newAddress=[NSString stringWithFormat:@"%@%@",defaultSign,model.address];
+        NSRange defaultRange = [newAddress rangeOfString:defaultSign];
         
-        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:address];
-        // red text
-        [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:defaultRange];
+        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:newAddress];
+        [attributeStr addAttribute:NSForegroundColorAttributeName value:ThemeColor range:defaultRange];
         _addressLabel.attributedText = attributeStr;
+    }else{
+        _addressLabel.text=model.address;
     }
-    
+    _nameLabel.text = model.name;
+    _telLabel.text = model.phone;
 }
-
 -(RACSignal *)addressEditSignal{
     return [_updateBtn rac_signalForControlEvents:UIControlEventTouchUpInside];
 }
@@ -58,7 +60,6 @@
 }
 
 -(void)initializeViews {
-    
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
@@ -66,6 +67,7 @@
     _telLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
     _addressLabel = [[UILabel alloc] init];
+    _addressLabel.textColor=[UIColor darkGrayColor];
     _addressLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     _addressLabel.numberOfLines = 0;
     
@@ -81,9 +83,6 @@
     
     [self.contentView addSubview:_deleteBtn];
     [self.contentView addSubview:_updateBtn];
-    
-    _nameLabel.text = @"刘亦菲";
-    _telLabel.text = @"180****8989";
 }
 
 -(void)addConstraints {
@@ -117,7 +116,6 @@
         make.bottom.equalTo(self.contentView).with.offset( - Width_Pt(35));
         make.size.equalTo(_deleteBtn);
     }];
-    
 }
 
 @end

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderSubTime : UIView
-@property (nonatomic, copy) NSString *selectedDate;
-
+@property (nonatomic,copy) NSString *selectedDate;
+@property (nonatomic,copy) NSString *selectedDay;
 @end

@@ -290,16 +290,11 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
             case 6:
             {
                 /** 会员充值 */
-                if ([[Acount shareManager] isSignIn]) {
+                if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
                     MoneyController *controller=[[MoneyController alloc]init];
                     controller.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:controller animated:YES];
-                }else{
-                    LoginController *loginController = [[LoginController alloc] init];
-                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-                    [self.navigationController presentViewController:loginNav animated:YES completion:nil];
                 }
-                
             }
                 break;
             case 7:
@@ -361,14 +356,10 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         case 1:
         {
             /** 新人领券 */
-            if ([[Acount shareManager] isSignIn]) {
+            if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
                 NewUserController *controller=[[NewUserController alloc]init];
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
-            }else{
-                LoginController *loginController = [[LoginController alloc] init];
-                UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-                [self.navigationController presentViewController:loginNav animated:YES completion:nil];
             }
         }
             break;
@@ -402,7 +393,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
 -(BeautifulDynamicView *)beautyDynamicView {
     if (!_beautyDynamicView) {
         _beautyDynamicView = [[BeautifulDynamicView alloc] init];
-        
     }
     return _beautyDynamicView;
 }

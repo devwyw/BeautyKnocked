@@ -44,7 +44,6 @@
     [super viewDidLoad];
     self.title=@"我的钱包";
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
-    self.edgesForExtendedLayout=UIRectEdgeNone;
     Acount *user=[Acount shareManager];
     
     /** 我的余额 */

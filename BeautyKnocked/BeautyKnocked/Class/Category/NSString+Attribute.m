@@ -13,13 +13,17 @@
 -(NSMutableAttributedString *)setRedPrice:(NSString *)redPrice linePrice:(NSString *)linePrice {
     NSRange redRange = [self rangeOfString:redPrice];
     NSRange lineRange = [self rangeOfString:linePrice];
-    
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:self];
-    // red text
     [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:redRange];
-    // delete line
     [attributeStr addAttributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor],NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle),NSBaselineOffsetAttributeName:@(0),NSStrikethroughColorAttributeName:[UIColor lightGrayColor]} range:lineRange];
-    
+    return attributeStr;
+}
+-(NSMutableAttributedString *)setMinString:(NSString*)minStr withMinFont:(CGFloat)min andMaxString:(NSString*)maxStr withMaxFont:(CGFloat)max{
+    NSRange minRange = [self rangeOfString:minStr];
+    NSRange maxRange = [self rangeOfString:maxStr];
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:self];
+    [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:min] range:minRange];
+    [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:max] range:maxRange];
     return attributeStr;
 }
 -(BOOL)isMobileNumber{

@@ -168,8 +168,11 @@ static NSInteger padding=6;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = [UIColor clearColor];
+    _collectionView.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self loadHttpData:self.index withCode:self.code];
+    }];
+    [_collectionView.mj_header beginRefreshing];
     [_collectionView registerClass:[ClassItemCollectionCell class] forCellWithReuseIdentifier:@"ClassItemCollectionCell"];
-    [self loadHttpData:self.index withCode:self.code];
 }
 -(void)configureConstraints {
     [_sortView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -190,6 +193,7 @@ static NSInteger padding=6;
         for (NSDictionary *dict in json[@"info"]) {
             [self.itemArray addObject:dict];
         }
+        [_collectionView.mj_header endRefreshing];
         [_collectionView reloadData];
     } Failure:nil];
 }

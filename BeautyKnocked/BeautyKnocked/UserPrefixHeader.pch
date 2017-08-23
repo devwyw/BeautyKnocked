@@ -24,6 +24,7 @@
 #import <LEEAlert.h>
 #import <SVProgressHUD.h>
 #import <MJExtension.h>
+#import <MJRefresh.h>
 /** 工程头文件 */
 #import "Master.h"
 #import "Acount.h"
@@ -55,7 +56,8 @@
 #define bqlb @"/manager/client/goods/labelManager/queryList"
 #define xmxq @"/manager/client/goods/projectManager/queryDetail"
 #define pllb @"/manager/client/goods/commentManager/queryListByCommId"
-#define tjpl @"/manager/client/goods/commentManager/submitProjectComment"//
+/** 提交评论 */
+#define tjpl @"/manager/client/goods/commentManager/submitProjectComment"
 #define tjxmlb @"/manager/client/goods/recommendManager/queryRecommendProject"
 #define tclb @"/manager/client/goods/packageManager/queryList"
 #define tclbpx @"/manager/client/goods/packageManager/queryListSort"
@@ -67,6 +69,14 @@
 #define czxq @"/manager/client/recharge/rechargeManager/queryDetail"
 #define czdd @"/manager/client/bill/rechargeBill/insert"
 #define khyhqlb @"/manager/client/personal/clientCouponManager/queryList"
+#define xzfwdz @"/manager/client/base/serviceAddressManager/addAddress"
+#define xgfwdz @"/manager/client/base/serviceAddressManager/updateAddress"
+#define fwdzlb @"/manager/client/base/serviceAddressManager/queryList"
+#define mrslb @"/manager/client/base/beauticianManager/queryList"
+#define mrslbpx @"/manager/client/base/beauticianManager/queryListSort"
+#define khsc @"/manager/client/base/clientCollectManager/addCollect"
+#define mrsskb @"/manager/client/base/beauticianTimeManager/queryList"
+#define yhqsx @"/manager/client/personal/clientCouponManager/clientCouponScreen"
 /** 调试模式 */
 #ifdef __OBJC__
 #ifdef DEBUG

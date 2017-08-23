@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SonCouponTableController : UITableViewController
-
+@property (nonatomic,strong) NSArray * listArray;
 @end

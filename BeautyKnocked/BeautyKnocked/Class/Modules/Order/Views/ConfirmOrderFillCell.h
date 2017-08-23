@@ -12,6 +12,5 @@
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;
-@property (nonatomic, strong) UILabel *contentLabel;
-
+@property (nonatomic,copy) NSMutableAttributedString * attributed;
 @end

@@ -30,8 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor whiteColor];
     self.title=@"修改密码";
     [self createViews];
@@ -124,7 +122,7 @@
     }];
     
     [_currentPasswordTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(Height_Pt(84));
+        make.top.equalTo(self.view).with.offset(64+Height_Pt(84));
         make.height.mas_equalTo(Height_Pt(152));
     }];
     

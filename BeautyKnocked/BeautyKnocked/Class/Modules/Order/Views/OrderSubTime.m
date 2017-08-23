@@ -40,7 +40,6 @@
     }
     return self;
 }
-
 -(void)setSelectedDate:(NSString *)selectedDate {
     _selectedDate = selectedDate;
     _dateLabel.text = selectedDate;
@@ -48,7 +47,7 @@
 
 -(NSMutableArray *)dataSource {
     if (!_dataSource) {
-        _dataSource = [NSMutableArray arrayWithCapacity:48];
+        _dataSource = [[NSMutableArray alloc]init];
         [_dataSource addObjectsFromArray:[MLDateManager fetchOneDayTime]];
     }
     return _dataSource;
@@ -83,7 +82,7 @@
     
     _dateLabel = [[UILabel alloc] init];
     _dateLabel.text = @"2048-05-49(周四)";
-    _dateLabel.textColor = [UIColor lightGrayColor];
+    _dateLabel.textColor = [UIColor darkGrayColor];
     _dateLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     [self addSubview:_dateLabel];
     
@@ -172,23 +171,19 @@
         make.top.left.right.equalTo(self);
         make.bottom.equalTo(_confirmBtn.mas_bottom).offset(10);
     }];
-    
 }
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
     if (identifier == nil) {
         identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
         [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
-        
         [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
     }
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    // 此处可以对Cell做你想做的操作了...
     UIView *selectedView = [[UIView alloc] init];
     selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
     cell.selectedBackgroundView = selectedView;
@@ -196,17 +191,26 @@
     [cell setBackgroundColor:[UIColor whiteColor]];
     cell.dateNumber = self.dataSource[indexPath.item];
     
+    
+    
+    
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
+    [self getSelectTime:self.dataSource[indexPath.item]];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(12, 5, 10, 5);
 }
-
+-(BOOL)getSelectTime:(NSString*)time{
+    NSString *cell = [NSString stringWithFormat:@"%@%@",_selectedDay,time];
+    NSDateFormatter *dateFormate = [[NSDateFormatter alloc]init];
+    [dateFormate setDateFormat:@"yyyy-MM-ddHH:mm"];
+    NSDate *formeDate = [dateFormate dateFromString:cell];
+    NSLog(@"%f",[formeDate timeIntervalSince1970]);
+    return YES;
+}
 @end

@@ -12,37 +12,11 @@
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UITextField *textField;
+@property (nonatomic,strong) UIView * line;
 
 @end
 
 @implementation AddressEditView
-
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-    //获得处理的上下文
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    //指定直线样式
-    CGContextSetLineCap(context, kCGLineCapSquare);
-    //直线宽度
-    CGContextSetLineWidth(context, 1.0);
-    //设置颜色
-    CGContextSetRGBStrokeColor(context, 211/255.0, 211/255.0, 211/255.0, 1.0);
-    //开始绘制
-    CGContextBeginPath(context);
-    //画笔移动到点(31,170)
-    CGContextMoveToPoint(context, Width_Pt(50), Height_Pt(134));
-    //下一点
-    CGContextAddLineToPoint(context, Width_Pt(50), Height_Pt(134));
-    //下一点
-    CGContextAddLineToPoint(context, Width - Width_Pt(50), Height_Pt(134));
-    //绘制完成
-    CGContextStrokePath(context);
-
-}
-
 
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -53,8 +27,10 @@
     }
     return self;
 }
-
 -(void)initializeViews {
+    _line=[[UIView alloc]init];
+    _line.backgroundColor=[UIColor lightGrayColor];
+    [self addSubview:_line];
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
@@ -64,9 +40,13 @@
     
     [self addSubview:_nameLabel];
     [self addSubview:_textField];
-    
 }
 -(void)addConstraints {
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self);
+        make.bottom.equalTo(self.mas_bottom);
+        make.height.offset(0.5);
+    }];
     [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).with.offset(Width_Pt(50));
         make.centerY.equalTo(self);
@@ -78,9 +58,11 @@
         make.right.equalTo(self).with.offset( - Width_Pt(50));
     }];
 }
-
 -(void)setTitle:(NSString *)title {
     _nameLabel.text = title;
+}
+-(void)setFather:(id)father{
+    [_textField setDelegate:father];
 }
 -(void)setContent:(NSString *)content {
     _textField.text = content;
@@ -88,9 +70,11 @@
 -(void)setPlaceholder:(NSString *)placeholder {
     _textField.placeholder = placeholder;
 }
-
--(NSString *)content {
+-(NSString *)content{
     return _textField.text;
+}
+-(UITextField *)textField{
+    return _textField;
 }
 
 @end

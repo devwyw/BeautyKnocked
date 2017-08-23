@@ -57,6 +57,7 @@
     return 1;
 }
 -(void)setModel:(DetailModel *)model{
+    _model=model;
     self.titleView.itemName=model.name;
     self.titleView.serviceTime=model.serviceTime;
     self.titleView.firstPrice=model.vipPrice;
@@ -78,6 +79,7 @@
     self.descripView.secondContent=model.payMatter;
 }
 -(void)setPmodel:(PackageInfoModel *)Pmodel{
+    _Pmodel=Pmodel;
     self.titleView.itemName=Pmodel.name;
     self.titleView.packPrice=Pmodel.price;
     

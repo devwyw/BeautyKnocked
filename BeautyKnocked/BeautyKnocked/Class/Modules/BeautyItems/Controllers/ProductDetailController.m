@@ -12,7 +12,6 @@
 #import "ConfirmOrderController.h"
 #import "AddCarView.h"
 #import "CarItem.h"
-#import <UIImageView+WebCache.h>
 #import "ProductModel.h"
 
 @interface ProductDetailController ()<UITableViewDelegate,UITableViewDataSource>
@@ -150,7 +149,7 @@
 -(void)loadHttpData:(NSString*)productID{
     [Master HttpPostRequestByParams:@{@"id":productID} url:mlqqm serviceCode:cpxq Success:^(id json) {
         self.productDetailViewModel.model=[ProductModel mj_objectWithKeyValues:json[@"info"]];
-        [self.tableheaderView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.productDetailViewModel.model.imagePath]] placeholderImage:[UIImage imageNamed:@"chanppic"]];
+        [Master GetWebImage:self.tableheaderView withUrl:self.productDetailViewModel.model.imagePath];
         /** 评论列表 */
         [Master HttpPostRequestByParams:@{@"id":productID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
             self.productDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];

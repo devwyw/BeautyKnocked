@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RACSubject;
 
 @interface BeauticianController : UIViewController
-
+@property (nonatomic,assign) BOOL isSelected;
+@property (nonatomic,strong) RACSubject * beauticianId;
 @end

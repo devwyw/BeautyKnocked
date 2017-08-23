@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BeauticianSortMenuViewDelegate <NSObject>
+
+-(void)didSelectAtRow:(NSInteger)row;
+-(void)selectedDay:(NSString*)day;
+@end
+
 @interface BeauticianSortMenuView : UIView
+
+@property (nonatomic,strong) id<BeauticianSortMenuViewDelegate> delegate;
 
 @end

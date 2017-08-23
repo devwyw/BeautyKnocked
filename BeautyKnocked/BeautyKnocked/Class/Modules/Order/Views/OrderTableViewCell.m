@@ -14,16 +14,14 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 @interface OrderTableViewCell ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UIView *leftView;
-
 @property (nonatomic, strong) UILabel *statusLabel;
-
 @property (nonatomic, strong) UIView *topLine;
-
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) UIView *bottomLine;
-
 @property (nonatomic, strong) UIView *marginLine;
+@property (nonatomic, strong) UIButton *beauticianBtn;
+@property (nonatomic, strong) UIButton *leftButton;
+@property (nonatomic, strong) UIButton *rightButton;
 
 @end
 
@@ -47,7 +45,6 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 }
 
 -(void)setupInterface {
-    
     _leftView = [[UIView alloc] init];
     [_leftView setBackgroundColor:[UIColor colorWithHexString:@"#E1BF6E"]];
     [self.contentView addSubview:_leftView];
@@ -77,7 +74,6 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
         [tableView setBackgroundColor:[UIColor whiteColor]];
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tableView registerClass:[OrderItemTableViewCell class] forCellReuseIdentifier:orderItemTableViewCellIdentifier];
-        
         self.tableView = tableView;
         self.tableView;
     });
@@ -169,7 +165,6 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     OrderItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:orderItemTableViewCellIdentifier forIndexPath:indexPath];
@@ -193,5 +188,10 @@ static NSString *const orderItemTableViewCellIdentifier = @"OrderItemTableViewCe
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return Height_Pt(10);
 }
-
+-(RACSignal*)leftPush{
+    return [_leftButton rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
+-(RACSignal*)rightPush{
+    return [_rightButton rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
 @end

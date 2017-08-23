@@ -10,7 +10,6 @@
 #import "PersonInfoTextField.h"
 #import "LoginPasswordView.h"
 #import "UIView+CornerRadius.h"
-#import <UIImageView+WebCache.h>
 
 @interface ModifyPersonInfoView ()
 
@@ -49,7 +48,7 @@
     [_headIcon setContentMode:UIViewContentModeScaleAspectFill];
     [_headIcon setClipsToBounds:YES];
     [_headIcon makeCornerRadius:Width_Pt(228)/2];
-    [_headIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,user.headPath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [Master GetWebImage:_headIcon withUrl:user.headPath];
     [_headIconButton addSubview:_headIcon];
     
     _cameraView = [[UIImageView alloc] init];

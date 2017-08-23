@@ -105,8 +105,8 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
         [_loginOutButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
         Weakify(self);
         [[_loginOutButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-            if (![[Acount shareManager] isSignIn]) {
-                [Master showSVProgressHUD:@"请登录您的账号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+            if (isStringEmpty([Acount shareManager].id)) {
+                [Master showSVProgressHUD:@"您未登录任何账号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
             }else{
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗?" message:@"(退出后不会删除历史数据,下次登录仍可使用本账号)" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];

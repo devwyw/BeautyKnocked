@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class DetailModel;
 @class PackageInfoModel;
+
 @interface ItemDetailViewModel : NSObject
 
 @property (nonatomic,strong) UINavigationController *navigationController;

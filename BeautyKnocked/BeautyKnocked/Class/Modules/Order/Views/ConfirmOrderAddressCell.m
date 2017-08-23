@@ -7,6 +7,7 @@
 //
 
 #import "ConfirmOrderAddressCell.h"
+#import "AddressModel.h"
 
 @interface ConfirmOrderAddressCell ()
 
@@ -14,18 +15,27 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *telNumberLabel;
 @property (nonatomic, strong) UILabel *addressLabel;
-
+@property (nonatomic, strong) UILabel * title;
 @end
 
 @implementation ConfirmOrderAddressCell
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
-
+-(void)setIsNull:(BOOL)isNull{
+    if (isNull) {
+        _title.hidden=!isNull;
+    }
+}
+-(void)setModel:(AddressModel *)model{
+    _title.hidden=YES;
+    _nameLabel.text = [NSString stringWithFormat:@"顾客姓名: %@",model.name];
+    _telNumberLabel.text = model.phone;
+    _addressLabel.text = [NSString stringWithFormat:@"服务地址: %@",model.address];
+}
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -35,7 +45,6 @@
     return self;
 }
 -(void)initializeViews {
-    
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     _imgView = [[UIImageView alloc] init];
@@ -53,18 +62,22 @@
     _addressLabel.font = font;
     _addressLabel.numberOfLines = 0;
     
+    _title = [[UILabel alloc] init];
+    _title.font = font;
+    _title.text=@"请选择您的服务地址";
+    _title.hidden=YES;
+    
+    [self.contentView addSubview:_title];
     [self.contentView addSubview:_imgView];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_telNumberLabel];
     [self.contentView addSubview:_addressLabel];
-    
-    _nameLabel.text = @"顾客姓名: 刘亦菲";
-    _telNumberLabel.text = @"15074568566";
-    _addressLabel.text = @"服务地址: 喜马拉雅山脚下白雪广场边缘100号洞天桃源小世界王府1050房";
-    
 }
 -(void)addConstraints {
-    
+    [_title mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.contentView);
+        make.left.equalTo(_imgView.mas_right).with.offset(Width_Pt(50));
+    }];
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(12);
         make.centerY.equalTo(self.contentView);

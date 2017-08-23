@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface RechargeModel : NSObject
+/** 充值列表 */
 @property (nonatomic,copy) NSString * id;
 @property (nonatomic,copy) NSString * rank;
 @property (nonatomic,copy) NSString * money;

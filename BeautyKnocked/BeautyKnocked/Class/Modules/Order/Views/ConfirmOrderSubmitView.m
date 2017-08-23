@@ -25,8 +25,6 @@
     [muAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:redRange];
     _totalPriceLabel.attributedText = muAttStr;
 }
-
-
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -60,5 +58,7 @@
         make.width.mas_equalTo(Width_Pt(320));
     }];
 }
-
+-(RACSignal*)payInfo{
+    return [_submitBtn rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
 @end

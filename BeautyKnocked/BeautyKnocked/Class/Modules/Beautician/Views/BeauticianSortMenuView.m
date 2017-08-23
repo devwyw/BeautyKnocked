@@ -32,6 +32,7 @@
 @property (nonatomic,strong) UIButton * donBtn;
 
 @property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
+@property (nonatomic,copy) NSString * selectDay;
 
 @end
 
@@ -115,33 +116,32 @@
     _sortingBtn.selected = NO;
 }
 -(void)didSelectAtRow:(NSUInteger)row{
-    
+    [self.delegate didSelectAtRow:(NSInteger)row];
 }
 -(void)setupConstraints {
-    
     [_lineImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
         make.top.equalTo(self).with.offset(Height_Pt(24));
         make.bottom.equalTo(self).with.offset( - Height_Pt(24));
-        make.width.mas_equalTo(Height_Pt(2));
+        make.width.mas_equalTo(1);
     }];
     
     [_sortingBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_lineImgView);
         make.right.equalTo(_lineImgView.mas_left);
         make.left.equalTo(self);
+        make.top.bottom.equalTo(self);
     }];
     
     [_filterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_lineImgView);
         make.right.equalTo(self);
         make.left.equalTo(_lineImgView.mas_right);
+        make.top.bottom.equalTo(self);
     }];
 }
 
 -(UIButton *)setupCustomBtnWtihImageName:(NSString *)imageName title:(NSString *)title {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.titleLabel.font = [UIFont systemFontOfSize:35/3.f];
+    button.titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     UIImage *image = [UIImage imageOriginalImageName:imageName];
     [button setImage:image forState:UIControlStateNormal];
@@ -172,7 +172,7 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
     _todayWeekDay = nowCompoents.weekday;
-    
+
     _backView = [[UIView alloc]init];
     _backView.backgroundColor = [UIColor whiteColor];
     [_popView addSubview:self.backView];
@@ -274,6 +274,7 @@
                 [self.popView setHidden:YES];
             }];
             *stop = YES;
+            [self.delegate selectedDay:_selectDay];
         }
     }];
 }
@@ -320,13 +321,12 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateModel *dateModel = self.dataSource[indexPath.item];
-    NSLog(@"date == %@",dateModel.date);
-    
     if (!dateModel.isInThirtyDays) {
         _donBtn.userInteractionEnabled=NO;
         return;
     }
     _donBtn.userInteractionEnabled=YES;
+    _selectDay=dateModel.date;
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

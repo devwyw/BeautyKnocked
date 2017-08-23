@@ -10,8 +10,6 @@
 #import "FightGroupsView.h"
 #import "UIButton+Category.h"
 #import "UIImage+Original.h"
-#import <UIImageView+WebCache.h>
-
 
 @interface PersonCenterHeadView ()
 
@@ -66,7 +64,7 @@
     _nameLabel.text = self.user.account;
 }
 -(void)setImageUrl:(NSString *)imageUrl{
-    [_headIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.user.headPath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [Master GetWebImage:_headIcon withUrl:self.user.headPath];
 }
 -(void)setupInterface {
     _backImgView = [[UIImageView alloc] init];
@@ -87,7 +85,7 @@
     [_headIcon setContentMode:UIViewContentModeScaleAspectFill];
     [_headIcon setClipsToBounds:YES];
     [_headIcon makeCornerRadius:Width_Pt(228)/2];
-    [_headIcon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,self.user.headPath]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [Master GetWebImage:_headIcon withUrl:self.user.headPath];
     [_headIconBtn addSubview:_headIcon];
 
     _nameLabel = [[UILabel alloc] init];

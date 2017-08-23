@@ -20,7 +20,6 @@ static NSString *const beauticianCellReuseIdentifier = @"BeauticianCell";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout=UIRectEdgeNone;
     self.title = @"收藏技师";
     self.tableView.estimatedRowHeight = 100;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
@@ -44,7 +43,13 @@ static NSString *const beauticianCellReuseIdentifier = @"BeauticianCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BeauticianCell *cell = [tableView dequeueReusableCellWithIdentifier:beauticianCellReuseIdentifier forIndexPath:indexPath];
-    cell.number = indexPath.row + 1;
+    [[cell.collect takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+        //收藏
+        UIButton *btn=(UIButton*)x;
+        if (!btn.isSelected) {
+            btn.selected=!btn.isSelected;
+        }
+    }];
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

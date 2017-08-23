@@ -48,34 +48,28 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self createViews];
 }
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.userCenterViewModel numberForRowsInSection:section];
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     [self.userCenterViewModel configureCell:cell indexPath:indexPath];
     return cell;
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.userCenterViewModel heightForRowAtIndexPath:indexPath];
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.userCenterViewModel configureTableView:tableView didSelectedAtIndexPath:indexPath];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 20/3.f;
+    return Height_Pt(20);
 }
 -(void)createViews {
     self.userCenterViewModel.navigationController = self.navigationController;
@@ -86,15 +80,14 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
         self.tableView.backgroundColor=[UIColor clearColor];
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
         self.tableView.showsVerticalScrollIndicator = NO;
+        self.tableView.bounces=NO;
         [self.view addSubview:self.tableView];
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(-20, 0, 0, 0));
         }];
         self.tableView;
     });
-
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

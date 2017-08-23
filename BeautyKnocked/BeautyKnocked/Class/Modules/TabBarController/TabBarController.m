@@ -77,12 +77,6 @@
 }
 #pragma mark UITabBarControllerDelegate
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-//        if (self.viewControllers[3] ==viewController) {
-//            if (![[Acount shareManager] isSignIn]) {
-//                LoginController *loginController = [[LoginController alloc] init];
-//                UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-//                [self presentViewController:loginNav animated:YES completion:nil];
-//            }
-//        }
+    
 }
 @end
