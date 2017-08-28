@@ -8,7 +8,6 @@
 
 #import "SonCouponTableController.h"
 #import "CouponCell.h"
-#import "CouponModel.h"
 
 @interface SonCouponTableController ()
 
@@ -28,6 +27,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.isOrder) {
+        self.title=@"可用优惠券";
+    }
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     self.tableView.estimatedRowHeight=100;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -37,11 +39,15 @@
     return self.listArray.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CouponModel *model=[[CouponModel alloc]init];
-    model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+    CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     CouponCell *cell=[tableView dequeueReusableCellWithIdentifier:@"CouponCell" forIndexPath:indexPath];
     cell.model=model;
     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+    [self.subCouponId sendNext:model.id];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;

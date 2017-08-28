@@ -10,12 +10,12 @@
 
 @interface PaySheetView ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UILabel *selectPaymentLabel;
-@property (nonatomic, strong) UIButton *cancelButton;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIButton *confirmPayButton;
-@property (nonatomic, strong) NSMutableArray *dataSource;
-
+@property (nonatomic,strong) UILabel *selectPaymentLabel;
+@property (nonatomic,strong) UIButton *cancelButton;
+@property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) UIButton *confirmPayButton;
+@property (nonatomic,strong) NSMutableArray *dataSource;
+@property (nonatomic,copy) NSString * type;
 @end
 
 @implementation PaySheetView
@@ -45,7 +45,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.rowHeight = Height_Pt(180);
-    _tableView.scrollEnabled = NO;
+    _tableView.bounces=NO;
     [self addSubview:_tableView];
     
     UIView *line = [UIView new];
@@ -56,6 +56,14 @@
     [_confirmPayButton setTitle:@"确认支付" forState:UIControlStateNormal];
     _confirmPayButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     [_confirmPayButton makeCornerRadius:5];
+    Weakify(self);
+    [[_confirmPayButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if (!isStringEmpty(Wself.type)) {
+            [LEEAlert closeWithCompletionBlock:^{
+                [Wself.subType sendNext:Wself.type];
+            }];
+        }
+    }];
     [_confirmPayButton setBackgroundColor:[UIColor colorWithHexString:@"#67D75A"]];
     [self addSubview:_confirmPayButton];
     
@@ -108,27 +116,15 @@
     
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
     
-//    if (indexPath.row == 0) {
-//        cell.textLabel.textColor = [UIColor lightGrayColor];
-//        cell.detailTextLabel.text = @"本次交易不支持";
-//        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-//    }
-    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    if (indexPath.row == 0) {
-//        return;
-//    }
-
+    _type=[NSString stringWithFormat:@"%ld",indexPath.row];
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     for (UITableViewCell *cell in tableView.visibleCells) {
         UIImageView *accessoryImgView = (UIImageView *)cell.accessoryView;
-        // set selected image
         accessoryImgView.highlighted = [cell isEqual:selectedCell] ? YES : NO;
     }
-
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -137,7 +133,6 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
-
 -(NSMutableArray *)dataSource {
     if (!_dataSource) {
         _dataSource = [NSMutableArray array];

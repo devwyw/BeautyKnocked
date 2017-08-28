@@ -109,6 +109,10 @@
     self.homePageViewModel.navigationController = self.navigationController;
     /** UITableView */
     [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    
     /** 购物车Item */
     {
         _carItem=[[CarItem alloc]initWithOriginY:Height-175];
@@ -117,9 +121,6 @@
         }];
         [self.view addSubview:_carItem];
     }
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

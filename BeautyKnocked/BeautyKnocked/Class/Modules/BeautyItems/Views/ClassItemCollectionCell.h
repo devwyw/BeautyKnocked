@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ItemClassModel;
-@class PackageModel;
+#import "ItemClassModel.h"
+#import "PackageModel.h"
 
 @interface ClassItemCollectionCell : UICollectionViewCell
 

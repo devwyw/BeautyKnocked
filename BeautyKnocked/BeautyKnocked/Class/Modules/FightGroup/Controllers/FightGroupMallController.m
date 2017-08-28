@@ -127,7 +127,11 @@
 }
 
 -(void)fightGroupPayAction:(UIButton *)button {
-    PaySheetView *paysheet=[[PaySheetView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(207+180*4))];
+    PaySheetView *paysheet=[[PaySheetView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(205+180*4))];
+    paysheet.subType=[RACSubject subject];
+    [paysheet.subType subscribeNext:^(id  _Nullable x) {
+      NSLog(@"%@",x);
+    }];
     [LEEAlert actionsheet].config
     .LeeCustomView(paysheet)
     .LeeActionSheetBottomMargin(-5)

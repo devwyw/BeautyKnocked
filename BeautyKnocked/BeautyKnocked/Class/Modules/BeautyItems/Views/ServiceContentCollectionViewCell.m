@@ -7,7 +7,6 @@
 //
 
 #import "ServiceContentCollectionViewCell.h"
-#import "ImageModel.h"
 
 @interface ServiceContentCollectionViewCell ()
 

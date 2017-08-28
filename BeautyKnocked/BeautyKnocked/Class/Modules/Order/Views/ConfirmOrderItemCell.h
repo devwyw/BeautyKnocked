@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailModel.h"
 
 @interface ConfirmOrderItemCell : UITableViewCell
 
-@property (nonatomic, strong) UIImage *itemImage;
-@property (nonatomic, copy) NSString *itemName;
-@property (nonatomic, copy) NSString *serviceLength;
-@property (nonatomic,assign) CGFloat price;
-@property (nonatomic,assign) CGFloat blcakprice;
+@property (nonatomic,strong) DetailModel * model;
 @end

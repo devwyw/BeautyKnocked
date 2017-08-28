@@ -10,40 +10,120 @@
 #import "MLDateCollectionViewCell.h"
 #import "MLDateManager.h"
 #import "OrderSubTime.h"
+#import "TimeSlotModel.h"
+#import <LEEAlert.h>
 
-@interface OrderSubDay ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+static OrderSubDay *instance=nil;
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIButton *cancelBtn;
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UILabel *remarkLabel;
+@interface OrderSubDay ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,NSCopying,NSMutableCopying>
 
-@property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, strong) NSArray *months;
-@property (nonatomic, strong) NSArray *weekDays;
+@property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) UIButton *cancelBtn;
+@property (nonatomic,strong) UICollectionView *collectionView;
+@property (nonatomic,strong) UILabel *remarkLabel;
 
-@property (nonatomic, assign) NSInteger todayWeekDay;
+@property (nonatomic,strong) NSMutableArray *dataSource;
+@property (nonatomic,strong) NSArray *months;
+@property (nonatomic,strong) NSArray *weekDays;
+
+@property (nonatomic,strong) NSDateComponents *nowCompoents;
 @property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
-
+@property (nonatomic,strong) DayModel * startTime;
+@property (nonatomic,strong) NSMutableDictionary * webTimeData;
 @end
 
 @implementation OrderSubDay
-
+#pragma mark ===== 单例模式 =====
++(instancetype)allocWithZone:(struct _NSZone *)zone{
+    if (!instance) {
+        instance = [super allocWithZone:zone];
+    }
+    return instance;
+}
+-(id)copy{
+    return self;
+}
+-(id)mutableCopy{
+    return self;
+}
+-(id)copyWithZone:(NSZone *)zone{
+    return self;
+}
+-(id)mutableCopyWithZone:(NSZone *)zone{
+    return self;
+}
++(instancetype)shareManager{
+    if (!instance) {
+        instance = [[OrderSubDay alloc]initWithFrame:CGRectMake(0, 0,Width_Pt(1018), Height_Pt(1186) + 20)];
+        [instance makeCornerRadius:5];
+        instance.backgroundColor=[UIColor whiteColor];
+        [instance initializeViews];
+    }
+    return instance;
+}
 -(NSMutableDictionary*)cellIdentifierDic{
     if (!_cellIdentifierDic) {
         _cellIdentifierDic=[[NSMutableDictionary alloc]init];
     }
     return _cellIdentifierDic;
 }
--(instancetype)initWithFrame:(CGRect)frame{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initializeViews];
-        self.backgroundColor=[UIColor whiteColor];
+-(NSMutableDictionary*)webTimeData{
+    if (!_webTimeData) {
+        _webTimeData=[[NSMutableDictionary alloc]init];
     }
-    return self;
+    return _webTimeData;
 }
+-(void)setModel:(WebTimeModel *)model{
+    _model=model;
+    _startTime=[[DayModel alloc]initGetHttpData:_model.startTime];
+    [self.webTimeData removeAllObjects];
 
+    for (NSDictionary *dict in _model.list) {
+        TimeSlotModel *model=[TimeSlotModel mj_objectWithKeyValues:dict];
+        DayModel *beginModel=[[DayModel alloc]initGetHttpData:model.beforeTime];
+        DayModel *endModel=[[DayModel alloc]initGetHttpData:model.afterTime];
+        
+        if (beginModel.day==endModel.day) {
+            NSString * todayKey=[NSString stringWithFormat:@"%ld-%ld-%ld",endModel.year,endModel.month,endModel.day];
+            NSMutableArray *today=_webTimeData[todayKey];
+            if (isArrayEmpty(today)) {
+                today=[[NSMutableArray alloc]init];
+            }
+            [today addObject:@[beginModel,endModel]];
+            [_webTimeData setObject:today forKey:todayKey];
+        }else{
+            /** 今晚23:31结束 */
+            DayModel *todayEndModel=[[DayModel alloc]init];
+            todayEndModel.year=beginModel.year;
+            todayEndModel.month=beginModel.month;
+            todayEndModel.day=beginModel.day;
+            todayEndModel.hour=23;
+            todayEndModel.minute=30;
+            NSString * todayKey=[NSString stringWithFormat:@"%ld-%ld-%ld",todayEndModel.year,todayEndModel.month,todayEndModel.day];
+            NSMutableArray *today=_webTimeData[todayKey];
+            if (isArrayEmpty(today)) {
+                today=[[NSMutableArray alloc]init];
+            }
+            [today addObject:@[beginModel,todayEndModel]];
+            [_webTimeData setObject:today forKey:todayKey];
+            
+            /** 明天0:-1开始 */
+            DayModel *tomorrowBeginModel=[[DayModel alloc]init];
+            tomorrowBeginModel.year=endModel.year;
+            tomorrowBeginModel.month=endModel.month;
+            tomorrowBeginModel.day=endModel.day;
+            tomorrowBeginModel.hour=0;
+            tomorrowBeginModel.minute=0;
+            NSString * tomorrowKey=[NSString stringWithFormat:@"%ld-%ld-%ld",endModel.year,endModel.month,endModel.day];
+            NSMutableArray *tomorrow=_webTimeData[tomorrowKey];
+            if (isArrayEmpty(tomorrow)) {
+                tomorrow=[[NSMutableArray alloc]init];
+            }
+            [tomorrow addObject:@[tomorrowBeginModel,endModel]];
+            [_webTimeData setObject:tomorrow forKey:tomorrowKey];
+        }
+    }
+}
 -(NSArray *)months {
     if (!_months) {
         _months = @[@"月份",@"1月",@"2月",@"3月",@"4月",@"5月",@"6月",@"7月",@"8月",@"9月",@"10月",@"11月",@"12月"];
@@ -56,7 +136,6 @@
     }
     return _weekDays;
 }
-
 -(NSMutableArray *)dataSource {
     if (!_dataSource) {
         _dataSource = [[NSMutableArray alloc]init];
@@ -66,8 +145,7 @@
 }
 -(void)initializeViews {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
-    _todayWeekDay = nowCompoents.weekday;
+    _nowCompoents =[calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:[NSDate date]];
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
@@ -108,7 +186,6 @@
         self.collectionView;
     });
     
-    
     _remarkLabel = [[UILabel alloc] init];
     _remarkLabel.text = @"  *最多可预约未来30天";
     _remarkLabel.textColor = [UIColor lightGrayColor];
@@ -141,7 +218,6 @@
         make.top.equalTo(self.collectionView.mas_bottom);
         make.left.and.and.right.and.bottom.equalTo(self);
     }];
-    
 }
 #pragma mark UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -161,33 +237,41 @@
 
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (dateModel.isInThirtyDays) {
-        UIView *selectedView = [[UIView alloc] init];
-        selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
-        cell.selectedBackgroundView = selectedView;
         [cell setBackgroundColor:[UIColor whiteColor]];
     }
     
     cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
     
-    if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
+    if (indexPath.item + 1 >= _nowCompoents.weekday && dateModel.day == 1 ) {
         cell.content = self.months[dateModel.month];
     }
     
-//    if (indexPath.item + 1 == _todayWeekDay) {
-//        cell.dateNumber = @"今天";
-//        cell.content = @"约满";
-//        cell.numberColor = ThemeColor;
-//        cell.contentColor = ThemeColor;
-//        cell.userInteractionEnabled=NO;
-//    }
+    if (indexPath.item + 1 == _nowCompoents.weekday &&_nowCompoents.day<_startTime.day) {
+        cell.dateNumber = @"今天";
+        cell.content = @"约满";
+        cell.numberColor = ThemeColor;
+        cell.contentColor = ThemeColor;
+        cell.userInteractionEnabled=NO;
+    }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (dateModel.isInThirtyDays) {
         OrderSubTime *view=[[OrderSubTime alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
+        view.selectTime=dateModel.date;
         view.selectedDate = [NSString stringWithFormat:@"%@(%@)",dateModel.date,self.weekDays[dateModel.week-1]];
-        view.selectedDay=dateModel.date;
+        view.subData=[RACSubject subject];
+        [view.subData subscribeNext:^(id  _Nullable x) {
+            [_subData sendNext:x];
+        }];
+        /** 开始时间 */
+        if (dateModel.year==_startDay.year && dateModel.month==_startDay.month && dateModel.day==_startDay.day) {
+            view.startModel=_startDay;
+        }
+        /** 时间段 */
+        view.listArray=[[NSArray alloc]initWithArray:self.webTimeData[[NSString stringWithFormat:@"%@",dateModel.date]]];
+
         [LEEAlert alert].config
         .LeeCustomView(view)
         .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
@@ -198,7 +282,6 @@
         .LeeShow();
     }
 }
-
 #pragma mark UICollectionViewDelegateFlowLayout
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(8, 8, 8, 8);

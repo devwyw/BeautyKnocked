@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class PersonCenterHeadView;
+#import "PersonCenterHeadView.h"
 
 @interface UserCnterViewModel : NSObject
 

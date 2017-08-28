@@ -90,7 +90,7 @@
                                                           [Wself.navigationController popViewControllerAnimated:YES];
                                                       }];
                                                       
-                                                  } Failure:nil];
+                                                  } Failure:nil andNavigation:Wself.navigationController];
             }
         }else{
             if (_currentPasswordTF.text.length<6) {

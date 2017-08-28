@@ -9,7 +9,6 @@
 #import "EvaluationCell.h"
 #import "EvaluationImageCell.h"
 #import "StarView.h"
-#import "CommentModel.h"
 #import "ComListModel.h"
 
 static NSString *reuseIdentifier = @"EvaluationImageCell";

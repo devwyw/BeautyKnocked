@@ -9,8 +9,8 @@
 #import "EditAddressController.h"
 #import "AddressEditView.h"
 #import "UIButton+Category.h"
-#import "AddressModel.h"
 #import "UITextField+Length.h"
+#import <LEEAlert.h>
 
 @interface EditAddressController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -362,7 +362,7 @@
         [Master showSVProgressHUD:message withType:ShowSVProgressTypeSuccess withShowBlock:^{
             [self.navigationController popViewControllerAnimated:YES];
         }];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

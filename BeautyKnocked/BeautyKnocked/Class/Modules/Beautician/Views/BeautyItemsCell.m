@@ -52,16 +52,16 @@
     [self.contentView addSubview:_itemImgView];
     
     _itemNameLabel = [[UILabel alloc] init];
-    _itemNameLabel.font = [UIFont systemFontOfSize:Font_Size(54)];
+    _itemNameLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     [self.contentView addSubview:_itemNameLabel];
     
     _briefingLabel = [[UILabel alloc] init];
-    _briefingLabel.textColor = [UIColor lightGrayColor];
-    _briefingLabel.font = [UIFont systemFontOfSize:Font_Size(46)];
+    _briefingLabel.textColor = [UIColor darkGrayColor];
+    _briefingLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     [self.contentView addSubview:_briefingLabel];
     
     _vipLabel = [[UILabel alloc] init];
-    _vipLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
+    _vipLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     [self.contentView addSubview:_vipLabel];
     
     _purchaseLabel = [[UILabel alloc] init];
@@ -84,20 +84,18 @@
     _briefingLabel.text = @"芳香开背 深层清洁";
     NSString *price = @"VIP: ¥88 ¥148";
     _vipLabel.attributedText = [price setRedPrice:@"¥88" linePrice:@"¥148"];
-    
     _purchaseLabel.text = @"22人购买";
     
 }
 
 -(void)makeConstraints {
-    
     [_itemImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self.contentView).with.offset(Height_Pt(20));
         make.size.mas_equalTo(CGSizeMake(Height_Pt(282), Height_Pt(282)));
     }];
     
     [_itemNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).with.offset(Height_Pt(60));
+        make.top.equalTo(self.contentView).with.offset(Height_Pt(50));
         make.left.equalTo(_itemImgView.mas_right).with.offset(Height_Pt(36));
         make.height.mas_equalTo(Height_Pt(54));
     }];

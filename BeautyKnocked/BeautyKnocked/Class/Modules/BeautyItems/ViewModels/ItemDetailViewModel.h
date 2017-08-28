@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DetailModel;
-@class PackageInfoModel;
+#import "DetailModel.h"
+#import "PackageInfoModel.h"
 
 @interface ItemDetailViewModel : NSObject
 

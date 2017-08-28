@@ -7,7 +7,6 @@
 //
 
 #import "UserCnterViewModel.h"
-#import "PersonCenterHeadView.h"
 #import "ToolItemView.h"
 #import "PersonInfoViewController.h"
 #import "PSSetupController.h"

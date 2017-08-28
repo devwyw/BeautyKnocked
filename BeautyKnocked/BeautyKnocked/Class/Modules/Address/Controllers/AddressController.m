@@ -9,7 +9,7 @@
 #import "AddressController.h"
 #import "CommonAddressCell.h"
 #import "EditAddressController.h"
-#import "AddressModel.h"
+#import <LEEAlert.h>
 
 static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 @interface AddressController ()<UITableViewDelegate,UITableViewDataSource>
@@ -44,8 +44,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_isSelected) {
-        AddressModel *model=[[AddressModel alloc]init];
-        model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+        AddressModel *model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
         [self.addressId sendNext:model];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -67,8 +66,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     return self.listArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AddressModel *model=[[AddressModel alloc]init];
-    model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+    AddressModel *model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     
     CommonAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellReuseIdentifier forIndexPath:indexPath];
     cell.model=model;
@@ -154,6 +152,6 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
             }
         }
         [_tableView reloadData];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 @end

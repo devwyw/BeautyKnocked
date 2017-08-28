@@ -7,7 +7,6 @@
 //
 
 #import "ConfirmOrderAddressCell.h"
-#import "AddressModel.h"
 
 @interface ConfirmOrderAddressCell ()
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class CouponModel;
+#import "CouponModel.h"
 
 @interface CouponCell : UITableViewCell
 @property (nonatomic,strong) CouponModel * model;

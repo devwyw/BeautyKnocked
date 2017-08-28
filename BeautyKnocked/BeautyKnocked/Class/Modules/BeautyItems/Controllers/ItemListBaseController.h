@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class TitleClassModel;
+#import "TitleClassModel.h"
 
 @interface ItemListBaseController : UIViewController
 @property (nonatomic,strong) TitleClassModel * model;

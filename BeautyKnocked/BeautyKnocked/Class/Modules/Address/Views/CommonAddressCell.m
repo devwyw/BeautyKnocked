@@ -7,7 +7,6 @@
 //
 
 #import "CommonAddressCell.h"
-#import "AddressModel.h"
 
 @interface CommonAddressCell ()
 

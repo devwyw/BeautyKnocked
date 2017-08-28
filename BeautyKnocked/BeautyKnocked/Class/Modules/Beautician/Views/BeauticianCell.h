@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BeauticianModel.h"
 @class RACSignal;
-@class BeauticianModel;
 
 @interface BeauticianCell : UITableViewCell
 

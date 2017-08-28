@@ -12,6 +12,7 @@
 #import "UserAgreementController.h"
 #import "UITextField+Length.h"
 #import "NSString+Attribute.h"
+#import "LoginController.h"
 
 @interface RegisterController ()<UITextFieldDelegate>
 
@@ -23,7 +24,7 @@
 @property (nonatomic, strong) UIButton * getCode;
 @property (nonatomic, assign) NSInteger time;
 @property (nonatomic, strong) NSTimer * timer;
-@property (nonatomic, strong)NSDate *beforeDate;
+@property (nonatomic, strong) NSDate *beforeDate;
 
 @property (nonatomic, strong) UITextField *varificationCodeTextField;
 
@@ -234,7 +235,7 @@ static int const timeCode = 60;
             _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
             [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
             [Master showSVProgressHUD:@"验证码获取成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
-        } Failure:nil];
+        } Failure:nil andNavigation:self.navigationController];
     }else{
         [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
     }
@@ -345,7 +346,7 @@ static int const timeCode = 60;
                         [Master showSVProgressHUD:@"解锁成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                             [Wself.navigationController popViewControllerAnimated:YES];
                         }];
-                    } Failure:nil];
+                    } Failure:nil andNavigation:Wself.navigationController];
                 }else{
                     if (_phoneNumberTextField.text.length!=11) {
                         [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
@@ -367,23 +368,21 @@ static int const timeCode = 60;
                                                                       @"password":_passwordTextField.text,
                                                                       @"device":UUID}
                                                                 url:mlqqm serviceCode:dl Success:^(id json) {
-                                                                    if ([Master getSuccess:json]) {
-                                                                        Acount *user=[Acount shareManager];
-                                                                        user=[Acount mj_objectWithKeyValues:json[@"info"]];
-                                                                        [user SignInAcount];
-                                                                        UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
-                                                                        root.selectedIndex=0;
-                                                                    }
-                                                                } Failure:nil];
+                                                                    Acount *user=[Acount shareManager];
+                                                                    user=[Acount mj_objectWithKeyValues:json[@"info"]];
+                                                                    [user SignInAcount];
+                                                                    UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                                                                    root.selectedIndex=0;
+                                                                } Failure:nil andNavigation:Wself.navigationController];
                                 }];
                             }];
-                        } Failure:nil];
+                        } Failure:nil andNavigation:Wself.navigationController];
                     }else{
                         [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"device":UUID,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
                             [Master showSVProgressHUD:@"重置成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                                 [Wself.navigationController popViewControllerAnimated:YES];
                             }];
-                        } Failure:nil];
+                        } Failure:nil andNavigation:Wself.navigationController];
                     }
                 }else{
                     if (_phoneNumberTextField.text.length!=11) {

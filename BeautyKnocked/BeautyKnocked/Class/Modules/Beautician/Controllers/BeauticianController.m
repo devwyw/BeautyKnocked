@@ -10,7 +10,7 @@
 #import "BeauticianSortMenuView.h"
 #import "BeauticianCell.h"
 #import "BeauticianItemPageController.h"
-#import "BeauticianModel.h"
+#import <MJRefresh.h>
 
 @interface BeauticianController ()<UITableViewDelegate,UITableViewDataSource,BeauticianSortMenuViewDelegate>
 
@@ -33,9 +33,17 @@
     }else{
         [self.navigationItem setTitle:@"预约美容师"];
     }
-    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     [self addSubItemviews];
     [self configureConstraints];
+}
+-(void)setCode1:(NSString *)code1{
+    _code1=code1;
+    self.sortMenu.hidden=YES;
+    
+    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 }
 -(NSMutableArray*)listArray{
     if (!_listArray) {
@@ -47,16 +55,15 @@
     return self.listArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BeauticianModel *model=[[BeauticianModel alloc]init];
-    model=[BeauticianModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+    BeauticianModel *model=[BeauticianModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     BeauticianCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BeauticianCell" forIndexPath:indexPath];
     cell.isBeauticianSelect=_isSelected;
     cell.model=model;
     Weakify(self);
     [[cell.beaSelect takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
         //选择
-        [self.beauticianId sendNext:model.id];
-        [self.navigationController popViewControllerAnimated:YES];
+        [Wself.beauticianId sendNext:model.id];
+        [Wself.navigationController popViewControllerAnimated:YES];
     }];
     [[cell.collect takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
         //收藏
@@ -67,9 +74,9 @@
                 [Master HttpPostRequestByParams:@{@"device":UUID,@"clientId":user.id,@"beauticianId":model.id} url:mlqqm serviceCode:khsc Success:^(id json) {
                     btn.selected=!btn.isSelected;
                     [Master showSVProgressHUD:@"收藏成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-                        [Wself loadHttpData];
+                        [Wself.tableView.mj_header beginRefreshing];
                     }];
-                } Failure:nil];
+                } Failure:nil andNavigation:Wself.navigationController];
             }
         }
     }];
@@ -85,18 +92,17 @@
     [self.view addSubview:self.sortMenu];
     [self.view addSubview:self.tableView];
 }
-
 -(void)configureConstraints {
     [self.sortMenu mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(64.f);
+        make.top.equalTo(self.view);
         make.left.and.right.equalTo(self.view);
-        make.height.mas_equalTo(Height_Pt(122.f));
+        make.height.mas_equalTo(Height_Pt(122));
     }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.sortMenu.mas_bottom);
         make.left.and.right.and.equalTo(self.view);
-        make.bottom.equalTo(self.view).with.offset(-49.f);
+        make.bottom.equalTo(self.view);
     }];
 }
 - (void)didReceiveMemoryWarning {
@@ -119,25 +125,36 @@
         _tableView.estimatedRowHeight = 100;
         _tableView.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
         _tableView.rowHeight = UITableViewAutomaticDimension;
-        _tableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadHttpData)];
+        _tableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            [self loadHttpDataWithCode:_code1 andWithCode:_code2];
+        }];
         [_tableView.mj_header beginRefreshing];
         [_tableView registerClass:[BeauticianCell class] forCellReuseIdentifier:@"BeauticianCell"];
     }
     return _tableView;
 }
--(void)loadHttpData{
-    NSString *aid=[[NSString alloc]init];
-    if (isStringEmpty([Acount shareManager].id)) {
-        aid=@"0";
+-(void)loadHttpDataWithCode:(NSString*)code andWithCode:(NSString*)codes{
+    if (isStringEmpty(code)&&isStringEmpty(codes)) {
+        NSString *aid=[[NSString alloc]init];
+        if (isStringEmpty([Acount shareManager].id)) {
+            aid=@"0";
+        }else{
+            aid=[Acount shareManager].id;
+        }
+        [Master HttpPostRequestByParams:@{@"clientId":aid} url:mlqqm serviceCode:mrslb Success:^(id json) {
+            [self.listArray removeAllObjects];
+            self.listArray=json[@"info"];
+            [_tableView.mj_header endRefreshing];
+            [_tableView reloadData];
+        } Failure:nil andNavigation:self.navigationController];
     }else{
-        aid=[Acount shareManager].id;
+        [Master HttpPostRequestByParams:@{@"timeLength":code,@"time":[NSString stringWithFormat:@"%@:00",codes]} url:mlqqm serviceCode:mrsskbsx Success:^(id json) {
+            [self.listArray removeAllObjects];
+            self.listArray=json[@"info"];
+            [_tableView.mj_header endRefreshing];
+            [_tableView reloadData];
+        } Failure:nil andNavigation:self.navigationController];
     }
-    [Master HttpPostRequestByParams:@{@"clientId":aid} url:mlqqm serviceCode:mrslb Success:^(id json) {
-        [self.listArray removeAllObjects];
-        self.listArray=json[@"info"];
-        [_tableView.mj_header endRefreshing];
-        [_tableView reloadData];
-    } Failure:nil];
 }
 -(void)loadHttpData:(NSInteger)row{
     NSString *aid=[[NSString alloc]init];
@@ -150,7 +167,7 @@
         [self.listArray removeAllObjects];
         self.listArray=json[@"info"];
         [_tableView reloadData];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 -(void)didSelectAtRow:(NSInteger)row{
     switch (row) {
@@ -165,7 +182,7 @@
         }
             break;
         default:
-            [self loadHttpData];
+            [_tableView.mj_header beginRefreshing];
             break;
     }
 }

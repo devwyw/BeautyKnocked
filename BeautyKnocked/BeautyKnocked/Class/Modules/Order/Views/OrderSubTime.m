@@ -10,18 +10,20 @@
 #import "MLDateCollectionViewCell.h"
 #import "MLDateManager.h"
 #import "OrderSubDay.h"
+#import <LEEAlert.h>
 
 @interface OrderSubTime ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIView * backview;
-@property (nonatomic, strong) UIButton *backBtn;
+@property (nonatomic, strong) UIButton * backBtn;
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) UIButton *cancelBtn;
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UIButton *confirmBtn;
-@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UILabel * dateLabel;
+@property (nonatomic, strong) UIButton * cancelBtn;
+@property (nonatomic, strong) UICollectionView * collectionView;
+@property (nonatomic, strong) UIButton * confirmBtn;
+@property (nonatomic, strong) NSMutableArray * dataSource;
 @property (nonatomic, strong) NSMutableDictionary * cellIdentifierDic;
+@property (nonatomic, copy) NSString * selectsTime;
 
 @end
 
@@ -61,9 +63,7 @@
     _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [[_backBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        // hide self
-        OrderSubDay *view=[[OrderSubDay alloc]initWithFrame:CGRectMake(0, 0,Width_Pt(1018), Height_Pt(1186) + 20)];
-        [view makeCornerRadius:5];
+        OrderSubDay *view=[OrderSubDay shareManager];
         [LEEAlert alert].config
         .LeeCustomView(view)
         .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
@@ -110,19 +110,19 @@
     });
     [self addSubview:_collectionView];
     
-    // confirm
+    /** 确定 */
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
     _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     [_confirmBtn makeCornerRadius:5];
     [_confirmBtn setBackgroundColor:ThemeColor];
     [[_confirmBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        // hide time and date
+        //确定
         [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             MLDateCollectionViewCell *cell = obj;
             if (cell.selected) {
                 [LEEAlert closeWithCompletionBlock:^{
-                    
+                    [_subData sendNext:[NSString stringWithFormat:@"%@ %@:00",_selectTime,_selectsTime]];
                 }];
                 *stop = YES;
             }
@@ -184,33 +184,55 @@
         [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
     }
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
     UIView *selectedView = [[UIView alloc] init];
     selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
     cell.selectedBackgroundView = selectedView;
     [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     [cell setBackgroundColor:[UIColor whiteColor]];
+    
     cell.dateNumber = self.dataSource[indexPath.item];
+
+    NSArray *nowTime=[[NSArray alloc]init];
+    nowTime=[self.dataSource[indexPath.item] componentsSeparatedByString:@":"];
     
-    
-    
-    
+    if ([nowTime.firstObject integerValue]<_startModel.hour) {
+        cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+        cell.content=@"约满";
+        cell.userInteractionEnabled=NO;
+    }else{
+        if ([nowTime.firstObject integerValue]==_startModel.hour && [nowTime.lastObject integerValue]<_startModel.minute) {
+            cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+            cell.content=@"约满";
+            cell.userInteractionEnabled=NO;
+        }
+    }
+    for (NSArray *timeArray in _listArray) {
+        DayModel *beginModel=timeArray.firstObject;
+        DayModel *endModel=timeArray.lastObject;
+        if ([nowTime.firstObject integerValue]>beginModel.hour && [nowTime.firstObject integerValue]<endModel.hour) {//大范围
+            cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+            cell.content=@"约满";
+            cell.userInteractionEnabled=NO;
+        }else{//局部
+            if ([nowTime.firstObject integerValue]==beginModel.hour && [nowTime.lastObject integerValue]>=beginModel.minute) {
+                cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+                cell.content=@"约满";
+                cell.userInteractionEnabled=NO;
+            }else if ([nowTime.firstObject integerValue]==endModel.hour && [nowTime.lastObject integerValue]<=endModel.minute){
+                cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+                cell.content=@"约满";
+                cell.userInteractionEnabled=NO;
+            }
+        }
+    }
     return cell;
 }
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self getSelectTime:self.dataSource[indexPath.item]];
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    _selectsTime=self.dataSource[indexPath.item];
 }
-
 #pragma mark UICollectionViewDelegateFlowLayout
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(12, 5, 10, 5);
-}
--(BOOL)getSelectTime:(NSString*)time{
-    NSString *cell = [NSString stringWithFormat:@"%@%@",_selectedDay,time];
-    NSDateFormatter *dateFormate = [[NSDateFormatter alloc]init];
-    [dateFormate setDateFormat:@"yyyy-MM-ddHH:mm"];
-    NSDate *formeDate = [dateFormate dateFromString:cell];
-    NSLog(@"%f",[formeDate timeIntervalSince1970]);
-    return YES;
 }
 @end

@@ -18,7 +18,6 @@
 #import "FightingGroupCell.h"
 #import "FightGroupRulesController.h"
 #import "CommentController.h"
-#import "CommentModel.h"
 
 static NSString *const cellReuseIdentifier = @"UITableViewCellStyleDefault";
 static NSString *const fightingGroupCellReuseIdentifier = @"FightingGroupCell";

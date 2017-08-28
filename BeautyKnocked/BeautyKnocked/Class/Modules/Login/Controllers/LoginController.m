@@ -68,7 +68,6 @@
 }
 
 -(void)addConstraints {
-    
     [_backImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
@@ -183,7 +182,6 @@
         Weakify(self);
         [[_loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             if (_usernameTextField.text.length==11&&_passwordTextField.text.length>=6){
-                [Master shareManager].rootController=Wself.navigationController;
                 [Master HttpPostRequestByParams:@{@"account":_usernameTextField.text,
                                                   @"password":_passwordTextField.text,
                                                   @"device":UUID}
@@ -197,7 +195,7 @@
                                                         root.selectedIndex=0;
                                                     }];
                                                 }];
-                } Failure:nil];
+                } Failure:nil andNavigation:Wself.navigationController];
             }else{
                 if (_usernameTextField.text.length!=11) {
                     [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];

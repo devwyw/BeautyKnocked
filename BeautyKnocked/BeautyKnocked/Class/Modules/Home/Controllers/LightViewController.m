@@ -27,13 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"光电中心"];
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     [self loadScrollVeiw];
     [self addButton];
     // Do any additional setup after loading the view.
 }
 -(void)loadScrollVeiw{
-    _Sview=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
+    _Sview=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
     [_Sview setContentSize:CGSizeMake(Width_Pt(1080), Height_Pt(4939))];
     _Sview.delaysContentTouches = NO;
     _Sview.showsVerticalScrollIndicator=NO;

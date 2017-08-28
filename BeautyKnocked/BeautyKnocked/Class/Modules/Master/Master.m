@@ -7,42 +7,18 @@
 //
 
 #import "Master.h"
-#import "RegisterController.h"
 #import <AFNetworking.h>
 #import <CommonCrypto/CommonDigest.h>
+#import <SVProgressHUD.h>
 #import <UIImageView+WebCache.h>
+#import <LEEAlert.h>
+#import "RegisterController.h"
+#import "LoginController.h"
 
-static Master *instance=nil;
-
-@interface Master ()<NSCopying,NSMutableCopying>
+@interface Master ()
 @end
 
 @implementation Master
-#pragma mark ===== 单例模式 =====
-+(instancetype)allocWithZone:(struct _NSZone *)zone{
-    if (!instance) {
-        instance = [super allocWithZone:zone];
-    }
-    return instance;
-}
--(id)copy{
-    return self;
-}
--(id)mutableCopy{
-    return self;
-}
--(id)copyWithZone:(NSZone *)zone{
-    return self;
-}
--(id)mutableCopyWithZone:(NSZone *)zone{
-    return self;
-}
-+(instancetype)shareManager{
-    if (!instance) {
-        instance = [[Master alloc]init];
-    }
-    return instance;
-}
 #pragma mark ===== 检测网络 =====
 +(void)getNetWork{
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
@@ -114,7 +90,7 @@ static Master *instance=nil;
  @param success 成功回调
  @param failure 失败回调
  */
-+(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure{
++(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure andNavigation:(UINavigationController *)navigationController{
     /** 拼接 */
     url = [NSString stringWithFormat:@"%@%@",url,serviceCode];
     {/** 菊花 */
@@ -135,7 +111,7 @@ static Master *instance=nil;
         NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers  error:nil];
         NSLog(@"%@",resultDic);
         if (!isObjectEmpty(success)) {
-            if ([Master getSuccess:resultDic]) {
+            if ([Master getSuccess:resultDic WithUINavigationController:navigationController]) {
                 success(resultDic);
             }
         }
@@ -194,20 +170,31 @@ static Master *instance=nil;
         }
     }];
 }
-+(BOOL)getSuccess:(id)json{
++(BOOL)getSuccess:(id)json WithUINavigationController:(UINavigationController*)root{
     switch ([json[@"status"] integerValue]) {
         case 200:
             return YES;
             case 7:
         {
             [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:^{
-                if (!isObjectEmpty(instance.rootController)) {
-                    RegisterController *controller=[[RegisterController alloc]init];
-                    controller.isType=NO;
-                    controller.isLock=YES;
-                    [instance.rootController pushViewController:controller animated:YES];
-                }else{
-                    NSLog(@"未设置Root控制器");
+                RegisterController *controller=[[RegisterController alloc]init];
+                controller.isType=NO;
+                controller.isLock=YES;
+                if (!isObjectEmpty(root)) {
+                    [root pushViewController:controller animated:YES];
+                }
+            }];
+            return NO;
+        }
+            case 8:
+        {
+            [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:^{
+                LoginController *loginController = [[LoginController alloc] init];
+                UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
+                if (!isObjectEmpty(root)) {
+                    [root presentViewController:loginNav animated:YES completion:^{
+                        [root popToRootViewControllerAnimated:NO];
+                    }];
                 }
             }];
             return NO;

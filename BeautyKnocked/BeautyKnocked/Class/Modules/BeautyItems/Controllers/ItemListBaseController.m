@@ -11,9 +11,7 @@
 #import "ClassItemCollectionCell.h"
 #import "ItemDetailController.h"
 #import "ProductDetailController.h"
-#import "ItemClassModel.h"
-#import "TitleClassModel.h"
-#import "PackageModel.h"
+#import <MJRefresh.h>
 
 @interface ItemListBaseController ()<ItemsSortViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
@@ -105,20 +103,17 @@ static NSInteger padding=6;
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ClassItemCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ClassItemCollectionCell" forIndexPath:indexPath];
     if ([self.model.type integerValue]==8) {
-        PackageModel *model=[[PackageModel alloc]init];
-        model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         cell.Pmodel=model;
     }else{
-        ItemClassModel *model=[[ItemClassModel alloc]init];
-        model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         cell.model=model;
     }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.model.type integerValue]==7) {
-        ItemClassModel *model=[[ItemClassModel alloc]init];
-        model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
         productDetailController.alpha=@"0";
         productDetailController.hidesBottomBarWhenPushed = YES;
@@ -129,14 +124,12 @@ static NSInteger padding=6;
         itemDetailController.alpha=@"0";
         itemDetailController.hidesBottomBarWhenPushed = YES;
         if ([self.model.type integerValue]==8) {
-            PackageModel *model=[[PackageModel alloc]init];
-            model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+            PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
             itemDetailController.detailID=model.id;
             itemDetailController.projectId=model.projectId;
             itemDetailController.code=tcxq;
         }else{
-            ItemClassModel *model=[[ItemClassModel alloc]init];
-            model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+            ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
             itemDetailController.detailID=model.id;
             itemDetailController.code=xmxq;
         }
@@ -195,7 +188,7 @@ static NSInteger padding=6;
         }
         [_collectionView.mj_header endRefreshing];
         [_collectionView reloadData];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 #pragma mark ===== 项目排序 =====
 -(void)loadHttpData:(NSString*)index withField:(NSInteger)field withLift:(NSInteger)lift withType:(NSString*)type{
@@ -220,6 +213,6 @@ static NSInteger padding=6;
                                               [self.itemArray addObject:dict];
                                           }
                                           [_collectionView reloadData];
-                                      } Failure:nil];
+                                      } Failure:nil andNavigation:self.navigationController];
 }
 @end

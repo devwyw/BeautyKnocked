@@ -7,6 +7,7 @@
 //
 
 #import "RulesMenuView.h"
+#import "UIButton+Category.h"
 
 @interface RulesMenuView ()
 
@@ -73,6 +74,10 @@
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
+    [button setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:imageName].size space:5];
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [self.delegate PushServiceView];
+    }];
     return button;
 }
 

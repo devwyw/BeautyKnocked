@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class AddressModel;
+#import "AddressModel.h"
 
 typedef NS_ENUM(NSUInteger, AddressEditStyle) {
     AddressEditStyleAddNew, // add

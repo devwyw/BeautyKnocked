@@ -7,13 +7,13 @@
 //
 
 #import "MessageView.h"
+#import <IQTextView.h>
 
 @interface MessageView ()
 @property (nonatomic,strong) UIView * backView;
 @property (nonatomic,strong) UILabel * title;
 @property (nonatomic,strong) UIButton * cancel;
-@property (nonatomic,strong) UITextView * textview;
-@property (nonatomic,strong) UILabel * toptitle;
+@property (nonatomic,strong) IQTextView * textview;
 @property (nonatomic,strong) UIButton * done;
 @end
 
@@ -26,9 +26,6 @@
         [self addConstraints];
     }
     return self;
-}
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 -(void)initializeViews{
     _backView = [[UIView alloc]init];
@@ -48,19 +45,12 @@
     }];
     [_backView addSubview:_cancel];
     
-    _textview=[[UITextView alloc]init];
+    _textview=[[IQTextView alloc]init];
     [_textview makeCornerRadius:5];
+    _textview.placeholder=@"您对美丽敲敲门服务平台是否存在什么疑问或困惑，请写下您的宝贵意见...";
     _textview.font=[UIFont systemFontOfSize:Font_Size(35)];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ChangeText:) name:UITextViewTextDidChangeNotification object:nil];
     _textview.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     [_backView addSubview:_textview];
-    
-    _toptitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, Width-Width_Pt(150)-25, Font_Size(35)*3)];
-    _toptitle.font=[UIFont systemFontOfSize:Font_Size(35)];
-    _toptitle.text=@"您对美丽敲敲门服务平台是否存在什么疑问或困惑，请写下您的宝贵意见...";
-    _toptitle.numberOfLines=0;
-    _toptitle.textColor=[UIColor lightGrayColor];
-    [_textview addSubview:_toptitle];
     
     _done=[[UIButton alloc]init];
     [_done makeCornerRadius:5];
@@ -69,13 +59,6 @@
     _done.titleLabel.font=[UIFont systemFontOfSize:Font_Size(50)];
     _done.backgroundColor=[UIColor colorWithHexString:@"#E1BF6E"];
     [_backView addSubview:_done];
-}
--(void)ChangeText:(NSNotification *)not{
-    if (_textview.text.length==0) {
-        _toptitle.hidden=NO;
-    }else{
-        _toptitle.hidden=YES;
-    }
 }
 -(void)addConstraints {
     [_backView mas_makeConstraints:^(MASConstraintMaker *make) {

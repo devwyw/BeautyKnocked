@@ -9,7 +9,6 @@
 #import "HomePageMuduleCell.h"
 #import "HomePageItemCollectionViewCell.h"
 #import "UIButton+Category.h"
-#import "ItemClassModel.h"
 
 static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 
@@ -134,8 +133,7 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     }
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ItemClassModel * model=[[ItemClassModel alloc]init];
-    model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
+    ItemClassModel * model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
     HomePageItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     cell.model=model;
     return cell;
@@ -164,7 +162,7 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
             [self.itemArray addObject:dict];
         }
         [_collectionView reloadData];
-    } Failure:nil];
+    } Failure:nil andNavigation:nil];
 }
 
 @end

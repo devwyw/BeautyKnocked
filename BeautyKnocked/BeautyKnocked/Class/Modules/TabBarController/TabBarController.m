@@ -10,7 +10,7 @@
 #import "LoginController.h"
 #import "UIImage+Original.h"
 
-@interface TabBarController ()<UITabBarControllerDelegate>
+@interface TabBarController ()
 
 @property (nonatomic, strong) NSMutableArray<UITabBarItem *> *tabBarItems;
 
@@ -40,7 +40,6 @@
         navigationController.tabBarItem = [self.tabBarItems objectAtIndex:i];
         [viewControllers addObject:navigationController];
     }
-    self.delegate = self;
     self.viewControllers = viewControllers;
 }
 

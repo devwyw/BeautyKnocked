@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class AddressModel;
+#import "AddressModel.h"
 
 @interface CommonAddressCell : UITableViewCell
 

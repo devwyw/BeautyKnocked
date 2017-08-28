@@ -26,23 +26,14 @@
     // Configure the view for the selected state
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
-
--(void)setItemImage:(UIImage *)itemImage {
-    [_imgView setImage:itemImage];
-}
--(void)setItemName:(NSString *)itemName {
-    _titleLabel.text = itemName;
-}
--(void)setServiceLength:(NSString *)serviceLength {
-    _serviceLenghtLabel.text = serviceLength;
-}
--(void)setPrice:(CGFloat)price{
-    NSMutableAttributedString *AttStr=[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"VIP价：¥%.1f",price]];
+-(void)setModel:(DetailModel *)model{
+    [Master GetWebImage:_imgView withUrl:model.imagePath];
+    _titleLabel.text = model.name;
+    _serviceLenghtLabel.text = [NSString stringWithFormat:@"服务时长%@分钟",model.serviceTime];
+    _blcakPrice.text = [NSString stringWithFormat:@"市场价: ¥%@",model.price];
+    NSMutableAttributedString *AttStr=[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"VIP价: ¥%@",model.vipPrice]];
     [AttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, AttStr.length)];
     _priceLabel.attributedText = AttStr;
-}
--(void)setBlcakprice:(CGFloat)blcakprice{
-    _blcakPrice.text = [NSString stringWithFormat:@"市场价：¥%.1f",blcakprice];
 }
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -54,7 +45,6 @@
 }
 
 -(void)initializeViews {
-    
     _imgView = [[UIImageView alloc] init];
     
     _titleLabel = [[UILabel alloc] init];
@@ -103,7 +93,6 @@
         make.left.equalTo(_priceLabel.mas_right).offset(20);
         make.bottom.equalTo(_imgView.mas_bottom).with.offset(- 8);
     }];
-
 }
 
 @end

@@ -51,10 +51,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    self.title=@"技师详情";
     [self addViews];
     [self addConstraints];
-    
 }
 
 -(void)addViews {
@@ -62,7 +61,6 @@
 }
 
 -(void)addConstraints {
-    
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).with.offset(kNavigationBarHeight);
         make.left.and.right.equalTo(self.view);

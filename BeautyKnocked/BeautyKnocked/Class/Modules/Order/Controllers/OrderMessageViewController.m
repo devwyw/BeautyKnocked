@@ -81,11 +81,6 @@
                 return cell;
             }else{
                 ConfirmOrderItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:@"ConfirmOrderItemCell" forIndexPath:indexPath];
-                cell.itemName = @"水美人";
-                cell.itemImage = [UIImage imageNamed:@"touxiang_03"];
-                cell.price =88;
-                cell.blcakprice=128;
-                cell.serviceLength = [NSString stringWithFormat:@"服务时90长分钟"];
                 return cell;
             }
         }

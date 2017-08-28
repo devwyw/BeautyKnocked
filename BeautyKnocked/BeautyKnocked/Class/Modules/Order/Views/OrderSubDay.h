@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WebTimeModel.h"
+#import "DayModel.h"
+@class RACSubject;
 
 @interface OrderSubDay : UIView
-
++(instancetype)shareManager;
+@property (nonatomic,strong) WebTimeModel * model;
+@property (nonatomic,strong) DayModel * startDay;
+@property (nonatomic,strong) RACSubject * subData;
 @end

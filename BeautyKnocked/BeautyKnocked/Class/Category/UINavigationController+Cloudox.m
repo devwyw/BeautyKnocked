@@ -20,7 +20,7 @@
     if (self.navigationBar.isTranslucent) {
         if (backgroundImageView != nil && backgroundImageView.image != nil) {
             barBackgroundView.alpha = alpha;
-        } else {
+        }else {
             UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];// UIVisualEffectView
             if (backgroundEffectView != nil) {
                 backgroundEffectView.alpha = alpha;
@@ -29,8 +29,7 @@
     } else {
         barBackgroundView.alpha = alpha;
     }
-    // 对导航栏下面那条线做处理
-    //self.navigationBar.clipsToBounds = alpha == 0.0;
+    //self.navigationBar.clipsToBounds = alpha == 0.0;//线
 }
 
 + (void)initialize {
@@ -141,5 +140,13 @@ static char *CloudoxKey = "CloudoxKey";
 -(NSString *)cloudox{
     return objc_getAssociatedObject(self, CloudoxKey);
 }
-
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationNone;
+}
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.topViewController.preferredStatusBarStyle;
+}
 @end

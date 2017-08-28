@@ -67,7 +67,7 @@
     [self.view addSubview:money];
     
     [moneyImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(Height_Pt(350));
+        make.top.equalTo(self.view).offset(Height_Pt(350)+64);
         make.left.equalTo(self.view).offset(Width_Pt(150));
     }];
     [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -96,7 +96,7 @@
     [self.view addSubview:level];
     
     [levelImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(Height_Pt(350));
+        make.top.equalTo(moneyImage);
         make.right.equalTo(self.view).offset(-Width_Pt(150));
     }];
     [levelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,7 +148,7 @@
     }];
 
     if ([[Acount shareManager].rank integerValue]==0) {
-        UILabel *message=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(100))];
+        UILabel *message=[[UILabel alloc]initWithFrame:CGRectMake(0, 64, Width, Height_Pt(100))];
         message.font=[UIFont systemFontOfSize:Font_Size(30)];
         message.textAlignment=NSTextAlignmentCenter;
         message.text=@"成为VIP可以体验项目VIP价格以及折上折哦~";

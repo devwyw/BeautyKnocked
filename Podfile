@@ -1,4 +1,4 @@
-platform :ios, '8.0'
+platform :ios, '8.0'# 2.0
 
 workspace "BeautyKnocked"
 abstract_target 'CommonLib' do

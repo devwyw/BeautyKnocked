@@ -33,6 +33,7 @@
 }
 -(void)createViews {
     self.modifyInfoView = [[ModifyPersonInfoView alloc] init];
+    _modifyInfoView.navigationController=self.navigationController;
     self.modifyInfoView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.modifyInfoView];
 }
@@ -72,7 +73,7 @@
                     user.headPath=json[@"info"];
                     [user UpdateAcount];
                     [Master showSVProgressHUD:@"头像修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
-                } Failure:nil];
+                } Failure:nil andNavigation:Wself.navigationController];
             }else{
                 [Master showSVProgressHUD:@"请重新选择头像图片" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
             }

@@ -16,22 +16,17 @@
 #define Size_Change ((Height != 667) ? 667/Height : 1)
 #define Font_Size(x) Height == 480 ? x*3/8/Size_Change*1.19 : x*3/8/Size_Change
 #define Weakify(o)        __weak   typeof(self) Wself = o;
-#define ThemeColor [UIColor colorWithHexString:@"#E1BF6E"]
+#define ThemeColor [UIColor colorWithHexString:@"#dcb563"]
 /** Pods头文件 */
 #import <Masonry.h>
-#import <IQKeyboardManager.h>
 #import <ReactiveObjC.h>
-#import <LEEAlert.h>
-#import <SVProgressHUD.h>
 #import <MJExtension.h>
-#import <MJRefresh.h>
-/** 工程头文件 */
+/** 项目头文件 */
 #import "Master.h"
 #import "Acount.h"
 #import "UIColor+help.h"
 #import "UIViewController+Cloudox.h"
 #import "UIView+CornerRadius.h"
-#import "UIImage+setColor.h"
 /** info */
 #define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define AppVersion [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
@@ -77,6 +72,10 @@
 #define khsc @"/manager/client/base/clientCollectManager/addCollect"
 #define mrsskb @"/manager/client/base/beauticianTimeManager/queryList"
 #define yhqsx @"/manager/client/personal/clientCouponManager/clientCouponScreen"
+#define mrsskbsx @"/manager/client/base/beauticianManager/queryListScreen"
+#define xeczlb @"/manager/client/recharge/rechargeManager/queryListSmall"
+#define tjxmdd @"/manager/client/bill/projectBillManager/addBill"
+#define qrxmdd @"/manager/client/bill/projectBillManager/addYesBill"
 /** 调试模式 */
 #ifdef __OBJC__
 #ifdef DEBUG

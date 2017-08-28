@@ -7,7 +7,6 @@
 //
 
 #import "BeauticianCell.h"
-#import "BeauticianModel.h"
 
 @interface BeauticianCell ()
 

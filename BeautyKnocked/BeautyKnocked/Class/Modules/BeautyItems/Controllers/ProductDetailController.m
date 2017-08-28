@@ -12,7 +12,7 @@
 #import "ConfirmOrderController.h"
 #import "AddCarView.h"
 #import "CarItem.h"
-#import "ProductModel.h"
+#import <LEEAlert.h>
 
 @interface ProductDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -46,9 +46,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"产品详情";
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
     [self initializeViews];
     [self addConstraints];
+    [self loadHttpData:self.productID];
+    
     /** 购物车Item */
     {
         _carItem=[[CarItem alloc]initWithOriginY:Height-111];
@@ -57,7 +59,6 @@
         }];
         [self.view addSubview:_carItem];
     }
-    [self loadHttpData:self.productID];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -70,7 +71,7 @@
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.estimatedRowHeight = 100;
     _tableView.showsVerticalScrollIndicator = NO;
-
+    
     self.productDetailViewModel.navigationController = self.navigationController;
     
     _addReserveView = [[AddAndReserveView alloc] init];
@@ -147,14 +148,15 @@
 }
 #pragma mark ===== 产品详情 =====
 -(void)loadHttpData:(NSString*)productID{
+    Weakify(self);
     [Master HttpPostRequestByParams:@{@"id":productID} url:mlqqm serviceCode:cpxq Success:^(id json) {
         self.productDetailViewModel.model=[ProductModel mj_objectWithKeyValues:json[@"info"]];
-        [Master GetWebImage:self.tableheaderView withUrl:self.productDetailViewModel.model.imagePath];
+        [Master GetWebImage:Wself.tableheaderView withUrl:Wself.productDetailViewModel.model.imagePath];
         /** 评论列表 */
         [Master HttpPostRequestByParams:@{@"id":productID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
-            self.productDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
+            Wself.productDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
             [_tableView reloadData];
-        } Failure:nil];
-    } Failure:nil];
+        } Failure:nil andNavigation:Wself.navigationController];
+    } Failure:nil andNavigation:Wself.navigationController];
 }
 @end

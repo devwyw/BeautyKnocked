@@ -73,8 +73,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.beauticianItemViewModel numberOfRowsInBeauticianItemTableViewAtSection:section];
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return [self.beauticianItemViewModel configureBeauticianItemTableView:tableView AtIndexPath:indexPath];

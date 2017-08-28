@@ -38,6 +38,10 @@
 -(void)setHeaderimage:(UIImage *)headerimage{
     [_headIcon setImage:headerimage];
 }
+-(void)setNavigationController:(UINavigationController *)navigationController{
+    _navigationController=navigationController;
+    _nicknameTextField.navigationController=navigationController;
+}
 -(void)createViews {
     Acount *user=[Acount shareManager];
     

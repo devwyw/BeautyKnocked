@@ -12,8 +12,7 @@
 #import <SDCycleScrollView.h>
 #import "UIButton+Category.h"
 #import <PYSearchViewController.h>
-#import "CarItem.h"
-#import "TitleClassModel.h"
+#import "UIImage+Original.h"
 
 @interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,PYSearchViewControllerDelegate>
 
@@ -21,7 +20,6 @@
 @property (nonatomic, strong) WMPanGestureRecognizer *panGesture;
 @property (nonatomic, assign) CGPoint lastPoint;
 @property (nonatomic, strong) SDCycleScrollView *classBannerView;
-@property (nonatomic, strong) CarItem * carItem;
 @property (nonatomic, strong) UISearchBar * searchBar;
 @property (nonatomic, strong) UIButton * item;
 
@@ -43,7 +41,6 @@ static CGFloat const kNavigationBarHeight = 64;
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navBarBgAlpha = @"1.0";
-    _carItem.count=100;
     [_item setHidden:NO];
     [_searchBar setHidden:_item.isHidden];
 }
@@ -133,14 +130,6 @@ static CGFloat const kNavigationBarHeight = 64;
     [self.view addSubview:self.classBannerView];
     [self setViewTop:kNavigationBarHeight];
     
-    /** 购物车Item */
-    {
-        _carItem=[[CarItem alloc]initWithOriginY:Height-111];
-        [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
-            NSLog(@"购物车");
-        }];
-        [self.view addSubview:_carItem];
-    }
     [self loadHttpData];
 }
 - (void)panOnView:(WMPanGestureRecognizer *)recognizer {
@@ -219,7 +208,7 @@ static CGFloat const kNavigationBarHeight = 64;
             [self.itemArray addObject:dict];
         }
         [self reloadData];
-        } Failure:nil];
+        } Failure:nil andNavigation:self.navigationController];
 }
 
 @end

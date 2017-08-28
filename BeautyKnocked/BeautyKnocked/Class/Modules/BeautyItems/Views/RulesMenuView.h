@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RulesMenuView : UIView
+@protocol RulesMenuViewDlegate <NSObject>
 
+-(void)PushServiceView;
+
+@end
+
+@interface RulesMenuView : UIView
+@property (nonatomic,strong) id<RulesMenuViewDlegate> delegate;
 @end

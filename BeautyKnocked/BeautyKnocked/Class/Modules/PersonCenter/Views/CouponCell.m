@@ -7,7 +7,7 @@
 //
 
 #import "CouponCell.h"
-#import "CouponModel.h"
+#import "NSString+Attribute.h"
 
 @interface CouponCell ()
 @property (nonatomic,strong) UIImageView * backImage;
@@ -16,7 +16,6 @@
 @property (nonatomic,strong) UILabel * type;
 
 @property (nonatomic,strong) UIView * centerview;
-@property (nonatomic,strong) UILabel * RMB;
 @property (nonatomic,strong) UILabel * money;
 
 @property (nonatomic,strong) UILabel * title;
@@ -41,25 +40,31 @@
     return self;
 }
 -(void)setModel:(CouponModel *)model{
-    switch ([model.status integerValue]) {
-        case 0:
-            _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
-            break;
-        case 1:
-            _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
-            _rightImage.image=[UIImage imageNamed:@"yishiyong"];
-            break;
-        default:
-            _backImage.image=[UIImage imageNamed:@"youhuiquan-bukeyong"];
-            _rightImage.image=[UIImage imageNamed:@"yiguoqi"];
-            break;
+    if (isStringEmpty(model.status)) {
+        _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
+    }else{
+        switch ([model.status integerValue]) {
+                case 0:
+                _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
+                break;
+                case 1:
+                _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
+                _rightImage.image=[UIImage imageNamed:@"yishiyong"];
+                break;
+            default:
+                _backImage.image=[UIImage imageNamed:@"youhuiquan-bukeyong"];
+                _rightImage.image=[UIImage imageNamed:@"yiguoqi"];
+                break;
+        }
     }
+    
     _title.text=model.name;
     _type.text=model.type;
-    _money.text=model.money;
+    NSString *text=[NSString stringWithFormat:@"¥ %@",model.money];
+    _money.attributedText=[text setMinString:@"¥" withMinFont:Font_Size(50) andMaxString:model.money withMaxFont:Font_Size(100)];
+    
     _message.text=[NSString stringWithFormat:@"• %@",model.commName];
     _time.text=[NSString stringWithFormat:@"有效期: %@-%@",[self getWebTime:model.startTime],[self getWebTime:model.endTime]];
-    
 }
 -(NSString*)getWebTime:(NSString*)time{
     NSTimeInterval interval=[[time substringToIndex:10] doubleValue];
@@ -85,14 +90,7 @@
     _centerview=[[UIView alloc]init];
     [_backImage addSubview:_centerview];
     
-    _RMB=[[UILabel alloc]init];
-    _RMB.font=[UIFont systemFontOfSize:Font_Size(50)];
-    _RMB.textColor=[UIColor whiteColor];
-    _RMB.text=@"¥";
-    [_centerview addSubview:_RMB];
-    
     _money=[[UILabel alloc]init];
-    _money.font=[UIFont boldSystemFontOfSize:Font_Size(100)];
     _money.textColor=[UIColor whiteColor];
     [_centerview addSubview:_money];
     
@@ -138,10 +136,6 @@
     }];
     [_money mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(_centerview);
-    }];
-    [_RMB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_money.mas_bottom).offset(-Height_Pt(15));
-        make.right.equalTo(_money.mas_left).offset(-Width_Pt(10));
     }];
     
     [_title mas_makeConstraints:^(MASConstraintMaker *make) {

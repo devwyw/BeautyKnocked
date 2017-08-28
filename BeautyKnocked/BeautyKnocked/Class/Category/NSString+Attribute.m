@@ -23,7 +23,7 @@
     NSRange maxRange = [self rangeOfString:maxStr];
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:self];
     [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:min] range:minRange];
-    [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:max] range:maxRange];
+    [attributeStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:max] range:maxRange];
     return attributeStr;
 }
 -(BOOL)isMobileNumber{

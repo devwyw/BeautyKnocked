@@ -186,7 +186,7 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 [imageArray addObject:[NSString stringWithFormat:@"%@%@",mlqqm,dict[@"path"]]];
             }
             _sdCycleBannerView.imageURLStringsGroup=imageArray;
-        } Failure:nil];
+        } Failure:nil andNavigation:self.navigationController];
     }
     return _sdCycleBannerView;
 }

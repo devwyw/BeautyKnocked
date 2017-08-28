@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "UserHeader.h"
-@class DetailModel;
-@class PackageInfoModel;
-@class ProductModel;
+#import "ProductModel.h"
+#import "DetailModel.h"
+#import "PackageInfoModel.h"
 
 @interface ConfirmOrderController : UIViewController
 
 @property (nonatomic,assign) MLOrderStyle orderStyle;
-
 @property (nonatomic,strong) DetailModel * detailModel;
 @property (nonatomic,strong) PackageInfoModel * packageInfoModel;
 @property (nonatomic,strong) ProductModel * productModel;

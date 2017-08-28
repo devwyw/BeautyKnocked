@@ -116,7 +116,7 @@ NSInteger number3=0;
         [self.listArray addObject:arr2];
         [self.listArray addObject:arr3];
         [self reloadData];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 /*
 #pragma mark - Navigation

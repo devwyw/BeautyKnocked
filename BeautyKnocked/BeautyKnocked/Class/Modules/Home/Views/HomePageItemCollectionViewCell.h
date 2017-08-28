@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ItemClassModel;
+#import "ItemClassModel.h"
 
 @interface HomePageItemCollectionViewCell : UICollectionViewCell
 @property (nonatomic,strong) ItemClassModel * model;

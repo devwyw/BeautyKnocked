@@ -11,5 +11,6 @@
 @interface UIImage (Original)
 
 +(UIImage *)imageOriginalImageName:(NSString *)imageName;
++(UIImage*)GetImageWithColor:(UIColor*)color andAlpha:(CGFloat)alpha andHeight:(CGFloat)height;
 
 @end

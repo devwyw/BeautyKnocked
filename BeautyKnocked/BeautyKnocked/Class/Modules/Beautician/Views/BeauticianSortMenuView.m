@@ -90,11 +90,10 @@
         }
     }
 }
-
 -(PSSortDropMenu *)sortMenu {
     if (!_sortMenu) {
         CGRect frame = self.superview.frame;
-        _topHeight = 64.0 + Height_Pt(122);
+        _topHeight = Height_Pt(122);
         _sortMenu = [[PSSortDropMenu alloc] initWithFrame:CGRectMake(0, _topHeight, frame.size.width, frame.size.height - _topHeight)];
         _sortMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _sortMenu.dataSource = @[@"默认工号排序",@"评分最高",@"人气最高"];

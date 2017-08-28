@@ -8,8 +8,6 @@
 
 #import "MineController.h"
 #import "UserCnterViewModel.h"
-#import "PersonCenterHeadView.h"
-
 
 static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 @interface MineController ()<UITableViewDelegate,UITableViewDataSource>

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <LEEAlert.h>
+@class RACSubject;
 
 @interface PaySheetView : UIView
-
+@property (nonatomic,strong) RACSubject * subType;
 @end

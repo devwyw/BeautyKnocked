@@ -8,7 +8,6 @@
 
 #import "EvaluationTableViewController.h"
 #import "EvaluationCell.h"
-#import "CommentModel.h"
 
 static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 
@@ -43,8 +42,7 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
     return self.list.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CommentModel *model=[[CommentModel alloc]init];
-    model=[CommentModel mj_objectWithKeyValues:self.list[indexPath.row]];
+    CommentModel *model=[CommentModel mj_objectWithKeyValues:self.list[indexPath.row]];
     EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];

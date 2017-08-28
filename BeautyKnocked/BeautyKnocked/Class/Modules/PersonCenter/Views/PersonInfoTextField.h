@@ -12,4 +12,5 @@
 
 @property (nonatomic, copy) NSString *textName;
 @property (nonatomic, copy) NSString *text;
+@property (nonatomic,strong) UINavigationController * navigationController;
 @end

@@ -8,7 +8,6 @@
 
 #import "HomePageItemCollectionViewCell.h"
 #import "NSString+Attribute.h"
-#import "ItemClassModel.h"
 
 @interface HomePageItemCollectionViewCell ()
 

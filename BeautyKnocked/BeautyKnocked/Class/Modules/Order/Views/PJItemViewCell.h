@@ -12,7 +12,5 @@
 
 @property (nonatomic,copy) NSString * imageName;
 @property (nonatomic,copy) NSString * titleStr;
-@property (nonatomic,strong) UIButton * addImage;
-@property (nonatomic,strong) UITextView * textview;
 
 @end

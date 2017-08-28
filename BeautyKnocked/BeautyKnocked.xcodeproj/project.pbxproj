@@ -14,6 +14,9 @@
 		041BFDBA1F43E80900903185 /* PayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDB91F43E80900903185 /* PayTypeCell.m */; };
 		041BFDBD1F43EF4700903185 /* PayInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDBC1F43EF4700903185 /* PayInfoCell.m */; };
 		041BFDC31F44185000903185 /* CouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDC21F44185000903185 /* CouponController.m */; };
+		0423C6C21F4E6EB900F492CB /* DayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423C6C11F4E6EB900F492CB /* DayModel.m */; };
+		0423C6C51F4E721C00F492CB /* WebTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423C6C41F4E721C00F492CB /* WebTimeModel.m */; };
+		0423C6C81F4E7F6900F492CB /* TimeSlotModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423C6C71F4E7F6900F492CB /* TimeSlotModel.m */; };
 		042DF05E1F2828CF00429D49 /* WuLiuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DF05D1F2828CF00429D49 /* WuLiuCell.m */; };
 		042DF0611F2847E800429D49 /* PayInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DF0601F2847E800429D49 /* PayInfoController.m */; };
 		042DF06C1F287CFE00429D49 /* OrderPJController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042DF06B1F287CFE00429D49 /* OrderPJController.m */; };
@@ -31,7 +34,8 @@
 		045C8ACE1F452C71002C2F8B /* SonCouponTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C8ACD1F452C71002C2F8B /* SonCouponTableController.m */; };
 		045C8AD11F454783002C2F8B /* CouponInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C8AD01F454783002C2F8B /* CouponInfoController.m */; };
 		045C8AD41F456E77002C2F8B /* CouponUseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C8AD31F456E77002C2F8B /* CouponUseCell.m */; };
-		046A7EC61F4D7D7B005AD5FF /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A7EC31F4D7D7B005AD5FF /* NSArray+Log.m */; };
+		0465F6971F53AABA00F9FF90 /* ServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0465F6961F53AABA00F9FF90 /* ServiceCell.m */; };
+		0465F69A1F53B32700F9FF90 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0465F6991F53B32700F9FF90 /* PayViewController.m */; };
 		046A7EC71F4D7D7B005AD5FF /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */; };
 		046A7ECA1F4D7D8D005AD5FF /* NSString+unicode.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A7EC91F4D7D8D005AD5FF /* NSString+unicode.m */; };
 		046AF9071F413E4700C627D6 /* DetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046AF9061F413E4700C627D6 /* DetailModel.m */; };
@@ -40,6 +44,8 @@
 		046AF9101F418F3B00C627D6 /* ComListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046AF90F1F418F3B00C627D6 /* ComListModel.m */; };
 		047C75221F38192200EE08E0 /* UITextField+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 047C75211F38192200EE08E0 /* UITextField+Length.m */; };
 		0484ABF61F2F15F600213AB1 /* book.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0484ABEB1F2F15F600213AB1 /* book.jpg */; };
+		04A3C8FA1F51549800B5856E /* OrderInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3C8F91F51549800B5856E /* OrderInfoModel.m */; };
+		04A3C8FD1F5157D800B5856E /* ServiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3C8FC1F5157D800B5856E /* ServiceView.m */; };
 		04A6EFCF1F3AA9CF0036FBDF /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6EFCD1F3AA9CF0036FBDF /* Photos.framework */; };
 		04A6EFD01F3AA9CF0036FBDF /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6EFCE1F3AA9CF0036FBDF /* PhotosUI.framework */; };
 		04A6EFD31F3B09070036FBDF /* ItemClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A6EFD21F3B09070036FBDF /* ItemClassModel.m */; };
@@ -744,10 +750,8 @@
 		04F0AFFA1F32B2FD00D77558 /* UIButton+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFD91F32B2FD00D77558 /* UIButton+Category.m */; };
 		04F0AFFB1F32B2FD00D77558 /* UIColor+help.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFDB1F32B2FD00D77558 /* UIColor+help.m */; };
 		04F0AFFC1F32B2FD00D77558 /* UIImage+Original.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFDD1F32B2FD00D77558 /* UIImage+Original.m */; };
-		04F0AFFD1F32B2FD00D77558 /* UIImage+setColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFDF1F32B2FD00D77558 /* UIImage+setColor.m */; };
 		04F0AFFE1F32B2FD00D77558 /* UIImageView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFE11F32B2FD00D77558 /* UIImageView+Category.m */; };
 		04F0AFFF1F32B2FD00D77558 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFE31F32B2FD00D77558 /* UINavigationController+Cloudox.m */; };
-		04F0B0001F32B2FD00D77558 /* UINavigationController+StatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFE51F32B2FD00D77558 /* UINavigationController+StatusBarStyle.m */; };
 		04F0B0011F32B2FD00D77558 /* UIView+CornerRadius.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFE71F32B2FD00D77558 /* UIView+CornerRadius.m */; };
 		04F0B0021F32B2FD00D77558 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFE91F32B2FD00D77558 /* UIViewController+Cloudox.m */; };
 		04F0B0031F32B2FD00D77558 /* WMPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFED1F32B2FD00D77558 /* WMPanGestureRecognizer.m */; };
@@ -799,7 +803,6 @@
 		7374CA031EC5600A00391187 /* MenuItemCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7374CA021EC5600A00391187 /* MenuItemCollectionCell.m */; };
 		7374CA0C1EC5778C00391187 /* MenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7374CA0B1EC5778C00391187 /* MenuItemView.m */; };
 		737564C71EF4D7800097367C /* ConfirmOrderRemarksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 737564C61EF4D7800097367C /* ConfirmOrderRemarksCell.m */; };
-		737564CE1EF5031A0097367C /* DDCSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 737564CD1EF5031A0097367C /* DDCSTextView.m */; };
 		7375CE901EE4F6F9009F7F21 /* ProductTitlePriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7375CE8F1EE4F6F9009F7F21 /* ProductTitlePriceView.m */; };
 		7375CE931EE50CAE009F7F21 /* EvaluationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7375CE921EE50CAE009F7F21 /* EvaluationTableViewController.m */; };
 		7376E0991EC3F92100C67A9B /* BeauticianCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7376E0981EC3F92100C67A9B /* BeauticianCell.m */; };
@@ -937,6 +940,12 @@
 		041BFDBC1F43EF4700903185 /* PayInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayInfoCell.m; sourceTree = "<group>"; };
 		041BFDC11F44185000903185 /* CouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponController.h; sourceTree = "<group>"; };
 		041BFDC21F44185000903185 /* CouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponController.m; sourceTree = "<group>"; };
+		0423C6C01F4E6EB900F492CB /* DayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayModel.h; sourceTree = "<group>"; };
+		0423C6C11F4E6EB900F492CB /* DayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayModel.m; sourceTree = "<group>"; };
+		0423C6C31F4E721C00F492CB /* WebTimeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebTimeModel.h; sourceTree = "<group>"; };
+		0423C6C41F4E721C00F492CB /* WebTimeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebTimeModel.m; sourceTree = "<group>"; };
+		0423C6C61F4E7F6900F492CB /* TimeSlotModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeSlotModel.h; sourceTree = "<group>"; };
+		0423C6C71F4E7F6900F492CB /* TimeSlotModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeSlotModel.m; sourceTree = "<group>"; };
 		042DF05C1F2828CF00429D49 /* WuLiuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuLiuCell.h; sourceTree = "<group>"; };
 		042DF05D1F2828CF00429D49 /* WuLiuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WuLiuCell.m; sourceTree = "<group>"; };
 		042DF05F1F2847E800429D49 /* PayInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInfoController.h; sourceTree = "<group>"; };
@@ -970,8 +979,10 @@
 		045C8AD01F454783002C2F8B /* CouponInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponInfoController.m; sourceTree = "<group>"; };
 		045C8AD21F456E77002C2F8B /* CouponUseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponUseCell.h; sourceTree = "<group>"; };
 		045C8AD31F456E77002C2F8B /* CouponUseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponUseCell.m; sourceTree = "<group>"; };
-		046A7EC21F4D7D7B005AD5FF /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
-		046A7EC31F4D7D7B005AD5FF /* NSArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Log.m"; sourceTree = "<group>"; };
+		0465F6951F53AABA00F9FF90 /* ServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCell.h; sourceTree = "<group>"; };
+		0465F6961F53AABA00F9FF90 /* ServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCell.m; sourceTree = "<group>"; };
+		0465F6981F53B32700F9FF90 /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayViewController.h; sourceTree = "<group>"; };
+		0465F6991F53B32700F9FF90 /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayViewController.m; sourceTree = "<group>"; };
 		046A7EC41F4D7D7B005AD5FF /* NSDictionary+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Log.h"; sourceTree = "<group>"; };
 		046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
 		046A7EC81F4D7D8D005AD5FF /* NSString+unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+unicode.h"; sourceTree = "<group>"; };
@@ -987,6 +998,10 @@
 		047C75201F38192200EE08E0 /* UITextField+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Length.h"; sourceTree = "<group>"; };
 		047C75211F38192200EE08E0 /* UITextField+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Length.m"; sourceTree = "<group>"; };
 		0484ABEB1F2F15F600213AB1 /* book.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book.jpg; sourceTree = "<group>"; };
+		04A3C8F81F51549800B5856E /* OrderInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderInfoModel.h; sourceTree = "<group>"; };
+		04A3C8F91F51549800B5856E /* OrderInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderInfoModel.m; sourceTree = "<group>"; };
+		04A3C8FB1F5157D800B5856E /* ServiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceView.h; sourceTree = "<group>"; };
+		04A3C8FC1F5157D800B5856E /* ServiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceView.m; sourceTree = "<group>"; };
 		04A6EFCD1F3AA9CF0036FBDF /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		04A6EFCE1F3AA9CF0036FBDF /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		04A6EFD11F3B09070036FBDF /* ItemClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemClassModel.h; path = BeautyKnocked/Class/Category/ItemClassModel.h; sourceTree = SOURCE_ROOT; };
@@ -1715,14 +1730,10 @@
 		04F0AFDB1F32B2FD00D77558 /* UIColor+help.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+help.m"; sourceTree = "<group>"; };
 		04F0AFDC1F32B2FD00D77558 /* UIImage+Original.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Original.h"; sourceTree = "<group>"; };
 		04F0AFDD1F32B2FD00D77558 /* UIImage+Original.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Original.m"; sourceTree = "<group>"; };
-		04F0AFDE1F32B2FD00D77558 /* UIImage+setColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+setColor.h"; sourceTree = "<group>"; };
-		04F0AFDF1F32B2FD00D77558 /* UIImage+setColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+setColor.m"; sourceTree = "<group>"; };
 		04F0AFE01F32B2FD00D77558 /* UIImageView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Category.h"; sourceTree = "<group>"; };
 		04F0AFE11F32B2FD00D77558 /* UIImageView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Category.m"; sourceTree = "<group>"; };
 		04F0AFE21F32B2FD00D77558 /* UINavigationController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Cloudox.h"; sourceTree = "<group>"; };
 		04F0AFE31F32B2FD00D77558 /* UINavigationController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Cloudox.m"; sourceTree = "<group>"; };
-		04F0AFE41F32B2FD00D77558 /* UINavigationController+StatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+StatusBarStyle.h"; sourceTree = "<group>"; };
-		04F0AFE51F32B2FD00D77558 /* UINavigationController+StatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+StatusBarStyle.m"; sourceTree = "<group>"; };
 		04F0AFE61F32B2FD00D77558 /* UIView+CornerRadius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CornerRadius.h"; sourceTree = "<group>"; };
 		04F0AFE71F32B2FD00D77558 /* UIView+CornerRadius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CornerRadius.m"; sourceTree = "<group>"; };
 		04F0AFE81F32B2FD00D77558 /* UIViewController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Cloudox.h"; sourceTree = "<group>"; };
@@ -1824,8 +1835,6 @@
 		7374CA0B1EC5778C00391187 /* MenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemView.m; sourceTree = "<group>"; };
 		737564C51EF4D7800097367C /* ConfirmOrderRemarksCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderRemarksCell.h; sourceTree = "<group>"; };
 		737564C61EF4D7800097367C /* ConfirmOrderRemarksCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderRemarksCell.m; sourceTree = "<group>"; };
-		737564CC1EF5031A0097367C /* DDCSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCSTextView.h; sourceTree = "<group>"; };
-		737564CD1EF5031A0097367C /* DDCSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCSTextView.m; sourceTree = "<group>"; };
 		7375CE8E1EE4F6F9009F7F21 /* ProductTitlePriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTitlePriceView.h; sourceTree = "<group>"; };
 		7375CE8F1EE4F6F9009F7F21 /* ProductTitlePriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTitlePriceView.m; sourceTree = "<group>"; };
 		7375CE911EE50CAE009F7F21 /* EvaluationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvaluationTableViewController.h; sourceTree = "<group>"; };
@@ -2086,8 +2095,6 @@
 			children = (
 				046A7EC81F4D7D8D005AD5FF /* NSString+unicode.h */,
 				046A7EC91F4D7D8D005AD5FF /* NSString+unicode.m */,
-				046A7EC21F4D7D7B005AD5FF /* NSArray+Log.h */,
-				046A7EC31F4D7D7B005AD5FF /* NSArray+Log.m */,
 				046A7EC41F4D7D7B005AD5FF /* NSDictionary+Log.h */,
 				046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */,
 			);
@@ -3095,8 +3102,6 @@
 				04F0AFDB1F32B2FD00D77558 /* UIColor+help.m */,
 				04F0AFDC1F32B2FD00D77558 /* UIImage+Original.h */,
 				04F0AFDD1F32B2FD00D77558 /* UIImage+Original.m */,
-				04F0AFDE1F32B2FD00D77558 /* UIImage+setColor.h */,
-				04F0AFDF1F32B2FD00D77558 /* UIImage+setColor.m */,
 				04F0AFE01F32B2FD00D77558 /* UIImageView+Category.h */,
 				04F0AFE11F32B2FD00D77558 /* UIImageView+Category.m */,
 				04F0AFE61F32B2FD00D77558 /* UIView+CornerRadius.h */,
@@ -3105,8 +3110,6 @@
 				04F0AFE31F32B2FD00D77558 /* UINavigationController+Cloudox.m */,
 				04F0AFE81F32B2FD00D77558 /* UIViewController+Cloudox.h */,
 				04F0AFE91F32B2FD00D77558 /* UIViewController+Cloudox.m */,
-				04F0AFE41F32B2FD00D77558 /* UINavigationController+StatusBarStyle.h */,
-				04F0AFE51F32B2FD00D77558 /* UINavigationController+StatusBarStyle.m */,
 				047C75201F38192200EE08E0 /* UITextField+Length.h */,
 				047C75211F38192200EE08E0 /* UITextField+Length.m */,
 			);
@@ -3254,6 +3257,10 @@
 				157BBBED1F24BAE900D8FED0 /* SectionHeaderView.m */,
 				15C50BB61F320DBC0062D53B /* AddCarView.h */,
 				15C50BB71F320DBC0062D53B /* AddCarView.m */,
+				04A3C8FB1F5157D800B5856E /* ServiceView.h */,
+				04A3C8FC1F5157D800B5856E /* ServiceView.m */,
+				0465F6951F53AABA00F9FF90 /* ServiceCell.h */,
+				0465F6961F53AABA00F9FF90 /* ServiceCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3581,6 +3588,8 @@
 				042DF0601F2847E800429D49 /* PayInfoController.m */,
 				042DF06A1F287CFE00429D49 /* OrderPJController.h */,
 				042DF06B1F287CFE00429D49 /* OrderPJController.m */,
+				0465F6981F53B32700F9FF90 /* PayViewController.h */,
+				0465F6991F53B32700F9FF90 /* PayViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -3592,6 +3601,14 @@
 				734C6DE51EF8FAA200F18FE4 /* MLDateModel.m */,
 				04426CA91F4C259100B30D5B /* OrderModel.h */,
 				04426CAA1F4C259100B30D5B /* OrderModel.m */,
+				0423C6C31F4E721C00F492CB /* WebTimeModel.h */,
+				0423C6C41F4E721C00F492CB /* WebTimeModel.m */,
+				0423C6C01F4E6EB900F492CB /* DayModel.h */,
+				0423C6C11F4E6EB900F492CB /* DayModel.m */,
+				0423C6C61F4E7F6900F492CB /* TimeSlotModel.h */,
+				0423C6C71F4E7F6900F492CB /* TimeSlotModel.m */,
+				04A3C8F81F51549800B5856E /* OrderInfoModel.h */,
+				04A3C8F91F51549800B5856E /* OrderInfoModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3622,8 +3639,6 @@
 				73A4851A1EF3B94F00FA9434 /* ConfirmOrderProductCell.m */,
 				737564C51EF4D7800097367C /* ConfirmOrderRemarksCell.h */,
 				737564C61EF4D7800097367C /* ConfirmOrderRemarksCell.m */,
-				737564CC1EF5031A0097367C /* DDCSTextView.h */,
-				737564CD1EF5031A0097367C /* DDCSTextView.m */,
 				739F43041EF769FC00D973E6 /* ConfirmOrderSubmitView.h */,
 				739F43051EF769FD00D973E6 /* ConfirmOrderSubmitView.m */,
 				04CB6C191F31C4610039B87C /* OrderSubDay.h */,
@@ -4942,15 +4957,16 @@
 				738DAADC1EDEB40300F45DE3 /* OurcommitmentController.m in Sources */,
 				736DE2971ED01F0F00E32717 /* BeauticianItemPageController.m in Sources */,
 				042DF06C1F287CFE00429D49 /* OrderPJController.m in Sources */,
+				0423C6C81F4E7F6900F492CB /* TimeSlotModel.m in Sources */,
 				046AF90D1F417A3B00C627D6 /* CommentModel.m in Sources */,
 				737A1FE01EDFE1B300CD6FD2 /* MyMessageController.m in Sources */,
 				7389D8881EEE383F0012EEDC /* MineFightGroupCell.m in Sources */,
 				736B3A1D1EC1670D00662156 /* LoginController.m in Sources */,
 				738798651EEFD0CC00B4D7D4 /* MineFightGroupViewModel.m in Sources */,
 				154662181F3202FE00ED146E /* MessageView.m in Sources */,
+				0423C6C51F4E721C00F492CB /* WebTimeModel.m in Sources */,
 				04426CA81F4BC84000B30D5B /* BeauticianModel.m in Sources */,
 				04E8C6851F3073D5005566C4 /* RechargeController.m in Sources */,
-				737564CE1EF5031A0097367C /* DDCSTextView.m in Sources */,
 				7388F5331EDA72D900EB7EE4 /* SetupViewModel.m in Sources */,
 				738DAAD61EDE76B000F45DE3 /* BeauticianRegisterViewModel.m in Sources */,
 				046AF9101F418F3B00C627D6 /* ComListModel.m in Sources */,
@@ -4963,6 +4979,7 @@
 				043212D01F273B5800F29D1B /* WuLiuController.m in Sources */,
 				04F0B0081F32B2FD00D77558 /* TextField.m in Sources */,
 				7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */,
+				0465F69A1F53B32700F9FF90 /* PayViewController.m in Sources */,
 				043212C11F272F2000F29D1B /* TopMessageView.m in Sources */,
 				042F44561F4A78E700B6AE15 /* AddressModel.m in Sources */,
 				7383EC651ECC419200C87A06 /* HomePageEndView.m in Sources */,
@@ -5006,6 +5023,7 @@
 				739F093A1EC941340023BF0B /* FeaturedRecommendationsView.m in Sources */,
 				7373309D1EE290D100DF54AC /* EvaluationFooterView.m in Sources */,
 				7388F53E1EDAA15700EB7EE4 /* BeauticianRegistrationController.m in Sources */,
+				04A3C8FA1F51549800B5856E /* OrderInfoModel.m in Sources */,
 				738406F11EC053F8001CAFCD /* FightGroupsView.m in Sources */,
 				0413DB691F1EFDD800357B27 /* LightViewController.m in Sources */,
 				739CBE411ED965E000D6FA3A /* PSSetupController.m in Sources */,
@@ -5032,7 +5050,6 @@
 				04F0AFFE1F32B2FD00D77558 /* UIImageView+Category.m in Sources */,
 				737125FB1EE7D6AF001A02DC /* IntegralBalanceView.m in Sources */,
 				739F43061EF769FD00D973E6 /* ConfirmOrderSubmitView.m in Sources */,
-				046A7EC61F4D7D7B005AD5FF /* NSArray+Log.m in Sources */,
 				739F093D1EC945E10023BF0B /* RecommendBeautyView.m in Sources */,
 				734C6DE61EF8FAA200F18FE4 /* MLDateModel.m in Sources */,
 				73A4850A1EF3811F00FA9434 /* ConfirmOrderFillCell.m in Sources */,
@@ -5045,7 +5062,6 @@
 				7387986F1EEFE4B000B4D7D4 /* MineFightGroupDetailController.m in Sources */,
 				041BFDB71F43D64700903185 /* RechargeModel.m in Sources */,
 				7376E0991EC3F92100C67A9B /* BeauticianCell.m in Sources */,
-				04F0B0001F32B2FD00D77558 /* UINavigationController+StatusBarStyle.m in Sources */,
 				7385E0BF1ED6CAA800561DB0 /* PersonInfoViewController.m in Sources */,
 				047C75221F38192200EE08E0 /* UITextField+Length.m in Sources */,
 				73440A3D1ED2CFDC003807B8 /* BeauticianItemController.m in Sources */,
@@ -5063,6 +5079,7 @@
 				73A485181EF3B93500FA9434 /* ConfirmOrderItemCell.m in Sources */,
 				04E8C6731F3023F6005566C4 /* MoneyController.m in Sources */,
 				737C5B231ED5776900C46128 /* PSRightFilterView.m in Sources */,
+				0423C6C21F4E6EB900F492CB /* DayModel.m in Sources */,
 				737CD3091EE161B900B6A5DB /* EvaluationCell.m in Sources */,
 				737125F81EE7B14F001A02DC /* IntegralSectionHeaderView.m in Sources */,
 				04F0B0011F32B2FD00D77558 /* UIView+CornerRadius.m in Sources */,
@@ -5073,6 +5090,7 @@
 				7390F4B81EE697030059A168 /* CommonAddressCell.m in Sources */,
 				7374CA0C1EC5778C00391187 /* MenuItemView.m in Sources */,
 				737CD3001EE13CA300B6A5DB /* ItemDetailViewModel.m in Sources */,
+				0465F6971F53AABA00F9FF90 /* ServiceCell.m in Sources */,
 				7399DC631ECED6720054877F /* OrderItemTableViewCell.m in Sources */,
 				04F0B0111F32B30700D77558 /* CarItem.m in Sources */,
 				04E8C6761F304E87005566C4 /* MoneyTableController.m in Sources */,
@@ -5092,6 +5110,7 @@
 				737AEF821ED7C1BA0039E88A /* PersonInfoTextField.m in Sources */,
 				04DF49291F44409900623307 /* CouponCell.m in Sources */,
 				04426CAB1F4C259100B30D5B /* OrderModel.m in Sources */,
+				04A3C8FD1F5157D800B5856E /* ServiceView.m in Sources */,
 				737125FE1EE7DE52001A02DC /* ExchangeDetailController.m in Sources */,
 				737125D31EE78C8A001A02DC /* IntegralMallViewModel.m in Sources */,
 				7391D9A71EC2FE870020F3CE /* BeauticianController.m in Sources */,
@@ -5108,7 +5127,6 @@
 				157BBBEE1F24BAE900D8FED0 /* SectionHeaderView.m in Sources */,
 				7382800F1EF274240005DC28 /* ConfirmOrderController.m in Sources */,
 				042DF05E1F2828CF00429D49 /* WuLiuCell.m in Sources */,
-				04F0AFFD1F32B2FD00D77558 /* UIImage+setColor.m in Sources */,
 				737C1E701EEA2CD50020D342 /* FightGroupRulesView.m in Sources */,
 				737CD3031EE13CC100B6A5DB /* ProductDetailViewModel.m in Sources */,
 				04CB6C1B1F31C4610039B87C /* OrderSubDay.m in Sources */,

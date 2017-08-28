@@ -8,7 +8,6 @@
 
 #import "ServiceItemContentView.h"
 #import "ServiceContentCollectionViewCell.h"
-#import "ImageModel.h"
 
 static NSString *const reuseIdentifier = @"ServiceContentCollectionViewCell";
 @interface ServiceItemContentView ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>

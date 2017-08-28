@@ -16,11 +16,9 @@
 #import "EvaluationCell.h"
 #import "EvaluationTableViewController.h"
 #import "CommentController.h"
-#import "DetailModel.h"
-#import "CommentModel.h"
-#import "PackageInfoModel.h"
+#import "ServiceView.h"
 
-@interface ItemDetailViewModel ()
+@interface ItemDetailViewModel ()<RulesMenuViewDlegate>
 
 @property (nonatomic, strong) ItemTitlePriceView *titleView;
 @property (nonatomic, strong) RulesMenuView *rulesView;
@@ -156,8 +154,7 @@
                 make.edges.equalTo(cell.contentView);
             }];
         }else {
-            CommentModel *model=[[CommentModel alloc]init];
-            model=[CommentModel mj_objectWithKeyValues:self.listArray[indexPath.row-1]];
+            CommentModel *model=[CommentModel mj_objectWithKeyValues:self.listArray[indexPath.row-1]];
             EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             if (!cell) {
                 cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];
@@ -177,8 +174,22 @@
 -(RulesMenuView *)rulesView {
     if (!_rulesView) {
         _rulesView = [[RulesMenuView alloc] init];
+        _rulesView.delegate=self;
     }
     return _rulesView;
+}
+-(void)PushServiceView{
+    ServiceView *paysheet=[[ServiceView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(200*5))];
+     [LEEAlert actionsheet].config
+     .LeeCustomView(paysheet)
+     .LeeActionSheetBottomMargin(-5)
+     .LeeCornerRadius(0.0f)
+     .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+     .LeeHeaderColor([UIColor clearColor])
+     .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+     return Width;
+     })
+     .LeeShow();
 }
 -(ServiceItemContentView *)serviceView {
     if (!_serviceView) {

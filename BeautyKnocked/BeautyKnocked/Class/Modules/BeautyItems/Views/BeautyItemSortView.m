@@ -150,15 +150,13 @@
 -(void)setupConstraints {
     [_saleSortBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
-        make.centerY.equalTo(self);
-        //make.width.mas_equalTo(Width_Pt(150));
+        make.centerY.equalTo(_entireSortBtn);
         make.height.equalTo(_entireSortBtn);
     }];
     
     [_filterSortBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self);
-        make.height.equalTo(_entireSortBtn);
-        //make.width.mas_equalTo(Width_Pt(128));
+        make.centerY.equalTo(_saleSortBtn);
+        make.height.equalTo(_saleSortBtn);
         make.right.equalTo(self).with.offset( - Width_Pt(40));
     }];
     

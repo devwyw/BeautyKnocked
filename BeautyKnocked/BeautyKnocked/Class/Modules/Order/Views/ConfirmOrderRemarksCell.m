@@ -7,12 +7,12 @@
 //
 
 #import "ConfirmOrderRemarksCell.h"
-#import "DDCSTextView.h"
+#import <IQTextView.h>
 
 @interface ConfirmOrderRemarksCell ()
 
 @property (nonatomic, strong) UILabel *remarksLabel;
-@property (nonatomic, strong) DDCSTextView *inputTextView;
+@property (nonatomic, strong) IQTextView *inputTextView;
 
 @end
 
@@ -34,15 +34,20 @@
     }
     return self;
 }
+-(void)setText:(NSString *)text{
+    _inputTextView.text=text;
+}
 -(void)initializeViews {
-    
     _remarksLabel = [[UILabel alloc] init];
     _remarksLabel.text = @"备注:";
     _remarksLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
-    _inputTextView = [[DDCSTextView alloc] init];
+    _inputTextView = [[IQTextView alloc] init];
     _inputTextView.placeholder = @"(选填)描述您对本次交易的说明";
-    //_inputTextView.placeholderTextColor = [UIColor redColor];
+    Weakify(self);
+    [[_inputTextView rac_textSignal]subscribeNext:^(NSString * _Nullable x) {
+        [Wself.subText sendNext:x];
+    }];
     _inputTextView.font = _remarksLabel.font;
     
     [self.contentView addSubview:_remarksLabel];

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RACSubject;
 
 @interface ConfirmOrderRemarksCell : UITableViewCell
-
+@property (nonatomic,strong) RACSubject * subText;
+@property (nonatomic,copy) NSString * text;
 @end

@@ -8,6 +8,7 @@
 
 #import "PJItemViewCell.h"
 #import "StarView.h"
+#import <IQTextView.h>
 
 @interface PJItemViewCell ()
 
@@ -17,20 +18,17 @@
 @property (nonatomic,strong) UIView * line;
 @property (nonatomic,strong) StarView * starBar;
 
-@property (nonatomic,strong) UILabel * topTitle;
-@property (nonatomic,strong) UILabel * bottomTitle;
+@property (nonatomic,strong) IQTextView * textview;
+
+@property (nonatomic,strong) UIButton * addImage;
 @property (nonatomic,strong) UILabel * imageTitle;
 
 @end
-
 
 @implementation PJItemViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-}
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -69,26 +67,12 @@
     _starBar.tapEnabled = YES;
     [self.contentView addSubview:_starBar];
     
-    _textview=[[UITextView alloc]init];
+    _textview=[[IQTextView alloc]init];
+    _textview.placeholder=@"亲，产品使用是否满意？快来写出你的使用心得吧~";
     _textview.font=[UIFont systemFontOfSize:Font_Size(35)];
     _textview.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     [_textview makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#E0E0E0"]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ChangeText:) name:UITextViewTextDidChangeNotification object:nil];
     [self.contentView addSubview:_textview];
-    
-    _topTitle=[[UILabel alloc]initWithFrame:CGRectMake(5, 3, (Width-20-Width_Pt(120))-10, Font_Size(35)*2)];
-    _topTitle.font=[UIFont systemFontOfSize:Font_Size(35)];
-    _topTitle.text=@"亲，产品使用是否满意？快来写出你的使用心得吧~";
-    _topTitle.numberOfLines=0;
-    _topTitle.textColor=[UIColor lightGrayColor];
-    [_textview addSubview:_topTitle];
-    
-    _bottomTitle=[[UILabel alloc]initWithFrame:CGRectMake((Width-20-Width_Pt(120))/2-5, Height_Pt(400)-(Font_Size(35)*1.5), (Width-20-Width_Pt(120))/2, Font_Size(35)*1.5)];
-    _bottomTitle.font=[UIFont systemFontOfSize:Font_Size(35)];
-    _bottomTitle.textAlignment=NSTextAlignmentRight;
-    _bottomTitle.text=@"请至少输入2个字";
-    _bottomTitle.textColor=[UIColor lightGrayColor];
-    [_textview addSubview:_bottomTitle];
     
     _addImage=[[UIButton alloc]init];
     [_addImage setImage:[UIImage imageNamed:@"zhaopian"] forState:UIControlStateNormal];
@@ -146,15 +130,6 @@
         make.bottom.equalTo(_addImage.mas_bottom);
     }];
 }
--(void)ChangeText:(NSNotification *)not{
-    if (_textview.text.length==0) {
-        _topTitle.hidden=NO;
-        _bottomTitle.hidden=NO;
-    }else{
-        _topTitle.hidden=YES;
-        _bottomTitle.hidden=YES;
-    }
-}
 -(void)setImageName:(NSString *)imageName{
     _image.image=[UIImage imageNamed:imageName];
 }
@@ -163,7 +138,6 @@
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

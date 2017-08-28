@@ -12,8 +12,7 @@
 #import "AddCarView.h"
 #import "CarItem.h"
 #import "ItemDetailViewModel.h"
-#import "DetailModel.h"
-#import "PackageInfoModel.h"
+#import <LEEAlert.h>
 
 @interface ItemDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -58,9 +57,10 @@
     }else{
         self.title=@"套餐详情";
     }
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];//关闭自动布局
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
     [self initializeViews];
     [self addConstraints];
+    
     /** 购物车Item */
     {
         _carItem=[[CarItem alloc]initWithOriginY:Height-111];
@@ -68,11 +68,6 @@
             NSLog(@"购物车");
         }];
         [self.view addSubview:_carItem];
-    }
-    if (isStringEmpty(self.projectId)) {
-        [self loadHttpData:self.detailID withProjectId:@"" withCode:self.code];
-    }else{
-        [self loadHttpData:self.detailID withProjectId:self.projectId withCode:self.code];
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -86,19 +81,23 @@
     _tableView.estimatedRowHeight = 100;
     _tableView.tableHeaderView = self.tableheaderView;
     _tableView.showsVerticalScrollIndicator = NO;
-    
+    [self.view addSubview:_tableView];
+
     _addReserveView = [[AddAndReserveView alloc] init];
+    Weakify(self);
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
         //立即预约
-        ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
-        if (isStringEmpty(self.projectId)) {
-            confirmController.orderStyle = MLItem;
-            confirmController.detailModel=self.itemDetailViewModel.model;
-        }else{
-            confirmController.orderStyle = MLPackage;
-            confirmController.packageInfoModel=self.itemDetailViewModel.Pmodel;
+        if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+            ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
+            if (isStringEmpty(self.projectId)) {
+                confirmController.orderStyle = MLItem;
+                confirmController.detailModel=self.itemDetailViewModel.model;
+            }else{
+                confirmController.orderStyle = MLPackage;
+                confirmController.packageInfoModel=self.itemDetailViewModel.Pmodel;
+            }
+            [Wself.navigationController pushViewController:confirmController animated:YES];
         }
-        [self.navigationController pushViewController:confirmController animated:YES];
     }];
 
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
@@ -120,10 +119,14 @@
         })
         .LeeShow();
     }];
+    [self.view addSubview:_addReserveView];
     
     self.itemDetailViewModel.navigationController = self.navigationController;
-    [self.view addSubview:_tableView];
-    [self.view addSubview:_addReserveView];
+    if (isStringEmpty(self.projectId)) {
+        [self loadHttpData:self.detailID withProjectId:@"" withCode:self.code];
+    }else{
+        [self loadHttpData:self.detailID withProjectId:self.projectId withCode:self.code];
+    }
 }
 -(void)addConstraints {
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -161,19 +164,20 @@
 }
 #pragma mark ===== 项目详情 =====
 -(void)loadHttpData:(NSString*)detailID withProjectId:(NSString*)projectId withCode:(NSString*)code{
+    Weakify(self);
     [Master HttpPostRequestByParams:@{@"id":detailID,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
         if (isStringEmpty(projectId)) {
-            self.itemDetailViewModel.model=[DetailModel mj_objectWithKeyValues:json[@"info"]];
-            [Master GetWebImage:self.tableheaderView withUrl:self.itemDetailViewModel.model.imagePath];
+            Wself.itemDetailViewModel.model=[DetailModel mj_objectWithKeyValues:json[@"info"]];
+            [Master GetWebImage:Wself.tableheaderView withUrl:Wself.itemDetailViewModel.model.imagePath];
         }else{
-            self.itemDetailViewModel.Pmodel=[PackageInfoModel mj_objectWithKeyValues:json[@"info"]];
-            [Master GetWebImage:self.tableheaderView withUrl:self.itemDetailViewModel.Pmodel.imagePath];
+            Wself.itemDetailViewModel.Pmodel=[PackageInfoModel mj_objectWithKeyValues:json[@"info"]];
+            [Master GetWebImage:Wself.tableheaderView withUrl:Wself.itemDetailViewModel.Pmodel.imagePath];
         }
         /** 评论列表 */
         [Master HttpPostRequestByParams:@{@"id":detailID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
-            self.itemDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
+            Wself.itemDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
             [_tableView reloadData];
-        } Failure:nil];
-    } Failure:nil];
+        } Failure:nil andNavigation:Wself.navigationController];
+    } Failure:nil andNavigation:Wself.navigationController];
 }
 @end

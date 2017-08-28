@@ -8,8 +8,6 @@
 
 #import "ClassItemCollectionCell.h"
 #import "NSString+Attribute.h"
-#import "ItemClassModel.h"
-#import "PackageModel.h"
 
 @interface ClassItemCollectionCell ()
 

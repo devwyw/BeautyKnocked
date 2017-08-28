@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RACSubject;
 
 @interface SonCouponTableController : UITableViewController
 @property (nonatomic,strong) NSArray * listArray;
+@property (nonatomic,assign) BOOL isOrder;
+@property (nonatomic,strong) RACSubject * subCouponId;
 @end

@@ -125,7 +125,9 @@ static Acount *instance=nil;
     }else{
         LoginController *loginController = [[LoginController alloc] init];
         UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
-        [navigationController presentViewController:loginNav animated:YES completion:nil];
+        [navigationController presentViewController:loginNav animated:YES completion:^{
+            [navigationController popToRootViewControllerAnimated:NO];
+        }];
         return NO;
     }
 }

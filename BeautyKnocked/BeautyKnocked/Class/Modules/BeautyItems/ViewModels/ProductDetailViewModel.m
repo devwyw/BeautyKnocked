@@ -15,8 +15,6 @@
 #import "EvaluationFooterView.h"
 #import "EvaluationTableViewController.h"
 #import "CommentController.h"
-#import "CommentModel.h"
-#import "ProductModel.h"
 
 static NSString *const evaluationCellReuseIdentifier = @"EvaluationCell";
 static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
@@ -113,8 +111,7 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
                 make.edges.equalTo(cell.contentView);
             }];
         }else {
-            CommentModel *model=[[CommentModel alloc]init];
-            model=[CommentModel mj_objectWithKeyValues:self.listArray[indexPath.row-1]];
+            CommentModel *model=[CommentModel mj_objectWithKeyValues:self.listArray[indexPath.row-1]];
             EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             if (!cell) {
                 cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];

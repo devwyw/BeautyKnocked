@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class AddressModel;
+#import "AddressModel.h"
 @class RACSubject;
 
 @interface AddressController : UIViewController

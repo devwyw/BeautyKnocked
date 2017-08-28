@@ -9,7 +9,6 @@
 #import "RechargeController.h"
 #import "RechargeCell.h"
 #import "RechargeInfoController.h"
-#import "RechargeModel.h"
 
 @interface RechargeController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITextField * textField;
@@ -124,7 +123,7 @@
 -(void)loadHttpData{
     [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:czlb Success:^(id json) {
         self.rechargeArray=[[NSArray alloc]initWithArray:json[@"info"]];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

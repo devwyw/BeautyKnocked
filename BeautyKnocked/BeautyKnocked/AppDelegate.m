@@ -7,7 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <IQKeyboardManager.h>
 #import "TabBarController.h"
+#import "UIImage+Original.h"
 
 @interface AppDelegate ()
 @property (nonatomic,strong) Master * master;

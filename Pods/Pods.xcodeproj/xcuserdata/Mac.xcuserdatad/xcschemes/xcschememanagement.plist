@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>17</integer>
 		</dict>
+		<key>FSTextView.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
 		<key>IQKeyboardManager.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -112,7 +117,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>0CE5A5C28620EC2C725F7344D7F18D39</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0CFD15DB81C1C4C85FEAA86E9B7727BA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1097BA003CE3DF57CCA5BAE95BE033DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -152,7 +167,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3175E94BE4403209FB6971DA0973EBFC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>39EF67980422BFFDE33050032E8A71BA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3A3FE9B9E5B6341574C2A740DC184483</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -202,6 +227,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>60564779E5E64B90902724E9F57839A5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>631D1DB44CE8890096A85FD19A270E7A</key>
 		<dict>
 			<key>primary</key>
@@ -238,6 +268,11 @@
 			<true/>
 		</dict>
 		<key>792BA86CBE5A99FBEDAB7C8BADC0698C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7B74A59BD7EB83648034B1999F1826D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -302,6 +337,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A95373AD9FB14782E7F9FC65685D3251</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A9FAEC698AD83AFC38640740CF68E151</key>
 		<dict>
 			<key>primary</key>
@@ -337,6 +377,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>C197DBD0407F9FB439E28678192E5F25</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1E70B408FC6A7975A7984094A2C9902</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>CB5C40CDC3BDEEB17D9A7B610402995E</key>
 		<dict>
 			<key>primary</key>
@@ -367,6 +417,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E7E02C53E69ADA93D0E3268DDCE603CE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EBC3B110A3F845F5AB7B083DEC5937C6</key>
 		<dict>
 			<key>primary</key>
@@ -378,6 +433,11 @@
 			<true/>
 		</dict>
 		<key>ED9C66BDA3071FFE1327A337285D3545</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F2A97DAAD61D76C4E3DF60473EEE1400</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ImageModel;
+#import "ImageModel.h"
+
 @interface ServiceContentCollectionViewCell : UICollectionViewCell
 @property (nonatomic,assign) NSInteger serialNumber;
 @property (nonatomic,strong) ImageModel * model;

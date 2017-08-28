@@ -11,8 +11,7 @@
 #import "ClassItemCollectionCell.h"
 #import "ItemDetailController.h"
 #import "ProductDetailController.h"
-#import "ItemClassModel.h"
-#import "PackageModel.h"
+#import <MJRefresh.h>
 
 @interface SonItemController ()<ItemsSortViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
@@ -105,42 +104,49 @@ static NSInteger padding=6;
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ClassItemCollectionCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ClassItemCollectionCell" forIndexPath:indexPath];
     if (self.index==7) {
-        PackageModel *model=[[PackageModel alloc]init];
-        model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         cell.Pmodel=model;
     }else{
-        ItemClassModel *model=[[ItemClassModel alloc]init];
-        model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         cell.model=model;
     }
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (_index==6) {
-        ItemClassModel *model=[[ItemClassModel alloc]init];
-        model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-        ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
-        productDetailController.alpha=@"0";
-        productDetailController.hidesBottomBarWhenPushed = YES;
-        productDetailController.productID=model.id;
-        [self.navigationController pushViewController:productDetailController animated:YES];
-    }else {
-        ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
-        itemDetailController.alpha=@"0";
-        itemDetailController.hidesBottomBarWhenPushed = YES;
-        if (_index==7) {
-            PackageModel *model=[[PackageModel alloc]init];
-            model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            itemDetailController.detailID=model.id;
-            itemDetailController.projectId=model.projectId;
-            itemDetailController.code=tcxq;
-        }else{
-            ItemClassModel *model=[[ItemClassModel alloc]init];
-            model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            itemDetailController.detailID=model.id;
-            itemDetailController.code=xmxq;
+    if (isStringEmpty(_sort)) {
+        Weakify(self);
+        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:xmxq Success:^(id json) {
+            [Wself.delegate selectModel:[DetailModel mj_objectWithKeyValues:json[@"info"]]];
+            [Wself.navigationController popViewControllerAnimated:YES];
+        } Failure:nil andNavigation:Wself.navigationController];
+    }else{
+        if (_index==6) {
+            //产品
+            ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+            ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
+            productDetailController.alpha=@"0";
+            productDetailController.hidesBottomBarWhenPushed = YES;
+            productDetailController.productID=model.id;
+            [self.navigationController pushViewController:productDetailController animated:YES];
+        }else {
+            ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
+            itemDetailController.alpha=@"0";
+            itemDetailController.hidesBottomBarWhenPushed = YES;
+            if (_index==7) {
+                //套餐
+                PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+                itemDetailController.detailID=model.id;
+                itemDetailController.projectId=model.projectId;
+                itemDetailController.code=tcxq;
+            }else{
+                //项目
+                ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+                itemDetailController.detailID=model.id;
+                itemDetailController.code=xmxq;
+            }
+            [self.navigationController pushViewController:itemDetailController animated:YES];
         }
-        [self.navigationController pushViewController:itemDetailController animated:YES];
     }
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -162,6 +168,9 @@ static NSInteger padding=6;
 -(void)createViews {
     _sortView = [[BeautyItemSortView alloc] init];
     _sortView.delegate=self;
+    if (isStringEmpty(_sort)) {
+        _sortView.hidden=YES;
+    }
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
@@ -175,10 +184,17 @@ static NSInteger padding=6;
     [_collectionView registerClass:[ClassItemCollectionCell class] forCellWithReuseIdentifier:@"ClassItemCollectionCell"];
 }
 -(void)configureConstraints {
-    [_sortView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.and.left.and.right.equalTo(self.view);
-        make.height.mas_equalTo(Height_Pt(100));
-    }];
+    if (isStringEmpty(_sort)) {
+        [_sortView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.and.left.and.right.equalTo(self.view);
+            make.height.mas_equalTo(0);
+        }];
+    }else{
+        [_sortView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.and.left.and.right.equalTo(self.view);
+            make.height.mas_equalTo(Height_Pt(100));
+        }];
+    }
     
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_sortView.mas_bottom);
@@ -195,7 +211,7 @@ static NSInteger padding=6;
         }
         [_collectionView.mj_header endRefreshing];
         [_collectionView reloadData];
-    } Failure:nil];
+    } Failure:nil andNavigation:self.navigationController];
 }
 #pragma mark ===== 项目排序 =====
 -(void)loadHttpData:(NSInteger)index withField:(NSInteger)field withLift:(NSInteger)lift withCode:(NSString*)code{
@@ -208,7 +224,7 @@ static NSInteger padding=6;
                                               [self.itemArray addObject:dict];
                                           }
                                           [_collectionView reloadData];
-                                      } Failure:nil];
+                                      } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
