@@ -31,8 +31,7 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    self.userCenterViewModel.headView.nickName=@"获取账号";
-    self.userCenterViewModel.headView.imageUrl=@"获取头像";
+    [self.userCenterViewModel.headView getUserData];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {

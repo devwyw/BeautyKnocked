@@ -15,13 +15,13 @@
 #import "ConfirmOrderRemarksCell.h"
 #import "ConfirmOrderSubmitView.h"
 #import "OrderSubDay.h"
-#import "OrderModel.h"
 #import "AddressController.h"
 #import "BeauticianController.h"
 #import "SonItemController.h"
 #import "SonCouponTableController.h"
 #import "PaySheetView.h"
 #import "PayViewController.h"
+#import "OrderModel.h"
 
 static NSString *const addressCell = @"ConfirmOrderAddressCell";
 static NSString *const FillCell = @"ConfirmOrderFillCell";
@@ -198,7 +198,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     case 0://选择技师
                 {
                     BeauticianController *controller=[[BeauticianController alloc]init];
-                    controller.isSelected=YES;
+                    controller.isType=1;
                     controller.beauticianId=[RACSubject subject];
                     [controller.beauticianId subscribeNext:^(id  _Nullable x) {
                         _detailOrderModel.beauticianId=x;
@@ -206,8 +206,8 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     }];
                     if (!isStringEmpty(_detailOrderModel.pactServiceTime)) {
                         //时间筛选技师
-                        controller.code1=self.detailOrderModel.serviceTime;
-                        controller.code2=self.detailOrderModel.pactServiceTime;
+                        controller.serviceTime=self.detailOrderModel.serviceTime;
+                        controller.pactServiceTime=self.detailOrderModel.pactServiceTime;
                     }
                     [self.navigationController pushViewController:controller animated:YES];
                 }

@@ -13,7 +13,6 @@
 #import "UserAgreementController.h"
 #import "MyMessageController.h"
 #import "AddressController.h"
-#import "CollectBeauticianTableViewController.h"
 #import "IntegralMallController.h"
 #import "SusoensionFlowLayout.h"
 #import "MineFightgroupTableController.h"
@@ -22,6 +21,7 @@
 #import "MoneyController.h"
 #import "LoginController.h"
 #import "CouponController.h"
+#import "BeauticianController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
@@ -179,11 +179,11 @@
 -(void)didChooseToolAtIndex:(NSUInteger)index {
     if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
         if (index == 1) {
-            CollectBeauticianTableViewController *collectVC = [[CollectBeauticianTableViewController alloc] init];
-            collectVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:collectVC animated:YES];
+            BeauticianController *controller=[[BeauticianController alloc]init];
+            controller.hidesBottomBarWhenPushed = YES;
+            controller.isType=2;
+            [self.navigationController pushViewController:controller animated:YES];
         }else if (index == 2) {
-            
         }else if (index == 3) {
             AddressController *addressVC = [[AddressController alloc] init];
             addressVC.hidesBottomBarWhenPushed = YES;

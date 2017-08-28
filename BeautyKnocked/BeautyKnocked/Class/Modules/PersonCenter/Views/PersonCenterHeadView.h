@@ -21,12 +21,7 @@
 @interface PersonCenterHeadView : UIView
 
 @property (nonatomic, weak) id<PSheaderViewDelegate> delegate;
-
 @property (nonatomic, strong) RACSignal *setClickedSignal;
-
 @property (nonatomic, strong) RACSignal *messageClickedSignal;
-
-@property (nonatomic,copy) NSString * nickName;
-@property (nonatomic,copy) NSString * imageUrl;
-
+-(void)getUserData;
 @end

@@ -294,27 +294,25 @@
     // 此处可以对Cell做你想做的操作了...
     [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     MLDateModel *dateModel = self.dataSource[indexPath.item];
-    if (indexPath.item + 1 == _todayWeekDay) {
-        cell.dateNumber = @"今天";
-        cell.content = @"约满";
-        cell.numberColor = ThemeColor;
-        cell.contentColor = ThemeColor;
-    }else {
-        cell.dateNumber = [NSString stringWithFormat:@"%ld",(long)dateModel.day];
-    }
+    cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
     
+    if (dateModel.isInThirtyDays) {
+        cell.backgroundColor=[UIColor whiteColor];
+        UIView *selectedView = [[UIView alloc] init];
+        selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
+        cell.selectedBackgroundView = selectedView;
+    }
+
     if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
         cell.content = self.months[dateModel.month];
     }
     
-    // border
-    if (dateModel.isInThirtyDays) {
-        // selected
-        UIView *selectedView = [[UIView alloc] init];
-        selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
-        cell.selectedBackgroundView = selectedView;
-        [cell setBackgroundColor:[UIColor whiteColor]];
-    }
+//    if (indexPath.item + 1 == _todayWeekDay) {
+//        cell.dateNumber = @"今天";
+//        cell.content = @"约满";
+//        cell.numberColor = ThemeColor;
+//        cell.contentColor = ThemeColor;
+//    }
     return cell;
 }
 

@@ -876,7 +876,6 @@
 		738DAADC1EDEB40300F45DE3 /* OurcommitmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 738DAADB1EDEB40300F45DE3 /* OurcommitmentController.m */; };
 		738DAAE11EDEB47200F45DE3 /* introduce.html in Resources */ = {isa = PBXBuildFile; fileRef = 738DAADF1EDEB47200F45DE3 /* introduce.html */; };
 		738DAAE41EDEBB8600F45DE3 /* UserAgreementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 738DAAE31EDEBB8600F45DE3 /* UserAgreementController.m */; };
-		7390F4A41EE6919B0059A168 /* CollectBeauticianTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7390F4A31EE6919B0059A168 /* CollectBeauticianTableViewController.m */; };
 		7390F4AE1EE696F70059A168 /* EditAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7390F4AB1EE696F70059A168 /* EditAddressController.m */; };
 		7390F4AF1EE696F70059A168 /* AddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7390F4AD1EE696F70059A168 /* AddressController.m */; };
 		7390F4B61EE697030059A168 /* AddressEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7390F4B11EE697030059A168 /* AddressEditView.m */; };
@@ -1981,8 +1980,6 @@
 		738DAADF1EDEB47200F45DE3 /* introduce.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = introduce.html; sourceTree = "<group>"; };
 		738DAAE21EDEBB8600F45DE3 /* UserAgreementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAgreementController.h; sourceTree = "<group>"; };
 		738DAAE31EDEBB8600F45DE3 /* UserAgreementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAgreementController.m; sourceTree = "<group>"; };
-		7390F4A21EE6919B0059A168 /* CollectBeauticianTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectBeauticianTableViewController.h; sourceTree = "<group>"; };
-		7390F4A31EE6919B0059A168 /* CollectBeauticianTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectBeauticianTableViewController.m; sourceTree = "<group>"; };
 		7390F4AA1EE696F70059A168 /* EditAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAddressController.h; sourceTree = "<group>"; };
 		7390F4AB1EE696F70059A168 /* EditAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAddressController.m; sourceTree = "<group>"; };
 		7390F4AC1EE696F70059A168 /* AddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressController.h; sourceTree = "<group>"; };
@@ -3533,8 +3530,6 @@
 				73440A3C1ED2CFDC003807B8 /* BeauticianItemController.m */,
 				736DE2981ED0208400E32717 /* BeauticianItemTableViewController.h */,
 				736DE2991ED0208400E32717 /* BeauticianItemTableViewController.m */,
-				7390F4A21EE6919B0059A168 /* CollectBeauticianTableViewController.h */,
-				7390F4A31EE6919B0059A168 /* CollectBeauticianTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -5165,7 +5160,6 @@
 				04F0AFF91F32B2FD00D77558 /* NSString+Attribute.m in Sources */,
 				7374313F1ECD7E9C00A617F3 /* BeautyItemSortView.m in Sources */,
 				73A37D991EBDAD7600BE60C9 /* MineController.m in Sources */,
-				7390F4A41EE6919B0059A168 /* CollectBeauticianTableViewController.m in Sources */,
 				737AEF981ED818D10039E88A /* PersonInfoViewModel.m in Sources */,
 				737330A01EE29C7200DF54AC /* ProductIntroduceView.m in Sources */,
 				045C8AD41F456E77002C2F8B /* CouponUseCell.m in Sources */,
@@ -5333,7 +5327,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
 				INFOPLIST_FILE = BeautyKnocked/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.paisen.com.BeautyKnocked;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5351,7 +5345,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
 				INFOPLIST_FILE = BeautyKnocked/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = www.paisen.com.BeautyKnocked;
 				PRODUCT_NAME = "$(TARGET_NAME)";

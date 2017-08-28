@@ -60,10 +60,8 @@
     }
     return _user;
 }
--(void)setNickName:(NSString *)nickName{
+-(void)getUserData{
     _nameLabel.text = self.user.account;
-}
--(void)setImageUrl:(NSString *)imageUrl{
     [Master GetWebImage:_headIcon withUrl:self.user.headPath];
 }
 -(void)setupInterface {

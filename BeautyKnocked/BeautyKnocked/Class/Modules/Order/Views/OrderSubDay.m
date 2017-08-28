@@ -11,7 +11,6 @@
 #import "MLDateManager.h"
 #import "OrderSubTime.h"
 #import "TimeSlotModel.h"
-#import <LEEAlert.h>
 
 static OrderSubDay *instance=nil;
 
@@ -234,14 +233,13 @@ static OrderSubDay *instance=nil;
     MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     // 此处可以对Cell做你想做的操作了...
     [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
-
     MLDateModel *dateModel = self.dataSource[indexPath.item];
-    if (dateModel.isInThirtyDays) {
-        [cell setBackgroundColor:[UIColor whiteColor]];
-    }
-    
     cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
     
+    if (dateModel.isInThirtyDays) {
+        cell.backgroundColor=[UIColor whiteColor];
+    }
+
     if (indexPath.item + 1 >= _nowCompoents.weekday && dateModel.day == 1 ) {
         cell.content = self.months[dateModel.month];
     }
