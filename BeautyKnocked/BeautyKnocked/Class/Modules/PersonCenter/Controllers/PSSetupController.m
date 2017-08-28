@@ -19,17 +19,19 @@
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.setupViewModel getUserNotificationSwitch];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"设置";
     self.setupViewModel.navigationController = self.navigationController;
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 -(SetupViewModel *)setupViewModel {
     if (!_setupViewModel) {
         _setupViewModel = [[SetupViewModel alloc] init];
@@ -42,8 +44,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.setupViewModel numberOfRowsAtSection:section];
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.setupViewModel configureTableView:tableView cellForRowAtIndexPath:indexPath];
 }
@@ -59,10 +59,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.setupViewModel configTableView:tableView didSelectRowAtIndexPath:indexPath];
 }
-
-
 @end

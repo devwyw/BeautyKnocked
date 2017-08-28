@@ -12,6 +12,7 @@
 #import "UIImage+Original.h"
 #import "UITextField+Length.h"
 #import "NSString+Attribute.h"
+#import <JPUSHService.h>
 
 @interface LoginController ()<UITextFieldDelegate>
 
@@ -58,7 +59,6 @@
 
 -(void)addSubViews {
     [self.view addSubview:self.backImgView];
-    
     [self.backImgView addSubview:self.logoImgView];
     [self.backImgView addSubview:self.usernameTextField];
     [self.backImgView addSubview:self.passwordTextField];
@@ -189,6 +189,10 @@
                                                 Acount *user=[Acount shareManager];
                                                 user=[Acount mj_objectWithKeyValues:json[@"info"]];
                                                 [user SignInAcount];
+                                                /** 极光推送设置别名Tag */
+                                                [JPUSHService setAlias:[NSString stringWithFormat:@"c%@",user.id] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+                                                    NSLog(@"极光推送:%@",iAlias);
+                                                } seq:[user.id integerValue]];
                                                 [Master showSVProgressHUD:@"登陆成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                                                     [Wself dismissViewControllerAnimated:YES completion:^{
                                                         UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;

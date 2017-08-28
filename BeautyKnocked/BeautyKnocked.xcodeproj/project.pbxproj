@@ -44,6 +44,7 @@
 		046AF9101F418F3B00C627D6 /* ComListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046AF90F1F418F3B00C627D6 /* ComListModel.m */; };
 		047C75221F38192200EE08E0 /* UITextField+Length.m in Sources */ = {isa = PBXBuildFile; fileRef = 047C75211F38192200EE08E0 /* UITextField+Length.m */; };
 		0484ABF61F2F15F600213AB1 /* book.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0484ABEB1F2F15F600213AB1 /* book.jpg */; };
+		04A2B1AB1F53C6E10032CA5E /* AppDelegate+JPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A2B1AA1F53C6E10032CA5E /* AppDelegate+JPush.m */; };
 		04A3C8FA1F51549800B5856E /* OrderInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3C8F91F51549800B5856E /* OrderInfoModel.m */; };
 		04A3C8FD1F5157D800B5856E /* ServiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3C8FC1F5157D800B5856E /* ServiceView.m */; };
 		04A6EFCF1F3AA9CF0036FBDF /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6EFCD1F3AA9CF0036FBDF /* Photos.framework */; };
@@ -998,6 +999,9 @@
 		047C75201F38192200EE08E0 /* UITextField+Length.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Length.h"; sourceTree = "<group>"; };
 		047C75211F38192200EE08E0 /* UITextField+Length.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Length.m"; sourceTree = "<group>"; };
 		0484ABEB1F2F15F600213AB1 /* book.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book.jpg; sourceTree = "<group>"; };
+		04A2B1A71F53C43C0032CA5E /* BeautyKnocked.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeautyKnocked.entitlements; sourceTree = "<group>"; };
+		04A2B1A91F53C6E10032CA5E /* AppDelegate+JPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+JPush.h"; sourceTree = "<group>"; };
+		04A2B1AA1F53C6E10032CA5E /* AppDelegate+JPush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+JPush.m"; sourceTree = "<group>"; };
 		04A3C8F81F51549800B5856E /* OrderInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderInfoModel.h; sourceTree = "<group>"; };
 		04A3C8F91F51549800B5856E /* OrderInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderInfoModel.m; sourceTree = "<group>"; };
 		04A3C8FB1F5157D800B5856E /* ServiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceView.h; sourceTree = "<group>"; };
@@ -2099,6 +2103,16 @@
 				046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */,
 			);
 			name = NSLog;
+			sourceTree = "<group>";
+		};
+		04A2B1A81F53C5460032CA5E /* AppDelegate+SDK */ = {
+			isa = PBXGroup;
+			children = (
+				04A2B1A91F53C6E10032CA5E /* AppDelegate+JPush.h */,
+				04A2B1AA1F53C6E10032CA5E /* AppDelegate+JPush.m */,
+			);
+			name = "AppDelegate+SDK";
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		04B1BAE21F3ED0400062CBE0 /* Model */ = {
@@ -3692,6 +3706,8 @@
 				73A37CE11EBD6A3F00BE60C9 /* Info.plist */,
 				73A37CD31EBD6A3F00BE60C9 /* AppDelegate.h */,
 				73A37CD41EBD6A3F00BE60C9 /* AppDelegate.m */,
+				04A2B1A71F53C43C0032CA5E /* BeautyKnocked.entitlements */,
+				04A2B1A81F53C5460032CA5E /* AppDelegate+SDK */,
 				73A37CDC1EBD6A3F00BE60C9 /* Assets.xcassets */,
 				73A37CD01EBD6A3F00BE60C9 /* Supporting Files */,
 			);
@@ -4143,6 +4159,14 @@
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 2D55A4E449;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					73A37CE51EBD6A3F00BE60C9 = {
 						CreatedOnToolsVersion = 8.3.1;
@@ -5149,6 +5173,7 @@
 				7399DC601ECED6310054877F /* OrderTableViewCell.m in Sources */,
 				737126041EE7DFC7001A02DC /* CouponImageView.m in Sources */,
 				73A37CD21EBD6A3F00BE60C9 /* main.m in Sources */,
+				04A2B1AB1F53C6E10032CA5E /* AppDelegate+JPush.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5303,6 +5328,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BeautyKnocked/BeautyKnocked.entitlements;
 				DEVELOPMENT_TEAM = 2D55A4E449;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
@@ -5320,6 +5346,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = BeautyKnocked/BeautyKnocked.entitlements;
 				DEVELOPMENT_TEAM = 2D55A4E449;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";

@@ -86,14 +86,7 @@
 -(void)phone:(UIButton*)button{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否需要拨打客服电话4009158919" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSURL *phone=[NSURL URLWithString:@"tel://4009158919"];
-        if ([[UIApplication sharedApplication] canOpenURL:phone]) {
-            if (SystemVersion>=10.0) {
-                [[UIApplication sharedApplication] openURL:phone options:@{} completionHandler:nil];
-            }else{
-                [[UIApplication sharedApplication] openURL:phone];
-            }
-        }
+        [Master pushSystemSettingWithUrl:@"tel://4009158919"];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];

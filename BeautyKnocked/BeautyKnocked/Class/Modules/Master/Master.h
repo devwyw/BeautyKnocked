@@ -21,6 +21,8 @@ typedef void(^ShowSVProgressBlock)();
 @interface Master : NSObject
 /** 检测网络 */
 +(void)getNetWork;
+/** 跳转到设置 */
++(void)pushSystemSettingWithUrl:(NSString *)url;
 /** 提示框 */
 +(void)showSVProgressHUD:(NSString*)string withType:(ShowSVProgressType)type withShowBlock:(ShowSVProgressBlock)block;
 #pragma mark ===== 所有网络请求 =====

@@ -40,9 +40,9 @@
     _imgView = [[UIImageView alloc] init];
     
     _signLabel = [[UILabel alloc] init];
-    _signLabel.font = [UIFont systemFontOfSize:Font_Size(36)];
+    _signLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     _signLabel.textColor = [UIColor whiteColor];
-    _signLabel.layer.backgroundColor = [UIColor orangeColor].CGColor;
+    _signLabel.backgroundColor = [UIColor orangeColor];
     [_signLabel makeCornerRadius:4];
     
     _titleLabel = [[UILabel alloc] init];
@@ -59,7 +59,6 @@
 }
 
 -(void)addConstraints {
-    
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.contentView);
         make.left.equalTo(self.contentView).with.offset(Width_Pt(25));
@@ -87,7 +86,7 @@
 }
 
 -(void)setSignText:(NSString *)signText {
-    _signLabel.text = signText;
+    _signLabel.text=signText;
 }
 
 -(void)setTitle:(NSString *)title {

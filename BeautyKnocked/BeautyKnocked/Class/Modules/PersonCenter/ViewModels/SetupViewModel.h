@@ -20,5 +20,6 @@
 
 -(CGFloat)configTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
+-(void)getUserNotificationSwitch;
 
 @end

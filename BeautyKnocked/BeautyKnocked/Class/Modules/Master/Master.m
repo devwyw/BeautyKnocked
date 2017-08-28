@@ -31,7 +31,7 @@
                 .LeeTitle(@"网络未连接")
                 .LeeContent(@"我们未在地球上找到您的连接")
                 .LeeCancelAction(@"网络设置", ^{
-                    [Master pushSystemSetting];
+                    [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
                 })
                 .LeeAction(@"确定", ^{
                 })
@@ -45,13 +45,13 @@
     }];
     [manager startMonitoring];
 }
-+(void)pushSystemSetting{
-    NSURL *Network=[NSURL URLWithString:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
-    if ([[UIApplication sharedApplication] canOpenURL:Network]) {
++(void)pushSystemSettingWithUrl:(NSString *)url{
+    NSURL *SettingUrl=[NSURL URLWithString:url];
+    if ([[UIApplication sharedApplication] canOpenURL:SettingUrl]) {
         if (SystemVersion>=10.0) {
-            [[UIApplication sharedApplication] openURL:Network options:@{} completionHandler:nil];
+            [[UIApplication sharedApplication] openURL:SettingUrl options:@{} completionHandler:nil];
         }else{
-            [[UIApplication sharedApplication] openURL:Network];
+            [[UIApplication sharedApplication] openURL:SettingUrl];
         }
     }
 }
@@ -91,6 +91,8 @@
  @param failure 失败回调
  */
 +(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure andNavigation:(UINavigationController *)navigationController{
+    /** 状态栏小菊花 */
+    [UIApplication sharedApplication].networkActivityIndicatorVisible =YES;
     /** 拼接 */
     url = [NSString stringWithFormat:@"%@%@",url,serviceCode];
     {/** 菊花 */
@@ -106,7 +108,9 @@
     manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
         [SVProgressHUD dismiss];
+        
         NSData *data = responseObject;
         NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers  error:nil];
         NSLog(@"%@",resultDic);
@@ -116,14 +120,24 @@
             }
         }
     }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
         [SVProgressHUD dismiss];
+        
         NSLog(@"json错误: %@",error);
         switch (error.code) {
             case -1004:
-                [SVProgressHUD showErrorWithStatus:@"我们未能与您连接，请您再试一试~"];
+                [Master showSVProgressHUD:@"我们未能与您连接，请您再试一试~" withType:ShowSVProgressTypeError withShowBlock:nil];
                 break;
             default:
-                [SVProgressHUD showErrorWithStatus:@"网络错误，请您再试一试~"];
+                [LEEAlert alert].config
+                .LeeTitle(@"网络未连接")
+                .LeeContent(@"我们未在地球上找到您的连接")
+                .LeeCancelAction(@"网络设置", ^{
+                    [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
+                })
+                .LeeAction(@"确定", ^{
+                })
+                .LeeShow();
                 break;
         }
         if (!isObjectEmpty(failure)){

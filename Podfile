@@ -18,6 +18,7 @@ pod 'PYSearch'
 pod 'FMDB'
 pod 'LEEAlert'
 pod 'ZLPhotoBrowser'
+pod 'JPush'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'
