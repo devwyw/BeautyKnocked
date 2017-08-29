@@ -25,20 +25,21 @@
     [super viewDidLoad];
     self.title=@"支付收银台";
     self.view.backgroundColor=[UIColor whiteColor];
+    self.edgesForExtendedLayout=UIRectEdgeNone;
     // Do any additional setup after loading the view.
     [self initializeViews];
     [self addConstraints];
 }
 -(void)initializeViews {
     _message=[[UILabel alloc]init];
-    _message.font=[UIFont systemFontOfSize:Font_Size(40)];
+    _message.font=[UIFont systemFontOfSize:Font_Size(45)];
     _message.text=@"您总共需要支付:";
     [self.view addSubview:_message];
     
     _money=[[UILabel alloc]init];
     NSString *text=[NSString stringWithFormat:@"¥ %@",_model.money];
-    NSMutableAttributedString *attributeStr =[text setMinString:@"¥" withMinFont:Font_Size(35) andMaxString:_model.money withMaxFont:Font_Size(70)];
-    [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, text.length)];
+    NSMutableAttributedString *attributeStr =[text setMinString:@"¥" withMinFont:Font_Size(50) andMaxString:_model.money withMaxFont:Font_Size(100)];
+    [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#d72d43"] range:NSMakeRange(0, text.length)];
     _money.attributedText=attributeStr;
     [self.view addSubview:_money];
     
@@ -47,8 +48,8 @@
     [self.view addSubview:_line];
     
     _myTitle=[[UILabel alloc]init];
-    _myTitle.font=[UIFont systemFontOfSize:Font_Size(40)];
-    _myTitle.text=@"60.0";
+    _myTitle.font=[UIFont systemFontOfSize:Font_Size(45)];
+    _myTitle.text=@"您的账单";
     [self.view addSubview:_myTitle];
     
     _tableview=[[UITableView alloc]init];
@@ -57,9 +58,18 @@
     _tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableview.bounces=NO;
     _tableview.estimatedRowHeight=Height_Pt(80);
-    _tableview.backgroundColor=[UIColor clearColor];
+    _tableview.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
     [_tableview registerClass:[PayInfoViewCell class] forCellReuseIdentifier:@"PayInfoViewCell"];
     [self.view addSubview:_tableview];
+    
+    _pushPay=[[UIButton alloc]init];
+    [_pushPay setBackgroundColor:[UIColor colorWithHexString:@"#67d75a"]];
+    [_pushPay setTitle:@"确认支付" forState:UIControlStateNormal];
+    [_pushPay.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(50)]];
+    [[_pushPay rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        /** 立即支付 */
+    }];
+    [self.view addSubview:_pushPay];
 }
 -(void)addConstraints {
     [_message mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,7 +87,7 @@
         make.height.offset(0.35);
     }];
     [_myTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_line.mas_bottom).offset(Height_Pt(40));
+        make.top.equalTo(_line.mas_bottom).offset(Height_Pt(50));
         make.left.equalTo(_message);
     }];
     [_tableview mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -85,9 +95,13 @@
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.view).offset(-Height_Pt(150));
     }];
+    [_pushPay mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_tableview.mas_bottom);
+        make.left.bottom.right.equalTo(self.view);
+    }];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2+_model.listArray.count;
+    return 2+_model.list.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PayInfoViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayInfoViewCell" forIndexPath:indexPath];
@@ -97,14 +111,14 @@
         model.num=@"数量";
         model.money=@"价格(元)";
         cell.model=model;
-    }else if (indexPath.row==_model.listArray.count+1){
+    }else if (indexPath.row==_model.list.count+1){
         PayInfoModel *model=[[PayInfoModel alloc]init];
         model.name=@"共计消费";
-        model.num=[NSString stringWithFormat:@"%ld",_model.listArray.count];
+        model.num=[NSString stringWithFormat:@"%ld",_model.list.count];
         model.money=_model.money;
         cell.model=model;
     }else{
-        cell.model=[PayInfoModel mj_objectWithKeyValues:_model.listArray[indexPath.row-1]];
+        cell.model=[PayInfoModel mj_objectWithKeyValues:_model.list[indexPath.row-1]];
     }
     return cell;
 }
@@ -114,8 +128,6 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return CGFLOAT_MIN;
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

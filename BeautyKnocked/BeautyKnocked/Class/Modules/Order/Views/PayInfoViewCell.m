@@ -24,6 +24,15 @@
     }
     return self;
 }
+-(void)setModel:(PayInfoModel *)model{
+    _name.text=model.name;
+    if ([model.num isEqualToString:@"数量"]) {
+        _num.text=model.num;
+    }else{
+        _num.text=[NSString stringWithFormat:@"x%@",model.num];
+    }
+    _money.text=model.money;
+}
 -(void)initializeViews {
     UIColor *darkGray=[UIColor darkGrayColor];
     UIFont *font=[UIFont systemFontOfSize:Font_Size(40)];
@@ -44,8 +53,20 @@
     [self.contentView addSubview:_money];
 }
 -(void)addConstraints {
+    [_name mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).offset(Height_Pt(20));
+        make.left.equalTo(self.contentView).offset(Width_Pt(50));
+        make.bottom.equalTo(self.contentView).offset(-Height_Pt(20));
+    }];
     
+    [_num mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.contentView);
+    }];
     
+    [_money mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.contentView);
+        make.left.equalTo(self.contentView.mas_right).offset(-Width_Pt(230));
+    }];
 }
 
 - (void)awakeFromNib {

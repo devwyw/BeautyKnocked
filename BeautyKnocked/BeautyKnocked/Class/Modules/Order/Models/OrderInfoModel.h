@@ -12,5 +12,5 @@
 @property (nonatomic,copy) NSString * id;
 @property (nonatomic,copy) NSString * orderStr;
 @property (nonatomic,copy) NSString * money;
-@property (nonatomic,strong) NSArray * listArray;
+@property (nonatomic,strong) NSArray * list;
 @end
