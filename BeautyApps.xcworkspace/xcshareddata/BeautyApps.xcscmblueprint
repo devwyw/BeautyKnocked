@@ -7,14 +7,14 @@
     "3E863BE46A56924440F159C90CD1EFBE4DC01CC9" : 9223372036854775807,
     "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9E3AFC8A-D330-45E2-91CB-E4CE96B1A83F",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "6DDA9941-0EEC-4F9C-B7A6-54C8DF5AABE9",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "3E863BE46A56924440F159C90CD1EFBE4DC01CC9" : "BeautyKnocked\/",
     "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D" : "Technician\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "BeautyApps",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BeautyKnocked\/BeautyApps.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BeautyApps.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/15079244845\/MLQQM.git",
