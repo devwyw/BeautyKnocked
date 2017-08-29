@@ -15,4 +15,9 @@
 
 @interface AppDelegate (JPush)
 +(void)registerJPushSDKWithOptions:(NSDictionary *)launchOptions andDelegate:(id)appDelegate;
++(void)registerDeviceToken:(NSData *)deviceToken;
++(void)willPresentNotification:(UNNotification *)notification;
++(void)didReceiveNotificationResponse:(UNNotificationResponse *)response;
++(void)didReceiveRemoteNotification:(NSDictionary *)userInfo;
++(void)removeAllPendingNotificationRequests;
 @end

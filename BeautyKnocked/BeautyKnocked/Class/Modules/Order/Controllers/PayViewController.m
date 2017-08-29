@@ -23,7 +23,7 @@
 
 @implementation PayViewController
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,32 +33,29 @@
     // Do any additional setup after loading the view.
     [self initializeViews];
     [self addConstraints];
-    
-    /** 支付通知 */
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(alipaySuccess) name:@"alipaySuccess" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(alipayFailure) name:@"alipayFailure" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(Success) name:AlipaySuccess object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(Failure) name:AlipayFailure object:nil];
 }
--(void)alipaySuccess{
+-(void)Success{
+    //Weakify(self);
     [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
-        [Master showSVProgressHUD:@"支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-            PayInfoController *controller=[[PayInfoController alloc]init];
-            [controller setImageName:@"zhifuchenggong"];
-            [controller setString1:@"支付成功"];
-            controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
-            controller.btnName=@"返回首页";
-            [self.navigationController pushViewController:controller animated:YES];
+        [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+            //[Wself payPushController:@"zhifuchenggong" withStatus:@"支付成功" withMessage:@"追加服务订单必须在服务时间内完成付款，否则作废。" withName:@"返回首页"];
         }];
     } Failure:nil andNavigation:self.navigationController];
 }
--(void)alipayFailure{
-    [Master showSVProgressHUD:@"支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
-        PayInfoController *controller=[[PayInfoController alloc]init];
-        [controller setImageName:@"zhifuchenggong"];
-        [controller setString1:@"支付成功"];
-        controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
-        controller.btnName=@"返回首页";
-        [self.navigationController pushViewController:controller animated:YES];
+-(void)Failure{
+    [Master showSVProgressHUD:@"订单支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
+        
     }];
+}
+-(void)payPushController:(NSString*)image withStatus:(NSString*)status withMessage:(NSString*)message withName:(NSString*)name{
+    PayInfoController *controller=[[PayInfoController alloc]init];
+    [controller setImageName:@"zhifuchenggong"];
+    [controller setString1:@"支付成功"];
+    controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
+    controller.btnName=@"返回首页";
+    [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)initializeViews {
     _message=[[UILabel alloc]init];
@@ -98,9 +95,23 @@
     [_pushPay.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(50)]];
     [[_pushPay rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
         /** 立即支付 */
-        [[AlipaySDK defaultService]payOrder:_model.orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-            NSLog(@"%@",resultDic);
-        }];
+        switch ([_isPayType integerValue]) {
+            case 0:
+                
+                break;
+            case 1:
+                
+                break;
+            default:
+                [[AlipaySDK defaultService]payOrder:_model.orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+                    if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                        [AppDelegate Success];
+                    }else{
+                        [AppDelegate Failure];
+                    }
+                }];
+                break;
+        }
     }];
     [self.view addSubview:_pushPay];
 }

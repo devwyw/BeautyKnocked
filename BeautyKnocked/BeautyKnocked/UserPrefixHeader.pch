@@ -27,6 +27,7 @@
 #import "UIColor+help.h"
 #import "UIViewController+Cloudox.h"
 #import "UIView+CornerRadius.h"
+#import "NSDictionary+Log.h"
 /** info */
 #define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define AppVersion [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]

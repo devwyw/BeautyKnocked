@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import <IQKeyboardManager.h>
 #import "TabBarController.h"
+#import <IQKeyboardManager.h>
 #import "AppDelegate+JPush.h"
 #import "AppDelegate+Alipay.h"
 
@@ -20,7 +20,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //[NSThread sleepForTimeInterval:3.0];
-    //[UIApplication sharedApplication].applicationIconBadgeNumber = 1;
     /** RootViewController */
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -31,7 +30,7 @@
     [self setAppearance];
     [self getLog];
     
-    /** 极光推送 */
+    /** 极光推送->注册 */
     [AppDelegate registerJPushSDKWithOptions:launchOptions andDelegate:self];
 
     return YES;
@@ -74,98 +73,52 @@
           );
 }
 #pragma mark ===== JPush =====
-//注册APNs成功并上报
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [JPUSHService registerDeviceToken:deviceToken];
+    [AppDelegate registerDeviceToken:deviceToken];
 }
-//JPUSHRegisterDelegate
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
-    NSDictionary * userInfo = notification.request.content.userInfo;
-    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        [JPUSHService handleRemoteNotification:userInfo];
-    }
+    [AppDelegate willPresentNotification:notification];
     completionHandler(UNNotificationPresentationOptionAlert);
 }
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
-    NSDictionary * userInfo = response.notification.request.content.userInfo;
-    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        [JPUSHService handleRemoteNotification:userInfo];
-    }
+    [AppDelegate didReceiveNotificationResponse:response];
     completionHandler();
 }
-//iOS 7 Support
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     if (SystemVersion < 10.0){
-        [JPUSHService handleRemoteNotification:userInfo];
+        [AppDelegate didReceiveRemoteNotification:userInfo];
         completionHandler(UIBackgroundFetchResultNewData);
     }
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [JPUSHService handleRemoteNotification:userInfo];
+    [AppDelegate didReceiveRemoteNotification:userInfo];
 }
 #pragma mark ===== 支付SDK =====
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    /** 支付宝支付 */
-    if ([url.host isEqualToString:@"safepay"]) {
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipaySuccess" object:nil];
-            }else{
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayFailure" object:nil];
-            }
-        }];
-    }
-    
-    /** 微信支付 */
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    /** 支付宝 */
+    [AppDelegate openURL:url];
     return YES;
 }
-
-// NOTE: 9.0以后使用新API接口
+// 9.0以后新API接口
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
-    /** 支付宝支付 */
-    if ([url.host isEqualToString:@"safepay"]) {
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipaySuccess" object:nil];
-            }else{
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayFailure" object:nil];
-            }
-        }];
-        
-        [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
-            NSString *result = resultDic[@"result"];
-            NSString *authCode = nil;
-            if (result.length>0) {
-                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
-                for (NSString *subResult in resultArr) {
-                    if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
-                        authCode = [subResult substringFromIndex:10];
-                        break;
-                    }
-                }
-            }
-        }];
-    }
-    /** 微信支付 */
-    
+    /** 支付宝 */
+    [AppDelegate openURLWithOptions:url];
     return YES;
 }
 #pragma mark ===== App管理 =====
 - (void)applicationWillResignActive:(UIApplication *)application {
 }
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [AppDelegate removeAllPendingNotificationRequests];
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [AppDelegate removeAllPendingNotificationRequests];
     if (SystemVersion>=10.0) {
         [[UNUserNotificationCenter alloc] removeAllPendingNotificationRequests];
     }
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    /** 每次进入App检测一次网络状态 */
     [Master getNetWork];
 }
 - (void)applicationWillTerminate:(UIApplication *)application {

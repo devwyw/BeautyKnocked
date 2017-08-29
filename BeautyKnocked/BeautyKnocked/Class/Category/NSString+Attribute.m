@@ -13,6 +13,9 @@
 -(NSMutableAttributedString *)setRedPrice:(NSString *)redPrice linePrice:(NSString *)linePrice {
     NSRange redRange = [self rangeOfString:redPrice];
     NSRange lineRange = [self rangeOfString:linePrice];
+    if ([redPrice isEqualToString:linePrice]) {
+        lineRange=NSMakeRange(redRange.location+redRange.length+1, linePrice.length);
+    }
     NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:self];
     [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:redRange];
     [attributeStr addAttributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor],NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle),NSBaselineOffsetAttributeName:@(0),NSStrikethroughColorAttributeName:[UIColor lightGrayColor]} range:lineRange];

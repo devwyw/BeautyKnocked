@@ -39,4 +39,25 @@ static NSString *JPushKey = @"1481b2a73612a63a7dd20bd3";
                  apsForProduction:1
      ];
 }
++(void)willPresentNotification:(UNNotification *)notification{
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+}
++(void)didReceiveNotificationResponse:(UNNotificationResponse *)response{
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+}
++(void)didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    [JPUSHService handleRemoteNotification:userInfo];
+}
++(void)removeAllPendingNotificationRequests{
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+}
++(void)registerDeviceToken:(NSData *)deviceToken{
+    [JPUSHService registerDeviceToken:deviceToken];
+}
 @end

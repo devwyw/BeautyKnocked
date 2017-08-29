@@ -96,8 +96,10 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
     if (!_userNotificationSwitch) {
         _userNotificationSwitch= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
         _userNotificationSwitch.onTintColor = ThemeColor;
-        [[_userNotificationSwitch rac_signalForControlEvents:UIControlEventValueChanged] subscribeNext:^(__kindof UISwitch * _Nullable message) {
+        Weakify(self);
+        [[_userNotificationSwitch rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
             [Master pushSystemSettingWithUrl:@"App-Prefs:root=www.paisen.com.BeautyKnocked"];
+            [Wself.navigationController popViewControllerAnimated:YES];
         }];
     }
     return _userNotificationSwitch;
