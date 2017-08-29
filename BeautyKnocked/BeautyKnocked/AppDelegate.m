@@ -10,6 +10,7 @@
 #import <IQKeyboardManager.h>
 #import "TabBarController.h"
 #import "AppDelegate+JPush.h"
+#import "AppDelegate+Alipay.h"
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
@@ -41,7 +42,7 @@
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
 
     /** 导航栏返回按钮图片 */
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-Width, -Height) forBarMetrics:UIBarMetricsDefault];
      [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"fanhui2"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 25, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 
     /** 导航栏背景配置 */
@@ -101,6 +102,55 @@
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [JPUSHService handleRemoteNotification:userInfo];
+}
+#pragma mark ===== 支付SDK =====
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    /** 支付宝支付 */
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipaySuccess" object:nil];
+            }else{
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayFailure" object:nil];
+            }
+        }];
+    }
+    
+    /** 微信支付 */
+    return YES;
+}
+
+// NOTE: 9.0以后使用新API接口
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    /** 支付宝支付 */
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipaySuccess" object:nil];
+            }else{
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayFailure" object:nil];
+            }
+        }];
+        
+        [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
+            NSString *result = resultDic[@"result"];
+            NSString *authCode = nil;
+            if (result.length>0) {
+                NSArray *resultArr = [result componentsSeparatedByString:@"&"];
+                for (NSString *subResult in resultArr) {
+                    if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
+                        authCode = [subResult substringFromIndex:10];
+                        break;
+                    }
+                }
+            }
+        }];
+    }
+    /** 微信支付 */
+    
+    return YES;
 }
 #pragma mark ===== App管理 =====
 - (void)applicationWillResignActive:(UIApplication *)application {

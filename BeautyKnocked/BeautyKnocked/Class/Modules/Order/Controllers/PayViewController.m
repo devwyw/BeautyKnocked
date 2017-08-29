@@ -9,6 +9,8 @@
 #import "PayViewController.h"
 #import "NSString+Attribute.h"
 #import "PayInfoViewCell.h"
+#import "AppDelegate+Alipay.h"
+#import "PayInfoController.h"
 
 @interface PayViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UILabel * message;
@@ -20,7 +22,9 @@
 @end
 
 @implementation PayViewController
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"支付收银台";
@@ -29,6 +33,32 @@
     // Do any additional setup after loading the view.
     [self initializeViews];
     [self addConstraints];
+    
+    /** 支付通知 */
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(alipaySuccess) name:@"alipaySuccess" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(alipayFailure) name:@"alipayFailure" object:nil];
+}
+-(void)alipaySuccess{
+    [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
+        [Master showSVProgressHUD:@"支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+            PayInfoController *controller=[[PayInfoController alloc]init];
+            [controller setImageName:@"zhifuchenggong"];
+            [controller setString1:@"支付成功"];
+            controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
+            controller.btnName=@"返回首页";
+            [self.navigationController pushViewController:controller animated:YES];
+        }];
+    } Failure:nil andNavigation:self.navigationController];
+}
+-(void)alipayFailure{
+    [Master showSVProgressHUD:@"支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
+        PayInfoController *controller=[[PayInfoController alloc]init];
+        [controller setImageName:@"zhifuchenggong"];
+        [controller setString1:@"支付成功"];
+        controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
+        controller.btnName=@"返回首页";
+        [self.navigationController pushViewController:controller animated:YES];
+    }];
 }
 -(void)initializeViews {
     _message=[[UILabel alloc]init];
@@ -68,6 +98,9 @@
     [_pushPay.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(50)]];
     [[_pushPay rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
         /** 立即支付 */
+        [[AlipaySDK defaultService]payOrder:_model.orderStr fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            NSLog(@"%@",resultDic);
+        }];
     }];
     [self.view addSubview:_pushPay];
 }

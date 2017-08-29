@@ -31,6 +31,7 @@
 #define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define AppVersion [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 #define UUID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
+#define appScheme @"BeautyKnocked"
 /** 空值判断 */
 #define isStringEmpty(a) ([a isEqual:[NSNull null]] || a == nil || [a isEqualToString:@""])
 #define isObjectEmpty(a) ([a isEqual:[NSNull null]] || a == nil)

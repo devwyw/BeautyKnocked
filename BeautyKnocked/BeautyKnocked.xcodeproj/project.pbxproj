@@ -27,7 +27,6 @@
 		043212D01F273B5800F29D1B /* WuLiuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043212CF1F273B5800F29D1B /* WuLiuController.m */; };
 		0439FF6D1F2B10C50087C314 /* PJItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0439FF6C1F2B10C50087C314 /* PJItemViewCell.m */; };
 		04426CA51F4BBB6000B30D5B /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04426CA41F4BBB6000B30D5B /* city.plist */; };
-		04426CA81F4BC84000B30D5B /* BeauticianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04426CA71F4BC84000B30D5B /* BeauticianModel.m */; };
 		04426CAB1F4C259100B30D5B /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04426CAA1F4C259100B30D5B /* OrderModel.m */; };
 		045C7A061F1DACD400B9C9C4 /* BrandViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C7A051F1DACD400B9C9C4 /* BrandViewController.m */; };
 		045C7A0F1F1DBA1600B9C9C4 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C7A0E1F1DBA1600B9C9C4 /* ShareViewController.m */; };
@@ -46,7 +45,6 @@
 		0484ABF61F2F15F600213AB1 /* book.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0484ABEB1F2F15F600213AB1 /* book.jpg */; };
 		0484EF8E1F550FA000F2D01E /* ItemClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0484EF8D1F550FA000F2D01E /* ItemClassModel.m */; };
 		0484EF9C1F55108900F2D01E /* CarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0484EF9B1F55108900F2D01E /* CarItem.m */; };
-		04A2B1AB1F53C6E10032CA5E /* AppDelegate+JPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A2B1AA1F53C6E10032CA5E /* AppDelegate+JPush.m */; };
 		04A3C8FA1F51549800B5856E /* OrderInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3C8F91F51549800B5856E /* OrderInfoModel.m */; };
 		04A3C8FD1F5157D800B5856E /* ServiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A3C8FC1F5157D800B5856E /* ServiceView.m */; };
 		04A6EFCF1F3AA9CF0036FBDF /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A6EFCD1F3AA9CF0036FBDF /* Photos.framework */; };
@@ -750,6 +748,22 @@
 		04E8C6851F3073D5005566C4 /* RechargeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6841F3073D5005566C4 /* RechargeController.m */; };
 		04EFA4501F554A5E003933A5 /* PayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA44F1F554A5E003933A5 /* PayInfoModel.m */; };
 		04EFA4531F554AAC003933A5 /* PayInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA4521F554AAC003933A5 /* PayInfoViewCell.m */; };
+		04EFA4DC1F5557BB003933A5 /* AppDelegate+Alipay.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA4D61F5557BB003933A5 /* AppDelegate+Alipay.m */; };
+		04EFA4DD1F5557BB003933A5 /* AppDelegate+JPush.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA4D81F5557BB003933A5 /* AppDelegate+JPush.m */; };
+		04EFA4DE1F5557BB003933A5 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 04EFA4DA1F5557BB003933A5 /* AlipaySDK.bundle */; };
+		04EFA4E21F5557C9003933A5 /* BeauticianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA4E11F5557C9003933A5 /* BeauticianModel.m */; };
+		04EFA4E41F555836003933A5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4E31F555836003933A5 /* libc++.tbd */; };
+		04EFA4E61F55583E003933A5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4E51F55583E003933A5 /* libz.tbd */; };
+		04EFA4E81F555844003933A5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4E71F555844003933A5 /* SystemConfiguration.framework */; };
+		04EFA4EA1F55584E003933A5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4E91F55584E003933A5 /* CoreTelephony.framework */; };
+		04EFA4EC1F555855003933A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4EB1F555855003933A5 /* QuartzCore.framework */; };
+		04EFA4EE1F55585B003933A5 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4ED1F55585B003933A5 /* CoreText.framework */; };
+		04EFA4F01F555867003933A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4EF1F555866003933A5 /* CoreGraphics.framework */; };
+		04EFA4F21F555873003933A5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4F11F555873003933A5 /* CFNetwork.framework */; };
+		04EFA4F41F555879003933A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4F31F555879003933A5 /* UIKit.framework */; };
+		04EFA4F61F55588A003933A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4F51F55588A003933A5 /* Foundation.framework */; };
+		04EFA4F81F555893003933A5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4F71F555893003933A5 /* CoreMotion.framework */; };
+		04EFA4FD1F5564AE003933A5 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EFA4FC1F5564AE003933A5 /* AlipaySDK.framework */; };
 		04F0AFF91F32B2FD00D77558 /* NSString+Attribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFD71F32B2FD00D77558 /* NSString+Attribute.m */; };
 		04F0AFFA1F32B2FD00D77558 /* UIButton+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFD91F32B2FD00D77558 /* UIButton+Category.m */; };
 		04F0AFFB1F32B2FD00D77558 /* UIColor+help.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFDB1F32B2FD00D77558 /* UIColor+help.m */; };
@@ -1086,8 +1100,6 @@
 		0439FF6B1F2B10C50087C314 /* PJItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PJItemViewCell.h; sourceTree = "<group>"; };
 		0439FF6C1F2B10C50087C314 /* PJItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PJItemViewCell.m; sourceTree = "<group>"; };
 		04426CA41F4BBB6000B30D5B /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
-		04426CA61F4BC84000B30D5B /* BeauticianModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeauticianModel.h; path = BeautyKnocked/Resource/Plist/BeauticianModel.h; sourceTree = SOURCE_ROOT; };
-		04426CA71F4BC84000B30D5B /* BeauticianModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeauticianModel.m; path = BeautyKnocked/Resource/Plist/BeauticianModel.m; sourceTree = SOURCE_ROOT; };
 		04426CA91F4C259100B30D5B /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
 		04426CAA1F4C259100B30D5B /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		045C7A041F1DACD400B9C9C4 /* BrandViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrandViewController.h; sourceTree = "<group>"; };
@@ -1123,9 +1135,7 @@
 		0484EF8D1F550FA000F2D01E /* ItemClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemClassModel.m; sourceTree = "<group>"; };
 		0484EF9A1F55108900F2D01E /* CarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarItem.h; sourceTree = "<group>"; };
 		0484EF9B1F55108900F2D01E /* CarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarItem.m; sourceTree = "<group>"; };
-		04A2B1A71F53C43C0032CA5E /* BeautyKnocked.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BeautyKnocked.entitlements; path = ../BeautyKnocked.entitlements; sourceTree = "<group>"; };
-		04A2B1A91F53C6E10032CA5E /* AppDelegate+JPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+JPush.h"; sourceTree = "<group>"; };
-		04A2B1AA1F53C6E10032CA5E /* AppDelegate+JPush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+JPush.m"; sourceTree = "<group>"; };
+		04A2B1A71F53C43C0032CA5E /* BeautyKnocked.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BeautyKnocked.entitlements; sourceTree = "<group>"; };
 		04A3C8F81F51549800B5856E /* OrderInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderInfoModel.h; sourceTree = "<group>"; };
 		04A3C8F91F51549800B5856E /* OrderInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderInfoModel.m; sourceTree = "<group>"; };
 		04A3C8FB1F5157D800B5856E /* ServiceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceView.h; sourceTree = "<group>"; };
@@ -1853,6 +1863,26 @@
 		04EFA4511F554AAC003933A5 /* PayInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInfoViewCell.h; sourceTree = "<group>"; };
 		04EFA4521F554AAC003933A5 /* PayInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayInfoViewCell.m; sourceTree = "<group>"; };
 		04EFA4541F554C3D003933A5 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		04EFA4D51F5557BB003933A5 /* AppDelegate+Alipay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Alipay.h"; sourceTree = "<group>"; };
+		04EFA4D61F5557BB003933A5 /* AppDelegate+Alipay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Alipay.m"; sourceTree = "<group>"; };
+		04EFA4D71F5557BB003933A5 /* AppDelegate+JPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+JPush.h"; sourceTree = "<group>"; };
+		04EFA4D81F5557BB003933A5 /* AppDelegate+JPush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+JPush.m"; sourceTree = "<group>"; };
+		04EFA4DA1F5557BB003933A5 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		04EFA4E01F5557C9003933A5 /* BeauticianModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeauticianModel.h; sourceTree = "<group>"; };
+		04EFA4E11F5557C9003933A5 /* BeauticianModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeauticianModel.m; sourceTree = "<group>"; };
+		04EFA4E31F555836003933A5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		04EFA4E51F55583E003933A5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		04EFA4E71F555844003933A5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		04EFA4E91F55584E003933A5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		04EFA4EB1F555855003933A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		04EFA4ED1F55585B003933A5 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		04EFA4EF1F555866003933A5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		04EFA4F11F555873003933A5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		04EFA4F31F555879003933A5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		04EFA4F51F55588A003933A5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		04EFA4F71F555893003933A5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		04EFA4F91F555FE2003933A5 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlipaySDK.framework; path = "BeautyKnocked/Resource/AppDelegate+SDK/SDK/AlipaySDK.framework"; sourceTree = "<group>"; };
+		04EFA4FC1F5564AE003933A5 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		04F0AFD61F32B2FD00D77558 /* NSString+Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Attribute.h"; sourceTree = "<group>"; };
 		04F0AFD71F32B2FD00D77558 /* NSString+Attribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Attribute.m"; sourceTree = "<group>"; };
 		04F0AFD81F32B2FD00D77558 /* UIButton+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Category.h"; sourceTree = "<group>"; };
@@ -2177,6 +2207,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EFA4F81F555893003933A5 /* CoreMotion.framework in Frameworks */,
+				04EFA4F61F55588A003933A5 /* Foundation.framework in Frameworks */,
+				04EFA4F41F555879003933A5 /* UIKit.framework in Frameworks */,
+				04EFA4F21F555873003933A5 /* CFNetwork.framework in Frameworks */,
+				04EFA4F01F555867003933A5 /* CoreGraphics.framework in Frameworks */,
+				04EFA4EE1F55585B003933A5 /* CoreText.framework in Frameworks */,
+				04EFA4EC1F555855003933A5 /* QuartzCore.framework in Frameworks */,
+				04EFA4EA1F55584E003933A5 /* CoreTelephony.framework in Frameworks */,
+				04EFA4E81F555844003933A5 /* SystemConfiguration.framework in Frameworks */,
+				04EFA4E61F55583E003933A5 /* libz.tbd in Frameworks */,
+				04EFA4E41F555836003933A5 /* libc++.tbd in Frameworks */,
+				04EFA4FD1F5564AE003933A5 /* AlipaySDK.framework in Frameworks */,
 				04A6EFCF1F3AA9CF0036FBDF /* Photos.framework in Frameworks */,
 				04A6EFD01F3AA9CF0036FBDF /* PhotosUI.framework in Frameworks */,
 				5D8095F77245647DFC0B0685 /* libPods-CommonLib-BeautyKnocked.a in Frameworks */,
@@ -2226,17 +2268,6 @@
 				046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */,
 			);
 			name = NSLog;
-			sourceTree = "<group>";
-		};
-		04A2B1A81F53C5460032CA5E /* AppDelegate+SDK */ = {
-			isa = PBXGroup;
-			children = (
-				04A2B1A71F53C43C0032CA5E /* BeautyKnocked.entitlements */,
-				04A2B1A91F53C6E10032CA5E /* AppDelegate+JPush.h */,
-				04A2B1AA1F53C6E10032CA5E /* AppDelegate+JPush.m */,
-			);
-			name = "AppDelegate+SDK";
-			path = Resource;
 			sourceTree = "<group>";
 		};
 		04B1BAE21F3ED0400062CBE0 /* Model */ = {
@@ -3252,6 +3283,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		04EFA4D41F5557BB003933A5 /* AppDelegate+SDK */ = {
+			isa = PBXGroup;
+			children = (
+				04EFA4D51F5557BB003933A5 /* AppDelegate+Alipay.h */,
+				04EFA4D61F5557BB003933A5 /* AppDelegate+Alipay.m */,
+				04EFA4D71F5557BB003933A5 /* AppDelegate+JPush.h */,
+				04EFA4D81F5557BB003933A5 /* AppDelegate+JPush.m */,
+				04EFA4D91F5557BB003933A5 /* SDK */,
+			);
+			name = "AppDelegate+SDK";
+			path = "Resource/AppDelegate+SDK";
+			sourceTree = "<group>";
+		};
+		04EFA4D91F5557BB003933A5 /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				04EFA4FC1F5564AE003933A5 /* AlipaySDK.framework */,
+				04EFA4DA1F5557BB003933A5 /* AlipaySDK.bundle */,
+			);
+			path = SDK;
+			sourceTree = "<group>";
+		};
 		04F0AFD51F32B2FD00D77558 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -3690,8 +3743,8 @@
 		7391D99F1EC2FE210020F3CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				04426CA61F4BC84000B30D5B /* BeauticianModel.h */,
-				04426CA71F4BC84000B30D5B /* BeauticianModel.m */,
+				04EFA4E01F5557C9003933A5 /* BeauticianModel.h */,
+				04EFA4E11F5557C9003933A5 /* BeauticianModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3860,7 +3913,7 @@
 				73A37CE11EBD6A3F00BE60C9 /* Info.plist */,
 				73A37CD31EBD6A3F00BE60C9 /* AppDelegate.h */,
 				73A37CD41EBD6A3F00BE60C9 /* AppDelegate.m */,
-				04A2B1A81F53C5460032CA5E /* AppDelegate+SDK */,
+				04EFA4D41F5557BB003933A5 /* AppDelegate+SDK */,
 				73A37CDC1EBD6A3F00BE60C9 /* Assets.xcassets */,
 				73A37CD01EBD6A3F00BE60C9 /* Supporting Files */,
 			);
@@ -3870,6 +3923,7 @@
 		73A37CD01EBD6A3F00BE60C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				04A2B1A71F53C43C0032CA5E /* BeautyKnocked.entitlements */,
 				73A37CD91EBD6A3F00BE60C9 /* Main.storyboard */,
 				73A37CDE1EBD6A3F00BE60C9 /* LaunchScreen.storyboard */,
 				73A37CD11EBD6A3F00BE60C9 /* main.m */,
@@ -4229,6 +4283,18 @@
 		E4B685C2CBDA2D94D204A7E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04EFA4F91F555FE2003933A5 /* AlipaySDK.framework */,
+				04EFA4F71F555893003933A5 /* CoreMotion.framework */,
+				04EFA4F51F55588A003933A5 /* Foundation.framework */,
+				04EFA4F31F555879003933A5 /* UIKit.framework */,
+				04EFA4F11F555873003933A5 /* CFNetwork.framework */,
+				04EFA4EF1F555866003933A5 /* CoreGraphics.framework */,
+				04EFA4ED1F55585B003933A5 /* CoreText.framework */,
+				04EFA4EB1F555855003933A5 /* QuartzCore.framework */,
+				04EFA4E91F55584E003933A5 /* CoreTelephony.framework */,
+				04EFA4E71F555844003933A5 /* SystemConfiguration.framework */,
+				04EFA4E51F55583E003933A5 /* libz.tbd */,
+				04EFA4E31F555836003933A5 /* libc++.tbd */,
 				04A6EFCD1F3AA9CF0036FBDF /* Photos.framework */,
 				04A6EFCE1F3AA9CF0036FBDF /* PhotosUI.framework */,
 				3CCA16B93354FD6F29A02D2E /* libPods-CommonLib-BeautyKnocked.a */,
@@ -5022,6 +5088,7 @@
 				04E7C3A91F2C392B00D03A79 /* right@2x.png in Resources */,
 				04E7C3D11F2C392B00D03A79 /* quxiao@2x.png in Resources */,
 				04E7C3CB1F2C392B00D03A79 /* ketijiao@2x.png in Resources */,
+				04EFA4DE1F5557BB003933A5 /* AlipaySDK.bundle in Resources */,
 				04E7C46B1F2C392C00D03A79 /* yiguoqi@3x.png in Resources */,
 				04E7C4B91F2C392C00D03A79 /* touxiang1@2x.png in Resources */,
 				04E7C3F51F2C392B00D03A79 /* dian1_03@3x.png in Resources */,
@@ -5266,7 +5333,6 @@
 				738798651EEFD0CC00B4D7D4 /* MineFightGroupViewModel.m in Sources */,
 				154662181F3202FE00ED146E /* MessageView.m in Sources */,
 				0423C6C51F4E721C00F492CB /* WebTimeModel.m in Sources */,
-				04426CA81F4BC84000B30D5B /* BeauticianModel.m in Sources */,
 				04E8C6851F3073D5005566C4 /* RechargeController.m in Sources */,
 				7388F5331EDA72D900EB7EE4 /* SetupViewModel.m in Sources */,
 				738DAAD61EDE76B000F45DE3 /* BeauticianRegisterViewModel.m in Sources */,
@@ -5282,6 +5348,7 @@
 				04F0B0081F32B2FD00D77558 /* TextField.m in Sources */,
 				7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */,
 				0465F69A1F53B32700F9FF90 /* PayViewController.m in Sources */,
+				04EFA4E21F5557C9003933A5 /* BeauticianModel.m in Sources */,
 				043212C11F272F2000F29D1B /* TopMessageView.m in Sources */,
 				042F44561F4A78E700B6AE15 /* AddressModel.m in Sources */,
 				7383EC651ECC419200C87A06 /* HomePageEndView.m in Sources */,
@@ -5308,6 +5375,7 @@
 				043212BE1F272D6B00F29D1B /* OrderHeaderView.m in Sources */,
 				737126011EE7DF8D001A02DC /* ExchangeRecordingController.m in Sources */,
 				04F0AFFB1F32B2FD00D77558 /* UIColor+help.m in Sources */,
+				04EFA4DC1F5557BB003933A5 /* AppDelegate+Alipay.m in Sources */,
 				0439FF6D1F2B10C50087C314 /* PJItemViewCell.m in Sources */,
 				04F0B0021F32B2FD00D77558 /* UIViewController+Cloudox.m in Sources */,
 				040442571F1F54D500E59CF1 /* NewUserController.m in Sources */,
@@ -5401,6 +5469,7 @@
 				7375CE931EE50CAE009F7F21 /* EvaluationTableViewController.m in Sources */,
 				04F0AFFC1F32B2FD00D77558 /* UIImage+Original.m in Sources */,
 				737CD2E21EE0FF2E00B6A5DB /* ItemTitlePriceView.m in Sources */,
+				04EFA4DD1F5557BB003933A5 /* AppDelegate+JPush.m in Sources */,
 				043212BB1F26F9F400F29D1B /* OrderMessageViewController.m in Sources */,
 				737C1E761EEA2FD80020D342 /* FightingGroupCell.m in Sources */,
 				7319866F1EC1A65300FA7DF0 /* RegisterController.m in Sources */,
@@ -5451,7 +5520,6 @@
 				7399DC601ECED6310054877F /* OrderTableViewCell.m in Sources */,
 				737126041EE7DFC7001A02DC /* CouponImageView.m in Sources */,
 				73A37CD21EBD6A3F00BE60C9 /* main.m in Sources */,
-				04A2B1AB1F53C6E10032CA5E /* AppDelegate+JPush.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5608,6 +5676,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = BeautyKnocked/BeautyKnocked.entitlements;
 				DEVELOPMENT_TEAM = 2D55A4E449;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BeautyKnocked/Resource/AppDelegate+SDK/SDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
 				INFOPLIST_FILE = BeautyKnocked/Info.plist;
@@ -5626,6 +5698,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = BeautyKnocked/BeautyKnocked.entitlements;
 				DEVELOPMENT_TEAM = 2D55A4E449;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BeautyKnocked/Resource/AppDelegate+SDK/SDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BeautyKnocked/UserPrefixHeader.pch";
 				INFOPLIST_FILE = BeautyKnocked/Info.plist;

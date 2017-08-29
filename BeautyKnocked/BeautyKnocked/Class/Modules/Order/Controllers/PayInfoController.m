@@ -26,6 +26,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.hidesBackButton=YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.title=@"支付页面";
@@ -114,12 +115,11 @@
 }
 
 -(void)payinfo:(UIButton*)btn{
-    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void)backinfo:(UIButton*)btn{
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
