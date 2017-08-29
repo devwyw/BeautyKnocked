@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3E863BE46A56924440F159C90CD1EFBE4DC01CC9+++5D1E64F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++822B6FD" : 9223372036854775807,
+    "3E863BE46A56924440F159C90CD1EFBE4DC01CC9+++5D1E64F" : 9223372036854775807,
+    "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++CA5BF9B" : 9223372036854775807,
+    "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++6FAC298" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "6E6E2A48-C74B-4AC4-BCEE-CDDA49FA1A86",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++822B6FD" : "Technician\/",
+    "3E863BE46A56924440F159C90CD1EFBE4DC01CC9+++5D1E64F" : "BeautyKnocked\/",
+    "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++CA5BF9B" : "BeautyKnocked\/Technician\/",
+    "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++6FAC298" : "BeautyKnocked\/Technician\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BeautyKnocked",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BeautyKnocked.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/15079244845\/MLQQM.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3E863BE46A56924440F159C90CD1EFBE4DC01CC9+++5D1E64F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/15079244845\/Technician.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++6FAC298"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/15079244845\/Technician.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++822B6FD"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/15079244845\/Technician.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AE1DE8FEA7D8AB41D89F3B7BDE7D66A9A10D3E5D+++CA5BF9B"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 platform :ios, '8.0'# 2.0
-
+inhibit_all_warnings!
 workspace "BeautyKnocked"
 abstract_target 'CommonLib' do
 
@@ -22,10 +22,6 @@ pod 'JPush'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'
-end
-
-target 'BeautyKnockedHelper' do
-    project 'BeautyKnockedHelper/BeautyKnockedHelper.xcodeproj'
 end
 
 end

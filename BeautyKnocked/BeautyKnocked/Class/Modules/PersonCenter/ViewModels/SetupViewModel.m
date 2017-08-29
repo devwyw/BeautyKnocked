@@ -9,7 +9,8 @@
 #import "SetupViewModel.h"
 #import "AboutUsTableViewController.h"
 #import "BeauticianRegistrationController.h"
-#import <JPUSHService.h>
+#import "AppDelegate+JPush.h"
+
 static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
 
 @interface SetupViewModel ()
@@ -28,10 +29,19 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
     return self;
 }
 -(void)getUserNotificationSwitch{
-    if ([[UIApplication sharedApplication] currentUserNotificationSettings].types==UIRemoteNotificationTypeNone) {
-        self.userNotificationSwitch.on = NO;
-    }else{
-        self.userNotificationSwitch.on = YES;
+    self.userNotificationSwitch.on = NO;
+    Weakify(self);
+    if (SystemVersion>=10.0) {
+        UNUserNotificationCenter *entity = [UNUserNotificationCenter currentNotificationCenter];
+        [entity getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            if (settings.authorizationStatus==UNNotificationSettingEnabled) {
+                Wself.userNotificationSwitch.on = YES;
+            }
+        }];
+    }else if(SystemVersion>=8.0){
+        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types!=UIUserNotificationTypeNone) {
+            self.userNotificationSwitch.on = YES;
+        }
     }
 }
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section {

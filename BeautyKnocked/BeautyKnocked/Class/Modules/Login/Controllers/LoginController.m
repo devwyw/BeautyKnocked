@@ -12,7 +12,7 @@
 #import "UIImage+Original.h"
 #import "UITextField+Length.h"
 #import "NSString+Attribute.h"
-#import <JPUSHService.h>
+#import "AppDelegate+JPush.h"
 
 @interface LoginController ()<UITextFieldDelegate>
 
@@ -190,7 +190,7 @@
                                                 user=[Acount mj_objectWithKeyValues:json[@"info"]];
                                                 [user SignInAcount];
                                                 /** 极光推送设置别名Tag */
-                                                [JPUSHService setAlias:[NSString stringWithFormat:@"c%@",user.id] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+                                                [JPUSHService setAlias:[NSString stringWithFormat:@"cj%@",user.id] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
                                                     NSLog(@"极光推送:%@",iAlias);
                                                 } seq:[user.id integerValue]];
                                                 [Master showSVProgressHUD:@"登陆成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{

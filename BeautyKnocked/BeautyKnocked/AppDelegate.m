@@ -32,10 +32,7 @@
     
     /** 极光推送 */
     [AppDelegate registerJPushSDKWithOptions:launchOptions andDelegate:self];
-    
-    
-    
-    
+
     return YES;
 }
 -(void)setAppearance{
@@ -113,7 +110,9 @@
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    [[UNUserNotificationCenter alloc] removeAllPendingNotificationRequests];
+    if (SystemVersion>=10.0) {
+        [[UNUserNotificationCenter alloc] removeAllPendingNotificationRequests];
+    }
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     /** 每次进入App检测一次网络状态 */

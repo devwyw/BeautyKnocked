@@ -12,14 +12,25 @@ static NSString *JPushKey = @"1481b2a73612a63a7dd20bd3";
 
 @implementation AppDelegate (JPush)
 +(void)registerJPushSDKWithOptions:(NSDictionary *)launchOptions andDelegate:(id)appDelegate{
+#ifdef DEBUG
+    [JPUSHService setDebugMode];
+#else
+    [JPUSHService setLogOFF];
+#endif
+    
     if (SystemVersion >= 10.0) {
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
-        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+        entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
         [JPUSHService registerForRemoteNotificationConfig:entity delegate:appDelegate];
     }else if (SystemVersion >= 8.0) {
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                           UIUserNotificationTypeSound |
                                                           UIUserNotificationTypeAlert)
+                                              categories:nil];
+    }else {
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
                                               categories:nil];
     }
     [JPUSHService setupWithOption:launchOptions

@@ -82,6 +82,7 @@
 #define mlqqm @"http://106.14.97.148/mlqqm"
 #define NSLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
+#define mlqqm @"http://106.14.97.148/mlqqm"
 #define NSLog(...)
 #endif
 #endif
