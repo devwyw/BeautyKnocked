@@ -748,6 +748,8 @@
 		04E8C6761F304E87005566C4 /* MoneyTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6751F304E87005566C4 /* MoneyTableController.m */; };
 		04E8C6791F3051E8005566C4 /* MoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6781F3051E8005566C4 /* MoneyCell.m */; };
 		04E8C6851F3073D5005566C4 /* RechargeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C6841F3073D5005566C4 /* RechargeController.m */; };
+		04EFA4501F554A5E003933A5 /* PayInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA44F1F554A5E003933A5 /* PayInfoModel.m */; };
+		04EFA4531F554AAC003933A5 /* PayInfoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EFA4521F554AAC003933A5 /* PayInfoViewCell.m */; };
 		04F0AFF91F32B2FD00D77558 /* NSString+Attribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFD71F32B2FD00D77558 /* NSString+Attribute.m */; };
 		04F0AFFA1F32B2FD00D77558 /* UIButton+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFD91F32B2FD00D77558 /* UIButton+Category.m */; };
 		04F0AFFB1F32B2FD00D77558 /* UIColor+help.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F0AFDB1F32B2FD00D77558 /* UIColor+help.m */; };
@@ -909,6 +911,125 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		04EFA4681F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0E2EE2D9DE4A6BEFFC28984BEEA52FBF;
+			remoteInfo = AFNetworking;
+		};
+		04EFA46A1F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D28AE829E5BA4E5D1F2A59A92C526684;
+			remoteInfo = FMDB;
+		};
+		04EFA46C1F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F525E8FFC6F4B6541C154FD6F9962A0;
+			remoteInfo = IQKeyboardManager;
+		};
+		04EFA46E1F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A968F8FCE21D75C86CE4546C6463A1A3;
+			remoteInfo = LEEAlert;
+		};
+		04EFA4701F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8588DD9D7E0FF342124A602166320F4A;
+			remoteInfo = Masonry;
+		};
+		04EFA4721F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FD9EDC9FBCDB2A0CC7F98DDC53405B69;
+			remoteInfo = MJExtension;
+		};
+		04EFA4741F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1749E30EE5C30ACDFD9A07B2D3201222;
+			remoteInfo = MJRefresh;
+		};
+		04EFA4761F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AA2106AA49F8D3361EDCD572905DF92D;
+			remoteInfo = "Pods-CommonLib-BeautyKnocked";
+		};
+		04EFA4781F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF11CCD67CFC908148FC1F10A7BD0479;
+			remoteInfo = "Pods-CommonLib-BeautyKnockedHelper";
+		};
+		04EFA47A1F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DB3DEE0BAD4CBEAA52716276D5A6CDCA;
+			remoteInfo = PYSearch;
+		};
+		04EFA47C1F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 87F3772ED672112DFDC526A24147DB1F;
+			remoteInfo = ReactiveObjC;
+		};
+		04EFA47E1F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 133CCD5291FDA0C139CE3D6F8434904F;
+			remoteInfo = SDCycleScrollView;
+		};
+		04EFA4801F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8F63CB48F616BE94EFDD0A182D0D79FB;
+			remoteInfo = SDWebImage;
+		};
+		04EFA4821F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DF876F26097DA07A4C0B149639C6714;
+			remoteInfo = SVProgressHUD;
+		};
+		04EFA4841F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 691F57164856DEC1C34409FCB426A6C7;
+			remoteInfo = WMPageController;
+		};
+		04EFA4861F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5F940F877ACB30451E8C669BBB17EE22;
+			remoteInfo = XLForm;
+		};
+		04EFA4881F554C3D003933A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1E386BDC4620D0B99ACB4E905869101;
+			remoteInfo = ZLPhotoBrowser;
+		};
 		73A37CE71EBD6A3F00BE60C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 73A37CC51EBD6A3F00BE60C9 /* Project object */;
@@ -1727,6 +1848,11 @@
 		04E8C6781F3051E8005566C4 /* MoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyCell.m; sourceTree = "<group>"; };
 		04E8C6831F3073D5005566C4 /* RechargeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeController.h; sourceTree = "<group>"; };
 		04E8C6841F3073D5005566C4 /* RechargeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeController.m; sourceTree = "<group>"; };
+		04EFA44E1F554A5E003933A5 /* PayInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInfoModel.h; sourceTree = "<group>"; };
+		04EFA44F1F554A5E003933A5 /* PayInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayInfoModel.m; sourceTree = "<group>"; };
+		04EFA4511F554AAC003933A5 /* PayInfoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayInfoViewCell.h; sourceTree = "<group>"; };
+		04EFA4521F554AAC003933A5 /* PayInfoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayInfoViewCell.m; sourceTree = "<group>"; };
+		04EFA4541F554C3D003933A5 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		04F0AFD61F32B2FD00D77558 /* NSString+Attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Attribute.h"; sourceTree = "<group>"; };
 		04F0AFD71F32B2FD00D77558 /* NSString+Attribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Attribute.m"; sourceTree = "<group>"; };
 		04F0AFD81F32B2FD00D77558 /* UIButton+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Category.h"; sourceTree = "<group>"; };
@@ -3102,6 +3228,30 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		04EFA4551F554C3D003933A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04EFA4691F554C3D003933A5 /* libAFNetworking.a */,
+				04EFA46B1F554C3D003933A5 /* libFMDB.a */,
+				04EFA46D1F554C3D003933A5 /* libIQKeyboardManager.a */,
+				04EFA46F1F554C3D003933A5 /* libLEEAlert.a */,
+				04EFA4711F554C3D003933A5 /* libMasonry.a */,
+				04EFA4731F554C3D003933A5 /* libMJExtension.a */,
+				04EFA4751F554C3D003933A5 /* libMJRefresh.a */,
+				04EFA4771F554C3D003933A5 /* libPods-CommonLib-BeautyKnocked.a */,
+				04EFA4791F554C3D003933A5 /* libPods-CommonLib-BeautyKnockedHelper.a */,
+				04EFA47B1F554C3D003933A5 /* libPYSearch.a */,
+				04EFA47D1F554C3D003933A5 /* libReactiveObjC.a */,
+				04EFA47F1F554C3D003933A5 /* libSDCycleScrollView.a */,
+				04EFA4811F554C3D003933A5 /* libSDWebImage.a */,
+				04EFA4831F554C3D003933A5 /* libSVProgressHUD.a */,
+				04EFA4851F554C3D003933A5 /* libWMPageController.a */,
+				04EFA4871F554C3D003933A5 /* libXLForm.a */,
+				04EFA4891F554C3D003933A5 /* libZLPhotoBrowser.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		04F0AFD51F32B2FD00D77558 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -3621,6 +3771,8 @@
 				0423C6C71F4E7F6900F492CB /* TimeSlotModel.m */,
 				04A3C8F81F51549800B5856E /* OrderInfoModel.h */,
 				04A3C8F91F51549800B5856E /* OrderInfoModel.m */,
+				04EFA44E1F554A5E003933A5 /* PayInfoModel.h */,
+				04EFA44F1F554A5E003933A5 /* PayInfoModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3669,6 +3821,8 @@
 				152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */,
 				0439FF6B1F2B10C50087C314 /* PJItemViewCell.h */,
 				0439FF6C1F2B10C50087C314 /* PJItemViewCell.m */,
+				04EFA4511F554AAC003933A5 /* PayInfoViewCell.h */,
+				04EFA4521F554AAC003933A5 /* PayInfoViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3676,6 +3830,7 @@
 		73A37CC41EBD6A3F00BE60C9 = {
 			isa = PBXGroup;
 			children = (
+				04EFA4541F554C3D003933A5 /* Pods.xcodeproj */,
 				73A37CCF1EBD6A3F00BE60C9 /* BeautyKnocked */,
 				73A37CE91EBD6A3F00BE60C9 /* BeautyKnockedTests */,
 				73A37CF41EBD6A3F00BE60C9 /* BeautyKnockedUITests */,
@@ -4187,6 +4342,12 @@
 			mainGroup = 73A37CC41EBD6A3F00BE60C9;
 			productRefGroup = 73A37CCE1EBD6A3F00BE60C9 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 04EFA4551F554C3D003933A5 /* Products */;
+					ProjectRef = 04EFA4541F554C3D003933A5 /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				73A37CCC1EBD6A3F00BE60C9 /* BeautyKnocked */,
@@ -4195,6 +4356,128 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		04EFA4691F554C3D003933A5 /* libAFNetworking.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAFNetworking.a;
+			remoteRef = 04EFA4681F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA46B1F554C3D003933A5 /* libFMDB.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libFMDB.a;
+			remoteRef = 04EFA46A1F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA46D1F554C3D003933A5 /* libIQKeyboardManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIQKeyboardManager.a;
+			remoteRef = 04EFA46C1F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA46F1F554C3D003933A5 /* libLEEAlert.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libLEEAlert.a;
+			remoteRef = 04EFA46E1F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4711F554C3D003933A5 /* libMasonry.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMasonry.a;
+			remoteRef = 04EFA4701F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4731F554C3D003933A5 /* libMJExtension.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMJExtension.a;
+			remoteRef = 04EFA4721F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4751F554C3D003933A5 /* libMJRefresh.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMJRefresh.a;
+			remoteRef = 04EFA4741F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4771F554C3D003933A5 /* libPods-CommonLib-BeautyKnocked.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-CommonLib-BeautyKnocked.a";
+			remoteRef = 04EFA4761F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4791F554C3D003933A5 /* libPods-CommonLib-BeautyKnockedHelper.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-CommonLib-BeautyKnockedHelper.a";
+			remoteRef = 04EFA4781F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA47B1F554C3D003933A5 /* libPYSearch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPYSearch.a;
+			remoteRef = 04EFA47A1F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA47D1F554C3D003933A5 /* libReactiveObjC.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactiveObjC.a;
+			remoteRef = 04EFA47C1F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA47F1F554C3D003933A5 /* libSDCycleScrollView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDCycleScrollView.a;
+			remoteRef = 04EFA47E1F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4811F554C3D003933A5 /* libSDWebImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDWebImage.a;
+			remoteRef = 04EFA4801F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4831F554C3D003933A5 /* libSVProgressHUD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSVProgressHUD.a;
+			remoteRef = 04EFA4821F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4851F554C3D003933A5 /* libWMPageController.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libWMPageController.a;
+			remoteRef = 04EFA4841F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4871F554C3D003933A5 /* libXLForm.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXLForm.a;
+			remoteRef = 04EFA4861F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04EFA4891F554C3D003933A5 /* libZLPhotoBrowser.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libZLPhotoBrowser.a;
+			remoteRef = 04EFA4881F554C3D003933A5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		73A37CCB1EBD6A3F00BE60C9 /* Resources */ = {
@@ -5021,6 +5304,7 @@
 				7382AC211EE9288000FF4542 /* ExchangeSuccessController.m in Sources */,
 				04F0B0071F32B2FD00D77558 /* StarView.m in Sources */,
 				737A1FE31EDFE3B300CD6FD2 /* NewsCenterCell.m in Sources */,
+				04EFA4531F554AAC003933A5 /* PayInfoViewCell.m in Sources */,
 				043212BE1F272D6B00F29D1B /* OrderHeaderView.m in Sources */,
 				737126011EE7DF8D001A02DC /* ExchangeRecordingController.m in Sources */,
 				04F0AFFB1F32B2FD00D77558 /* UIColor+help.m in Sources */,
@@ -5120,6 +5404,7 @@
 				043212BB1F26F9F400F29D1B /* OrderMessageViewController.m in Sources */,
 				737C1E761EEA2FD80020D342 /* FightingGroupCell.m in Sources */,
 				7319866F1EC1A65300FA7DF0 /* RegisterController.m in Sources */,
+				04EFA4501F554A5E003933A5 /* PayInfoModel.m in Sources */,
 				737A1FE61EDFEAE800CD6FD2 /* NewsCenterModel.m in Sources */,
 				0413DB721F1F0DE000357B27 /* LightSonViewController.m in Sources */,
 				04DC3AD31F4678A0004F269E /* CouponModel.m in Sources */,

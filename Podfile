@@ -1,7 +1,7 @@
 platform :ios, '8.0'# 2.0
-inhibit_all_warnings!
 workspace "BeautyKnocked"
 abstract_target 'CommonLib' do
+inhibit_all_warnings!
 
 pod 'AFNetworking', '3.1.0'
 pod 'Masonry', '1.0.2'
