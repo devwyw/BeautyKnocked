@@ -15,9 +15,9 @@
 
 @implementation SonCouponTableController
 
--(NSArray*)listArray{
+-(NSMutableArray*)listArray{
     if (!_listArray) {
-        _listArray=[[NSArray alloc]init];
+        _listArray=[[NSMutableArray alloc]init];
     }
     return _listArray;
 }
@@ -39,15 +39,26 @@
     return self.listArray.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     CouponCell *cell=[tableView dequeueReusableCellWithIdentifier:@"CouponCell" forIndexPath:indexPath];
-    cell.model=model;
+    cell.model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+    //lijishiyong@2x
+    if (_isOrder) {
+        /**
+         CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+         [self.subCouponId sendNext:model.id];
+         [self.navigationController popViewControllerAnimated:YES];
+         */
+    }else{
+        
+    }
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
-    [self.subCouponId sendNext:model.id];
-    [self.navigationController popViewControllerAnimated:YES];
+    CouponModel *model=[CouponModel mj_objectWithKeyValues:_listArray[indexPath.row]];
+    model.isStatus=!model.isStatus;
+    [_listArray replaceObjectAtIndex:indexPath.row withObject:model];
+    [self.tableView reloadData];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;

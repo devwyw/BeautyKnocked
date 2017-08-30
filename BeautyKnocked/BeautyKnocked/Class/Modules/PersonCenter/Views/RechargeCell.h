@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RechargeModel.h"
+@class RACSignal;
 
 @interface RechargeCell : UITableViewCell
 @property (nonatomic,strong) RechargeModel * model;
+@property (nonatomic,strong) RACSignal * push;
 @end

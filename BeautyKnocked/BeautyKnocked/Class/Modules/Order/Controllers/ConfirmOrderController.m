@@ -260,7 +260,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                         _detailOrderModel.clientCouponId=x;
                         [_tableView reloadData];
                     }];
-                    controller.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
+                    controller.listArray=json[@"info"];
                     [Wself.navigationController pushViewController:controller animated:YES];
                 } Failure:nil andNavigation:self.navigationController];
             }

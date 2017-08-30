@@ -18,4 +18,5 @@
 @property (nonatomic,copy) NSString * startTime;
 @property (nonatomic,copy) NSString * endTime;
 @property (nonatomic,copy) NSString * status;
+@property (nonatomic,assign) BOOL isStatus;
 @end

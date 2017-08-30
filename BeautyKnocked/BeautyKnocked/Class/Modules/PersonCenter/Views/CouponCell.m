@@ -10,6 +10,8 @@
 #import "NSString+Attribute.h"
 
 @interface CouponCell ()
+@property (nonatomic,strong) UIImageView * whiteImage;
+
 @property (nonatomic,strong) UIImageView * backImage;
 @property (nonatomic,strong) UIImageView * leftImage;
 @property (nonatomic,strong) UIImageView * rightImage;
@@ -40,6 +42,7 @@
     return self;
 }
 -(void)setModel:(CouponModel *)model{
+    _model=model;
     if (isStringEmpty(model.status)) {
         _backImage.image=[UIImage imageNamed:@"youhuiquan-keyong"];
     }else{
@@ -65,6 +68,16 @@
     
     _message.text=[NSString stringWithFormat:@"• %@",model.commName];
     _time.text=[NSString stringWithFormat:@"有效期: %@-%@",[self getWebTime:model.startTime],[self getWebTime:model.endTime]];
+    
+    if (model.isStatus) {
+        [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.offset(125);
+        }];
+    }else{
+        [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.offset(0);
+        }];
+    }
 }
 -(NSString*)getWebTime:(NSString*)time{
     NSTimeInterval interval=[[time substringToIndex:10] doubleValue];
@@ -75,6 +88,9 @@
     return timeString;
 }
 -(void)initializeViews {
+    _whiteImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"zhankaibeijing"]];
+    [self.contentView addSubview:_whiteImage];
+    
     _backImage=[[UIImageView alloc]init];
     [self.contentView addSubview:_backImage];
     
@@ -114,10 +130,15 @@
 -(void)addConstraints {
     [_backImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).offset(Height_Pt(40));
-        make.left.equalTo(self.contentView).offset(Width_Pt(40));
+        make.left.equalTo(self.contentView).offset(Width_Pt(60));
+        make.right.equalTo(self.contentView).offset(-Width_Pt(60));
+        make.height.offset(Height_Pt(300));
+    }];
+    [_whiteImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_backImage.mas_bottom);
+        make.left.right.equalTo(_backImage);
         make.bottom.equalTo(self.contentView);
-        make.right.equalTo(self.contentView).offset(-Width_Pt(40));
-        make.height.mas_equalTo(Height_Pt(300));
+        make.height.offset(0);
     }];
     
     [_leftImage mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -15,4 +15,5 @@
 @property (nonatomic,copy) NSString * money;
 @property (nonatomic,copy) NSString * discount;
 @property (nonatomic,copy) NSString * give;
+@property (nonatomic,assign) BOOL isSelected;
 @end

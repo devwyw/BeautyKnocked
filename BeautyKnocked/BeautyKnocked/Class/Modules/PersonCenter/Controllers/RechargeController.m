@@ -13,16 +13,16 @@
 @interface RechargeController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITextField * textField;
 @property (nonatomic,strong) UITableView * tableview;
-@property (nonatomic,strong) NSArray * rechargeArray;
+@property (nonatomic,strong) NSMutableArray * rechargeArray;
 @end
 
 @implementation RechargeController
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
--(NSArray*)rechargeArray{
+-(NSMutableArray*)rechargeArray{
     if (!_rechargeArray) {
-        _rechargeArray=[[NSArray alloc]init];
+        _rechargeArray=[[NSMutableArray alloc]init];
     }
     return _rechargeArray;
 }
@@ -45,7 +45,7 @@
         _textField.placeholder=@"请输入充值卡序列号";
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.borderStyle = UITextBorderStyleRoundedRect;
-        _textField.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
+        _textField.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
         [_textField makeCornerRadius:5];
         [whiteview addSubview:_textField];
         
@@ -95,6 +95,7 @@
         _tableview.estimatedRowHeight=100;
         _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableview.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
+        [_tableview registerClass:[RechargeCell class] forCellReuseIdentifier:@"RechargeCell"];
     }
     return _tableview;
 }
@@ -102,18 +103,21 @@
     return self.rechargeArray.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    RechargeCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-    if (!cell) {
-        cell=[[RechargeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RechargeCell"];
-    }
+    RechargeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"RechargeCell" forIndexPath:indexPath];
     cell.model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
+    Weakify(self);
+    [[cell.push takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+        RechargeInfoController *controller=[[RechargeInfoController alloc]init];
+        controller.Cid=cell.model.id;
+        [Wself.navigationController pushViewController:controller animated:YES];
+    }];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    RechargeModel *model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
-    RechargeInfoController *controller=[[RechargeInfoController alloc]init];
-    controller.Cid=model.id;
-    [self.navigationController pushViewController:controller animated:YES];
+    RechargeModel *model=[RechargeModel mj_objectWithKeyValues:_rechargeArray[indexPath.row]];
+    model.isSelected=!model.isSelected;
+    [_rechargeArray replaceObjectAtIndex:indexPath.row withObject:model];
+    [_tableview reloadData];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return CGFLOAT_MIN;
@@ -131,7 +135,7 @@
     }
     Weakify(self);
     [Master HttpPostRequestByParams:@{@"rank":[Acount shareManager].rank} url:mlqqm serviceCode:code Success:^(id json) {
-        Wself.rechargeArray=[[NSArray alloc]initWithArray:json[@"info"]];
+        Wself.rechargeArray=json[@"info"];
         [_tableview reloadData];
     } Failure:nil andNavigation:self.navigationController];
 }
