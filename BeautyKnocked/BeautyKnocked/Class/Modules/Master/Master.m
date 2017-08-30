@@ -14,6 +14,7 @@
 #import <LEEAlert.h>
 #import "RegisterController.h"
 #import "LoginController.h"
+#import "TabBarController.h"
 
 @interface Master ()
 @end
@@ -188,18 +189,6 @@
     switch ([json[@"status"] integerValue]) {
         case 200:
             return YES;
-            case 7:
-        {
-            [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:^{
-                RegisterController *controller=[[RegisterController alloc]init];
-                controller.isType=NO;
-                controller.isLock=YES;
-                if (!isObjectEmpty(root)) {
-                    [root pushViewController:controller animated:YES];
-                }
-            }];
-            return NO;
-        }
             case 8:
         {
             [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:^{
@@ -217,5 +206,10 @@
             [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:nil];
             return NO;
     }
+}
++(void)setTabBarItem:(NSInteger)item withNavigationController:(UINavigationController*)navigationController{
+    UITabBarController *controller=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+    controller.selectedIndex=item;
+    [navigationController popToRootViewControllerAnimated:NO];
 }
 @end

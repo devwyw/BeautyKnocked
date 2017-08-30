@@ -11,9 +11,7 @@
 #import "UIImage+Original.h"
 
 @interface TabBarController ()
-
 @property (nonatomic, strong) NSMutableArray<UITabBarItem *> *tabBarItems;
-
 @end
 
 @implementation TabBarController
@@ -23,7 +21,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self setupTabBarItem];
 }
 -(void)setupTabBarItem {
@@ -45,12 +42,10 @@
 
 -(NSMutableArray<UITabBarItem *> *)tabBarItems {
     if (!_tabBarItems) {
-        // selected 1_03 unSelected 0_03
         _tabBarItems = [NSMutableArray arrayWithCapacity:5];
         NSArray *tabBarItemImages = @[@"shou",@"fen",@"yuyue_03",@"ding",@"wo"];
         NSArray *tabBarItemTitles = @[@"首页",@"分类",@"预约",@"订单",@"我的"];
         
-        // create 5 tabBarItems
         for (NSInteger i = 0; i < 5; i += 1) {
             UITabBarItem *tabBarItem = [[UITabBarItem alloc] init];
             tabBarItem.title = [tabBarItemTitles objectAtIndex:i];
@@ -72,7 +67,6 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 #pragma mark UITabBarControllerDelegate
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {

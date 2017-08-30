@@ -108,19 +108,20 @@
     if (!_headView) {
         _headView = [[PersonCenterHeadView alloc] init];
         _headView.delegate = self;
-        
+        Weakify(self);
         [_headView.setClickedSignal subscribeNext:^(id  _Nullable x) {
             PSSetupController *setupVC = [[PSSetupController alloc] init];
             setupVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:setupVC animated:YES];
+            [Wself.navigationController pushViewController:setupVC animated:YES];
         }];
         
         [_headView.messageClickedSignal subscribeNext:^(id  _Nullable x) {
-            MyMessageController *newsVC = [[MyMessageController alloc] init];
-            newsVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:newsVC animated:YES];
+            if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+                MyMessageController *newsVC = [[MyMessageController alloc] init];
+                newsVC.hidesBottomBarWhenPushed = YES;
+                [Wself.navigationController pushViewController:newsVC animated:YES];
+            }
         }];
-        
     }
     return _headView;
 }

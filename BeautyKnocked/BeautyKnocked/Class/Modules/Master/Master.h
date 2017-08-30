@@ -19,6 +19,8 @@ typedef void(^HttpFalureBlock)(NSError *error);
 typedef void(^ShowSVProgressBlock)();
 
 @interface Master : NSObject
+/** 选择TabBarItem */
++(void)setTabBarItem:(NSInteger)item withNavigationController:(UINavigationController*)navigationController;
 /** 检测网络 */
 +(void)getNetWork;
 /** 跳转到设置 */

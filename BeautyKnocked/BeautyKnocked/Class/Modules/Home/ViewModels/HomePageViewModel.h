@@ -11,7 +11,8 @@
 @interface HomePageViewModel : NSObject
 
 
-@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic,strong) UINavigationController *navigationController;
+@property (nonatomic,strong) NSMutableArray * imageArray;
 
 -(NSUInteger)numberOfSectionsInHomePageTableView;
 

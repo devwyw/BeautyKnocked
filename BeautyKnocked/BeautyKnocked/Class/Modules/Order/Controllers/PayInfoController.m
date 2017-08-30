@@ -35,12 +35,11 @@
     // Do any additional setup after loading the view.
 }
 -(void)initializeViews {
-    _image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"zhifuchenggong"]];
+    _image=[[UIImageView alloc]init];
     [self.view addSubview:_image];
     
     _label1=[[UILabel alloc]init];
     _label1.font=[UIFont systemFontOfSize:Font_Size(42)];
-    _label1.text=@"支付成功";
     [self.view addSubview:_label1];
     
     _line=[[UIView alloc]init];
@@ -55,12 +54,11 @@
     
     _label3=[[UILabel alloc]init];
     _label3.font=[UIFont systemFontOfSize:Font_Size(34)];
-    _label3.text=@"追加服务订单必须在服务时间内完成付款，否则作废。";
+    
     _label3.textColor=[UIColor grayColor];
     [self.view addSubview:_label3];
     
     _btn1=[[UIButton alloc]init];
-    [_btn1 setTitle:@"返回首页" forState:UIControlStateNormal];
     [_btn1 setTitleColor:[UIColor colorWithHexString:@"#D7AE4D"] forState:UIControlStateNormal];
     _btn1.titleLabel.font=[UIFont systemFontOfSize:Font_Size(38)];
     [_btn1 makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#D7AE4D"]];
@@ -76,6 +74,18 @@
     [_btn2 makeCornerRadius:8];
     [_btn2 addTarget:self action:@selector(backinfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn2];
+    
+    if (_isStatus) {
+        _image.image=[UIImage imageNamed:@"zhifuchenggong"];
+        _label1.text=@"支付成功";
+        _label3.text=@"您的订单已经成功受理，感谢您的购买~";
+        [_btn1 setTitle:@"返回首页" forState:UIControlStateNormal];
+    }else{
+        _image.image=[UIImage imageNamed:@"zhifushibai"];
+        _label1.text=@"支付失败，请重新支付";
+        _label3.text=@"您的订单必须在服务时间内完成付款，否则会被取消哦~";
+        [_btn1 setTitle:@"重新支付" forState:UIControlStateNormal];
+    }
 }
 -(void)addConstraints {
     [_image mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -115,10 +125,14 @@
 }
 
 -(void)payinfo:(UIButton*)btn{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (_isStatus) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 -(void)backinfo:(UIButton*)btn{
-    
+    [Master setTabBarItem:3 withNavigationController:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

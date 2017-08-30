@@ -12,7 +12,6 @@
 #import "BeauticianController.h"
 #import "RechargePayModel.h"
 #import "AppDelegate+Alipay.h"
-#import "PayInfoController.h"
 
 @interface RechargeInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
@@ -52,19 +51,10 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:AlipayFailure object:nil];
 }
 -(void)success{
-    [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-        
-    }];
+    [Master showSVProgressHUD:@"账号充值成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
 }
 -(void)failure{
-    [Master showSVProgressHUD:@"订单支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
-        
-    }];
-}
--(void)payPushController:(BOOL)isType{
-    PayInfoController *controller=[[PayInfoController alloc]init];
-    
-    [self.navigationController pushViewController:controller animated:YES];
+    [Master showSVProgressHUD:@"账号充值失败" withType:ShowSVProgressTypeError withShowBlock:nil];
 }
 -(void)initializeViews {
     [self.view addSubview:self.tableview];
@@ -79,9 +69,9 @@
         }else{
             [Master HttpPostRequestByParams:_model.mj_keyValues url:mlqqm serviceCode:czdd Success:^(id json) {
                 if ([_model.payType integerValue]==1) {
-                    [AppDelegate AliPayWhitPayOrder:json[@"info"]];
-                }else{
                     
+                }else{
+                    [AppDelegate AliPayWithPayOrder:json[@"info"]];
                 }
             } Failure:nil andNavigation:Wself.navigationController];
         }
@@ -204,14 +194,5 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return Height_Pt(20);
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

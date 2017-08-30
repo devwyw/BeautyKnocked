@@ -27,11 +27,11 @@
     NSString *image=[NSString string];
     NSString *title=[NSString string];
     if (row==1) {
-        image=@"zhifubao";
-        title=@"支付宝支付";
-    }else{
         image=@"weixin";
         title=@"微信支付";
+    }else{
+        image=@"zhifubao";
+        title=@"支付宝支付";
     }
     _payImage.image=[UIImage imageNamed:image];
     _payType.text=title;

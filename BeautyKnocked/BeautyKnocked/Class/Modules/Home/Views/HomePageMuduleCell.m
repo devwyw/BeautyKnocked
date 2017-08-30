@@ -43,7 +43,7 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupInterface];
         [self setupConstraints];
-        [self loadHttpData:section];
+        [self loadHttpData];
     }
     return self;
 }
@@ -121,16 +121,7 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     }];
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    switch (_section) {
-        case 5:
-            return self.itemArray.count;
-        case 6:
-            return self.itemArray.count;
-        case 7:
-            return self.itemArray.count;
-        default:
-            return 0;
-    }
+    return self.itemArray.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ItemClassModel * model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
@@ -155,8 +146,8 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, Width_Pt(42), 0, Width_Pt(42));
 }
--(void)loadHttpData:(NSInteger)index{
-    [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",index-4]} url:mlqqm serviceCode:tjxmlb Success:^(id json) {
+-(void)loadHttpData{
+    [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",_section-4]} url:mlqqm serviceCode:tjxmlb Success:^(id json) {
         [self.itemArray removeAllObjects];
         for (NSDictionary *dict in json[@"info"]) {
             [self.itemArray addObject:dict];

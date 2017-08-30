@@ -10,5 +10,4 @@
 
 @interface RegisterController : UIViewController
 @property BOOL isType;
-@property BOOL isLock;
 @end

@@ -37,18 +37,22 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:AlipayFailure object:nil];
 }
 -(void)success{
-    [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-        
-    }];
+    Weakify(self);
+    [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
+        [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+            [Wself payPushController:YES];
+        }];
+    } Failure:nil andNavigation:self.navigationController];
 }
 -(void)failure{
+    Weakify(self);
     [Master showSVProgressHUD:@"订单支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
-        
+        [Wself payPushController:NO];
     }];
 }
 -(void)payPushController:(BOOL)isType{
     PayInfoController *controller=[[PayInfoController alloc]init];
-    
+    controller.isStatus=isType;
     [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)initializeViews {
@@ -97,7 +101,7 @@
                 
                 break;
             default:
-                [AppDelegate AliPayWhitPayOrder:_model.orderStr];
+                [AppDelegate AliPayWithPayOrder:_model.orderStr];
                 break;
         }
     }];

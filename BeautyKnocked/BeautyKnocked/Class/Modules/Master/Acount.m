@@ -15,7 +15,6 @@ static Acount *instance=nil;
 @interface Acount ()<NSCopying,NSMutableCopying>{
     FMDatabase *Data;
 }
-
 @end
 
 @implementation Acount

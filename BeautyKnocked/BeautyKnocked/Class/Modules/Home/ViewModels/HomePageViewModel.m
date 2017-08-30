@@ -46,11 +46,15 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
 @end
 
 @implementation HomePageViewModel
-
+-(NSMutableArray*)imageArray{
+    if (!_imageArray) {
+        _imageArray=[[NSMutableArray alloc]init];
+    }
+    return _imageArray;
+}
 -(NSUInteger)numberOfSectionsInHomePageTableView {
     return 14;
 }
-
 -(NSUInteger)numberOfRowsInHomePageTableViewAtSection:(NSUInteger)section {
     return 1;
 }
@@ -65,7 +69,11 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         if (section == 0) {
             /** 滑动图 */
             [cell.contentView addSubview:self.sdCycleBannerView];
-
+            NSMutableArray *images=[[NSMutableArray alloc]init];
+            for (NSDictionary *dict in self.imageArray) {
+                [images addObject:[NSString stringWithFormat:@"%@%@",mlqqm,dict[@"path"]]];
+            }
+            _sdCycleBannerView.imageURLStringsGroup=images;
         }else if (section == 1) {
             /** 品牌甄选 */
             [cell.contentView addSubview:self.threeItemsMenu];
@@ -123,12 +131,8 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
     return nil;
 }
-
-
 -(CGFloat)congigureCellheightAtIndexPath:(NSIndexPath *)indexPath {
-    
     NSUInteger section = indexPath.section;
-    
     if (section == 0) {
         return Height_Pt(453);
     }else if (section == 1) {
@@ -151,13 +155,10 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     
     return CGFLOAT_MIN;
 }
-
 -(CGFloat)configureHeaderHeightAtSection:(NSUInteger )section {
     return CGFLOAT_MIN;
 }
-
 -(CGFloat)configureFooterHeightAtSection:(NSUInteger )section {
-    
     if ( section == 0 || section == 12 || section == 13) {
         return CGFLOAT_MIN;
     }else if (section == 8){
@@ -174,19 +175,12 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
 }
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    NSLog(@"index == %ld",(long)index);
+    NSLog(@"选中:%@",self.imageArray[index]);
 }
--(SDCycleScrollView *)sdCycleBannerView {
+-(SDCycleScrollView *)sdCycleBannerView{
     if (!_sdCycleBannerView) {
-        _sdCycleBannerView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, Width, Height_Pt(453)) delegate:self placeholderImage:[UIImage imageNamed:@""]];
+        _sdCycleBannerView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, Width, Height_Pt(450)) delegate:self placeholderImage:[UIImage new]];
         _sdCycleBannerView.autoScrollTimeInterval = 4.f;
-        [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
-            NSMutableArray *imageArray=[[NSMutableArray alloc]init];
-            for (NSDictionary *dict in json[@"info"]) {
-                [imageArray addObject:[NSString stringWithFormat:@"%@%@",mlqqm,dict[@"path"]]];
-            }
-            _sdCycleBannerView.imageURLStringsGroup=imageArray;
-        } Failure:nil andNavigation:self.navigationController];
     }
     return _sdCycleBannerView;
 }
@@ -328,8 +322,7 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
 }
 -(void)more:(UIButton *)button{
-    UITabBarController *controller=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
-    controller.selectedIndex=1;
+    [Master setTabBarItem:1 withNavigationController:self.navigationController];
 }
 -(HomePageEndView *)endView {
     if (!_endView) {

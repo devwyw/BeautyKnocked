@@ -13,5 +13,5 @@
 @interface AppDelegate (Alipay)
 +(void)openURL:(NSURL *)url;
 +(void)openURLWithOptions:(NSURL *)url;
-+(void)AliPayWhitPayOrder:(NSString*)order;
++(void)AliPayWithPayOrder:(NSString*)order;
 @end

@@ -10,6 +10,7 @@
 #import "HomePageViewModel.h"
 #import "UIButton+Category.h"
 #import "CarItem.h"
+#import <MJRefresh.h>
 
 @interface HomeController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -114,8 +115,22 @@
         }];
         [self.view addSubview:_carItem];
     }
+    [self loadHttpImageData];
 }
-
+-(UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.showsVerticalScrollIndicator=NO;
+        _tableView.estimatedRowHeight = 100;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadHttpImageData)];
+        [_tableView.mj_header beginRefreshing];
+    }
+    return _tableView;
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.homePageViewModel numberOfSectionsInHomePageTableView];
 }
@@ -125,32 +140,24 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.homePageViewModel configureTableView:tableView AtIndexPath:indexPath andObject:self];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self.homePageViewModel congigureCellheightAtIndexPath:indexPath];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return [self.homePageViewModel configureHeaderHeightAtSection:section];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return [self.homePageViewModel configureFooterHeightAtSection:section];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
--(UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.separatorStyle = 0;
-        _tableView.estimatedRowHeight = 100;
-        _tableView.rowHeight = UITableViewAutomaticDimension;
-    }
-    return _tableView;
+-(void)loadHttpImageData{
+    [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
+        [self.homePageViewModel.imageArray removeAllObjects];
+        self.homePageViewModel.imageArray=json[@"info"];
+        [_tableView.mj_header endRefreshing];
+        [_tableView reloadData];
+    } Failure:nil andNavigation:self.navigationController];
 }
-
 @end

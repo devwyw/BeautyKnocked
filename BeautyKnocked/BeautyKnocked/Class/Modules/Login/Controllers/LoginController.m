@@ -195,8 +195,7 @@
                                                 } seq:[user.id integerValue]];
                                                 [Master showSVProgressHUD:@"登陆成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                                                     [Wself dismissViewControllerAnimated:YES completion:^{
-                                                        UITabBarController *root=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
-                                                        root.selectedIndex=0;
+                                                        [Master setTabBarItem:0 withNavigationController:Wself.navigationController];
                                                     }];
                                                 }];
                 } Failure:nil andNavigation:Wself.navigationController];
