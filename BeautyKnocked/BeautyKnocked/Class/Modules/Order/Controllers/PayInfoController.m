@@ -35,12 +35,12 @@
     // Do any additional setup after loading the view.
 }
 -(void)initializeViews {
-    _image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:_imageName]];
+    _image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"zhifuchenggong"]];
     [self.view addSubview:_image];
     
     _label1=[[UILabel alloc]init];
     _label1.font=[UIFont systemFontOfSize:Font_Size(42)];
-    _label1.text=_string1;
+    _label1.text=@"支付成功";
     [self.view addSubview:_label1];
     
     _line=[[UIView alloc]init];
@@ -55,12 +55,12 @@
     
     _label3=[[UILabel alloc]init];
     _label3.font=[UIFont systemFontOfSize:Font_Size(34)];
-    _label3.text=_string2;
+    _label3.text=@"追加服务订单必须在服务时间内完成付款，否则作废。";
     _label3.textColor=[UIColor grayColor];
     [self.view addSubview:_label3];
     
     _btn1=[[UIButton alloc]init];
-    [_btn1 setTitle:_btnName forState:UIControlStateNormal];
+    [_btn1 setTitle:@"返回首页" forState:UIControlStateNormal];
     [_btn1 setTitleColor:[UIColor colorWithHexString:@"#D7AE4D"] forState:UIControlStateNormal];
     _btn1.titleLabel.font=[UIFont systemFontOfSize:Font_Size(38)];
     [_btn1 makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#D7AE4D"]];

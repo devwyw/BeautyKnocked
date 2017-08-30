@@ -38,6 +38,16 @@
     }
     return self;
 }
+-(void)setModel:(RechargeModel *)model{
+    _rank.text=[NSString stringWithFormat:@"V%@会员卡",model.rank];
+    _money.text=[NSString stringWithFormat:@"¥ %@",model.money];
+    if ([model.discount integerValue]==1) {
+        _message2.text=@"• 无其它折扣;";
+    }else{
+        _message2.text=[NSString stringWithFormat:@"• 预约项目、购买套餐可享受%.1f折;",[model.discount floatValue]*10];
+    }
+    _message3.text=[NSString stringWithFormat:@"• 充值即送: %@",model.give];
+}
 -(void)initializeViews {
     _rank=[[UILabel alloc]init];
     _rank.font=[UIFont systemFontOfSize:Font_Size(50)];
@@ -82,11 +92,6 @@
     [self.contentView addSubview:_use3];
     
     {
-        _rank.text=@"V1会员卡";
-        _money.text=@"¥ 1000";
-        _message2.text=@"• 无其它折扣;";
-        _message3.text=@"• 充值即送: 价值98元的胎盘酶青春活研修复面膜一盒";
-        
         _messageLabel.text=@"充值介绍:";
         _useLabel.text=@"使用说明:";
         _message1.text=@"• 可以享受项目的VIP体验价;";

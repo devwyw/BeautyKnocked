@@ -85,6 +85,7 @@
             make.left.bottom.right.equalTo(self.view);
         }];
     }
+    [self loadHttpData];
 }
 -(UITableView*)tableview{
     if (!_tableview) {
@@ -98,19 +99,20 @@
     return _tableview;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return self.rechargeArray.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //RechargeModel *model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
     RechargeCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell=[[RechargeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RechargeCell"];
     }
-    //cell.model=model;
+    cell.model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    RechargeModel *model=[RechargeModel mj_objectWithKeyValues:self.rechargeArray[indexPath.row]];
     RechargeInfoController *controller=[[RechargeInfoController alloc]init];
+    controller.Cid=model.id;
     [self.navigationController pushViewController:controller animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -121,8 +123,16 @@
 }
 #pragma mark ===== 充值列表 =====
 -(void)loadHttpData{
-    [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:czlb Success:^(id json) {
-        self.rechargeArray=[[NSArray alloc]initWithArray:json[@"info"]];
+    NSString *code=@"";
+    if (_isType) {
+        code=xeczlb;
+    }else{
+        code=czlb;
+    }
+    Weakify(self);
+    [Master HttpPostRequestByParams:@{@"rank":[Acount shareManager].rank} url:mlqqm serviceCode:code Success:^(id json) {
+        Wself.rechargeArray=[[NSArray alloc]initWithArray:json[@"info"]];
+        [_tableview reloadData];
     } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {

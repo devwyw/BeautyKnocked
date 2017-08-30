@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RechargeInfoController : UIViewController
-
+@property (nonatomic,copy) NSString * Cid;
 @end

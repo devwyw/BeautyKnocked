@@ -139,12 +139,8 @@
 }
 -(void)wantAddMore:(NSString *)currentTitle{
     NSLog(@"添加项目");
-    
     PayInfoController *controller=[[PayInfoController alloc]init];
-    [controller setImageName:@"zhifushibai"];
-    [controller setString1:@"支付失败，请重新支付"];
-    controller.string2=@"追加服务订单必须在服务时间内完成付款，否则作废。";
-    controller.btnName=@"重新支付";
+    controller.isStatus=YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 - (void)didReceiveMemoryWarning {

@@ -11,10 +11,10 @@
 /** 约束宏 */
 #define Width [UIScreen mainScreen].bounds.size.width
 #define Height [UIScreen mainScreen].bounds.size.height
-#define Width_Pt(x) x / 1080.f * Width
+#define Width_Pt(x) (x / 1080.f) * Width
 #define Height_Pt(x) ((x) / 1920.f) * ((Height < 568.f) ? (568.f) : (Height))
 #define Size_Change ((Height != 667) ? 667/Height : 1)
-#define Font_Size(x) Height == 480 ? x*3/8/Size_Change*1.19 : x*3/8/Size_Change
+#define Font_Size(x) Height == 480 ? (x*3)/8/(Size_Change*1.19) : (x*3)/8/Size_Change
 #define Weakify(o)        __weak   typeof(self) Wself = o;
 #define ThemeColor [UIColor colorWithHexString:@"#dcb563"]
 /** Pods头文件 */
@@ -27,12 +27,10 @@
 #import "UIColor+help.h"
 #import "UIViewController+Cloudox.h"
 #import "UIView+CornerRadius.h"
-#import "NSDictionary+Log.h"
 /** info */
 #define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define AppVersion [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 #define UUID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
-#define appScheme @"BeautyKnocked"
 /** 空值判断 */
 #define isStringEmpty(a) ([a isEqual:[NSNull null]] || a == nil || [a isEqualToString:@""])
 #define isObjectEmpty(a) ([a isEqual:[NSNull null]] || a == nil)
@@ -62,7 +60,7 @@
 #define cplb @"/manager/client/goods/productManager/queryList"
 #define cplbpx @"/manager/client/goods/productManager/queryListSort"
 #define cpxq @"/manager/client/goods/productManager/queryDetail"
-#define czlb @"/manager/client/recharge/rechargeManager/queryList"
+#define czlb @"/manager/client/recharge/rechargeManager/queryListNormal"
 #define czxq @"/manager/client/recharge/rechargeManager/queryDetail"
 #define czdd @"/manager/client/bill/rechargeBill/insert"
 #define khyhqlb @"/manager/client/personal/clientCouponManager/queryList"

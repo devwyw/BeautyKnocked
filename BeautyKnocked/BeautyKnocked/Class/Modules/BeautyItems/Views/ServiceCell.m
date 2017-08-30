@@ -39,6 +39,7 @@
 }
 -(void)initializeViews {
     _image=[[UIImageView alloc]init];
+    [_image setContentMode:UIViewContentModeScaleAspectFit];
     [self.contentView addSubview:_image];
     
     _title=[[UILabel alloc]init];
@@ -55,7 +56,7 @@
     [_image mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(Width_Pt(60));
         make.centerY.equalTo(self.contentView);
-        make.size.sizeOffset(CGSizeMake(Width_Pt(60), Height_Pt(70)));
+        make.size.sizeOffset(CGSizeMake(Width_Pt(70), Height_Pt(70)));
     }];
     
     [_title mas_makeConstraints:^(MASConstraintMaker *make) {

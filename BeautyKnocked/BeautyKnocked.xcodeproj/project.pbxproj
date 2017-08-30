@@ -54,6 +54,7 @@
 		04B1BAE51F3ED0620062CBE0 /* TitleClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B1BAE41F3ED0620062CBE0 /* TitleClassModel.m */; };
 		04B1BAE81F3ED3A80062CBE0 /* SonItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B1BAE71F3ED3A80062CBE0 /* SonItemController.m */; };
 		04B46E441F20872C007349F2 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B46E431F20872C007349F2 /* NearbyController.m */; };
+		04B6F9521F5664C100BDC44B /* RechargePayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B6F9511F5664C100BDC44B /* RechargePayModel.m */; };
 		04C576C91F31766700D1F188 /* RechargeInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C576C81F31766700D1F188 /* RechargeInfoController.m */; };
 		04CB6C181F31B73D0039B87C /* PaySheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C171F31B73D0039B87C /* PaySheetView.m */; };
 		04CB6C1B1F31C4610039B87C /* OrderSubDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C1A1F31C4610039B87C /* OrderSubDay.m */; };
@@ -1150,6 +1151,8 @@
 		04B1BAE71F3ED3A80062CBE0 /* SonItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonItemController.m; sourceTree = "<group>"; };
 		04B46E421F20872C007349F2 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
 		04B46E431F20872C007349F2 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
+		04B6F9501F5664C100BDC44B /* RechargePayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargePayModel.h; sourceTree = "<group>"; };
+		04B6F9511F5664C100BDC44B /* RechargePayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargePayModel.m; sourceTree = "<group>"; };
 		04C53C6F1F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		04C53C701F204F370016E0A5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		04C576C71F31766700D1F188 /* RechargeInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeInfoController.h; sourceTree = "<group>"; };
@@ -4220,6 +4223,8 @@
 				041BFDB61F43D64700903185 /* RechargeModel.m */,
 				04DC3AD11F4678A0004F269E /* CouponModel.h */,
 				04DC3AD21F4678A0004F269E /* CouponModel.m */,
+				04B6F9501F5664C100BDC44B /* RechargePayModel.h */,
+				04B6F9511F5664C100BDC44B /* RechargePayModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5460,6 +5465,7 @@
 				04F0B0031F32B2FD00D77558 /* WMPanGestureRecognizer.m in Sources */,
 				7390F4B81EE697030059A168 /* CommonAddressCell.m in Sources */,
 				7374CA0C1EC5778C00391187 /* MenuItemView.m in Sources */,
+				04B6F9521F5664C100BDC44B /* RechargePayModel.m in Sources */,
 				737CD3001EE13CA300B6A5DB /* ItemDetailViewModel.m in Sources */,
 				0465F6971F53AABA00F9FF90 /* ServiceCell.m in Sources */,
 				7399DC631ECED6720054877F /* OrderItemTableViewCell.m in Sources */,

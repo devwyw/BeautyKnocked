@@ -9,8 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PayInfoController : UIViewController
-@property (nonatomic,copy) NSString * imageName;
-@property (nonatomic,copy) NSString * string1;
-@property (nonatomic,copy) NSString * string2;
-@property (nonatomic,copy) NSString * btnName;
+@property (nonatomic,assign) BOOL isStatus;
 @end

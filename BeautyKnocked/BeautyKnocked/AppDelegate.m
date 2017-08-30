@@ -31,7 +31,7 @@
     [self getLog];
     
     /** 极光推送->注册 */
-    [AppDelegate registerJPushSDKWithOptions:launchOptions andDelegate:self];
+    [AppDelegate registerJPushSDKWithOptions:launchOptions delegate:self];
 
     return YES;
 }

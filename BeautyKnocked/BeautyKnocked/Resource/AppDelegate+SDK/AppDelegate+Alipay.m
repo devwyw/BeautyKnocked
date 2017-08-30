@@ -7,8 +7,18 @@
 //
 
 #import "AppDelegate+Alipay.h"
+#import <AlipaySDK/AlipaySDK.h>
 
 @implementation AppDelegate (Alipay)
++(void)AliPayWhitPayOrder:(NSString*)order{
+    [[AlipaySDK defaultService]payOrder:order fromScheme:@"BeautyKnocked" callback:^(NSDictionary *resultDic) {
+        if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+            [AppDelegate Success];
+        }else{
+            [AppDelegate Failure];
+        }
+    }];
+}
 +(void)Success{
     [[NSNotificationCenter defaultCenter]postNotificationName:AlipaySuccess object:nil];
 }

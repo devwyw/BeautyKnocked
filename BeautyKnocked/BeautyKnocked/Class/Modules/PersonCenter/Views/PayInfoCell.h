@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RechargeModel.h"
 
 @interface PayInfoCell : UITableViewCell
-
+@property (nonatomic,strong) RechargeModel * model;
 @end

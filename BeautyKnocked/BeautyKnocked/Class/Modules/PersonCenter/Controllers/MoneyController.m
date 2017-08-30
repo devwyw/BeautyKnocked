@@ -114,8 +114,9 @@
     [normal setTitle:@"正常充值" forState:UIControlStateNormal];
     [normal setBackgroundColor:[UIColor colorWithHexString:@"#FFA700"]];
     [normal makeCornerRadius:Height_Pt(121)/2];
+    Weakify(self);
     [[normal rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [self pushRecharge];
+        [Wself pushRechargeWithType:NO];
     }];
     [self.view addSubview:normal];
     
@@ -130,9 +131,9 @@
         [cancelAction setValue:[UIColor redColor] forKey:@"_titleTextColor"];
         [alertController addAction:cancelAction];
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self pushRecharge];
+            [Wself pushRechargeWithType:YES];
         }]];
-        [self presentViewController:alertController animated:YES completion:nil];
+        [Wself presentViewController:alertController animated:YES completion:nil];
     }];
     [self.view addSubview:minMoney];
     
@@ -160,8 +161,9 @@
     }
     // Do any additional setup after loading the view.
 }
--(void)pushRecharge{
+-(void)pushRechargeWithType:(BOOL)type{
     RechargeController *controller=[[RechargeController alloc]init];
+    controller.isType=type;
     [self.navigationController pushViewController:controller animated:YES];
 }
 - (void)didReceiveMemoryWarning {

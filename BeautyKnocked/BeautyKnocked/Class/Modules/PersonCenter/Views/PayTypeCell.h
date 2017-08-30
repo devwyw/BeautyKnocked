@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PayTypeCell : UITableViewCell
-
+@property (nonatomic,assign) NSInteger row;
+@property (nonatomic,assign) BOOL isSelected;
 @end

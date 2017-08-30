@@ -284,7 +284,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     
     _submitOrderView = [[ConfirmOrderSubmitView alloc] init];
     _submitOrderView.backgroundColor = [UIColor whiteColor];
-    _submitOrderView.totalPrice = self.detailModel.vipPrice;
+    _submitOrderView.totalPrice =[[Acount shareManager].rank integerValue]>=1 ? self.detailModel.vipPrice:self.detailModel.price;
     Weakify(self);
     [_submitOrderView.payInfo subscribeNext:^(id  _Nullable x) {
         NSLog(@"%@",Wself.detailOrderModel.mj_keyValues);
@@ -375,7 +375,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
 -(void)selectModel:(DetailModel *)model{
     self.detailOrderModel.projectIds=[NSString stringWithFormat:@"%@,%@",self.detailOrderModel.projectIds,model.id];
     self.detailOrderModel.serviceTime=[NSString stringWithFormat:@"%ld",[self.detailOrderModel.serviceTime integerValue]+[model.serviceTime integerValue]];
-    _submitOrderView.totalPrice=[NSString stringWithFormat:@"%ld",[_submitOrderView.totalPrice integerValue]+[model.vipPrice integerValue]];
+    _submitOrderView.totalPrice=[NSString stringWithFormat:@"%.2f",[_submitOrderView.totalPrice floatValue]+([[Acount shareManager].rank integerValue]>=1 ?[model.vipPrice floatValue]:[model.price floatValue])];
     
     [_addArray addObject:model];
     [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count+1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];

@@ -34,11 +34,16 @@
     }
     return self;
 }
+-(void)setModel:(RechargeModel *)model{
+    _vipimage.image=[UIImage imageNamed:[NSString stringWithFormat:@"V%@",model.rank]];
+    _money.text=model.money;
+    _title.text=[NSString stringWithFormat:@"充值%@，送特权",model.money];
+}
 -(void)setMyViews{
     _backimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"chongzhikabj"]];
     [self.contentView addSubview:_backimage];
     
-    _vipimage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"V1"]];
+    _vipimage=[[UIImageView alloc]init];
     [_backimage addSubview:_vipimage];
     
     _recharge=[[UILabel alloc]init];
@@ -48,13 +53,12 @@
     [_backimage addSubview:_recharge];
     
     _money=[[UILabel alloc]init];
-    _money.text=@"1000";
+    
     _money.font=[UIFont systemFontOfSize:Font_Size(90)];
     _money.textColor=[UIColor colorWithHexString:@"#F1B722"];
     [_backimage addSubview:_money];
     
     _title=[[UILabel alloc]init];
-    _title.text=@"充值1000，送特权";
     _title.font=[UIFont systemFontOfSize:Font_Size(40)];
     [_backimage addSubview:_title];
     
@@ -130,8 +134,6 @@
         make.left.equalTo(_nowRecharge);
     }];
 }
-
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

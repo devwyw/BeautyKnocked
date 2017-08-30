@@ -9,6 +9,7 @@
 #import "PayTypeCell.h"
 
 @interface PayTypeCell ()
+@property (nonatomic,strong) UIImageView * selectImage;
 @property (nonatomic,strong) UIImageView * payImage;
 @property (nonatomic,strong) UILabel * payType;
 @end
@@ -19,10 +20,28 @@
     [super awakeFromNib];
     // Initialization code
 }
+-(void)setIsSelected:(BOOL)isSelected{
+    _selectImage.highlighted=isSelected;
+}
+-(void)setRow:(NSInteger)row{
+    NSString *image=[NSString string];
+    NSString *title=[NSString string];
+    if (row==1) {
+        image=@"zhifubao";
+        title=@"支付宝支付";
+    }else{
+        image=@"weixin";
+        title=@"微信支付";
+    }
+    _payImage.image=[UIImage imageNamed:image];
+    _payType.text=title;
+}
+-(void)setImage:(NSString*)image andTitle:(NSString*)title{
+    
+}
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
         self.selectionStyle=UITableViewCellSelectionStyleNone;
         [self initializeViews];
         [self addConstraints];
@@ -30,12 +49,16 @@
     return self;
 }
 -(void)initializeViews {
-    _payImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"zhifubao"]];
+    _selectImage= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
+    self.accessoryView =_selectImage;
+    
+    _payImage=[[UIImageView alloc]init];
+    [_payImage setContentMode:UIViewContentModeScaleAspectFit];
     [self.contentView addSubview:_payImage];
     
     _payType=[[UILabel alloc]init];
     _payType.font=[UIFont systemFontOfSize:Font_Size(40)];
-    _payType.text=@"支付宝支付";
+    
     [self.contentView addSubview:_payType];
 }
 -(void)addConstraints {
@@ -43,7 +66,7 @@
         make.top.equalTo(self.contentView).offset(Height_Pt(20));
         make.left.equalTo(self.contentView).offset(Width_Pt(50));
         make.bottom.equalTo(self.contentView).offset(-Height_Pt(20));
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(121), Height_Pt(121)));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(120), Height_Pt(120)));
     }];
     [_payType mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_payImage);

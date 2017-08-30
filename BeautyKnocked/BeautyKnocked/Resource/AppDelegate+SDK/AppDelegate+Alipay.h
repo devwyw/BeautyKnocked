@@ -7,13 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import <AlipaySDK/AlipaySDK.h>
 #define AlipaySuccess @"AlipaySuccess"
 #define AlipayFailure @"AlipayFailure"
 
 @interface AppDelegate (Alipay)
 +(void)openURL:(NSURL *)url;
 +(void)openURLWithOptions:(NSURL *)url;
-+(void)Success;
-+(void)Failure;
++(void)AliPayWhitPayOrder:(NSString*)order;
 @end

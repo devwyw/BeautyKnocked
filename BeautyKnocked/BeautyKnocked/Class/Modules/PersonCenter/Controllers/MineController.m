@@ -66,6 +66,9 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
     return CGFLOAT_MIN;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section==2) {
+        return CGFLOAT_MIN;
+    }
     return Height_Pt(20);
 }
 -(void)createViews {

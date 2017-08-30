@@ -9,17 +9,36 @@
 #import "RechargeInfoController.h"
 #import "PayTypeCell.h"
 #import "PayInfoCell.h"
+#import "BeauticianController.h"
+#import "RechargePayModel.h"
+#import "AppDelegate+Alipay.h"
+#import "PayInfoController.h"
 
 @interface RechargeInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
 @property (nonatomic,strong) UIButton * payDone;
-
+@property (nonatomic,strong) RechargeModel * rechargeModel;
+@property (nonatomic,strong) RechargePayModel * model;
 @end
-NSInteger indexSelect=1;
 
 @implementation RechargeInfoController
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+-(RechargeModel*)rechargeModel{
+    if (!_rechargeModel) {
+        _rechargeModel=[[RechargeModel alloc]init];
+    }
+    return _rechargeModel;
+}
+-(RechargePayModel*)model{
+    if (!_model) {
+        _model=[[RechargePayModel alloc]init];
+    }
+    return _model;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,6 +47,24 @@ NSInteger indexSelect=1;
     self.edgesForExtendedLayout=UIRectEdgeNone;
     [self initializeViews];
     [self addConstraints];
+    [self loadHttpData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(success) name:AlipaySuccess object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:AlipayFailure object:nil];
+}
+-(void)success{
+    [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+        
+    }];
+}
+-(void)failure{
+    [Master showSVProgressHUD:@"订单支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
+        
+    }];
+}
+-(void)payPushController:(BOOL)isType{
+    PayInfoController *controller=[[PayInfoController alloc]init];
+    
+    [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)initializeViews {
     [self.view addSubview:self.tableview];
@@ -35,6 +72,20 @@ NSInteger indexSelect=1;
     _payDone=[[UIButton alloc]init];
     [_payDone setTitle:@"确认支付" forState:UIControlStateNormal];
     [_payDone setBackgroundColor:[UIColor colorWithHexString:@"#67D75A"]];
+    Weakify(self);
+    [[_payDone rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if ([_model.payType integerValue]==0) {
+            [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+        }else{
+            [Master HttpPostRequestByParams:_model.mj_keyValues url:mlqqm serviceCode:czdd Success:^(id json) {
+                if ([_model.payType integerValue]==1) {
+                    [AppDelegate AliPayWhitPayOrder:json[@"info"]];
+                }else{
+                    
+                }
+            } Failure:nil andNavigation:Wself.navigationController];
+        }
+    }];
     [self.view addSubview:_payDone];
 }
 -(void)addConstraints {
@@ -55,6 +106,8 @@ NSInteger indexSelect=1;
         _tableview.estimatedRowHeight=Height_Pt(100);
         _tableview.backgroundColor=[UIColor clearColor];
         _tableview.bounces=NO;
+        [_tableview registerClass:[PayInfoCell class] forCellReuseIdentifier:@"PayInfoCell"];
+        [_tableview registerClass:[PayTypeCell class] forCellReuseIdentifier:@"PayTypeCell"];
     }
     return _tableview;
 }
@@ -73,10 +126,8 @@ NSInteger indexSelect=1;
     switch (indexPath.section) {
         case 0:
         {
-            PayInfoCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-            if (!cell) {
-                cell=[[PayInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PayInfoCell"];
-            }
+            PayInfoCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayInfoCell" forIndexPath:indexPath];
+            cell.model=self.rechargeModel;
             return cell;
         }
         case 2:
@@ -85,16 +136,15 @@ NSInteger indexSelect=1;
                 UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefault"];
                 cell.selectionStyle=UITableViewCellSelectionStyleNone;
                 cell.textLabel.font=[UIFont systemFontOfSize:Font_Size(40)];
-                cell.textLabel.text=@"请选择支付方式";
+                cell.textLabel.text=@"支付方式";
                 return cell;
             }else{
-                PayTypeCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-                if (!cell) {
-                    cell=[[PayTypeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PayTypeCell"];
-                }
-                if (indexPath.row==indexSelect) {
-                    UIImageView *image=(UIImageView*)cell.accessoryView;
-                    image.highlighted=YES;
+                PayTypeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayTypeCell" forIndexPath:indexPath];
+                cell.row=indexPath.row;
+                if ([self.model.payType integerValue]==indexPath.row) {
+                    cell.isSelected=YES;
+                }else{
+                    cell.isSelected=NO;
                 }
                 return cell;
             }
@@ -104,7 +154,11 @@ NSInteger indexSelect=1;
             UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"UITableViewCellStyleValue1"];
             cell.selectionStyle=UITableViewCellSelectionStyleNone;
             cell.textLabel.text=@"技师推荐";
-            cell.detailTextLabel.text=@"默认随机";
+            if ([self.model.beauticianId integerValue]==0) {
+                cell.detailTextLabel.text=@"默认随机";
+            }else{
+                cell.detailTextLabel.text=[NSString stringWithFormat:@"%@号技师",_model.beauticianId];
+            }
             cell.textLabel.font=[UIFont systemFontOfSize:Font_Size(40)];
             cell.detailTextLabel.font=cell.textLabel.font;
             cell.detailTextLabel.textColor=[UIColor grayColor];
@@ -115,16 +169,30 @@ NSInteger indexSelect=1;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==1) {
-        UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-        cell.detailTextLabel.text=@"7号技师";
+        BeauticianController *controller=[[BeauticianController alloc]init];
+        controller.isType=1;
+        controller.beauticianId=[RACSubject subject];
+        [controller.beauticianId subscribeNext:^(id  _Nullable x) {
+            _model.beauticianId=x;
+            [_tableview reloadData];
+        }];
+        [self.navigationController pushViewController:controller animated:YES];
     }else if (indexPath.section==2 && indexPath.row>0){
-        PayTypeCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-        indexSelect=indexPath.row;
-        for (UITableViewCell *allCell in tableView.visibleCells) {
-            UIImageView *image=(UIImageView*)allCell.accessoryView;
-            image.highlighted=[cell isEqual:allCell] ? YES : NO;
-        }
+        _model.payType=[NSString stringWithFormat:@"%ld",indexPath.row];
+        [_tableview reloadData];
     }
+}
+-(void)loadHttpData{
+    self.model.device=UUID;
+    self.model.clientId=[Acount shareManager].id;
+    self.model.beauticianId=@"0";
+    self.model.payType=@"0";
+    self.model.rechargeId=_Cid;
+    
+    [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czxq Success:^(id json) {
+        self.rechargeModel=[RechargeModel mj_objectWithKeyValues:json[@"info"]];
+        [_tableview reloadData];
+    } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

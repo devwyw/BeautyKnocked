@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RechargeController : UIViewController
-
+@property (nonatomic,assign) BOOL isType;
 @end
