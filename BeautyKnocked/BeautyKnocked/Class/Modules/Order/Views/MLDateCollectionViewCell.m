@@ -51,23 +51,16 @@
     
     [self.contentView addSubview:_numberLabel];
     [self.contentView addSubview:_contentLabel];
-    
 }
 -(void)addConstraints {
-    
     [_numberLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).offset(3);
         make.centerX.equalTo(self.contentView);
-        make.top.and.left.and.right.equalTo(self.contentView);
-        make.height.equalTo(_contentLabel);
     }];
     
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_numberLabel.mas_bottom);
-        make.centerX.equalTo(self.contentView);
-        make.bottom.and.left.and.right.equalTo(self.contentView);
+        make.bottom.equalTo(self.contentView).offset(-3);
+        make.right.equalTo(self.contentView).offset(-1.5);
     }];
 }
-
-
-
 @end

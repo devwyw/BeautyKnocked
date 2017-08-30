@@ -149,11 +149,11 @@
         make.left.right.equalTo(_backgroundimage);
     }];
     [_leftTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_whiteimage.mas_top).offset(Height_Pt(40));
+        make.top.equalTo(_whiteimage.mas_top).offset(Height_Pt(45));
         make.left.equalTo(_whiteimage).offset(Width_Pt(40));
     }];
     [_leftMessage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_leftTitle.mas_bottom).offset(Height_Pt(20));
+        make.top.equalTo(_leftTitle.mas_bottom).offset(Height_Pt(25));
         make.left.equalTo(_leftTitle);
         make.right.equalTo(_whiteimage).offset(-Width_Pt(50));
     }];

@@ -41,17 +41,23 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CouponCell *cell=[tableView dequeueReusableCellWithIdentifier:@"CouponCell" forIndexPath:indexPath];
     cell.model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
-    //lijishiyong@2x
-    if (_isOrder) {
-        /**
-         CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
-         [self.subCouponId sendNext:model.id];
-         [self.navigationController popViewControllerAnimated:YES];
-         */
-    }else{
-        
-    }
-    
+    Weakify(self)
+    [[cell.useCoupon takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+        if (_isOrder) {
+            CouponModel *model=[CouponModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
+            [Wself.subCouponId sendNext:model.id];
+            [Wself.navigationController popViewControllerAnimated:YES];
+        }else{
+            switch ([cell.model.type integerValue]) {
+                case 5:
+                    [Master setTabBarItem:0 withNavigationController:Wself.navigationController];
+                    break;
+                default:
+                    [Master setTabBarItem:2 withNavigationController:Wself.navigationController];
+                    break;
+            }
+        }
+    }];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -159,17 +159,13 @@ static CGFloat const kNavigationBarHeight = 64;
 // MARK: ChangeViewFrame (Animatable)
 - (void)setViewTop:(CGFloat)viewTop {
     _viewTop = viewTop;
-    
     if (_viewTop <= kNavigationBarHeight) {
         _viewTop = kNavigationBarHeight;
     }
-    
     if (_viewTop > kWMHeaderViewHeight + kNavigationBarHeight) {
         _viewTop = kWMHeaderViewHeight + kNavigationBarHeight;
     }
-    
     self.viewFrame = CGRectMake(0, _viewTop, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - _viewTop);
-    
     self.classBannerView.frame = CGRectMake(0, _viewTop - kWMHeaderViewHeight, [UIScreen mainScreen].bounds.size.width,  kWMHeaderViewHeight);
 }
 
@@ -203,7 +199,6 @@ static CGFloat const kNavigationBarHeight = 64;
 }
 -(void)loadHttpData{
     [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:bqlb Success:^(id json) {
-        [self.itemArray removeAllObjects];
         for (NSDictionary *dict in json[@"info"]) {
             [self.itemArray addObject:dict];
         }

@@ -11,6 +11,11 @@
 
 @interface CouponCell ()
 @property (nonatomic,strong) UIImageView * whiteImage;
+@property (nonatomic,strong) UILabel * label1;
+@property (nonatomic,strong) UILabel * label2;
+@property (nonatomic,strong) UILabel * label3;
+@property (nonatomic,strong) UILabel * label4;
+@property (nonatomic,strong) UIButton * nowPay;
 
 @property (nonatomic,strong) UIImageView * backImage;
 @property (nonatomic,strong) UIImageView * leftImage;
@@ -60,7 +65,6 @@
                 break;
         }
     }
-    
     _title.text=model.name;
     _type.text=model.type;
     NSString *text=[NSString stringWithFormat:@"¥ %@",model.money];
@@ -70,13 +74,51 @@
     _time.text=[NSString stringWithFormat:@"有效期: %@-%@",[self getWebTime:model.startTime],[self getWebTime:model.endTime]];
     
     if (model.isStatus) {
-        [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.offset(125);
-        }];
+        if (isStringEmpty(model.status)||[model.status integerValue]==0) {
+            _nowPay.hidden=NO;
+            [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.offset(175);
+            }];
+        }else{
+            [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.offset(175-Height_Pt(120));
+            }];
+        }
+        NSString *type=@"类型";
+        switch ([model.type integerValue]) {
+            case 1:
+                type=@"项目";
+                break;
+            case 4:
+                type=@"闺蜜";
+                break;
+            case 5:
+                type=@"产品";
+                break;
+            default:
+                break;
+        }
+        _label1.text=[NSString stringWithFormat:@"• 此优惠券%@;",model.commName];
+        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，可抵扣%@VIP价%ld元;",model.money,type,[model.money integerValue]+10];
+        _label3.text=@"• 每笔订单最多限用一张，不叠加使用优惠券;";
+        
+        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"• 券不找零，不兑换现金，最终解释权归美丽敲敲门所有;"];
+        [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Font_Size(35)] range:NSMakeRange(0, attributeStr.length)];
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
+        style.alignment=NSTextAlignmentLeft;
+        style.headIndent = Font_Size(30);
+        style.lineSpacing=5;
+        [attributeStr addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributeStr.length)];
+        _label4.attributedText=attributeStr;
     }else{
         [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.offset(0);
         }];
+        _label1.text=@"";
+        _label2.text=@"";
+        _label3.text=@"";
+        _label4.text=@"";
+        _nowPay.hidden=YES;
     }
 }
 -(NSString*)getWebTime:(NSString*)time{
@@ -88,11 +130,42 @@
     return timeString;
 }
 -(void)initializeViews {
-    _whiteImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"zhankaibeijing"]];
-    [self.contentView addSubview:_whiteImage];
-    
     _backImage=[[UIImageView alloc]init];
     [self.contentView addSubview:_backImage];
+    
+    _whiteImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"zhankaibeijing"]];
+    _whiteImage.userInteractionEnabled=YES;
+    [self.contentView addSubview:_whiteImage];
+    
+    UIColor *gray=[UIColor darkGrayColor];
+    UIFont *font=[UIFont systemFontOfSize:Font_Size(35)];
+    
+    _label1=[[UILabel alloc]init];
+    _label1.textColor=gray;
+    _label1.font=font;
+    [_whiteImage addSubview:_label1];
+    
+    _label2=[[UILabel alloc]init];
+    _label2.textColor=gray;
+    _label2.font=font;
+    [_whiteImage addSubview:_label2];
+    
+    _label3=[[UILabel alloc]init];
+    _label3.textColor=gray;
+    _label3.font=font;
+    [_whiteImage addSubview:_label3];
+    
+    _label4=[[UILabel alloc]init];
+    _label4.textColor=gray;
+    _label4.font=font;
+    _label4.numberOfLines=2;
+    [_whiteImage addSubview:_label4];
+    
+    _nowPay=[[UIButton alloc]init];
+    [_nowPay setTitle:@"立即使用" forState:UIControlStateNormal];
+    [_nowPay setBackgroundImage:[UIImage imageNamed:@"lijishiyong"] forState:UIControlStateNormal];
+    _nowPay.titleLabel.font=font;
+    [_whiteImage addSubview:_nowPay];
     
     _leftImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"biaoqian"]];
     [_backImage addSubview:_leftImage];
@@ -134,11 +207,36 @@
         make.right.equalTo(self.contentView).offset(-Width_Pt(60));
         make.height.offset(Height_Pt(300));
     }];
+    
     [_whiteImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_backImage.mas_bottom);
+        make.top.equalTo(_backImage.mas_bottom).offset(-1);
         make.left.right.equalTo(_backImage);
         make.bottom.equalTo(self.contentView);
         make.height.offset(0);
+    }];
+    
+    [_label1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_whiteImage).offset(Height_Pt(30));
+        make.left.equalTo(_whiteImage).offset(Width_Pt(40));
+        make.right.equalTo(_whiteImage).offset(-Width_Pt(50));
+    }];
+    [_label2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_label1.mas_bottom).offset(Height_Pt(25));
+        make.left.right.equalTo(_label1);
+    }];
+    [_label3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_label2.mas_bottom).offset(Height_Pt(25));
+        make.left.right.equalTo(_label2);
+    }];
+    [_label4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_label3.mas_bottom).offset(Height_Pt(25));
+        make.left.right.equalTo(_label3);
+    }];
+    
+    [_nowPay mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_whiteImage);
+        make.bottom.equalTo(_whiteImage).offset(-Height_Pt(40));
+        make.size.sizeOffset(CGSizeMake(Width_Pt(220), Height_Pt(80)));
     }];
     
     [_leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -179,6 +277,9 @@
         make.right.equalTo(_backImage).offset(-Width_Pt(15));
         make.size.mas_equalTo(CGSizeMake(Width_Pt(200), Height_Pt(105)));
     }];
+}
+-(RACSignal*)useCoupon{
+    return [_nowPay rac_signalForControlEvents:UIControlEventTouchUpInside];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

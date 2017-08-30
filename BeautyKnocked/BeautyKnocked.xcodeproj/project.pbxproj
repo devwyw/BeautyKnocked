@@ -3910,6 +3910,7 @@
 			isa = PBXGroup;
 			children = (
 				73A37D611EBD804800BE60C9 /* Class */,
+				73A37D631EBD804800BE60C9 /* Modules */,
 				73A37D5F1EBD7EE500BE60C9 /* Resource */,
 				73A37D731EBD804800BE60C9 /* TabBarController */,
 				73A37D601EBD7F0700BE60C9 /* UserPrefixHeader.pch */,
@@ -3969,7 +3970,6 @@
 				04F0AFD51F32B2FD00D77558 /* Category */,
 				04F0AFEA1F32B2FD00D77558 /* OtherClass */,
 				04F0AFF41F32B2FD00D77558 /* MyClass */,
-				73A37D631EBD804800BE60C9 /* Modules */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -3987,7 +3987,8 @@
 				73A37D921EBDAD4500BE60C9 /* User */,
 				04E8C67A1F305F12005566C4 /* Other */,
 			);
-			path = Modules;
+			name = Modules;
+			path = Class/Modules;
 			sourceTree = "<group>";
 		};
 		73A37D641EBD804800BE60C9 /* Home */ = {

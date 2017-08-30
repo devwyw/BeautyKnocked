@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CouponModel.h"
+@class RACSignal;
 
 @interface CouponCell : UITableViewCell
 @property (nonatomic,strong) CouponModel * model;
+@property (nonatomic,strong) RACSignal * useCoupon;
 @end
