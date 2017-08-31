@@ -79,7 +79,7 @@ NSInteger number3=0;
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
     SonCouponTableController *controller=[[SonCouponTableController alloc]init];
     if (self.listArray.count==3) {
-        controller.listArray=self.listArray[index];
+        controller.listArray=[[NSMutableArray alloc]initWithArray:self.listArray[index]];
     }
     return controller;
 }
@@ -92,7 +92,7 @@ NSInteger number3=0;
 }
 #pragma mark ===== 优惠券列表 =====
 -(void)loadHttp{
-    [Master HttpPostRequestByParams:@{@"device":UUID,@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:khyhqlb Success:^(id json) {
+    [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:khyhqlb Success:^(id json) {
         NSMutableArray *arr1=[[NSMutableArray alloc]init];
         NSMutableArray *arr2=[[NSMutableArray alloc]init];
         NSMutableArray *arr3=[[NSMutableArray alloc]init];

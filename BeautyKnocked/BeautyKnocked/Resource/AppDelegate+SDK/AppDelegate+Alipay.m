@@ -37,17 +37,16 @@
         
         [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
             NSString *result = resultDic[@"result"];
-            NSString *authCode = @"";
             if (result.length>0) {
                 NSArray *resultArr = [result componentsSeparatedByString:@"&"];
                 for (NSString *subResult in resultArr) {
                     if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
-                        authCode = [subResult substringFromIndex:10];
+                        NSLog(@"授权结果:%@",[subResult substringFromIndex:10]);
                         break;
                     }
                 }
             }
-            NSLog(@"授权结果:%@", authCode);
+            
         }];
     }
 }
@@ -63,17 +62,15 @@
         
         [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
             NSString *result = resultDic[@"result"];
-            NSString *authCode = @"";
             if (result.length>0) {
                 NSArray *resultArr = [result componentsSeparatedByString:@"&"];
                 for (NSString *subResult in resultArr) {
                     if (subResult.length > 10 && [subResult hasPrefix:@"auth_code="]) {
-                        authCode = [subResult substringFromIndex:10];
+                        NSLog(@"授权结果:%@",[subResult substringFromIndex:10]);
                         break;
                     }
                 }
             }
-            NSLog(@"授权结果:%@", authCode);
         }];
     }
 }

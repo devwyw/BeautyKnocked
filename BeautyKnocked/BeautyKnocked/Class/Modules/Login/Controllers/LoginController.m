@@ -183,8 +183,7 @@
         [[_loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             if (_usernameTextField.text.length==11&&_passwordTextField.text.length>=6){
                 [Master HttpPostRequestByParams:@{@"account":_usernameTextField.text,
-                                                  @"password":_passwordTextField.text,
-                                                  @"device":UUID}
+                                                  @"password":_passwordTextField.text}
                                             url:mlqqm serviceCode:dl Success:^(id json) {
                                                 Acount *user=[Acount shareManager];
                                                 user=[Acount mj_objectWithKeyValues:json[@"info"]];

@@ -67,7 +67,7 @@
                 }
                 NSLog(@"压缩后:%fK",imageData.length/1024.0f);
                 NSString *imageBase = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                [Master HttpPostRequestByParams:@{@"id":user.id,@"device":UUID,@"imgStr":imageBase} url:mlqqm serviceCode:ghtx Success:^(id json) {
+                [Master HttpPostRequestByParams:@{@"id":user.id,@"imgStr":imageBase} url:mlqqm serviceCode:ghtx Success:^(id json) {
                     /** 修改头像 */
                     Wself.modifyInfoView.headerimage=images.firstObject;
                     user.headPath=json[@"info"];

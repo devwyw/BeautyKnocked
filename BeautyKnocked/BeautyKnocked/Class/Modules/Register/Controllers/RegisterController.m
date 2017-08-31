@@ -334,8 +334,8 @@ static int const timeCode = 60;
                         [Master showSVProgressHUD:@"注册成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                             [Wself dismissViewControllerAnimated:YES completion:^{
                                 [Master HttpPostRequestByParams:@{@"account":_phoneNumberTextField.text,
-                                                                  @"password":_passwordTextField.text,
-                                                                  @"device":UUID}
+                                                                  @"password":_passwordTextField.text
+                                                                  }
                                                             url:mlqqm serviceCode:dl Success:^(id json) {
                                                                 Acount *user=[Acount shareManager];
                                                                 user=[Acount mj_objectWithKeyValues:json[@"info"]];
@@ -346,7 +346,7 @@ static int const timeCode = 60;
                         }];
                     } Failure:nil andNavigation:Wself.navigationController];
                 }else{
-                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"device":UUID,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
+                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
                         [Master showSVProgressHUD:@"重置成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                             [Wself.navigationController popViewControllerAnimated:YES];
                         }];

@@ -12,7 +12,6 @@
 static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 
 @interface EvaluationTableViewController ()
-@property (nonatomic,strong) NSArray * list;
 @end
 
 @implementation EvaluationTableViewController
@@ -27,22 +26,16 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
--(NSArray*)list{
-    if (!_list) {
-        _list=[[NSArray alloc]init];
-    }
-    return _list;
-}
 -(void)setListArray:(NSArray *)listArray{
-    self.list=[[NSArray alloc]initWithArray:listArray];
+    _listArray=listArray;
     [self.tableView reloadData];
 }
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.list.count;
+    return self.listArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CommentModel *model=[CommentModel mj_objectWithKeyValues:self.list[indexPath.row]];
+    CommentModel *model=[CommentModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     EvaluationCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[EvaluationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EvaluationCell"];

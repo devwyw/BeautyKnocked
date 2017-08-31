@@ -73,8 +73,8 @@
             make.height.offset(0);
             make.bottom.equalTo(self.contentView).offset(-Height_Pt(20));
         }];
-        _leftMessage.text=@"";
-        _leftTitle.text=@"";
+        _leftMessage.text=nil;
+        _leftTitle.text=nil;
     }
 }
 -(void)setMyViews{

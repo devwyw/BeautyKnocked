@@ -67,7 +67,7 @@
     Weakify(self);
     [[_textField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
         if (![_textField.text isEqualToString:user.nickName] && _textField.text.length>0) {
-            [Master HttpPostRequestByParams:@{@"id":user.id,@"device":UUID,@"nickName":_textField.text} url:mlqqm serviceCode:ggnc Success:^(id json) {
+            [Master HttpPostRequestByParams:@{@"id":user.id,@"nickName":_textField.text} url:mlqqm serviceCode:ggnc Success:^(id json) {
                 /** 修改昵称 */
                 user.nickName=_textField.text;
                 [user UpdateAcount];

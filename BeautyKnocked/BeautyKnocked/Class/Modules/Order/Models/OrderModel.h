@@ -10,7 +10,6 @@
 
 @interface OrderModel : NSObject
 /** 项目订单 */
-@property (nonatomic,copy) NSString * device;
 @property (nonatomic,copy) NSString * clientId;
 @property (nonatomic,copy) NSString * beauticianId;
 @property (nonatomic,copy) NSString * addressId;
@@ -20,4 +19,5 @@
 @property (nonatomic,copy) NSString * pactServiceTime;
 @property (nonatomic,copy) NSString * serviceTime;
 @property (nonatomic,copy) NSString * remark;
+@property (nonatomic,copy) NSString * ip;
 @end

@@ -117,7 +117,7 @@
     RechargeModel *model=[RechargeModel mj_objectWithKeyValues:_rechargeArray[indexPath.row]];
     model.isSelected=!model.isSelected;
     [_rechargeArray replaceObjectAtIndex:indexPath.row withObject:model];
-    [_tableview reloadData];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return CGFLOAT_MIN;
@@ -127,7 +127,7 @@
 }
 #pragma mark ===== 充值列表 =====
 -(void)loadHttpData{
-    NSString *code=@"";
+    NSString *code;
     if (_isType) {
         code=xeczlb;
     }else{

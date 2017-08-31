@@ -30,17 +30,16 @@
 /** info */
 #define SystemVersion ([[[UIDevice currentDevice] systemVersion] floatValue])
 #define AppVersion [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
-#define UUID [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 /** 空值判断 */
 #define isStringEmpty(a) ([a isEqual:[NSNull null]] || a == nil || [a isEqualToString:@""])
 #define isObjectEmpty(a) ([a isEqual:[NSNull null]] || a == nil)
 #define isArrayEmpty(a) ([a isEqual:[NSNull null]] || a == nil || a.count == 0)
-/** 服务器请求Code->简写拼音 */
+/** 服务器接口->简写拼音 */
 #define zc @"/manager/client/base/registerManager/register"
 #define zcyzm @"/manager/client/base/smsVerificationManager/sendVerification"
 #define ptyzm @"/manager/client/base/smsVerificationManager/sendCode"
 #define dl @"/manager/client/base/loginManager/login"
-#define js @"/manager/client/base/loginManager/unlock"
+#define tcdl @"/manager/client/base/loginManager/outLongin"
 #define wjmm @"/manager/client/base/loginManager/forgetPassword"
 #define lbt @"/manager/client/base/bannerManager/queryList"
 #define ghtx @"/manager/client/base/clientManager/updateHeadPath"
@@ -51,8 +50,7 @@
 #define bqlb @"/manager/client/goods/labelManager/queryList"
 #define xmxq @"/manager/client/goods/projectManager/queryDetail"
 #define pllb @"/manager/client/goods/commentManager/queryListByCommId"
-/** 提交评论 */
-#define tjpl @"/manager/client/goods/commentManager/submitProjectComment"
+#define tjddpl @"/manager/client/goods/commentManager/submitBillComment"
 #define tjxmlb @"/manager/client/goods/recommendManager/queryRecommendProject"
 #define tclb @"/manager/client/goods/packageManager/queryList"
 #define tclbpx @"/manager/client/goods/packageManager/queryListSort"
@@ -76,6 +74,10 @@
 #define xeczlb @"/manager/client/recharge/rechargeManager/queryListSmall"
 #define tjxmdd @"/manager/client/bill/projectBillManager/addBill"
 #define qrxmdd @"/manager/client/bill/projectBillManager/addYesBill"
+#define scfwdz @"/manager/client/base/serviceAddressManager/deleteAddress"
+#define mrssx @"/manager/client/base/beauticianManager/queryScreen"
+#define tjcpdd @"/manager/client/bill/productBillManager/addBill"
+#define czzslb @"/manager/client/recharge/rechargeRuleManager/queryByRId"
 /** 调试模式 */
 #ifdef __OBJC__
 #ifdef DEBUG

@@ -141,7 +141,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     }];
 }
 -(void)loadHttpData{
-    [Master HttpPostRequestByParams:@{@"device":UUID,@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:fwdzlb Success:^(id json) {
+    [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:fwdzlb Success:^(id json) {
         self.listArray=json[@"info"];
         for (int i=0; i<_listArray.count; i++) {
             if ([_listArray[i][@"isDefault"] integerValue]==1) {

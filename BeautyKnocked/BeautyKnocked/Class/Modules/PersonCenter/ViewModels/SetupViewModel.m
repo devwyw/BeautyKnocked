@@ -118,13 +118,15 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
                 [alertController addAction:cancelAction];
                 [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     Acount *user=[Acount shareManager];
-                    [JPUSHService deleteAlias:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
-                        NSLog(@"极光推送:%@",iAlias);
-                    } seq:[user.id integerValue]];
-                    [user SignOutAcount];
-                    [Master showSVProgressHUD:@"退出成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-                        [Wself.navigationController popViewControllerAnimated:YES];
-                    }];
+                    [Master HttpPostRequestByParams:@{@"id":user.id} url:mlqqm serviceCode:tcdl Success:^(id json) {
+                        [JPUSHService deleteAlias:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+                            NSLog(@"极光推送:%@",iAlias);
+                        } seq:[user.id integerValue]];
+                        [user SignOutAcount];
+                        [Master showSVProgressHUD:@"退出成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                            [Wself.navigationController popViewControllerAnimated:YES];
+                        }];
+                    } Failure:nil andNavigation:Wself.navigationController];
                 }]];
                 [Wself.navigationController presentViewController:alertController animated:YES completion:nil];
             }

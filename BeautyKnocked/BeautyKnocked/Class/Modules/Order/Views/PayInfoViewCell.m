@@ -25,13 +25,22 @@
     return self;
 }
 -(void)setModel:(PayInfoModel *)model{
-    _name.text=model.name;
     if ([model.num isEqualToString:@"数量"]) {
         _num.text=model.num;
     }else{
         _num.text=[NSString stringWithFormat:@"x%@",model.num];
     }
     _money.text=model.money;
+    if ([model.isUse integerValue]==1) {
+        NSString *text=[NSString stringWithFormat:@"%@ (*已优惠)",model.name];
+        NSRange colorRang=[text rangeOfString:@"(*已优惠)"];
+        NSMutableAttributedString *attText=[[NSMutableAttributedString alloc]initWithString:text];
+        [attText addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#d72d43"] range:colorRang];
+        [attText addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Font_Size(40)] range:NSMakeRange(0, text.length)];
+        _name.attributedText=attText;
+    }else{
+        _name.text=model.name;
+    }
 }
 -(void)initializeViews {
     UIColor *darkGray=[UIColor darkGrayColor];

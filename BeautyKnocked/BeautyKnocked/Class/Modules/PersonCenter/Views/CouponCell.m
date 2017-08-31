@@ -75,14 +75,15 @@
     
     if (model.isStatus) {
         if (isStringEmpty(model.status)||[model.status integerValue]==0) {
-            _nowPay.hidden=NO;
             [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.offset(175);
             }];
+            _nowPay.hidden=NO;
         }else{
             [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.offset(175-Height_Pt(120));
             }];
+            _nowPay.hidden=YES;
         }
         NSString *type=@"类型";
         switch ([model.type integerValue]) {
@@ -114,10 +115,10 @@
         [_whiteImage mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.offset(0);
         }];
-        _label1.text=@"";
-        _label2.text=@"";
-        _label3.text=@"";
-        _label4.text=@"";
+        _label1.text=nil;
+        _label2.text=nil;
+        _label3.text=nil;
+        _label4.text=nil;
         _nowPay.hidden=YES;
     }
 }

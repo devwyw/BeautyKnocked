@@ -103,9 +103,7 @@
     cell.backgroundColor=[UIColor clearColor];
     [cell.imageView setImage:[UIImage imageNamed:imageName]];
     cell.textLabel.text = paymentName;
-    
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
-    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

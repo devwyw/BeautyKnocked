@@ -39,4 +39,6 @@ typedef void(^ShowSVProgressBlock)();
                  andNavigation:(UINavigationController*)navigationController;
 /** 网络图片 */
 +(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url;
+/** 获取ip */
++(NSString *)getIPv4;
 @end

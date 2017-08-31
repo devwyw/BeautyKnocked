@@ -26,12 +26,6 @@
 @property (nonatomic,copy) NSString * money;
 /** #积分# */
 @property (nonatomic,copy) NSString * score;
-/** #经度# */
-@property (nonatomic,copy) NSString * longitude;
-/** #纬度# */
-@property (nonatomic,copy) NSString * latitude;
-/** token标识符 */
-@property (nonatomic,copy) NSString * token;
 #pragma mark ===== 账号接口 =====
 /** 账号登录 */
 -(void)SignInAcount;

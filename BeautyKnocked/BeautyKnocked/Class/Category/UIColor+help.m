@@ -69,7 +69,7 @@
 }
 //十进制转十六进制
 -(NSString *)ToHex:(int)tmpid{
-    NSString *endtmp=@"";
+    NSString *endtmp;
     NSString *nLetterValue;
     NSString *nStrat;
     int ttmpig=tmpid%16;

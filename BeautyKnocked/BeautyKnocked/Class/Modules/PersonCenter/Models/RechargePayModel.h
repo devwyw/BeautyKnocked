@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface RechargePayModel : NSObject
-@property (nonatomic,copy) NSString * device;
 @property (nonatomic,copy) NSString * clientId;
 @property (nonatomic,copy) NSString * beauticianId;
 @property (nonatomic,copy) NSString * payType;
 @property (nonatomic,copy) NSString * rechargeId;
+@property (nonatomic,copy) NSString * rules;
+@property (nonatomic,copy) NSString * ip;
 @end

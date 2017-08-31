@@ -62,7 +62,7 @@
         if ([user isSignInWithNavigationController:Wself.navigationController]) {
             UIButton *btn=(UIButton*)x;
             if (!btn.isSelected) {
-                [Master HttpPostRequestByParams:@{@"device":UUID,@"clientId":user.id,@"beauticianId":model.id} url:mlqqm serviceCode:khsc Success:^(id json) {
+                [Master HttpPostRequestByParams:@{@"clientId":user.id,@"beauticianId":model.id} url:mlqqm serviceCode:khsc Success:^(id json) {
                     btn.selected=!btn.isSelected;
                     [Master showSVProgressHUD:@"收藏成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
                         [Wself.tableView.mj_header beginRefreshing];

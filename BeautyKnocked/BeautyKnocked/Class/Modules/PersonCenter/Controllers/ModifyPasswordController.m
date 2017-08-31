@@ -83,7 +83,6 @@
                 [Master showSVProgressHUD:@"旧密码与新密码相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
             }else{
                 [Master HttpPostRequestByParams:@{@"id":user.id,
-                                                  @"device":UUID,
                                                   @"oldPassword":_currentPasswordTF.text,
                                                   @"newPassword":_passwordTF.text} url:mlqqm serviceCode:ggmm Success:^(id json) {
                                                       [Master showSVProgressHUD:@"修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{

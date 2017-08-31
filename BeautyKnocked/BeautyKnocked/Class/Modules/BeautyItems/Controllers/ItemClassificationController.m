@@ -129,7 +129,6 @@ static CGFloat const kNavigationBarHeight = 64;
     [self.view addGestureRecognizer:self.panGesture];
     [self.view addSubview:self.classBannerView];
     [self setViewTop:kNavigationBarHeight];
-    
     [self loadHttpData];
 }
 - (void)panOnView:(WMPanGestureRecognizer *)recognizer {

@@ -409,7 +409,6 @@ static BOOL _sortAscending;
         }];
     }
 }
-
 + (NSString *)transformDataLength:(NSInteger)dataLength {
     NSString *bytes = @"";
     if (dataLength >= 0.1 * (1024 * 1024)) {

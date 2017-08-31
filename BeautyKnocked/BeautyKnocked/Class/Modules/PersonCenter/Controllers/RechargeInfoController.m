@@ -164,16 +164,16 @@
         controller.beauticianId=[RACSubject subject];
         [controller.beauticianId subscribeNext:^(id  _Nullable x) {
             _model.beauticianId=x;
-            [_tableview reloadData];
+            [_tableview reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
         }];
         [self.navigationController pushViewController:controller animated:YES];
     }else if (indexPath.section==2 && indexPath.row>0){
         _model.payType=[NSString stringWithFormat:@"%ld",indexPath.row];
-        [_tableview reloadData];
+        [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 -(void)loadHttpData{
-    self.model.device=UUID;
+    self.model.ip=[Master getIPv4];
     self.model.clientId=[Acount shareManager].id;
     self.model.beauticianId=@"0";
     self.model.payType=@"0";

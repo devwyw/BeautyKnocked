@@ -69,7 +69,7 @@ static Acount *instance=nil;
     if (!isStringEmpty(aid)) {
         [Data executeUpdate:@"DELETE FROM acount WHERE aid = ?",aid];
     }
-    [Data executeUpdate:@"INSERT INTO acount(aid,account,nickName,headPath,rank,money,score,longitude,latitude,token) VALUES(?,?,?,?,?,?,?,?,?,?)",self.id,self.account,self.nickName,self.headPath,self.rank,self.money,self.score,self.longitude,self.latitude,self.token];
+    [Data executeUpdate:@"INSERT INTO acount(aid,account,nickName,headPath,rank,money,score,longitude,latitude,token) VALUES(?,?,?,?,?,?,?,?,?,?)",self.id,self.account,self.nickName,self.headPath,self.rank,self.money,self.score];
     [Data close];
 }
 /** 账号退出 */
@@ -94,9 +94,6 @@ static Acount *instance=nil;
     [Data executeUpdate:@"UPDATE 'acount' SET rank = ?  WHERE aid = ? ",self.rank,self.id];
     [Data executeUpdate:@"UPDATE 'acount' SET money = ?  WHERE aid = ? ",self.money,self.id];
     [Data executeUpdate:@"UPDATE 'acount' SET score = ?  WHERE aid = ? ",self.score,self.id];
-    [Data executeUpdate:@"UPDATE 'acount' SET longitude = ?  WHERE aid = ? ",self.longitude,self.id];
-    [Data executeUpdate:@"UPDATE 'acount' SET latitude = ?  WHERE aid = ? ",self.latitude,self.id];
-    [Data executeUpdate:@"UPDATE 'acount' SET token = ?  WHERE aid = ? ",self.token,self.id];
     [Data close];
 }
 /** 获取账号信息 */
@@ -111,9 +108,6 @@ static Acount *instance=nil;
         self.rank=[res stringForColumn:@"rank"];
         self.money=[res stringForColumn:@"money"];
         self.score=[res stringForColumn:@"score"];
-        self.longitude=[res stringForColumn:@"longitude"];
-        self.latitude=[res stringForColumn:@"latitude"];
-        self.token=[res stringForColumn:@"token"];
     }
     [Data close];
 }

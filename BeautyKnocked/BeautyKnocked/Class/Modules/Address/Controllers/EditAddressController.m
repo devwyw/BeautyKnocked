@@ -335,7 +335,6 @@
 }
 -(void)loadHttpData:(AddressModel*)model withAddressEditStyle:(AddressEditStyle)type{
     NSMutableDictionary *dict=[[NSMutableDictionary alloc]initWithDictionary:model.mj_keyValues];
-    [dict setObject:UUID forKey:@"device"];
     [dict setObject:[Acount shareManager].id forKey:@"clientId"];
     
     NSString *code=[[NSString alloc]init];

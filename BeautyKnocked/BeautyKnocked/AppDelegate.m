@@ -65,10 +65,9 @@
 }
 #pragma mark ===== NSLog =====
 -(void)getLog{
-    NSLog(@"\n系统:%.2f\n版本:%@\nUUID:%@\n账号:%@",
+    NSLog(@"\n系统:%.2f\n版本:%@\n账号:%@",
           SystemVersion,
           AppVersion,
-          UUID,
           [Acount shareManager].account
           );
 }

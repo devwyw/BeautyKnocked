@@ -162,7 +162,9 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                 return cell;
             }else{/** 备注 */
                 ConfirmOrderRemarksCell *cell = [tableView dequeueReusableCellWithIdentifier:RemarksCell forIndexPath:indexPath];
-                cell.text=self.detailOrderModel.remark;
+                if (!isStringEmpty(_detailOrderModel.remark)) {
+                    cell.text=_detailOrderModel.remark;
+                }
                 cell.subText=[RACSubject subject];
                 [[cell.subText takeUntil:cell.rac_prepareForReuseSignal] subscribeNext:^(id  _Nullable x) {
                     _detailOrderModel.remark=x;
@@ -188,7 +190,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             [controller.addressId subscribeNext:^(id  _Nullable x) {
                 self.addressModel=(AddressModel*)x;
                 self.detailOrderModel.addressId=self.addressModel.id;
-                [self.tableView reloadData];
+                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
             }];
             [self.navigationController pushViewController:controller animated:YES];
         }
@@ -202,7 +204,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     controller.beauticianId=[RACSubject subject];
                     [controller.beauticianId subscribeNext:^(id  _Nullable x) {
                         _detailOrderModel.beauticianId=x;
-                        [_tableView reloadData];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
                     }];
                     if (!isStringEmpty(_detailOrderModel.pactServiceTime)) {
                         //时间筛选技师
@@ -228,7 +230,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                             view.subData=[RACSubject subject];
                             [view.subData subscribeNext:^(id  _Nullable x) {
                                 _detailOrderModel.pactServiceTime=x;
-                                [_tableView reloadData];
+                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
                             }];
                             [LEEAlert alert].config
                             .LeeCustomView(view)
@@ -252,15 +254,15 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         default:
             if (indexPath.row==0) {
                 Weakify(self);
-                [Master HttpPostRequestByParams:@{@"device":_detailOrderModel.device,@"clientId":_detailOrderModel.clientId,@"commIds":self.detailOrderModel.projectIds,@"commType":@"1"} url:mlqqm serviceCode:yhqsx Success:^(id json) {
+                [Master HttpPostRequestByParams:@{@"clientId":_detailOrderModel.clientId,@"commIds":self.detailOrderModel.projectIds,@"commType":@"1"} url:mlqqm serviceCode:yhqsx Success:^(id json) {
                     SonCouponTableController *controller=[[SonCouponTableController alloc]init];
                     controller.isOrder=YES;
                     controller.subCouponId=[RACSubject subject];
                     [controller.subCouponId subscribeNext:^(id  _Nullable x) {
                         _detailOrderModel.clientCouponId=x;
-                        [_tableView reloadData];
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
                     }];
-                    controller.listArray=json[@"info"];
+                    controller.listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
                     [Wself.navigationController pushViewController:controller animated:YES];
                 } Failure:nil andNavigation:self.navigationController];
             }
@@ -279,8 +281,6 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     [_tableView registerClass:[ConfirmOrderAddCell class] forCellReuseIdentifier:AddCell];
     [_tableView registerClass:[ConfirmOrderRemarksCell class] forCellReuseIdentifier:RemarksCell];
     [self.view addSubview:self.tableView];
-    
-    [self getDefaultAddressModel];
     
     _submitOrderView = [[ConfirmOrderSubmitView alloc] init];
     _submitOrderView.backgroundColor = [UIColor whiteColor];
@@ -326,6 +326,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         make.top.equalTo(self.tableView.mas_bottom);
         make.left.and.bottom.and.right.equalTo(self.view);
     }];
+    [self getDefaultAddressModel];
 }
 /** 获取默认地址 */
 -(void)getDefaultAddressModel{
@@ -333,28 +334,24 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         case MLProduct:
             break;
         case MLItem:
-            self.detailOrderModel.device=UUID;
+            self.detailOrderModel.ip=[Master getIPv4];
             self.detailOrderModel.clientId=[Acount shareManager].id;
             self.detailOrderModel.beauticianId=@"0";
-            self.detailOrderModel.addressId=@"";
             self.detailOrderModel.projectIds=self.detailModel.id;
-            self.detailOrderModel.payType=@"";
             self.detailOrderModel.clientCouponId=@"0";
-            self.detailOrderModel.pactServiceTime=@"";
             self.detailOrderModel.serviceTime=self.detailModel.serviceTime;
-            self.detailOrderModel.remark=@"";
             [self.addArray addObject:_detailModel];
             break;
         default:
             break;
     }
-    [Master HttpPostRequestByParams:@{@"device":self.detailOrderModel.device,@"clientId":self.detailOrderModel.clientId} url:mlqqm serviceCode:fwdzlb Success:^(id json) {
+    [Master HttpPostRequestByParams:@{@"clientId":self.detailOrderModel.clientId} url:mlqqm serviceCode:fwdzlb Success:^(id json) {
         NSMutableArray *array=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         for (int i=0; i<array.count; i++) {
             if ([array[i][@"isDefault"] integerValue]==1) {
                 self.addressModel=[AddressModel mj_objectWithKeyValues:array[i]];
                 self.detailOrderModel.addressId=self.addressModel.id;
-                [self.tableView reloadData];
+                [_tableView reloadData];
                 break;
             }
         }
@@ -378,7 +375,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     _submitOrderView.totalPrice=[NSString stringWithFormat:@"%.2f",[_submitOrderView.totalPrice floatValue]+([[Acount shareManager].rank integerValue]>=1 ?[model.vipPrice floatValue]:[model.price floatValue])];
     
     [_addArray addObject:model];
-    [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count+1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count+1 inSection:1]] withRowAnimation:UITableViewRowAnimationRight];
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_addArray.count+2 inSection:1] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 @end

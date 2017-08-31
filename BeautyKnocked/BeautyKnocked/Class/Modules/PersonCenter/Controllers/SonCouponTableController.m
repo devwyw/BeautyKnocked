@@ -64,7 +64,11 @@
     CouponModel *model=[CouponModel mj_objectWithKeyValues:_listArray[indexPath.row]];
     model.isStatus=!model.isStatus;
     [_listArray replaceObjectAtIndex:indexPath.row withObject:model];
-    [self.tableView reloadData];
+    if (model.isStatus) {
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    }else{
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
