@@ -17,9 +17,7 @@
 @end
 
 @implementation RechargeController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(NSMutableArray*)rechargeArray{
     if (!_rechargeArray) {
         _rechargeArray=[[NSMutableArray alloc]init];
@@ -117,7 +115,7 @@
     RechargeModel *model=[RechargeModel mj_objectWithKeyValues:_rechargeArray[indexPath.row]];
     model.isSelected=!model.isSelected;
     [_rechargeArray replaceObjectAtIndex:indexPath.row withObject:model];
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return CGFLOAT_MIN;
@@ -135,7 +133,7 @@
     }
     Weakify(self);
     [Master HttpPostRequestByParams:@{@"rank":[Acount shareManager].rank} url:mlqqm serviceCode:code Success:^(id json) {
-        Wself.rechargeArray=json[@"info"];
+        Wself.rechargeArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         [_tableview reloadData];
     } Failure:nil andNavigation:self.navigationController];
 }

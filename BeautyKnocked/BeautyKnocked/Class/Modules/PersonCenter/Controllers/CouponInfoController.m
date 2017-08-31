@@ -16,9 +16,7 @@
 @end
 
 @implementation CouponInfoController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(NSArray*)titleq{
     if(!_titleq){
         _titleq=[[NSArray alloc]initWithObjects:@"优惠券是否可以叠加使用？",@"取消订单后，优惠券会返还吗？",@"优惠券可以找零或体现吗？",@"优惠券为什么不可使用？",@"如何获得美丽敲敲门优惠券？", nil];

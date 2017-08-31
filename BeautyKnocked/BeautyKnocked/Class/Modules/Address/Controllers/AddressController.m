@@ -20,9 +20,6 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 @end
 
 @implementation AddressController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
 -(NSMutableArray*)listArray{
     if (!_listArray) {
         _listArray=[[NSMutableArray alloc]init];
@@ -142,7 +139,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 }
 -(void)loadHttpData{
     [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:fwdzlb Success:^(id json) {
-        self.listArray=json[@"info"];
+        self.listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         for (int i=0; i<_listArray.count; i++) {
             if ([_listArray[i][@"isDefault"] integerValue]==1) {
                 NSDictionary *defaultAddress=[[NSDictionary alloc]initWithDictionary:_listArray[i]];

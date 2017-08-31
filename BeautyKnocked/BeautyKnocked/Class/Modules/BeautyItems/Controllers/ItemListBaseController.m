@@ -23,9 +23,7 @@
 static NSInteger padding=6;
 
 @implementation ItemListBaseController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

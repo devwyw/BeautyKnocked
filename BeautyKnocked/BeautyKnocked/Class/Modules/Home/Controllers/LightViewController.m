@@ -21,9 +21,7 @@
 @end
 
 @implementation LightViewController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"光电中心"];

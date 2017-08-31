@@ -144,6 +144,7 @@ NSString * const ID = @"cycleCell";
     mainView.dataSource = self;
     mainView.delegate = self;
     mainView.scrollsToTop = NO;
+    mainView.bounces=NO;
     [self addSubview:mainView];
     _mainView = mainView;
 }

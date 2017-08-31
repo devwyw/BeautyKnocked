@@ -14,14 +14,13 @@
 
 // 设置导航栏背景透明度
 - (void)setNeedsNavigationBackground:(CGFloat)alpha {
-    // 导航栏背景透明度设置
-    UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];// _UIBarBackground
-    UIImageView *backgroundImageView = [[barBackgroundView subviews] objectAtIndex:0];// UIImageView
+    UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];
+    UIImageView *backgroundImageView = [[barBackgroundView subviews] objectAtIndex:0];
     if (self.navigationBar.isTranslucent) {
         if (backgroundImageView != nil && backgroundImageView.image != nil) {
             barBackgroundView.alpha = alpha;
         }else {
-            UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];// UIVisualEffectView
+            UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];
             if (backgroundEffectView != nil) {
                 backgroundEffectView.alpha = alpha;
             }
@@ -29,12 +28,10 @@
     } else {
         barBackgroundView.alpha = alpha;
     }
-    //self.navigationBar.clipsToBounds = alpha == 0.0;//线
 }
 
 + (void)initialize {
     if (self == [UINavigationController self]) {
-        // 交换方法
         SEL originalSelector = NSSelectorFromString(@"_updateInteractiveTransition:");
         SEL swizzledSelector = NSSelectorFromString(@"et__updateInteractiveTransition:");
         Method originalMethod = class_getInstanceMethod([self class], originalSelector);
@@ -42,7 +39,6 @@
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
 }
-
 // 交换的方法，监控滑动手势
 - (void)et__updateInteractiveTransition:(CGFloat)percentComplete {
     [self et__updateInteractiveTransition:(percentComplete)];
@@ -51,15 +47,13 @@
         id<UIViewControllerTransitionCoordinator> coor = topVC.transitionCoordinator;
         if (coor != nil) {
             // 随着滑动的过程设置导航栏透明度渐变
-            CGFloat fromAlpha = [[coor viewControllerForKey:UITransitionContextFromViewControllerKey].navBarBgAlpha floatValue];
-            CGFloat toAlpha = [[coor viewControllerForKey:UITransitionContextToViewControllerKey].navBarBgAlpha floatValue];
+            CGFloat fromAlpha = [[coor viewControllerForKey:UITransitionContextFromViewControllerKey].BarAlpha floatValue];
+            CGFloat toAlpha = [[coor viewControllerForKey:UITransitionContextToViewControllerKey].BarAlpha floatValue];
             CGFloat nowAlpha = fromAlpha + (toAlpha - fromAlpha) * percentComplete;
-            //NSLog(@"from:%f, to:%f, now:%f",fromAlpha, toAlpha, nowAlpha);
             [self setNeedsNavigationBackground:nowAlpha];
         }
     }
 }
-
 #pragma mark - UINavigationController Delegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     UIViewController *topVC = self.topViewController;
@@ -80,73 +74,61 @@
 }
 
 - (void)dealInteractionChanges:(id<UIViewControllerTransitionCoordinatorContext>)context {
-    if ([context isCancelled]) {// 自动取消了返回手势
+    if ([context isCancelled]) {
         NSTimeInterval cancelDuration = [context transitionDuration] * (double)[context percentComplete];
         [UIView animateWithDuration:cancelDuration animations:^{
-            CGFloat nowAlpha = [[context viewControllerForKey:UITransitionContextFromViewControllerKey].navBarBgAlpha floatValue];
-            //NSLog(@"自动取消返回到alpha：%f", nowAlpha);
+            CGFloat nowAlpha = [[context viewControllerForKey:UITransitionContextFromViewControllerKey].BarAlpha floatValue];
             [self setNeedsNavigationBackground:nowAlpha];
         }];
-    } else {// 自动完成了返回手势
+    } else {
         NSTimeInterval finishDuration = [context transitionDuration] * (double)(1 - [context percentComplete]);
         [UIView animateWithDuration:finishDuration animations:^{
             CGFloat nowAlpha = [[context viewControllerForKey:
-                                 UITransitionContextToViewControllerKey].navBarBgAlpha floatValue];
-            //NSLog(@"自动完成返回到alpha：%f", nowAlpha);
+                                 UITransitionContextToViewControllerKey].BarAlpha floatValue];
             [self setNeedsNavigationBackground:nowAlpha];
         }];
     }
 }
-
-
 #pragma mark - UINavigationBar Delegate
 - (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
     if (self.viewControllers.count >= navigationBar.items.count) {// 点击返回按钮
         UIViewController *popToVC = self.viewControllers[self.viewControllers.count - 1];
-        [self setNeedsNavigationBackground:[popToVC.navBarBgAlpha floatValue]];
-//        [self popViewControllerAnimated:YES];
+        [self setNeedsNavigationBackground:[popToVC.BarAlpha floatValue]];
     }
 }
-
 - (void)navigationBar:(UINavigationBar *)navigationBar didPushItem:(UINavigationItem *)item {
-    // push到一个新界面
-    [self setNeedsNavigationBackground:[self.topViewController.navBarBgAlpha floatValue]];
+    [self setNeedsNavigationBackground:[self.topViewController.BarAlpha floatValue]];
 }
-
-
-//定义常量 必须是C语言字符串
-static char *CloudoxKey = "CloudoxKey";
-
+#pragma mark ===== RunTime =====
+static char *BarAlphas = "BarAlphas";
 -(void)setCloudox:(NSString *)cloudox{
-    /*
-     OBJC_ASSOCIATION_ASSIGN;            //assign策略
-     OBJC_ASSOCIATION_COPY_NONATOMIC;    //copy策略
-     OBJC_ASSOCIATION_RETAIN_NONATOMIC;  // retain策略
-     
-     OBJC_ASSOCIATION_RETAIN;
-     OBJC_ASSOCIATION_COPY;
-     */
-    /*
-     * id object 给哪个对象的属性赋值
-     const void *key 属性对应的key
-     id value  设置属性值为value
-     objc_AssociationPolicy policy  使用的策略，是一个枚举值，和copy，retain，assign是一样的，手机开发一般都选择NONATOMIC
-     objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy);
-     */
-    
-    objc_setAssociatedObject(self, CloudoxKey, cloudox, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, BarAlphas, cloudox, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
-
 -(NSString *)cloudox{
-    return objc_getAssociatedObject(self, CloudoxKey);
+    return objc_getAssociatedObject(self, BarAlphas);
 }
-- (BOOL)prefersStatusBarHidden {
-    return NO;
+static char *BarHidden = "BarHidden";
+-(void)setBarHiden:(NSString *)barHiden{
+    objc_setAssociatedObject(self, BarHidden, barHiden, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+-(NSString*)barHiden{
+    return objc_getAssociatedObject(self, BarHidden);
+}
+- (BOOL)prefersStatusBarHidden{
+    return [self.barHiden isEqualToString:@"1"] ? YES:NO;
 }
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
-    return UIStatusBarAnimationNone;
+    return UIStatusBarAnimationFade;
+}
+static char *DefaultBar = "DefaultBar";
+-(void)setDefaultBar:(NSString *)defaultBar{
+    objc_setAssociatedObject(self, DefaultBar, defaultBar, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+-(NSString*)defaultBar{
+    return objc_getAssociatedObject(self, DefaultBar);
 }
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.topViewController.preferredStatusBarStyle;
+    return [self.defaultBar isEqualToString:@"1"] ? UIStatusBarStyleDefault:UIStatusBarStyleLightContent;
 }
+
 @end

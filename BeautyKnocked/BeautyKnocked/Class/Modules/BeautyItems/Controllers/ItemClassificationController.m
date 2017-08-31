@@ -29,9 +29,7 @@ static CGFloat const kWMHeaderViewHeight = 124;
 static CGFloat const kNavigationBarHeight = 64;
 
 @implementation ItemClassificationController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (NSMutableArray *)itemArray {//@[@"推荐",@"特惠",@"特价",@"美甲",@"美容",@"美发",@"商城",@"套餐"]
     if (!_itemArray) {
         _itemArray = [[NSMutableArray alloc]init];
@@ -40,7 +38,7 @@ static CGFloat const kNavigationBarHeight = 64;
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"1.0";
+    self.BarAlpha = @"1.0";
     [_item setHidden:NO];
     [_searchBar setHidden:_item.isHidden];
 }
@@ -101,6 +99,7 @@ static CGFloat const kNavigationBarHeight = 64;
     NewNavigation.navigationBar.shadowImage=[UIImage new];
     NewNavigation.hidesBottomBarWhenPushed = YES;
     NewNavigation.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
+    NewNavigation.isDefaultBar=@"1";
     [self presentViewController:NewNavigation animated:YES completion:nil];
     return NO;
 }

@@ -46,10 +46,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
 @implementation ConfirmOrderController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"1";
-}
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    self.BarAlpha = @"1";
 }
 -(OrderModel*)detailOrderModel{
     if (!_detailOrderModel) {
@@ -206,7 +203,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                         _detailOrderModel.beauticianId=x;
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
                     }];
-                    if (!isStringEmpty(_detailOrderModel.pactServiceTime)) {
+                    if (!isStringEmpty(self.detailOrderModel.pactServiceTime)) {
                         //时间筛选技师
                         controller.serviceTime=self.detailOrderModel.serviceTime;
                         controller.pactServiceTime=self.detailOrderModel.pactServiceTime;

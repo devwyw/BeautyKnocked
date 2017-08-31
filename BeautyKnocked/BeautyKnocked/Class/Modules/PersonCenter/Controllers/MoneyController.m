@@ -37,9 +37,7 @@
     [super viewWillDisappear:animated];
     [_item removeFromSuperview];
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"我的钱包";

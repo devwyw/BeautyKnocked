@@ -26,9 +26,7 @@ static NSString *const orderTableViewCellIdentifier = @"OrderTableViewCell";
     self = [super initWithStyle:UITableViewStyleGrouped];
     return self;
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithHexString:@"#F7F7F7"]];

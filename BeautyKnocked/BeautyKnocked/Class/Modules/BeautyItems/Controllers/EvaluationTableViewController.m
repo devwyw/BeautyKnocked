@@ -15,9 +15,7 @@ static NSString *const evaluationCellIdentifier = @"EvaluationCell";
 @end
 
 @implementation EvaluationTableViewController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.estimatedRowHeight = 100;

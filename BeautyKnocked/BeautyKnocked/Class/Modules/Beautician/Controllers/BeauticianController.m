@@ -20,9 +20,6 @@
 @end
 
 @implementation BeauticianController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (_isType==1) {
@@ -141,14 +138,14 @@
         }
         [Master HttpPostRequestByParams:@{@"clientId":aid} url:mlqqm serviceCode:mrslb Success:^(id json) {
             [self.listArray removeAllObjects];
-            self.listArray=json[@"info"];
+            self.listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
             [_tableView.mj_header endRefreshing];
             [_tableView reloadData];
         } Failure:nil andNavigation:self.navigationController];
     }else{
-        [Master HttpPostRequestByParams:@{@"timeLength":_serviceTime,@"time":[NSString stringWithFormat:@"%@:00",_pactServiceTime]} url:mlqqm serviceCode:mrsskbsx Success:^(id json) {
+        [Master HttpPostRequestByParams:@{@"timeLength":_serviceTime,@"time":_pactServiceTime} url:mlqqm serviceCode:mrsskbsx Success:^(id json) {
             [self.listArray removeAllObjects];
-            self.listArray=json[@"info"];
+            self.listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
             [_tableView.mj_header endRefreshing];
             [_tableView reloadData];
         } Failure:nil andNavigation:self.navigationController];
@@ -163,7 +160,7 @@
     }
     [Master HttpPostRequestByParams:@{@"clientId":aid,@"field":[NSString stringWithFormat:@"%ld",row]} url:mlqqm serviceCode:mrslbpx Success:^(id json) {
         [self.listArray removeAllObjects];
-        self.listArray=json[@"info"];
+        self.listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         [_tableView reloadData];
     } Failure:nil andNavigation:self.navigationController];
 }

@@ -24,9 +24,7 @@
 @end
 
 @implementation ProductDetailController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat OffsetY=scrollView.contentOffset.y;
     if (OffsetY >= 0 && OffsetY <= 64) {
@@ -36,11 +34,11 @@
     }else{
         _alpha=@"0";
     }
-    self.navBarBgAlpha = _alpha;
+    self.BarAlpha = _alpha;
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = _alpha;
+    self.BarAlpha = _alpha;
     _carItem.count=100;
 }
 - (void)viewDidLoad {

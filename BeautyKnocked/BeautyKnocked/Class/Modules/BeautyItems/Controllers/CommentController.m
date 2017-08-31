@@ -14,12 +14,10 @@
 @end
 
 @implementation CommentController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha=@"1.0";
+    self.BarAlpha=@"1.0";
 }
 -(NSArray*)listArray{
     if (!_listArray) {

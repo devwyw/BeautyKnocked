@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TabBarController.h"
+#import "StartImageController.h"
 #import <IQKeyboardManager.h>
 #import "AppDelegate+JPush.h"
 #import "AppDelegate+Alipay.h"
@@ -23,7 +24,13 @@
     /** RootViewController */
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[TabBarController alloc]init];
+    /** 首次启动 */
+    if (isStringEmpty([[NSUserDefaults standardUserDefaults] objectForKey:@"isStartUp"])) {
+        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"isStartUp"];
+        self.window.rootViewController = [[StartImageController alloc]init];
+    }else{
+        self.window.rootViewController = [[TabBarController alloc]init];
+    }
     [self.window makeKeyAndVisible];
     
     /** 配置区 */

@@ -19,9 +19,7 @@ static NSString *const recordingCellIdentifier = @"ExchangeRecordingCell";
 -(instancetype)initWithStyle:(UITableViewStyle)style {
     return [super initWithStyle:UITableViewStyleGrouped];
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"兑换记录";

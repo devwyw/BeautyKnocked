@@ -19,9 +19,7 @@
 @end
 
 @implementation OrderMessageViewController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"订单详情";

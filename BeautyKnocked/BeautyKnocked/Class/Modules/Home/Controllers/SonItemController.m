@@ -25,11 +25,9 @@ static NSInteger padding=6;
 @implementation SonItemController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"1";
+    self.BarAlpha = @"1";
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSArray *titleArray=[[NSArray alloc]initWithObjects:@"每日推荐",@"美丽特惠",@"特价商品",@"上门美甲",@"上门美容",@"上门美发",@"商城",@"疗程套餐", nil];

@@ -15,10 +15,6 @@
 @end
 
 @implementation TabBarController
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupTabBarItem];
@@ -39,7 +35,6 @@
     }
     self.viewControllers = viewControllers;
 }
-
 -(NSMutableArray<UITabBarItem *> *)tabBarItems {
     if (!_tabBarItems) {
         _tabBarItems = [NSMutableArray arrayWithCapacity:5];

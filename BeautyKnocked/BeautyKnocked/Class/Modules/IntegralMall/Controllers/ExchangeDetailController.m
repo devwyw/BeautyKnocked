@@ -19,9 +19,7 @@
 @end
 
 @implementation ExchangeDetailController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(ExchangeDetailViewModel *)viewModel {
     if (!_viewModel) {
         _viewModel = [[ExchangeDetailViewModel alloc] init];

@@ -14,9 +14,7 @@
 @end
 
 @implementation MoneyTableController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"余额明细";

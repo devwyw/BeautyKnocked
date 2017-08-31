@@ -18,9 +18,7 @@ static NSString *const messageCellReuseIdentifier = @"NewsCenterCell";
 @end
 
 @implementation MyMessageController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(instancetype)initWithStyle:(UITableViewStyle)style {
     return [super initWithStyle:UITableViewStyleGrouped];
 }

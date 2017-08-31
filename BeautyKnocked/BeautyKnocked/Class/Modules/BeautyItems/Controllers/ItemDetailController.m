@@ -34,11 +34,9 @@
     }else{
         _alpha=@"0";
     }
-    self.navBarBgAlpha = _alpha;
+    self.BarAlpha = _alpha;
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(ItemDetailViewModel *)itemDetailViewModel {
     if (!_itemDetailViewModel) {
         _itemDetailViewModel = [[ItemDetailViewModel alloc] init];
@@ -47,7 +45,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = _alpha;
+    self.BarAlpha = _alpha;
     _carItem.count=100;
 }
 - (void)viewDidLoad {

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface UINavigationController (Cloudox) <UINavigationBarDelegate, UINavigationControllerDelegate>
-@property (copy, nonatomic) NSString *cloudox;
-- (void)setNeedsNavigationBackground:(CGFloat)alpha;
+-(void)setNeedsNavigationBackground:(CGFloat)alpha;
+@property (nonatomic,copy) NSString * cloudox;
+@property (nonatomic,copy) NSString * barHiden;
+@property (nonatomic,copy) NSString * defaultBar;
 @end

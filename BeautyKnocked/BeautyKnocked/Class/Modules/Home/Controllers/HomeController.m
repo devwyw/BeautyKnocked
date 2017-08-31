@@ -32,7 +32,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha = @"1";
+    self.BarAlpha = @"1";
     _carItem.count=100;
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];
@@ -92,9 +92,7 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -155,7 +153,7 @@
 -(void)loadHttpImageData{
     [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
         [self.homePageViewModel.imageArray removeAllObjects];
-        self.homePageViewModel.imageArray=json[@"info"];
+        self.homePageViewModel.imageArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         [_tableView.mj_header endRefreshing];
         [_tableView reloadData];
     } Failure:nil andNavigation:self.navigationController];

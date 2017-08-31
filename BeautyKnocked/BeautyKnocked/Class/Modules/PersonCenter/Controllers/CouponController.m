@@ -20,9 +20,7 @@ NSInteger number2=0;
 NSInteger number3=0;
 
 @implementation CouponController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     {

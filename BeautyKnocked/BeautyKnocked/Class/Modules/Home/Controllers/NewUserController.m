@@ -34,9 +34,7 @@
 -(void)share:(UIButton*)button{
     NSLog(@"分享");
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"新人领券"];

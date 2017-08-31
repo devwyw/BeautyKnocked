@@ -35,9 +35,7 @@
         [item removeFromSuperview];
     }
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"分享有礼"];

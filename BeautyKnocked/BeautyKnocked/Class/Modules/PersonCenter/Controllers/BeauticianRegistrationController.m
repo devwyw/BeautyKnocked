@@ -14,9 +14,7 @@
 @end
 
 @implementation BeauticianRegistrationController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"美容师报名";

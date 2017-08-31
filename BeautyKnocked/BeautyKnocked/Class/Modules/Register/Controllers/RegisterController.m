@@ -43,7 +43,7 @@ static int const timeCode = 60;
 @implementation RegisterController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navBarBgAlpha=@"0";
+    self.BarAlpha=@"0";
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -73,9 +73,7 @@ static int const timeCode = 60;
         _getCode.userInteractionEnabled=YES;
     }
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];

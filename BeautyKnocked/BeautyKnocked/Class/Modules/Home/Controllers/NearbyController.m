@@ -13,9 +13,7 @@
 @end
 
 @implementation NearbyController
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"附近美容师"];
