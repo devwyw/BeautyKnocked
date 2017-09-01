@@ -14,7 +14,7 @@
 #endif
 
 @interface AppDelegate (JPush)
-+(void)registerJPushSDKWithOptions:(NSDictionary *)launchOptions delegate:(id)delegate;
++(void)registerJPushSDKWithOptions:(NSDictionary *)launchOptions Delegate:(id)delegate;
 +(void)registerDeviceToken:(NSData *)deviceToken;
 +(void)willPresentNotification:(UNNotification *)notification;
 +(void)didReceiveNotificationResponse:(UNNotificationResponse *)response;

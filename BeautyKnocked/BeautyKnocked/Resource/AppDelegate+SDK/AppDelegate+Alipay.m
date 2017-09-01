@@ -19,12 +19,6 @@
         }
     }];
 }
-+(void)Success{
-    [[NSNotificationCenter defaultCenter]postNotificationName:AlipaySuccess object:nil];
-}
-+(void)Failure{
-    [[NSNotificationCenter defaultCenter]postNotificationName:AlipayFailure object:nil];
-}
 +(void)openURL:(NSURL *)url{
     if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {

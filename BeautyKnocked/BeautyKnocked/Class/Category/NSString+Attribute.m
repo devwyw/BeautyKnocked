@@ -7,6 +7,8 @@
 //
 
 #import "NSString+Attribute.h"
+#import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonHMAC.h>
 
 @implementation NSString (Attribute)
 
@@ -39,5 +41,28 @@
     }else{
         return NO;
     }
+}
+-(NSString *)md5String{
+    const char *string = self.UTF8String;
+    int length = (int)strlen(string);
+    unsigned char bytes[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(string, length, bytes);
+    return [self stringFromBytes:bytes length:CC_MD5_DIGEST_LENGTH];
+}
+- (NSString *)stringFromBytes:(unsigned char *)bytes length:(int)length{
+    NSMutableString *mutableString = @"".mutableCopy;
+    for (int i = 0; i < length; i++)
+        [mutableString appendFormat:@"%02x", bytes[i]];
+    return [NSString stringWithString:mutableString];
+}
+- (NSString *)unicodeString{
+    NSString *tempStr1 = [self stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
+    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSPropertyListFormat format = NSPropertyListOpenStepFormat;
+    NSString *returnStr = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:&format error:nil];
+    return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n" withString:@"\n"];
 }
 @end

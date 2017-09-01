@@ -7,18 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol ConfirmOrderAddCellDelegate <NSObject>
-
--(void)wantAddMore:(NSString *)currentTitle;
-
-@end
+@class RACSignal;
 
 @interface ConfirmOrderAddCell : UITableViewCell
 
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString * colorStr;
-
-@property (nonatomic, weak) id<ConfirmOrderAddCellDelegate> delegate;
+@property (nonatomic,strong) RACSignal * addMore;
 
 @end

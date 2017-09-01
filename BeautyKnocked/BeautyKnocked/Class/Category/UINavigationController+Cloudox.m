@@ -11,7 +11,6 @@
 #import "UIViewController+Cloudox.h"
 
 @implementation UINavigationController (Cloudox)
-
 // 设置导航栏背景透明度
 - (void)setNeedsNavigationBackground:(CGFloat)alpha {
     UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];
@@ -72,7 +71,6 @@
         }
     }
 }
-
 - (void)dealInteractionChanges:(id<UIViewControllerTransitionCoordinatorContext>)context {
     if ([context isCancelled]) {
         NSTimeInterval cancelDuration = [context transitionDuration] * (double)[context percentComplete];

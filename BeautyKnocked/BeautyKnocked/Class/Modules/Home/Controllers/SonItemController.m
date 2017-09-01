@@ -115,7 +115,7 @@ static NSInteger padding=6;
         Weakify(self);
         ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:xmxq Success:^(id json) {
-            [Wself.delegate selectModel:[DetailModel mj_objectWithKeyValues:json[@"info"]]];
+            [Wself.subModel sendNext:json[@"info"]];
             [Wself.navigationController popViewControllerAnimated:YES];
         } Failure:nil andNavigation:Wself.navigationController];
     }else{

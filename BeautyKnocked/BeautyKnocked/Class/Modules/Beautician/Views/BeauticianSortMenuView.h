@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol BeauticianSortMenuViewDelegate <NSObject>
-
--(void)didSelectAtRow:(NSInteger)row;
--(void)selectedDay:(NSString*)day;
-@end
+@class RACSubject;
 
 @interface BeauticianSortMenuView : UIView
-
-@property (nonatomic,strong) id<BeauticianSortMenuViewDelegate> delegate;
-
+@property (nonatomic,strong) RACSubject * subRow;
+@property (nonatomic,strong) RACSubject * subDay;
 @end

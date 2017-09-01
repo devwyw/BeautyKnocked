@@ -14,7 +14,7 @@
 #import "OrderHeaderView.h"
 #import "PayInfoController.h"
 
-@interface OrderMessageViewController ()<UITableViewDelegate,UITableViewDataSource,ConfirmOrderAddCellDelegate>
+@interface OrderMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
 @end
 
@@ -73,9 +73,7 @@
                 return cell;
             }else if(indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
                 ConfirmOrderAddCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ConfirmOrderAddCell" forIndexPath:indexPath];
-                cell.delegate = self;
                 cell.title = @"添加项目";
-                //cell.colorStr=@"#E1BF6E";
                 return cell;
             }else{
                 ConfirmOrderItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:@"ConfirmOrderItemCell" forIndexPath:indexPath];

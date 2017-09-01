@@ -110,12 +110,11 @@
     return _popView;
 }
 #pragma mark PSSortDropMenuDelegate
-
 -(void)haveDismiss {
     _sortingBtn.selected = NO;
 }
--(void)didSelectAtRow:(NSUInteger)row{
-    [self.delegate didSelectAtRow:(NSInteger)row];
+-(void)didSelectAtRow:(NSInteger)row{
+    [self.subRow sendNext:[NSString stringWithFormat:@"%ld",row]];
 }
 -(void)setupConstraints {
     [_lineImgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -137,7 +136,6 @@
         make.top.bottom.equalTo(self);
     }];
 }
-
 -(UIButton *)setupCustomBtnWtihImageName:(NSString *)imageName title:(NSString *)title {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.titleLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
@@ -265,6 +263,7 @@
     }];
 }
 -(void)donBtn:(UIButton*)btn{
+    Weakify(self);
     [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         MLDateCollectionViewCell *cell = obj;
         if (cell.selected) {
@@ -273,7 +272,7 @@
                 [self.popView setHidden:YES];
             }];
             *stop = YES;
-            [self.delegate selectedDay:_selectDay];
+            [Wself.subDay sendNext:_selectDay];
         }
     }];
 }
@@ -306,7 +305,6 @@
     if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
         cell.content = self.months[dateModel.month];
     }
-    
 //    if (indexPath.item + 1 == _todayWeekDay) {
 //        cell.dateNumber = @"今天";
 //        cell.content = @"约满";

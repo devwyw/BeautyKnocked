@@ -44,12 +44,6 @@
         [_addButton makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#D7AE4D"]];
         [_addButton setImage:[UIImage imageNamed:@"jiahao1"] forState:UIControlStateNormal];
         [_addButton setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiahao1"].size space:8];
-        [[_addButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIButton * _Nullable button) {
-            if ([self.delegate respondsToSelector:@selector(wantAddMore:)]) {
-                [self.delegate wantAddMore:button.currentTitle];
-            }
-        }];
-
         [self.contentView addSubview:_addButton];
         
         [_addButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -60,5 +54,7 @@
     }
     return self;
 }
-
+-(RACSignal*)addMore{
+    return [_addButton rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
 @end

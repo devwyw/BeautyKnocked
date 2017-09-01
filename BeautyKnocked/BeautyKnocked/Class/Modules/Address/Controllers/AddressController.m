@@ -63,15 +63,13 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     return self.listArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AddressModel *model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
-    
     CommonAddressCell *cell = [tableView dequeueReusableCellWithIdentifier:addressCellReuseIdentifier forIndexPath:indexPath];
-    cell.model=model;
+    cell.model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     Weakify(self);
     [[cell.addressEditSignal takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
         EditAddressController *editController = [[EditAddressController alloc] init];
         editController.editStyle = AddressEditStyleUpdate;
-        editController.model=model;
+        editController.model=cell.model;
         [Wself.navigationController pushViewController:editController animated:YES];
     }];
     [[cell.addressDeleteSignal takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
@@ -83,8 +81,10 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         .LeeTitle(@"您确定要删除当前地址吗？")
         .LeeCancelAction(@"取消", nil)
         .LeeAction(@"确认", ^{
-            [_listArray removeObjectAtIndex:indexPath.row];
-            [_tableView reloadData];
+            [Master HttpPostRequestByParams:@{@"id":cell.model.id,@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:scfwdz Success:^(id json) {
+                [_listArray removeObjectAtIndex:indexPath.row];
+                [_tableView reloadData];
+            } Failure:nil andNavigation:Wself.navigationController];
         })
         .LeeShow();
     }];

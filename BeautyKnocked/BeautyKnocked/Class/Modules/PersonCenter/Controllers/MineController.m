@@ -11,11 +11,8 @@
 
 static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 @interface MineController ()<UITableViewDelegate,UITableViewDataSource>
-
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) UserCnterViewModel *userCenterViewModel;
-
 @end
 
 @implementation MineController
@@ -27,13 +24,11 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
     }
     return self;
 }
-
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [self.userCenterViewModel.headView getUserData];
 }
-
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];

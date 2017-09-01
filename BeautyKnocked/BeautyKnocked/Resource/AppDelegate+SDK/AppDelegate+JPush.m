@@ -8,10 +8,10 @@
 
 #import "AppDelegate+JPush.h"
 
-static NSString *JPushKey = @"1481b2a73612a63a7dd20bd3";
-
+static NSString *AppKey = @"1481b2a73612a63a7dd20bd3";
 @implementation AppDelegate (JPush)
-+(void)registerJPushSDKWithOptions:(NSDictionary *)launchOptions delegate:(id)delegate{
+
++(void)registerJPushSDKWithOptions:(NSDictionary *)launchOptions Delegate:(id)delegate{
 #ifdef DEBUG
     [JPUSHService setDebugMode];
 #else
@@ -34,7 +34,7 @@ static NSString *JPushKey = @"1481b2a73612a63a7dd20bd3";
                                               categories:nil];
     }
     [JPUSHService setupWithOption:launchOptions
-                           appKey:JPushKey
+                           appKey:AppKey
                           channel:@"App Store"
                  apsForProduction:1
      ];

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailModel.h"
+#import "PackageModel.h"
 
 @interface ConfirmOrderItemCell : UITableViewCell
 
 @property (nonatomic,strong) DetailModel * model;
+@property (nonatomic,strong) PackageModel * Pmodel;
 @end

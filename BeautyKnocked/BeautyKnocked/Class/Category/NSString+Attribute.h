@@ -16,4 +16,8 @@
 -(BOOL)isMobileNumber;
 /** Min&Max字体 */
 -(NSMutableAttributedString *)setMinString:(NSString*)minStr withMinFont:(CGFloat)min andMaxString:(NSString*)maxStr withMaxFont:(CGFloat)max;
+/** 微信支付MD5 */
+-(NSString *)md5String;
+/** 中文打印 */
+-(NSString *)unicodeString;
 @end

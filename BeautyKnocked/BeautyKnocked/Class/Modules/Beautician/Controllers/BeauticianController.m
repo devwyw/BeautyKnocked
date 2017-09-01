@@ -12,7 +12,7 @@
 #import "BeauticianItemPageController.h"
 #import <MJRefresh.h>
 
-@interface BeauticianController ()<UITableViewDelegate,UITableViewDataSource,BeauticianSortMenuViewDelegate>
+@interface BeauticianController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) BeauticianSortMenuView *sortMenu;
 @property (nonatomic,strong) UITableView *tableView;
@@ -106,8 +106,34 @@
 }
 -(BeauticianSortMenuView *)sortMenu {
     if (!_sortMenu) {
+        Weakify(self);
         _sortMenu = [[BeauticianSortMenuView alloc] init];
-        _sortMenu.delegate=self;
+        _sortMenu.subRow=[RACSubject subject];
+        [_sortMenu.subRow subscribeNext:^(id  _Nullable x) {
+            switch ([x integerValue]) {
+                case 1:
+                {
+                    [Wself loadHttpData:7];
+                }
+                    break;
+                case 2:
+                {
+                    [Wself loadHttpData:6];
+                }
+                    break;
+                default:
+                    [_tableView.mj_header beginRefreshing];
+                    break;
+            }
+        }];
+        _sortMenu.subDay=[RACSubject subject];
+        [_sortMenu.subDay subscribeNext:^(id  _Nullable x) {
+            [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id,@"day":x} url:mlqqm serviceCode:mrssx Success:^(id json) {
+                [_listArray removeAllObjects];
+                _listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+                [_tableView reloadData];
+            } Failure:nil andNavigation:Wself.navigationController];
+        }];
     }
     return _sortMenu;
 }
@@ -163,25 +189,5 @@
         self.listArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         [_tableView reloadData];
     } Failure:nil andNavigation:self.navigationController];
-}
--(void)didSelectAtRow:(NSInteger)row{
-    switch (row) {
-        case 1:
-        {
-            [self loadHttpData:7];
-        }
-            break;
-        case 2:
-        {
-            [self loadHttpData:6];
-        }
-            break;
-        default:
-            [_tableView.mj_header beginRefreshing];
-            break;
-    }
-}
--(void)selectedDay:(NSString *)day{
-    NSLog(@"%@",day);
 }
 @end

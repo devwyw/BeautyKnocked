@@ -14,6 +14,8 @@
 		041BFDBA1F43E80900903185 /* PayTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDB91F43E80900903185 /* PayTypeCell.m */; };
 		041BFDBD1F43EF4700903185 /* PayInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDBC1F43EF4700903185 /* PayInfoCell.m */; };
 		041BFDC31F44185000903185 /* CouponController.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDC21F44185000903185 /* CouponController.m */; };
+		0420BAFF1F593E6B006BD63A /* AppDelegate+WXApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420BAFE1F593E6B006BD63A /* AppDelegate+WXApi.m */; };
+		0420BB051F5952CB006BD63A /* PackageOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420BB041F5952CB006BD63A /* PackageOrderModel.m */; };
 		0423C6C21F4E6EB900F492CB /* DayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423C6C11F4E6EB900F492CB /* DayModel.m */; };
 		0423C6C51F4E721C00F492CB /* WebTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423C6C41F4E721C00F492CB /* WebTimeModel.m */; };
 		0423C6C81F4E7F6900F492CB /* TimeSlotModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423C6C71F4E7F6900F492CB /* TimeSlotModel.m */; };
@@ -36,7 +38,6 @@
 		0465F6971F53AABA00F9FF90 /* ServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0465F6961F53AABA00F9FF90 /* ServiceCell.m */; };
 		0465F69A1F53B32700F9FF90 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0465F6991F53B32700F9FF90 /* PayViewController.m */; };
 		046A7EC71F4D7D7B005AD5FF /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */; };
-		046A7ECA1F4D7D8D005AD5FF /* NSString+unicode.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A7EC91F4D7D8D005AD5FF /* NSString+unicode.m */; };
 		046AF9071F413E4700C627D6 /* DetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046AF9061F413E4700C627D6 /* DetailModel.m */; };
 		046AF90A1F41447B00C627D6 /* ImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046AF9091F41447B00C627D6 /* ImageModel.m */; };
 		046AF90D1F417A3B00C627D6 /* CommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046AF90C1F417A3B00C627D6 /* CommentModel.m */; };
@@ -962,6 +963,10 @@
 		041BFDBC1F43EF4700903185 /* PayInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayInfoCell.m; sourceTree = "<group>"; };
 		041BFDC11F44185000903185 /* CouponController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponController.h; sourceTree = "<group>"; };
 		041BFDC21F44185000903185 /* CouponController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponController.m; sourceTree = "<group>"; };
+		0420BAFD1F593E6B006BD63A /* AppDelegate+WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+WXApi.h"; sourceTree = "<group>"; };
+		0420BAFE1F593E6B006BD63A /* AppDelegate+WXApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+WXApi.m"; sourceTree = "<group>"; };
+		0420BB031F5952CB006BD63A /* PackageOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageOrderModel.h; sourceTree = "<group>"; };
+		0420BB041F5952CB006BD63A /* PackageOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageOrderModel.m; sourceTree = "<group>"; };
 		0423C6C01F4E6EB900F492CB /* DayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayModel.h; sourceTree = "<group>"; };
 		0423C6C11F4E6EB900F492CB /* DayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayModel.m; sourceTree = "<group>"; };
 		0423C6C31F4E721C00F492CB /* WebTimeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebTimeModel.h; sourceTree = "<group>"; };
@@ -1005,8 +1010,6 @@
 		0465F6991F53B32700F9FF90 /* PayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayViewController.m; sourceTree = "<group>"; };
 		046A7EC41F4D7D7B005AD5FF /* NSDictionary+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Log.h"; sourceTree = "<group>"; };
 		046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Log.m"; sourceTree = "<group>"; };
-		046A7EC81F4D7D8D005AD5FF /* NSString+unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+unicode.h"; sourceTree = "<group>"; };
-		046A7EC91F4D7D8D005AD5FF /* NSString+unicode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+unicode.m"; sourceTree = "<group>"; };
 		046AF9051F413E4700C627D6 /* DetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailModel.h; sourceTree = "<group>"; };
 		046AF9061F413E4700C627D6 /* DetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailModel.m; sourceTree = "<group>"; };
 		046AF9081F41447B00C627D6 /* ImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageModel.h; sourceTree = "<group>"; };
@@ -2153,17 +2156,6 @@
 			path = Plist;
 			sourceTree = "<group>";
 		};
-		046A7ECB1F4D7D90005AD5FF /* NSLog */ = {
-			isa = PBXGroup;
-			children = (
-				046A7EC81F4D7D8D005AD5FF /* NSString+unicode.h */,
-				046A7EC91F4D7D8D005AD5FF /* NSString+unicode.m */,
-				046A7EC41F4D7D7B005AD5FF /* NSDictionary+Log.h */,
-				046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */,
-			);
-			name = NSLog;
-			sourceTree = "<group>";
-		};
 		04B1BAE21F3ED0400062CBE0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -3161,6 +3153,8 @@
 				04EFA4D61F5557BB003933A5 /* AppDelegate+Alipay.m */,
 				04EFA4D71F5557BB003933A5 /* AppDelegate+JPush.h */,
 				04EFA4D81F5557BB003933A5 /* AppDelegate+JPush.m */,
+				0420BAFD1F593E6B006BD63A /* AppDelegate+WXApi.h */,
+				0420BAFE1F593E6B006BD63A /* AppDelegate+WXApi.m */,
 				04EFA4D91F5557BB003933A5 /* SDK */,
 			);
 			name = "AppDelegate+SDK";
@@ -3179,7 +3173,8 @@
 		04F0AFD51F32B2FD00D77558 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				046A7ECB1F4D7D90005AD5FF /* NSLog */,
+				046A7EC41F4D7D7B005AD5FF /* NSDictionary+Log.h */,
+				046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */,
 				04F0AFD61F32B2FD00D77558 /* NSString+Attribute.h */,
 				04F0AFD71F32B2FD00D77558 /* NSString+Attribute.m */,
 				04F0AFD81F32B2FD00D77558 /* UIButton+Category.h */,
@@ -3698,6 +3693,8 @@
 				734C6DE51EF8FAA200F18FE4 /* MLDateModel.m */,
 				04426CA91F4C259100B30D5B /* OrderModel.h */,
 				04426CAA1F4C259100B30D5B /* OrderModel.m */,
+				0420BB031F5952CB006BD63A /* PackageOrderModel.h */,
+				0420BB041F5952CB006BD63A /* PackageOrderModel.m */,
 				0423C6C31F4E721C00F492CB /* WebTimeModel.h */,
 				0423C6C41F4E721C00F492CB /* WebTimeModel.m */,
 				0423C6C01F4E6EB900F492CB /* DayModel.h */,
@@ -3858,12 +3855,12 @@
 				04F0B0091F32B30700D77558 /* Master */,
 				73A37D691EBD804800BE60C9 /* Login */,
 				73A37D6E1EBD804800BE60C9 /* Register */,
+				04E8C67A1F305F12005566C4 /* Other */,
 				73A37D641EBD804800BE60C9 /* Home */,
 				7374312E1ECD40B700A617F3 /* Class */,
 				7391D99D1EC2FE210020F3CE /* Beautician */,
 				7399DC591ECED5300054877F /* Order */,
 				73A37D921EBDAD4500BE60C9 /* User */,
-				04E8C67A1F305F12005566C4 /* Other */,
 			);
 			name = Modules;
 			path = Class/Modules;
@@ -5161,6 +5158,7 @@
 				738406F11EC053F8001CAFCD /* FightGroupsView.m in Sources */,
 				0413DB691F1EFDD800357B27 /* LightViewController.m in Sources */,
 				739CBE411ED965E000D6FA3A /* PSSetupController.m in Sources */,
+				0420BAFF1F593E6B006BD63A /* AppDelegate+WXApi.m in Sources */,
 				7390F4AE1EE696F70059A168 /* EditAddressController.m in Sources */,
 				73A4851B1EF3B94F00FA9434 /* ConfirmOrderProductCell.m in Sources */,
 				045C7A061F1DACD400B9C9C4 /* BrandViewController.m in Sources */,
@@ -5178,7 +5176,6 @@
 				737431531ECD929000A617F3 /* ClassItemCollectionCell.m in Sources */,
 				152863BC1F29DB2700AD55C7 /* PJBeautViewCell.m in Sources */,
 				737CD2F41EE1180800B6A5DB /* ServiceItemContentView.m in Sources */,
-				046A7ECA1F4D7D8D005AD5FF /* NSString+unicode.m in Sources */,
 				737C5B261ED57E3500C46128 /* FilterCollectionViewCell.m in Sources */,
 				738DAAD31EDE616000F45DE3 /* BeauticianRegisterExpertiseView.m in Sources */,
 				04F0AFFE1F32B2FD00D77558 /* UIImageView+Category.m in Sources */,
@@ -5256,6 +5253,7 @@
 				73A37D911EBDA00900BE60C9 /* HomeController.m in Sources */,
 				04E60D001F42A7D40040A579 /* PackageModel.m in Sources */,
 				7387BCD51EF0DEDF0061C5A1 /* MineFightGroupDetailViewModel.m in Sources */,
+				0420BB051F5952CB006BD63A /* PackageOrderModel.m in Sources */,
 				737431351ECD413500A617F3 /* ItemClassificationController.m in Sources */,
 				73440A471ED2DDA8003807B8 /* BeautifulDynamicView.m in Sources */,
 				7374C9FD1EC54FB800391187 /* HomePageViewModel.m in Sources */,

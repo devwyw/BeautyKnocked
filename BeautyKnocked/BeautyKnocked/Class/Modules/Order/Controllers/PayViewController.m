@@ -10,6 +10,7 @@
 #import "NSString+Attribute.h"
 #import "PayInfoViewCell.h"
 #import "AppDelegate+Alipay.h"
+#import "AppDelegate+WXApi.h"
 #import "PayInfoController.h"
 
 @interface PayViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -33,8 +34,8 @@
     // Do any additional setup after loading the view.
     [self initializeViews];
     [self addConstraints];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(success) name:AlipaySuccess object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:AlipayFailure object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(success) name:paySuccess object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:payFailure object:nil];
 }
 -(void)success{
     Weakify(self);
@@ -98,7 +99,7 @@
                 
                 break;
             case 1:
-                
+                [AppDelegate WXPayWithPrepayId:_model.orderStr];
                 break;
             default:
                 [AppDelegate AliPayWithPayOrder:_model.orderStr];

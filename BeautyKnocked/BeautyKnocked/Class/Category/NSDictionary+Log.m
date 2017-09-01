@@ -6,7 +6,7 @@
  */
 
 #import "NSDictionary+Log.h"
-#import "NSString+unicode.h"
+#import "NSString+Attribute.h"
 #import <objc/runtime.h>
 
 @implementation NSDictionary (Log)
@@ -21,17 +21,13 @@
 - (NSString *)xy_debugDescription{
     return self.xy_debugDescription.unicodeString;
 }
-
 + (void)load{
     [self swapMethod];
 }
-
 + (void)swapMethod{
     Method method1 = class_getInstanceMethod(self, @selector(debugDescription));
     Method method2 = class_getInstanceMethod(self, @selector(xy_debugDescription));
-    
     method_exchangeImplementations(method1, method2);
 }
 #endif
-
 @end

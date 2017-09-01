@@ -33,6 +33,7 @@ PODS:
     - SDWebImage/Core (= 3.7.0)
   - SDWebImage/Core (3.7.0)
   - SVProgressHUD (2.1.2)
+  - WechatOpenSDK (1.8.0)
   - WMPageController (2.2.1)
   - ZLPhotoBrowser (2.2.5)
 
@@ -50,6 +51,7 @@ DEPENDENCIES:
   - SDCycleScrollView (= 1.65)
   - SDWebImage (= 3.7)
   - SVProgressHUD
+  - WechatOpenSDK
   - WMPageController (= 2.2.1)
   - ZLPhotoBrowser
 
@@ -68,9 +70,10 @@ SPEC CHECKSUMS:
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: b42db92951f9d565c55f1d7f1d5efe47e33a7515
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
   ZLPhotoBrowser: e3b90e4ab9ec5d19ba2ed2ef7c9ded654e1b1c8e
 
-PODFILE CHECKSUM: 77133363b75e2d068824aa6f0bdef5a341649204
+PODFILE CHECKSUM: 7b7a47a1bbe509a8453ef8f1a67dea15f563ab95
 
 COCOAPODS: 1.2.0

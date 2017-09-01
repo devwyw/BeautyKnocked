@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#define paySuccess @"paySuccess"
+#define payFailure @"payFailure"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
++(void)Success;
++(void)Failure;
 @end
 

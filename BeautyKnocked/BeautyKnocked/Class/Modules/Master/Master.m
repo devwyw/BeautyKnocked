@@ -15,6 +15,7 @@
 #import "RegisterController.h"
 #import "LoginController.h"
 #import "TabBarController.h"
+#import "NSString+Attribute.h"
 /** 获取IP */
 #import <ifaddrs.h>
 #import <arpa/inet.h>
@@ -87,6 +88,25 @@
             result[8], result[9], result[10], result[11],
             result[12], result[13], result[14], result[15]
             ];
+}
++(NSString *)getSign:(NSDictionary *)signParams{
+    /** 微信支付签名 */
+    NSArray *keys = [signParams allKeys];
+    NSArray *sortedKeys = [keys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2 options:NSNumericSearch];
+    }];
+    NSMutableString *sign = [NSMutableString string];
+    for (NSString *key in sortedKeys) {
+        [sign appendString:key];
+        [sign appendString:@"="];
+        [sign appendString:[signParams objectForKey:key]];
+        [sign appendString:@"&"];
+    }
+    NSString *signString = [[sign copy] substringWithRange:NSMakeRange(0, sign.length - 1)];
+    signString = [NSString stringWithFormat:@"%@&key=83f3dbd456ef0b7df7c3441aa864b248",signString];
+    NSString *result = [signString md5String];
+    result = [result uppercaseString];
+    return result;
 }
 +(NSString *)get32bitString{
     char data[32];

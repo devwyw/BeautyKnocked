@@ -19,7 +19,6 @@
     [super viewWillAppear:animated];
     self.BarAlpha=@"1";
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

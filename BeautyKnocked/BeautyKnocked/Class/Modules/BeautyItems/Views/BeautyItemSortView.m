@@ -46,7 +46,7 @@
 -(void)haveDismiss {
     _entireSortBtn.selected = NO;
 }
--(void)didSelectAtRow:(NSUInteger)row{
+-(void)didSelectAtRow:(NSInteger)row{
     _saleSortBtn.selected=NO;
     _isNope=_saleSortBtn.isSelected;
     [self selectedAction];

@@ -7,8 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#define AlipaySuccess @"AlipaySuccess"
-#define AlipayFailure @"AlipayFailure"
 
 @interface AppDelegate (Alipay)
 +(void)openURL:(NSURL *)url;

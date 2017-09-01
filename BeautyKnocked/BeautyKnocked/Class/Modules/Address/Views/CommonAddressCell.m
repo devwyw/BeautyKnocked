@@ -37,6 +37,7 @@
     return self;
 }
 -(void)setModel:(AddressModel *)model{
+    _model=model;
     if ([model.isDefault integerValue]==1) {
         NSString *defaultSign = @"[默认]";
         NSString *newAddress=[NSString stringWithFormat:@"%@%@",defaultSign,model.address];

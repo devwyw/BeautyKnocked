@@ -28,6 +28,8 @@ typedef void(^ShowSVProgressBlock)();
 /** 提示框 */
 +(void)showSVProgressHUD:(NSString*)string withType:(ShowSVProgressType)type withShowBlock:(ShowSVProgressBlock)block;
 #pragma mark ===== 所有网络请求 =====
+/** 微信支付签名 */
++(NSString *)getSign:(NSDictionary *)signParams;
 /** 时间戳 */
 +(NSString *)gettTimes;
 /** MD5加密 */

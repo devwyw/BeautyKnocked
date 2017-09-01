@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @protocol PSSortDropMenuDelegate <NSObject>
-
--(void)didSelectAtRow:(NSUInteger)row;
-
+-(void)didSelectAtRow:(NSInteger)row;
 -(void)haveDismiss;
-
 @end
 
 @interface PSSortDropMenu : UIView

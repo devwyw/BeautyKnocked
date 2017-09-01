@@ -45,8 +45,8 @@
     [self initializeViews];
     [self addConstraints];
     [self loadHttpData];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(success) name:AlipaySuccess object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:AlipayFailure object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(success) name:paySuccess object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:payFailure object:nil];
 }
 -(void)success{
     [Master showSVProgressHUD:@"账号充值成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];

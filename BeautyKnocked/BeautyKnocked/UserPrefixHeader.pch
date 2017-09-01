@@ -78,6 +78,7 @@
 #define mrssx @"/manager/client/base/beauticianManager/queryScreen"
 #define tjcpdd @"/manager/client/bill/productBillManager/addBill"
 #define czzslb @"/manager/client/recharge/rechargeRuleManager/queryByRId"
+#define tjtcdd @"/manager/client/bill/packagerBillManager/addBill"
 /** 调试模式 */
 #ifdef __OBJC__
 #ifdef DEBUG
