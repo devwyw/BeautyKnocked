@@ -19,11 +19,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.setupViewModel getUserNotificationSwitch];
+    [_setupViewModel getUserNotificationSwitchWithTableView:self.tableView];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title=@"设置";
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     self.setupViewModel.navigationController = self.navigationController;
 }
 - (void)didReceiveMemoryWarning {

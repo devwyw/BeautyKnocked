@@ -5,8 +5,7 @@
 //  Created by zhongweiping on 2017/5/28.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
-
-#import <XLForm/XLForm.h>
+#import <UIKit/UIKit.h>
 
 @interface BeauticianRegistrationController : UITableViewController
 

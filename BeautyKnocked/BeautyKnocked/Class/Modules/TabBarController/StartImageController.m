@@ -17,9 +17,6 @@
 @end
 
 @implementation StartImageController
-- (BOOL)prefersStatusBarHidden{
-    return YES;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];

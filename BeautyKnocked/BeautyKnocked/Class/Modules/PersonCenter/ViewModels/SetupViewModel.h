@@ -15,11 +15,7 @@
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section;
 
 -(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-
 -(void)configTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-
 -(CGFloat)configTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-
--(void)getUserNotificationSwitch;
-
+-(void)getUserNotificationSwitchWithTableView:(UITableView*)tableview;
 @end

@@ -11,12 +11,11 @@
 #import "BeauticianRegistrationController.h"
 #import "AppDelegate+JPush.h"
 
-static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
-
 @interface SetupViewModel ()
 @property (nonatomic, strong) UIButton *loginOutButton;
 @property (nonatomic, strong) NSArray *dataSource;
 @property (nonatomic, strong) UISwitch * userNotificationSwitch;
+@property (nonatomic,assign) BOOL isStart;
 @end
 
 @implementation SetupViewModel
@@ -28,33 +27,56 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
     }
     return self;
 }
--(void)getUserNotificationSwitch{
-    self.userNotificationSwitch.on = NO;
-    Weakify(self);
+-(void)getUserNotificationSwitchWithTableView:(UITableView*)tableview{
     if (SystemVersion>=10.0) {
         UNUserNotificationCenter *entity = [UNUserNotificationCenter currentNotificationCenter];
         [entity getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
             if (settings.authorizationStatus==UNNotificationSettingEnabled) {
-                Wself.userNotificationSwitch.on = YES;
+                _isStart=YES;
+            }else{
+                _isStart=NO;
             }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [tableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+            });
         }];
     }else if(SystemVersion>=8.0){
         if ([[UIApplication sharedApplication] currentUserNotificationSettings].types!=UIUserNotificationTypeNone) {
-            self.userNotificationSwitch.on = YES;
+            _isStart=YES;
+        }else{
+            _isStart=NO;
         }
+         [tableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section {
     return _dataSource.count + 1;
 }
-
 -(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell;
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:setupCellReuseIdentifier];
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.row < 4) {
+        if (indexPath.row==0) {
+            Weakify(self);
+            _userNotificationSwitch= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
+            _userNotificationSwitch.onTintColor = ThemeColor;
+            _userNotificationSwitch.on=_isStart;
+            [[_userNotificationSwitch rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
+                [Master pushSystemSettingWithUrl:@"App-Prefs:root=www.paisen.com.BeautyKnocked"];
+                [Wself.navigationController popViewControllerAnimated:YES];
+            }];
+            cell.accessoryView = _userNotificationSwitch;
+        }else if(indexPath.row<3){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        cell.textLabel.text = self.dataSource[indexPath.row];
+        cell.textLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
+    }else {
+        [cell.contentView addSubview:self.loginOutButton];
+        [self.loginOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(cell.contentView).with.insets(UIEdgeInsetsMake(Height_Pt(66), Width_Pt(49), 0, Width_Pt(49)));
+        }];
     }
-    [self configureCell:cell indexPath:indexPath];
-    
     return cell;
 }
 
@@ -64,7 +86,6 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
     }
     return Height_Pt(160);
 }
-
 -(void)configTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 1) {
         BeauticianRegistrationController *beauticianRegistrationVC = [[BeauticianRegistrationController alloc] init];
@@ -73,36 +94,6 @@ static NSString *const setupCellReuseIdentifier = @"SetupUITableViewCell";
         AboutUsTableViewController *aboutVC = [[AboutUsTableViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
     }
-}
-
--(void)configureCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row < 4) {
-        if (indexPath.row==0) {
-            cell.accessoryView = self.userNotificationSwitch;
-        }else if(indexPath.row<3){
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        cell.textLabel.text = [self.dataSource objectAtIndex:indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    }else {
-        [cell.contentView addSubview:self.loginOutButton];
-        [self.loginOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(cell.contentView).with.insets(UIEdgeInsetsMake(Height_Pt(66), Width_Pt(49), 0, Width_Pt(49)));
-        }];
-    }
-}
--(UISwitch *)userNotificationSwitch{
-    if (!_userNotificationSwitch) {
-        _userNotificationSwitch= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
-        _userNotificationSwitch.onTintColor = ThemeColor;
-        Weakify(self);
-        [[_userNotificationSwitch rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
-            [Master pushSystemSettingWithUrl:@"App-Prefs:root=www.paisen.com.BeautyKnocked"];
-            [Wself.navigationController popViewControllerAnimated:YES];
-        }];
-    }
-    return _userNotificationSwitch;
 }
 -(UIButton *)loginOutButton {
     if (!_loginOutButton) {
