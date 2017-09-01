@@ -34,7 +34,6 @@ PODS:
   - SDWebImage/Core (3.7.0)
   - SVProgressHUD (2.1.2)
   - WMPageController (2.2.1)
-  - XLForm (3.0.0)
   - ZLPhotoBrowser (2.2.5)
 
 DEPENDENCIES:
@@ -52,7 +51,6 @@ DEPENDENCIES:
   - SDWebImage (= 3.7)
   - SVProgressHUD
   - WMPageController (= 2.2.1)
-  - XLForm (= 3.0)
   - ZLPhotoBrowser
 
 SPEC CHECKSUMS:
@@ -71,9 +69,8 @@ SPEC CHECKSUMS:
   SDWebImage: b42db92951f9d565c55f1d7f1d5efe47e33a7515
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
-  XLForm: 10fc7eb9e2d5df21a515fa3a794f4e26319abd0e
   ZLPhotoBrowser: e3b90e4ab9ec5d19ba2ed2ef7c9ded654e1b1c8e
 
-PODFILE CHECKSUM: 336f289cfe95a35627e6ea06dcd311921eb25a8d
+PODFILE CHECKSUM: 77133363b75e2d068824aa6f0bdef5a341649204
 
 COCOAPODS: 1.2.0
