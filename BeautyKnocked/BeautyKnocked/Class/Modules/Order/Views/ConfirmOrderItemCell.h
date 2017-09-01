@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DetailModel.h"
-#import "PackageModel.h"
+@class DetailModel;
+@class PackageInfoModel;
 
 @interface ConfirmOrderItemCell : UITableViewCell
 
 @property (nonatomic,strong) DetailModel * model;
-@property (nonatomic,strong) PackageModel * Pmodel;
+@property (nonatomic,strong) PackageInfoModel * Pmodel;
 @end

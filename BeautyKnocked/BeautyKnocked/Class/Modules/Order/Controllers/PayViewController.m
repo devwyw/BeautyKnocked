@@ -30,7 +30,6 @@
     [super viewDidLoad];
     self.title=@"支付收银台";
     self.view.backgroundColor=[UIColor whiteColor];
-    self.edgesForExtendedLayout=UIRectEdgeNone;
     // Do any additional setup after loading the view.
     [self initializeViews];
     [self addConstraints];
@@ -110,7 +109,7 @@
 }
 -(void)addConstraints {
     [_message mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(Height_Pt(75));
+        make.top.equalTo(self.view).offset(Height_Pt(75)+64);
         make.left.equalTo(self.view).offset(Width_Pt(50));
     }];
     [_money mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -11,7 +11,6 @@
 
 @interface SonItemController : UIViewController
 @property (nonatomic,assign) NSInteger index;
-@property (nonatomic,copy) NSString * code;
-@property (nonatomic,copy) NSString * sort;
 @property (nonatomic,strong) RACSubject * subModel;
+@property (nonatomic,assign) BOOL isSelected;
 @end

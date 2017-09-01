@@ -121,9 +121,9 @@
     
     self.itemDetailViewModel.navigationController = self.navigationController;
     if (isStringEmpty(self.projectId)) {
-        [self loadHttpData:self.detailID withProjectId:@"" withCode:self.code];
+        [self loadHttpData:self.detailID withProjectId:@""];
     }else{
-        [self loadHttpData:self.detailID withProjectId:self.projectId withCode:self.code];
+        [self loadHttpData:self.detailID withProjectId:self.projectId];
     }
 }
 -(void)addConstraints {
@@ -160,8 +160,14 @@
     }
     return _tableheaderView;
 }
-#pragma mark ===== 项目详情 =====
--(void)loadHttpData:(NSString*)detailID withProjectId:(NSString*)projectId withCode:(NSString*)code{
+#pragma mark ===== 详情 =====
+-(void)loadHttpData:(NSString*)detailID withProjectId:(NSString*)projectId{
+    NSString *code=nil;
+    if (isStringEmpty(projectId)) {
+        code=xmxq;
+    }else{
+        code=tcxq;
+    }
     Weakify(self);
     [Master HttpPostRequestByParams:@{@"id":detailID,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
         if (isStringEmpty(projectId)) {

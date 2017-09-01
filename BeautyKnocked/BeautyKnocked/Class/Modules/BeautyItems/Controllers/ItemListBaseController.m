@@ -125,11 +125,9 @@ static NSInteger padding=6;
             PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
             itemDetailController.detailID=model.id;
             itemDetailController.projectId=model.projectId;
-            itemDetailController.code=tcxq;
         }else{
             ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
             itemDetailController.detailID=model.id;
-            itemDetailController.code=xmxq;
         }
         [self.navigationController pushViewController:itemDetailController animated:YES];
     }

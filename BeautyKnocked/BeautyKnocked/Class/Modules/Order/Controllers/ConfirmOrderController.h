@@ -15,6 +15,7 @@
 @interface ConfirmOrderController : UIViewController
 
 @property (nonatomic,assign) MLOrderStyle orderStyle;
+
 @property (nonatomic,strong) DetailModel * detailModel;
 @property (nonatomic,strong) PackageInfoModel * packageInfoModel;
 @property (nonatomic,strong) ProductModel * productModel;

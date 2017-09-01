@@ -43,18 +43,18 @@ static NSInteger padding=6;
     switch (self.index) {
         case 6:
         {
-            [self loadHttpData:self.index withField:5 withLift:1 withCode:self.sort];
+            [self loadHttpData:self.index withField:5 withLift:1];
         }
             break;
         case 7:
         {
-            [self loadHttpData:self.index withField:8 withLift:1 withCode:self.sort];
+            [self loadHttpData:self.index withField:8 withLift:1];
         }
             break;
             
         default:
         {
-            [self loadHttpData:self.index withField:2 withLift:1 withCode:self.sort];
+            [self loadHttpData:self.index withField:2 withLift:1];
         }
             break;
     }
@@ -64,27 +64,27 @@ static NSInteger padding=6;
         case 6:
         {
             if (row==0) {
-                [self loadHttpData:self.index withCode:self.code];
+                [self loadHttpData:self.index];
             }else{
-                [self loadHttpData:self.index withField:4 withLift:row-1 withCode:self.sort];
+                [self loadHttpData:self.index withField:4 withLift:row-1];
             }
         }
             break;
         case 7:
         {
             if (row==0) {
-                [self loadHttpData:self.index withCode:self.code];
+                [self loadHttpData:self.index];
             }else{
-                [self loadHttpData:self.index withField:3 withLift:row-1 withCode:self.sort];
+                [self loadHttpData:self.index withField:3 withLift:row-1];
             }
         }
             break;
         default:
         {
             if (row==0) {
-                [self loadHttpData:self.index withCode:self.code];
+                [self loadHttpData:self.index];
             }else{
-                [self loadHttpData:self.index withField:1 withLift:row-1 withCode:self.sort];
+                [self loadHttpData:self.index withField:1 withLift:row-1];
             }
         }
             break;
@@ -101,7 +101,7 @@ static NSInteger padding=6;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ClassItemCollectionCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"ClassItemCollectionCell" forIndexPath:indexPath];
-    if (self.index==7) {
+    if (_index==7) {
         PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         cell.Pmodel=model;
     }else{
@@ -111,10 +111,22 @@ static NSInteger padding=6;
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (isStringEmpty(_sort)) {
+    if (_isSelected) {
         Weakify(self);
-        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-        [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:xmxq Success:^(id json) {
+        NSString *code=nil;
+        NSString *mid=nil;
+        NSString *projectId=nil;
+        if (_index==7) {
+            PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+            code=tcxq;
+            mid=model.id;
+            projectId=model.projectId;
+        }else{
+            ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+            code=xmxq;
+            mid=model.id;
+        }
+        [Master HttpPostRequestByParams:@{@"id":mid,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
             [Wself.subModel sendNext:json[@"info"]];
             [Wself.navigationController popViewControllerAnimated:YES];
         } Failure:nil andNavigation:Wself.navigationController];
@@ -136,12 +148,10 @@ static NSInteger padding=6;
                 PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
                 itemDetailController.detailID=model.id;
                 itemDetailController.projectId=model.projectId;
-                itemDetailController.code=tcxq;
             }else{
                 //项目
                 ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
                 itemDetailController.detailID=model.id;
-                itemDetailController.code=xmxq;
             }
             [self.navigationController pushViewController:itemDetailController animated:YES];
         }
@@ -166,7 +176,7 @@ static NSInteger padding=6;
 -(void)createViews {
     _sortView = [[BeautyItemSortView alloc] init];
     _sortView.delegate=self;
-    if (isStringEmpty(_sort)) {
+    if (_isSelected) {
         _sortView.hidden=YES;
     }
     
@@ -176,13 +186,13 @@ static NSInteger padding=6;
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = [UIColor clearColor];
     _collectionView.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadHttpData:self.index withCode:self.code];
+        [self loadHttpData:self.index];
     }];
     [_collectionView.mj_header beginRefreshing];
     [_collectionView registerClass:[ClassItemCollectionCell class] forCellWithReuseIdentifier:@"ClassItemCollectionCell"];
 }
 -(void)configureConstraints {
-    if (isStringEmpty(_sort)) {
+    if (_isSelected) {
         [_sortView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.and.left.and.right.equalTo(self.view);
             make.height.mas_equalTo(0);
@@ -201,7 +211,19 @@ static NSInteger padding=6;
     }];
 }
 #pragma mark ===== 默认排序 =====
--(void)loadHttpData:(NSInteger)index withCode:(NSString*)code{
+-(void)loadHttpData:(NSInteger)index{
+    NSString *code=nil;
+    switch (index) {
+        case 6:
+            code=cplb;
+            break;
+        case 7:
+            code=tclb;
+            break;
+        default:
+            code=xmlb;
+            break;
+    }
     [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",index+1]} url:mlqqm serviceCode:code Success:^(id json) {
         [self.itemArray removeAllObjects];
         for (NSDictionary *dict in json[@"info"]) {
@@ -212,7 +234,19 @@ static NSInteger padding=6;
     } Failure:nil andNavigation:self.navigationController];
 }
 #pragma mark ===== 项目排序 =====
--(void)loadHttpData:(NSInteger)index withField:(NSInteger)field withLift:(NSInteger)lift withCode:(NSString*)code{
+-(void)loadHttpData:(NSInteger)index withField:(NSInteger)field withLift:(NSInteger)lift{
+    NSString *code=nil;
+    switch (index) {
+        case 6:
+            code=cplbpx;
+            break;
+        case 7:
+            code=tclbpx;
+            break;
+        default:
+            code=xmlbpx;
+            break;
+    }
     [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",index+1],
                                       @"field":[NSString stringWithFormat:@"%ld",field],
                                       @"lift":[NSString stringWithFormat:@"%ld",lift],

@@ -245,8 +245,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 /** 上门服务 */
                 SonItemController *controller=[[SonItemController alloc]init];
                 controller.index=index+3;
-                controller.code=xmlb;
-                controller.sort=xmlbpx;
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
             }
@@ -264,8 +262,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 /** 套餐 */
                 SonItemController *controller=[[SonItemController alloc]init];
                 controller.index=7;
-                controller.code=tclb;
-                controller.sort=tclbpx;
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
             }
@@ -275,8 +271,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 /** 商城 */
                 SonItemController *controller=[[SonItemController alloc]init];
                 controller.index=6;
-                controller.code=cplb;
-                controller.sort=cplbpx;
                 controller.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:controller animated:YES];
             }
@@ -317,7 +311,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         itemDetailController.alpha=@"0";
         itemDetailController.hidesBottomBarWhenPushed = YES;
         itemDetailController.detailID=itemID;
-        itemDetailController.code=xmxq;
         [self.navigationController pushViewController:itemDetailController animated:YES];
     }
 }
@@ -361,8 +354,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
             /** 产品商城 */
             SonItemController *controller=[[SonItemController alloc]init];
             controller.index=6;
-            controller.code=cplb;
-            controller.sort=cplbpx;
             controller.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:controller animated:YES];
         }

@@ -7,6 +7,8 @@
 //
 
 #import "ConfirmOrderItemCell.h"
+#import "DetailModel.h"
+#import "PackageInfoModel.h"
 
 @interface ConfirmOrderItemCell ()
 
@@ -22,18 +24,20 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+}
+-(void)setPmodel:(PackageInfoModel *)Pmodel{
+    [Master GetWebImage:_imgView withUrl:Pmodel.imagePath];
+    _titleLabel.text = Pmodel.name;
+    _priceLabel.text = [NSString stringWithFormat:@"套餐价: ¥%@",Pmodel.price];
 }
 -(void)setModel:(DetailModel *)model{
     [Master GetWebImage:_imgView withUrl:model.imagePath];
     _titleLabel.text = model.name;
     _serviceLenghtLabel.text = [NSString stringWithFormat:@"服务时长%@分钟",model.serviceTime];
+    _priceLabel.text = [NSString stringWithFormat:@"VIP价: ¥%@",model.vipPrice];
     _blcakPrice.text = [NSString stringWithFormat:@"市场价: ¥%@",model.price];
-    NSMutableAttributedString *AttStr=[[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"VIP价: ¥%@",model.vipPrice]];
-    [AttStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, AttStr.length)];
-    _priceLabel.attributedText = AttStr;
 }
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -54,6 +58,7 @@
     _serviceLenghtLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     
     _priceLabel = [[UILabel alloc] init];
+    _priceLabel.textColor=[UIColor redColor];
     _priceLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     
     _blcakPrice=[[UILabel alloc]init];
