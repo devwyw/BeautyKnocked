@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LEEAlert.h>
 
 @interface ServiceView : UIView
 

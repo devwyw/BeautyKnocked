@@ -51,27 +51,12 @@
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
 
     /** 导航栏返回按钮图片 */
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-Width, -Height) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(Width,0) forBarMetrics:UIBarMetricsDefault];
      [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"fanhui2"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 25, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 
-    /** 导航栏背景配置 */
-    UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
-    [navigationBarAppearance setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:17.0]}];
-    [navigationBarAppearance setTranslucent:YES];
-    [navigationBarAppearance setBackgroundImage:[AppDelegate GetImageWithColor:ThemeColor andAlpha:1 andHeight:64] forBarMetrics:UIBarMetricsDefault];
-    [navigationBarAppearance setShadowImage:[UIImage new]];
-}
-/** Color->Image */
-+(UIImage*)GetImageWithColor:(UIColor*)color andAlpha:(CGFloat)alpha andHeight:(CGFloat)height
-{
-    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, height);
-    UIGraphicsBeginImageContext(r.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context,[color colorWithAlphaComponent:alpha].CGColor);
-    CGContextFillRect(context, r);
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
+    /** 全局标题配置 */
+    UINavigationBar *navigation = [UINavigationBar appearance];
+    [navigation setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:17.0]}];
 }
 #pragma mark ===== NSLog =====
 -(void)getLog{

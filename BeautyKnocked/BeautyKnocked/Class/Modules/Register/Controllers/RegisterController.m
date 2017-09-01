@@ -45,8 +45,8 @@ static int const timeCode = 60;
     [super viewWillAppear:animated];
     self.BarAlpha=@"0";
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self stopTime];
 }
 -(void)dealloc{

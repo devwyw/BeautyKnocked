@@ -41,7 +41,7 @@
     _cancel=[[UIButton alloc]init];
     [_cancel setImage:[UIImage imageNamed:@"qu-xiao"] forState:UIControlStateNormal];
     [[_cancel rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [LEEAlert closeWithCompletionBlock:nil];
+        [Master RemovePopViewWithBlock:nil];
     }];
     [_backView addSubview:_cancel];
     

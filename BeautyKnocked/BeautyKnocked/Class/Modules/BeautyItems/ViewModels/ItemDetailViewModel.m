@@ -180,16 +180,7 @@
 }
 -(void)PushServiceView{
     ServiceView *paysheet=[[ServiceView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(200*5))];
-     [LEEAlert actionsheet].config
-     .LeeCustomView(paysheet)
-     .LeeActionSheetBottomMargin(-5)
-     .LeeCornerRadius(0.0f)
-     .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-     .LeeHeaderColor([UIColor clearColor])
-     .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-     return Width;
-     })
-     .LeeShow();
+    [Master PopSheetView:paysheet];
 }
 -(ServiceItemContentView *)serviceView {
     if (!_serviceView) {

@@ -158,7 +158,7 @@ static OrderSubDay *instance=nil;
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cancelBtn  setImage:[UIImage imageNamed:@"quxiao"] forState:UIControlStateNormal];
     [[_cancelBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [LEEAlert closeWithCompletionBlock:nil];
+        [Master RemovePopViewWithBlock:nil];
     }];
     
     NSMutableArray *views = [NSMutableArray arrayWithCapacity:7];
@@ -269,15 +269,7 @@ static OrderSubDay *instance=nil;
         }
         /** 时间段 */
         view.listArray=[[NSArray alloc]initWithArray:self.webTimeData[[NSString stringWithFormat:@"%@",dateModel.date]]];
-
-        [LEEAlert alert].config
-        .LeeCustomView(view)
-        .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-        .LeeHeaderColor([UIColor clearColor])
-        .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-            return Width_Pt(1018);
-        })
-        .LeeShow();
+        [Master PopAlertView:view];
     }
 }
 #pragma mark UICollectionViewDelegateFlowLayout

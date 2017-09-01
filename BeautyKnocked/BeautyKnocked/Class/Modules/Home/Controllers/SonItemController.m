@@ -113,23 +113,19 @@ static NSInteger padding=6;
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (_isSelected) {
         Weakify(self);
-        NSString *code=nil;
-        NSString *mid=nil;
-        NSString *projectId=nil;
         if (_index==7) {
             PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            code=tcxq;
-            mid=model.id;
-            projectId=model.projectId;
+            [Master HttpPostRequestByParams:@{@"id":model.id,@"projectId":model.projectId} url:mlqqm serviceCode:tcxq Success:^(id json) {
+                [Wself.subModel sendNext:json[@"info"]];
+                [Wself.navigationController popViewControllerAnimated:YES];
+            } Failure:nil andNavigation:Wself.navigationController];
         }else{
             ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            code=xmxq;
-            mid=model.id;
+            [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:xmxq Success:^(id json) {
+                [Wself.subModel sendNext:json[@"info"]];
+                [Wself.navigationController popViewControllerAnimated:YES];
+            } Failure:nil andNavigation:Wself.navigationController];
         }
-        [Master HttpPostRequestByParams:@{@"id":mid,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
-            [Wself.subModel sendNext:json[@"info"]];
-            [Wself.navigationController popViewControllerAnimated:YES];
-        } Failure:nil andNavigation:Wself.navigationController];
     }else{
         if (_index==6) {
             //产品

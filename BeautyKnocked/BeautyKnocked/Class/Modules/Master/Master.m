@@ -303,4 +303,47 @@
     }
     return [addresses count] ? addresses : nil;
 }
++(void)PopSheetView:(UIView*)view{
+    [LEEAlert actionsheet].config
+    .LeeCustomView(view)
+    .LeeActionSheetBottomMargin(-5)
+    .LeeCornerRadius(0.0f)
+    .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+    .LeeHeaderColor([UIColor clearColor])
+    .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+        return Width;
+    })
+    .LeeShow();
+}
++(void)PopAlertView:(UIView*)view WithTitle:(NSString*)title WithDoneBlock:(PopViewBlock)block{
+    [LEEAlert alert].config
+    .LeeAddCustomView(^(LEECustomView *custom) {
+        custom.view=view;
+    })
+    .LeeTitle(title)
+    .LeeCancelAction(@"取消", nil)
+    .LeeAction(@"确认", ^{
+        if (!isObjectEmpty(block)) {
+            block();
+        }
+    })
+    .LeeShow();
+}
++(void)PopAlertView:(UIView *)view{
+    [LEEAlert alert].config
+    .LeeCustomView(view)
+    .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
+    .LeeHeaderColor([UIColor clearColor])
+    .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
+        return view.frame.size.width;
+    })
+    .LeeShow();
+}
++(void)RemovePopViewWithBlock:(PopViewHideBlock)block{
+    [LEEAlert closeWithCompletionBlock:^{
+        if (!isObjectEmpty(block)) {
+            block();
+        }
+    }];
+}
 @end

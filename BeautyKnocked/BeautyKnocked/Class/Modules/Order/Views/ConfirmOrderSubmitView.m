@@ -19,6 +19,9 @@
 
 -(void)setTotalPrice:(NSString *)totalPrice {
     _totalPrice = totalPrice;
+    if ([totalPrice floatValue]>=1000) {
+        totalPrice=[NSString stringWithFormat:@"%.f",[totalPrice floatValue]];
+    }
     NSString *text = [NSString stringWithFormat:@"总价: ¥ %@",totalPrice];
     NSRange redRange = [text rangeOfString:[text substringFromIndex:4]];
     NSMutableAttributedString *muAttStr = [[NSMutableAttributedString alloc] initWithString:text];

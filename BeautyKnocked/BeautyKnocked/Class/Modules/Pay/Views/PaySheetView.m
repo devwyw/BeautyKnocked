@@ -55,9 +55,10 @@
     Weakify(self);
     [[_confirmPayButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
         if (!isStringEmpty(Wself.type)) {
-            [LEEAlert closeWithCompletionBlock:^{
+            [Master RemovePopViewWithBlock:^{
                 [Wself.subType sendNext:Wself.type];
             }];
+            
         }
     }];
     [_confirmPayButton setBackgroundColor:[UIColor colorWithHexString:@"#67D75A"]];
@@ -138,7 +139,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要放弃当前支付操作吗？" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"继续支付" style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"放弃" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [LEEAlert closeWithCompletionBlock:nil];
+        [Master RemovePopViewWithBlock:nil];
     }]];
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
 }

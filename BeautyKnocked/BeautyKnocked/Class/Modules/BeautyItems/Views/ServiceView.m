@@ -58,7 +58,7 @@
     _confirmPayButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     [_confirmPayButton setBackgroundColor:ThemeColor];
     [[_confirmPayButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [LEEAlert closeWithCompletionBlock:nil];
+        [Master RemovePopViewWithBlock:nil];
     }];
     [self addSubview:_confirmPayButton];
     

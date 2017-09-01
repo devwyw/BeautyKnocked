@@ -17,6 +17,8 @@ typedef enum : NSUInteger {
 typedef void(^HttpSuccessBlock)(id json);
 typedef void(^HttpFalureBlock)(NSError *error);
 typedef void(^ShowSVProgressBlock)();
+typedef void(^PopViewBlock)();
+typedef void(^PopViewHideBlock)();
 
 @interface Master : NSObject
 /** 选择TabBarItem */
@@ -43,4 +45,12 @@ typedef void(^ShowSVProgressBlock)();
 +(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url;
 /** 获取ip */
 +(NSString *)getIPv4;
+/** 弹出SheetView */
++(void)PopSheetView:(UIView*)view;
+/** 弹出AlertView */
++(void)PopAlertView:(UIView*)view WithTitle:(NSString*)title WithDoneBlock:(PopViewBlock)block;
+/** 弹出AlertEditView */
++(void)PopAlertView:(UIView*)view;
+/** 关闭PopVIew */
++(void)RemovePopViewWithBlock:(PopViewHideBlock)block;
 @end

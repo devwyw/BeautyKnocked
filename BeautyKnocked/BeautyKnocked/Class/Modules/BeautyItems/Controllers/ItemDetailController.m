@@ -27,9 +27,10 @@
 @implementation ItemDetailController
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat OffsetY=scrollView.contentOffset.y;
-    if (OffsetY >= 0 && OffsetY <= 64) {
-        _alpha = [NSString stringWithFormat:@"%f",OffsetY/64];
-    }else if(OffsetY > 64){
+    CGFloat MaxY=Height/2.5;
+    if (OffsetY >= 0 && OffsetY <= MaxY) {
+        _alpha = [NSString stringWithFormat:@"%f",OffsetY/MaxY];
+    }else if(OffsetY > MaxY){
         _alpha = @"1";
     }else{
         _alpha=@"0";
@@ -45,8 +46,13 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
     self.BarAlpha = _alpha;
     _carItem.count=100;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self setAutomaticallyAdjustsScrollViewInsets:YES];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,7 +61,7 @@
     }else{
         self.title=@"套餐详情";
     }
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
     [self initializeViews];
     [self addConstraints];
     
@@ -102,20 +108,9 @@
         //购物车
         AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
         [view.doneAction subscribeNext:^(id  _Nullable x) {
-            [LEEAlert closeWithCompletionBlock:^{
-                NSLog(@"%@",view.count);
-            }];
+            
         }];
-        [LEEAlert actionsheet].config
-        .LeeHeaderColor([UIColor clearColor])
-        .LeeCustomView(view)
-        .LeeActionSheetBottomMargin(-5)
-        .LeeCornerRadius(0.0f)
-        .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-        .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-            return Width;
-        })
-        .LeeShow();
+        [Master PopSheetView:view];
     }];
     [self.view addSubview:_addReserveView];
     

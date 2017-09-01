@@ -10,7 +10,6 @@
 #import "AddressEditView.h"
 #import "UIButton+Category.h"
 #import "UITextField+Length.h"
-#import <LEEAlert.h>
 
 @interface EditAddressController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 
@@ -174,15 +173,9 @@
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
     if (textField==_serviceAddressView.textField) {
         [textField resignFirstResponder];
-        [LEEAlert alert].config
-        .LeeAddCustomView(^(LEECustomView *custom) {
-            custom.view=self.pickview;
-        })
-        .LeeCancelAction(@"取消", nil)
-        .LeeAction(@"确认", ^{
+        [Master PopAlertView:self.pickview WithTitle:@"" WithDoneBlock:^{
             _serviceAddressView.content=self.selectComponent;
-        })
-        .LeeShow();
+        }];
         return NO;
     }
     return YES;

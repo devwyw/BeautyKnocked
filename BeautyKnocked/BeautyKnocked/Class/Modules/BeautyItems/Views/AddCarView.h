@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LEEAlert.h>
 @class RACSignal;
 
 @interface AddCarView : UIView

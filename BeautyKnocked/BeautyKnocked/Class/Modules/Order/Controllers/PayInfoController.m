@@ -24,13 +24,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.hidesBackButton=YES;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.title=@"支付页面";
     [self initializeViews];
     [self addConstraints];
     // Do any additional setup after loading the view.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationItem.hidesBackButton=YES;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationItem.hidesBackButton=NO;
 }
 -(void)initializeViews {
     _image=[[UIImageView alloc]init];

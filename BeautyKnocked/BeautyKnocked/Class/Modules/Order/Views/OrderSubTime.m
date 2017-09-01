@@ -63,14 +63,7 @@
     [_backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
     [[_backBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         OrderSubDay *view=[OrderSubDay shareManager];
-        [LEEAlert alert].config
-        .LeeCustomView(view)
-        .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-        .LeeHeaderColor([UIColor clearColor])
-        .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-            return Width_Pt(1018);
-        })
-        .LeeShow();
+        [Master PopAlertView:view];
     }];
     [self addSubview:_backBtn];
     
@@ -89,7 +82,7 @@
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cancelBtn setImage:[UIImage imageNamed:@"quxiao"] forState:UIControlStateNormal];
     [[_cancelBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [LEEAlert closeWithCompletionBlock:nil];
+        [Master RemovePopViewWithBlock:nil];
     }];
     [self addSubview:_cancelBtn];
     
@@ -120,9 +113,10 @@
         [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             MLDateCollectionViewCell *cell = obj;
             if (cell.selected) {
-                [LEEAlert closeWithCompletionBlock:^{
+                [Master RemovePopViewWithBlock:^{
                     [_subData sendNext:[NSString stringWithFormat:@"%@ %@:00",_selectTime,_selectsTime]];
                 }];
+                
                 *stop = YES;
             }
         }];

@@ -335,14 +335,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                                 _detailOrderModel.pactServiceTime=x;
                                 [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
                             }];
-                            [LEEAlert alert].config
-                            .LeeCustomView(view)
-                            .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-                            .LeeHeaderColor([UIColor clearColor])
-                            .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-                                return Width_Pt(1018);
-                            })
-                            .LeeShow();
+                            [Master PopAlertView:view];
                         } Failure:nil andNavigation:self.navigationController];
                     }else{
                         /** 产品-配送方式 */
@@ -410,6 +403,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     _packageOrderModel.payType=x;
                     [Wself payOrder:_packageOrderModel.mj_keyValues WithCode:tjtcdd];
                 }];
+                [Master PopSheetView:paysheet];
             }
                 break;
             case MLItem:
@@ -424,6 +418,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                         _detailOrderModel.payType=x;
                         [Wself payOrder:_detailOrderModel.mj_keyValues WithCode:tjxmdd];
                     }];
+                    [Master PopSheetView:paysheet];
                 }
             }
                 break;
@@ -433,16 +428,6 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             }
                 break;
         }
-        [LEEAlert actionsheet].config
-        .LeeCustomView(paysheet)
-        .LeeActionSheetBottomMargin(-5)
-        .LeeCornerRadius(0.0f)
-        .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-        .LeeHeaderColor([UIColor clearColor])
-        .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-            return Width;
-        })
-        .LeeShow();
     }];
     [self.view addSubview:self.submitOrderView];
     

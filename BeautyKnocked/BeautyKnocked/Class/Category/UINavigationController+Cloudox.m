@@ -15,20 +15,36 @@
 - (void)setNeedsNavigationBackground:(CGFloat)alpha {
     UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];
     UIImageView *backgroundImageView = [[barBackgroundView subviews] objectAtIndex:0];
+    UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];
+    
+    if (!backgroundImageView.isHidden) {
+        backgroundImageView.hidden=YES;
+        UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Width, 64)];
+        image.image=[UINavigationController GetImageWithColor:ThemeColor andAlpha:1 andHeight:64];
+        [backgroundEffectView addSubview:image];
+    }
+    
     if (self.navigationBar.isTranslucent) {
         if (backgroundImageView != nil && backgroundImageView.image != nil) {
             barBackgroundView.alpha = alpha;
         }else {
-            UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];
-            if (backgroundEffectView != nil) {
-                backgroundEffectView.alpha = alpha;
-            }
+            backgroundEffectView.alpha = alpha;
         }
-    } else {
+    }else{
         barBackgroundView.alpha = alpha;
     }
 }
-
++(UIImage*)GetImageWithColor:(UIColor*)color andAlpha:(CGFloat)alpha andHeight:(CGFloat)height
+{
+    CGRect r= CGRectMake(0.0f, 0.0f, 1.0f, height);
+    UIGraphicsBeginImageContext(r.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context,[color colorWithAlphaComponent:alpha].CGColor);
+    CGContextFillRect(context, r);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
 + (void)initialize {
     if (self == [UINavigationController self]) {
         SEL originalSelector = NSSelectorFromString(@"_updateInteractiveTransition:");

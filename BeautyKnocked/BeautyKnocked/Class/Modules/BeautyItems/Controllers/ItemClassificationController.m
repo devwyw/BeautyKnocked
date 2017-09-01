@@ -38,7 +38,7 @@ static CGFloat const kNavigationBarHeight = 64;
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.BarAlpha = @"1.0";
+    self.BarAlpha = @"1";
     [_item setHidden:NO];
     [_searchBar setHidden:_item.isHidden];
 }
@@ -122,6 +122,7 @@ static CGFloat const kNavigationBarHeight = 64;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setHeaderView];
+    
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     // Do any additional setup after loading the view.
     self.panGesture = [[WMPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnView:)];

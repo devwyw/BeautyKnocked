@@ -9,7 +9,6 @@
 #import "AddressController.h"
 #import "CommonAddressCell.h"
 #import "EditAddressController.h"
-#import <LEEAlert.h>
 
 static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 @interface AddressController ()<UITableViewDelegate,UITableViewDataSource>
@@ -73,20 +72,13 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
         [Wself.navigationController pushViewController:editController animated:YES];
     }];
     [[cell.addressDeleteSignal takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
-        [LEEAlert alert].config
-        .LeeAddCustomView(^(LEECustomView *custom) {
-            UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"kulian"]];
-            custom.view=image;
-        })
-        .LeeTitle(@"您确定要删除当前地址吗？")
-        .LeeCancelAction(@"取消", nil)
-        .LeeAction(@"确认", ^{
+         UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"kulian"]];
+        [Master PopAlertView:image WithTitle:@"您确定要删除当前地址吗？" WithDoneBlock:^{
             [Master HttpPostRequestByParams:@{@"id":cell.model.id,@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:scfwdz Success:^(id json) {
                 [_listArray removeObjectAtIndex:indexPath.row];
                 [_tableView reloadData];
             } Failure:nil andNavigation:Wself.navigationController];
-        })
-        .LeeShow();
+        }];
     }];
     return cell;
 }

@@ -130,16 +130,7 @@
     [paysheet.subType subscribeNext:^(id  _Nullable x) {
       NSLog(@"%@",x);
     }];
-    [LEEAlert actionsheet].config
-    .LeeCustomView(paysheet)
-    .LeeActionSheetBottomMargin(-5)
-    .LeeCornerRadius(0.0f)
-    .LeeHeaderInsets(UIEdgeInsetsMake(0, 0, 0, 0))
-    .LeeHeaderColor([UIColor clearColor])
-    .LeeConfigMaxWidth(^CGFloat(LEEScreenOrientationType type) {
-        return Width;
-    })
-    .LeeShow();
+    [Master PopSheetView:paysheet];
 }
 
 @end
