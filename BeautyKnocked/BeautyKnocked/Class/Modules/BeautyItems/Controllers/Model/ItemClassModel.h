@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface ItemClassModel : NSObject
-/** 项目列表 */
+/** 项目&产品->列表 */
 @property (nonatomic,copy) NSString * id;
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * price;

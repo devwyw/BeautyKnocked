@@ -14,6 +14,6 @@
 /** 十六进制->Color-alpha */
 + (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha;
 /** Color->十六进制 */
-- (NSString *)toColorString;
+-(NSString *)toColorString;
 @end
 

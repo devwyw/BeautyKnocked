@@ -51,12 +51,12 @@
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
 
     /** 导航栏返回按钮图片 */
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(Width,0) forBarMetrics:UIBarMetricsDefault];
-     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"fanhui2"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 25, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"fanhui2"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 25, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 
     /** 全局标题配置 */
     UINavigationBar *navigation = [UINavigationBar appearance];
     [navigation setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont systemFontOfSize:17.0]}];
+    [navigation setTintColor:[UIColor clearColor]];
 }
 #pragma mark ===== NSLog =====
 -(void)getLog{

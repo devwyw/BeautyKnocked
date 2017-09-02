@@ -26,6 +26,7 @@
 #define IP_ADDR_IPv4    @"ipv4"
 #define IP_ADDR_IPv6    @"ipv6"
 
+static NSInteger netWorkingStatus=0;
 @interface Master ()
 @end
 
@@ -38,13 +39,16 @@
             case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusNotReachable:
             {
+                netWorkingStatus=1;
                 [LEEAlert alert].config
                 .LeeTitle(@"网络未连接")
                 .LeeContent(@"我们未在地球上找到您的连接")
                 .LeeCancelAction(@"网络设置", ^{
+                    netWorkingStatus=0;
                     [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
                 })
                 .LeeAction(@"确定", ^{
+                    netWorkingStatus=0;
                 })
                 .LeeShow();
             }
@@ -156,9 +160,11 @@
         NSLog(@"json错误: %@",error);
         switch (error.code) {
             case -1004:
+                if (netWorkingStatus==1)break;
                 [Master showSVProgressHUD:@"我们未能与您连接，请您再试一试~" withType:ShowSVProgressTypeError withShowBlock:nil];
                 break;
             default:
+                if (netWorkingStatus==1)break;
                 [LEEAlert alert].config
                 .LeeTitle(@"网络未连接")
                 .LeeContent(@"我们未在地球上找到您的连接")

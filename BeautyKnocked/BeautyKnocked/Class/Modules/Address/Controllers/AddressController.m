@@ -40,8 +40,7 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_isSelected) {
-        AddressModel *model=[AddressModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
-        [self.addressId sendNext:model];
+        [self.addressId sendNext:self.listArray[indexPath.row]];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

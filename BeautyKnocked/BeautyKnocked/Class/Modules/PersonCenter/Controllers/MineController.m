@@ -35,6 +35,8 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.StatusDefaultBar=@"0";
+    self.BarColor = [ThemeColor toColorString];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
     [self.view setBackgroundColor:[UIColor whiteColor]];

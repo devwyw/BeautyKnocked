@@ -33,11 +33,11 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationItem.hidesBackButton=YES;
+    [self.navigationItem setHidesBackButton:YES animated:NO];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationItem.hidesBackButton=NO;
+    [self.navigationItem setHidesBackButton:NO animated:NO];
 }
 -(void)initializeViews {
     _image=[[UIImageView alloc]init];

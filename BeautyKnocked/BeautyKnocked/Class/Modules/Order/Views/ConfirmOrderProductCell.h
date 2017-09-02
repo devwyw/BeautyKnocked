@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ProductModel;
 
 @interface ConfirmOrderProductCell : UITableViewCell
-@property (nonatomic, strong) UIImage *itemImage;
-@property (nonatomic, copy) NSString *itemName;
-@property (nonatomic, copy) NSString *price;
+@property (nonatomic,strong) ProductModel * model;
 @end

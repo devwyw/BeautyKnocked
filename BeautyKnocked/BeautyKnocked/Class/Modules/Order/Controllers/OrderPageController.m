@@ -41,6 +41,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.StatusDefaultBar=@"0";
+    self.BarColor = [ThemeColor toColorString];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     self.navigationItem.title=@"确认订单";

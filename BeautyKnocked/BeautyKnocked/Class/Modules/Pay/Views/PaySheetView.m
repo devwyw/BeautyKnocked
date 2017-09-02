@@ -97,13 +97,11 @@
     UITableViewCell *cell = nil;
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCellStyleValue1"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    NSString *imageName = self.dataSource[indexPath.row][@"image"];
-    NSString *paymentName = self.dataSource[indexPath.row][@"name"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor=[UIColor clearColor];
-    [cell.imageView setImage:[UIImage imageNamed:imageName]];
-    cell.textLabel.text = paymentName;
+    [cell.imageView setImage:[UIImage imageNamed:self.dataSource[indexPath.row][@"image"]]];
+    cell.textLabel.text = self.dataSource[indexPath.row][@"name"];
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
     return cell;
 }
@@ -115,12 +113,11 @@
         accessoryImgView.highlighted = [cell isEqual:selectedCell] ? YES : NO;
     }
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.5;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return CGFLOAT_MIN;
+    return 0.5;
 }
 -(NSMutableArray *)dataSource {
     if (!_dataSource) {

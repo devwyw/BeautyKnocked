@@ -62,6 +62,8 @@
 		04CB6C1E1F31CA7E0039B87C /* OrderSubTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C1D1F31CA7E0039B87C /* OrderSubTime.m */; };
 		04DC3AD31F4678A0004F269E /* CouponModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DC3AD21F4678A0004F269E /* CouponModel.m */; };
 		04DF49291F44409900623307 /* CouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF49281F44409900623307 /* CouponCell.m */; };
+		04E3A9A11F5A3F2900F94AAE /* ProductOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3A9A01F5A3F2900F94AAE /* ProductOrderModel.m */; };
+		04E3A9A41F5A520000F94AAE /* ExpressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3A9A31F5A520000F94AAE /* ExpressView.m */; };
 		04E40AD21F2C586900C4D665 /* MyGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E40AD11F2C586900C4D665 /* MyGroupController.m */; };
 		04E60CFD1F42A6C10040A579 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E60CFC1F42A6C10040A579 /* ProductModel.m */; };
 		04E60D001F42A7D40040A579 /* PackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E60CFF1F42A7D40040A579 /* PackageModel.m */; };
@@ -1056,6 +1058,10 @@
 		04DC3AD21F4678A0004F269E /* CouponModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponModel.m; sourceTree = "<group>"; };
 		04DF49271F44409900623307 /* CouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponCell.h; sourceTree = "<group>"; };
 		04DF49281F44409900623307 /* CouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponCell.m; sourceTree = "<group>"; };
+		04E3A99F1F5A3F2900F94AAE /* ProductOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductOrderModel.h; sourceTree = "<group>"; };
+		04E3A9A01F5A3F2900F94AAE /* ProductOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductOrderModel.m; sourceTree = "<group>"; };
+		04E3A9A21F5A520000F94AAE /* ExpressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressView.h; sourceTree = "<group>"; };
+		04E3A9A31F5A520000F94AAE /* ExpressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressView.m; sourceTree = "<group>"; };
 		04E40AD01F2C586900C4D665 /* MyGroupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGroupController.h; sourceTree = "<group>"; };
 		04E40AD11F2C586900C4D665 /* MyGroupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGroupController.m; sourceTree = "<group>"; };
 		04E60CFB1F42A6C10040A579 /* ProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductModel.h; sourceTree = "<group>"; };
@@ -3693,6 +3699,8 @@
 				734C6DE51EF8FAA200F18FE4 /* MLDateModel.m */,
 				04426CA91F4C259100B30D5B /* OrderModel.h */,
 				04426CAA1F4C259100B30D5B /* OrderModel.m */,
+				04E3A99F1F5A3F2900F94AAE /* ProductOrderModel.h */,
+				04E3A9A01F5A3F2900F94AAE /* ProductOrderModel.m */,
 				0420BB031F5952CB006BD63A /* PackageOrderModel.h */,
 				0420BB041F5952CB006BD63A /* PackageOrderModel.m */,
 				0423C6C31F4E721C00F492CB /* WebTimeModel.h */,
@@ -3755,6 +3763,8 @@
 				0439FF6C1F2B10C50087C314 /* PJItemViewCell.m */,
 				04EFA4511F554AAC003933A5 /* PayInfoViewCell.h */,
 				04EFA4521F554AAC003933A5 /* PayInfoViewCell.m */,
+				04E3A9A21F5A520000F94AAE /* ExpressView.h */,
+				04E3A9A31F5A520000F94AAE /* ExpressView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5103,6 +5113,7 @@
 				0484EF9C1F55108900F2D01E /* CarItem.m in Sources */,
 				7390F4C81EE6AA360059A168 /* IntegralMallController.m in Sources */,
 				73440A3A1ED2B893003807B8 /* BeauticianItemViewModel.m in Sources */,
+				04E3A9A11F5A3F2900F94AAE /* ProductOrderModel.m in Sources */,
 				043212D01F273B5800F29D1B /* WuLiuController.m in Sources */,
 				04F0B0081F32B2FD00D77558 /* TextField.m in Sources */,
 				7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */,
@@ -5231,6 +5242,7 @@
 				04F0AFFC1F32B2FD00D77558 /* UIImage+Original.m in Sources */,
 				737CD2E21EE0FF2E00B6A5DB /* ItemTitlePriceView.m in Sources */,
 				04EFA4DD1F5557BB003933A5 /* AppDelegate+JPush.m in Sources */,
+				04E3A9A41F5A520000F94AAE /* ExpressView.m in Sources */,
 				043212BB1F26F9F400F29D1B /* OrderMessageViewController.m in Sources */,
 				737C1E761EEA2FD80020D342 /* FightingGroupCell.m in Sources */,
 				7319866F1EC1A65300FA7DF0 /* RegisterController.m in Sources */,

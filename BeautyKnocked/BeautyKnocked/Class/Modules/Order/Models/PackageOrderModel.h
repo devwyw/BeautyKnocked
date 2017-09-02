@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface PackageOrderModel : NSObject
+/** 套餐订单 */
 @property (nonatomic,copy) NSString * clientId;
 @property (nonatomic,copy) NSString * beauticianId;
 @property (nonatomic,copy) NSString * packageIds;

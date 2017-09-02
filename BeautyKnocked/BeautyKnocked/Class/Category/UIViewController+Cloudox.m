@@ -22,19 +22,29 @@ static char *BarAlphas = "BarAlphas";
     return objc_getAssociatedObject(self, BarAlphas) ? : @"1.0";
 }
 /** RunTime */
-static char *BarHidden = "BarHidden";
--(void)setIsBarHidden:(NSString *)isBarHidden{
-    objc_setAssociatedObject(self, BarHidden, isBarHidden, OBJC_ASSOCIATION_COPY_NONATOMIC);
+static char *ImageColor = "ImageColor";
+-(void)setBarColor:(NSString *)BarColor{
+    objc_setAssociatedObject(self, ImageColor, BarColor, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self.navigationController setNeedsNavigationBackgroundColor:BarColor];
 }
--(NSString*)isBarHidden{
-    return objc_getAssociatedObject(self, BarHidden) ? : @"0";
+-(NSString*)BarColor{
+    return objc_getAssociatedObject(self, ImageColor) ? : @"#ffffff";
 }
 /** RunTime */
-static char *DefaultBar = "DefaultBar";
--(void)setIsDefaultBar:(NSString *)isDefaultBar{
-    objc_setAssociatedObject(self, DefaultBar, isDefaultBar, OBJC_ASSOCIATION_COPY_NONATOMIC);
+static char *BarHiddens = "BarHiddens";
+-(void)setStatusBarHidden:(NSString *)StatusBarHidden{
+    objc_setAssociatedObject(self, BarHiddens, StatusBarHidden, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
--(NSString*)isDefaultBar{
-    return objc_getAssociatedObject(self, DefaultBar) ? : @"0";
+-(NSString*)StatusBarHidden{
+    return objc_getAssociatedObject(self, BarHiddens) ? : @"0";
+}
+/** RunTime */
+static char *DefaultBars = "DefaultBars";
+-(void)setStatusDefaultBar:(NSString *)StatusDefaultBar{
+    objc_setAssociatedObject(self, DefaultBars, StatusDefaultBar, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self.navigationController setStatusDefaultBar:StatusDefaultBar];
+}
+-(NSString*)StatusDefaultBar{
+    return objc_getAssociatedObject(self, DefaultBars) ? : @"0";
 }
 @end

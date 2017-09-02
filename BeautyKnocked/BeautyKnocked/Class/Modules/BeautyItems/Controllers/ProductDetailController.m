@@ -80,6 +80,7 @@
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
         ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
         confirmController.orderStyle = MLProduct;
+        confirmController.productModel=self.productDetailViewModel.model;
         [self.navigationController pushViewController:confirmController animated:YES];
     }];
     

@@ -22,6 +22,8 @@
 @implementation BeauticianController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.StatusDefaultBar=@"0";
+    self.BarColor = [ThemeColor toColorString];
     if (_isType==1) {
         [self.navigationItem setTitle:@"选择美容师"];
     }else if(_isType==2){

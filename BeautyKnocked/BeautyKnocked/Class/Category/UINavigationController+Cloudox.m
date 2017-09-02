@@ -19,9 +19,9 @@
     
     if (!backgroundImageView.isHidden) {
         backgroundImageView.hidden=YES;
-        UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Width, 64)];
-        image.image=[UINavigationController GetImageWithColor:ThemeColor andAlpha:1 andHeight:64];
-        [backgroundEffectView addSubview:image];
+        UIImageView * backgroundImageColor=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Width, 64)];
+        [backgroundImageColor setTag:10001];
+        [backgroundEffectView addSubview:backgroundImageColor];
     }
     
     if (self.navigationBar.isTranslucent) {
@@ -114,6 +114,7 @@
     [self setNeedsNavigationBackground:[self.topViewController.BarAlpha floatValue]];
 }
 #pragma mark ===== RunTime =====
+/** 透明度 */
 static char *BarAlphas = "BarAlphas";
 -(void)setCloudox:(NSString *)cloudox{
     objc_setAssociatedObject(self, BarAlphas, cloudox, OBJC_ASSOCIATION_COPY_NONATOMIC);
@@ -121,28 +122,32 @@ static char *BarAlphas = "BarAlphas";
 -(NSString *)cloudox{
     return objc_getAssociatedObject(self, BarAlphas);
 }
-static char *BarHidden = "BarHidden";
--(void)setBarHiden:(NSString *)barHiden{
-    objc_setAssociatedObject(self, BarHidden, barHiden, OBJC_ASSOCIATION_COPY_NONATOMIC);
+/** 背景颜色 */
+static char *ImageColor = "ImageColor";
+-(void)setImageColor:(NSString *)imageColor{
+    objc_setAssociatedObject(self, ImageColor, imageColor, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
--(NSString*)barHiden{
-    return objc_getAssociatedObject(self, BarHidden);
+-(NSString *)imageColor{
+    return objc_getAssociatedObject(self, ImageColor);
 }
-- (BOOL)prefersStatusBarHidden{
-    return [self.barHiden isEqualToString:@"1"] ? YES:NO;
+-(void)setNeedsNavigationBackgroundColor:(NSString*)color{
+    UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];
+    UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];
+    UIImageView *imageColor=[backgroundEffectView viewWithTag:10001];
+    imageColor.image=[UINavigationController GetImageWithColor:[UIColor colorWithHexString:color] andAlpha:1 andHeight:64];
 }
-- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
-    return UIStatusBarAnimationFade;
+/** 状态栏风格 */
+static char *DefaultBars = "DefaultBars";
+-(void)setIsDefaultBar:(NSString *)isDefaultBar{
+    objc_setAssociatedObject(self, DefaultBars, isDefaultBar, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
-static char *DefaultBar = "DefaultBar";
--(void)setDefaultBar:(NSString *)defaultBar{
-    objc_setAssociatedObject(self, DefaultBar, defaultBar, OBJC_ASSOCIATION_COPY_NONATOMIC);
+-(NSString*)isDefaultBar{
+    return objc_getAssociatedObject(self, DefaultBars);
 }
--(NSString*)defaultBar{
-    return objc_getAssociatedObject(self, DefaultBar);
+-(void)setStatusDefaultBar:(NSString*)status{
+    if ([status integerValue]==1) {
+        self.navigationBar.barStyle = UIBarStyleDefault;
+    }else{
+        self.navigationBar.barStyle = UIBarStyleBlack;}
 }
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return [self.defaultBar isEqualToString:@"1"] ? UIStatusBarStyleDefault:UIStatusBarStyleLightContent;
-}
-
 @end

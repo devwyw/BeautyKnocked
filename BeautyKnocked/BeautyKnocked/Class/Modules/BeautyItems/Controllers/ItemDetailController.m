@@ -69,7 +69,9 @@
     {
         _carItem=[[CarItem alloc]initWithOriginY:Height-111];
         [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
-            NSLog(@"购物车");
+            [Master RemovePopViewWithBlock:^{
+                NSLog(@"购物车");
+            }];
         }];
         [self.view addSubview:_carItem];
     }

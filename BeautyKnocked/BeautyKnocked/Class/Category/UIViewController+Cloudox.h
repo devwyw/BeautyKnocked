@@ -11,8 +11,8 @@
 @interface UIViewController (Cloudox)
 /** 导航栏透明度->1:显示(默认) 0:透明 */
 @property (nonatomic,copy) NSString * BarAlpha;
-/** 状态栏隐藏->0:显示(默认) 1:隐藏 */
-@property (nonatomic,copy) NSString * isBarHidden;
+/** 导航栏背景色(16进制字符串)->白色:(默认) */
+@property (nonatomic,copy) NSString * BarColor;
 /** 状态栏风格->0:白色(默认) 1:黑色 */
-@property (nonatomic,copy) NSString * isDefaultBar;
+@property (nonatomic,copy) NSString * StatusDefaultBar;
 @end

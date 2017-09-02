@@ -7,6 +7,7 @@
 //
 
 #import "ConfirmOrderProductCell.h"
+#import "ProductModel.h"
 
 @interface ConfirmOrderProductCell ()
 @property (nonatomic, strong) UIImageView *imgView;
@@ -22,17 +23,12 @@
     // Configure the view for the selected state
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
-
--(void)setItemImage:(UIImage *)itemImage {
-    [_imgView setImage:itemImage];
+-(void)setModel:(ProductModel *)model{
+    _model=model;
+    [Master GetWebImage:_imgView withUrl:model.imagePath];
+    _titleLabel.text=model.name;
+    _priceLabel.text=[NSString stringWithFormat:@"¥ %@",model.price];
 }
--(void)setItemName:(NSString *)itemName {
-    _titleLabel.text = itemName;
-}
--(void)setPrice:(NSString *)price {
-    _priceLabel.text = price;
-}
-
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -50,7 +46,7 @@
     
     _priceLabel = [[UILabel alloc] init];
     _priceLabel.textColor = [UIColor redColor];
-    _priceLabel.font = [UIFont systemFontOfSize:Font_Size(30)];
+    _priceLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
     
     [self.contentView addSubview:_imgView];
     [self.contentView addSubview:_titleLabel];
@@ -58,7 +54,6 @@
     
 }
 -(void)addConstraints {
-    
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(8);
         make.left.equalTo(self.contentView).with.offset(12);

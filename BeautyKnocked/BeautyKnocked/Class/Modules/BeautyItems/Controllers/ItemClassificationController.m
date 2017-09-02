@@ -39,6 +39,7 @@ static CGFloat const kNavigationBarHeight = 64;
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.BarAlpha = @"1";
+    self.BarColor = [ThemeColor toColorString];
     [_item setHidden:NO];
     [_searchBar setHidden:_item.isHidden];
 }
@@ -99,7 +100,7 @@ static CGFloat const kNavigationBarHeight = 64;
     NewNavigation.navigationBar.shadowImage=[UIImage new];
     NewNavigation.hidesBottomBarWhenPushed = YES;
     NewNavigation.modalTransitionStyle=UIModalTransitionStyleCoverVertical;
-    NewNavigation.isDefaultBar=@"1";
+    NewNavigation.StatusDefaultBar=@"1";
     [self presentViewController:NewNavigation animated:YES completion:nil];
     return NO;
 }
@@ -122,7 +123,8 @@ static CGFloat const kNavigationBarHeight = 64;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setHeaderView];
-    
+    self.BarColor = [ThemeColor toColorString];
+    self.StatusDefaultBar=@"0";
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     // Do any additional setup after loading the view.
     self.panGesture = [[WMPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnView:)];

@@ -120,8 +120,14 @@ static NSInteger padding=6;
                 [Wself.navigationController popViewControllerAnimated:YES];
             } Failure:nil andNavigation:Wself.navigationController];
         }else{
+            NSString *code=nil;
+            if (_index==6) {
+                code=cpxq;
+            }else{
+                code=xmxq;
+            }
             ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:xmxq Success:^(id json) {
+            [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:code Success:^(id json) {
                 [Wself.subModel sendNext:json[@"info"]];
                 [Wself.navigationController popViewControllerAnimated:YES];
             } Failure:nil andNavigation:Wself.navigationController];
