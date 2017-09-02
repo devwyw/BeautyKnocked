@@ -29,7 +29,7 @@
     _titleLabel.text = [NSString stringWithFormat:@"【%@】",title];
 }
 -(void)setPrice:(NSString *)price{
-    _priceLabel.text = [NSString stringWithFormat:@"VIP价: ¥%@",price];
+    _priceLabel.text = [NSString stringWithFormat:@"市场价: ¥%@",price];
 }
 -(void)initializeViews {
     _titleLabel = [[UILabel alloc] init];

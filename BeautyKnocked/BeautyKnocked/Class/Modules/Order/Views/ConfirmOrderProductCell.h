@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 @class ProductModel;
+@class RACSubject;
 
 @interface ConfirmOrderProductCell : UITableViewCell
 @property (nonatomic,strong) ProductModel * model;
+@property (nonatomic,strong) RACSubject * subCount;
 @end

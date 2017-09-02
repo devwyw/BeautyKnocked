@@ -111,7 +111,8 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         if (section == 1) {
             return self.addArray.count+3;
         }else{
-            return [self.titles[section] count];
+            NSArray *arrayCounts=[[NSArray alloc]initWithArray:self.titles[section]];
+            return arrayCounts.count;
         }
     }
 }
@@ -147,7 +148,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                             [controller.subModel subscribeNext:^(id  _Nullable x) {
                                 PackageInfoModel *model=[PackageInfoModel mj_objectWithKeyValues:x];
                                 _packageOrderModel.packageIds=[NSString stringWithFormat:@"%@,%@",_packageOrderModel.packageIds,model.id];
-                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%.2f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
+                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
                                 [_addArray addObject:x];
                                 [_tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_addArray.count inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
                                 [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_addArray.count+1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -177,7 +178,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         case 1:
         {
             if (indexPath.row < 2) {
-                ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:FillCell forIndexPath:indexPath];
+                 ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:FillCell forIndexPath:indexPath];
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 if (indexPath.row==0) {
                     /** 选择技师 */
@@ -236,12 +237,12 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                         controller.isSelected=YES;
                         controller.subModel=[RACSubject subject];
                         if (_orderStyle==MLItem) {
-                            controller.index=4;
+                            controller.index=0;
                             [controller.subModel subscribeNext:^(id  _Nullable x) {
                                 DetailModel *model=[DetailModel mj_objectWithKeyValues:x];
                                 _detailOrderModel.projectIds=[NSString stringWithFormat:@"%@,%@",_detailOrderModel.projectIds,model.id];
                                 _detailOrderModel.serviceTime=[NSString stringWithFormat:@"%ld",[_detailOrderModel.serviceTime integerValue]+[model.serviceTime integerValue]];
-                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%.2f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
+                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
                                 [Wself reloadWithAddArray:x];
                             }];
                         }else{
@@ -249,7 +250,8 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                             [controller.subModel subscribeNext:^(id  _Nullable x) {
                                 ProductModel *model=[ProductModel mj_objectWithKeyValues:x];
                                 _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,model.id];
-                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%.2f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
+                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
+                                
                                 [Wself reloadWithAddArray:x];
                             }];
                         }
@@ -265,8 +267,28 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     return cell;
                 }else{
                     /** 产品列表 */
+                    ProductModel *model=[ProductModel mj_objectWithKeyValues:_addArray[indexPath.row-2]];
                     ConfirmOrderProductCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCell forIndexPath:indexPath];
-                    cell.model=[ProductModel mj_objectWithKeyValues:self.addArray[indexPath.row-2]];
+                    cell.model=model;
+                    cell.subCount=[RACSubject subject];
+                    [[cell.subCount takeUntil:cell.rac_prepareForReuseSignal] subscribeNext:^(id  _Nullable x) {
+                        _submitOrderView.totalPrice=nil;
+                        _productOrderModel.productIds=nil;
+                        model.count=x;
+                        [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:model.mj_keyValues];
+                        
+                        for (NSDictionary *dict in _addArray) {
+                            _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([dict[@"count"] integerValue]*[dict[@"price"] floatValue])+[_submitOrderView.totalPrice floatValue]];
+                            for (int i=1; i<=[dict[@"count"] integerValue]; i++) {
+                                if (!isStringEmpty(_productOrderModel.productIds)) {
+                                    _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,dict[@"id"]];
+                                }else{
+                                    _productOrderModel.productIds=dict[@"id"];
+                                }
+                            }
+                        }
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    }];
                     return cell;
                 }
             }
@@ -407,6 +429,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     }else{
                         /** 产品-配送方式 */
                         ExpressView *expview=[[ExpressView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(150*7))];
+                        expview.index=_productOrderModel.expressMode;
                         expview.subType=[RACSubject subject];
                         [expview.subType subscribeNext:^(id  _Nullable x) {
                             _productOrderModel.expressMode=x;

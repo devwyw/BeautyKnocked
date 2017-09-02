@@ -31,7 +31,6 @@
         Class controllerClass = NSClassFromString([controllerClasses objectAtIndex:i]);
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[controllerClass alloc] init]];
         navigationController.tabBarItem = [self.tabBarItems objectAtIndex:i];
-        navigationController.BarColor=@"#dcb563";
         [viewControllers addObject:navigationController];
     }
     self.viewControllers = viewControllers;

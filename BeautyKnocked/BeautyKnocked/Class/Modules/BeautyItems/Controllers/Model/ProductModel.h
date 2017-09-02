@@ -21,4 +21,5 @@
 @property (nonatomic,copy) NSString * effect;
 @property (nonatomic,copy) NSString * forPeople;
 @property (nonatomic,copy) NSString * useMethod;
+@property (nonatomic,copy) NSString * count;
 @end

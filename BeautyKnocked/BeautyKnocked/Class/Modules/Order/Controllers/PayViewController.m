@@ -40,19 +40,21 @@
     Weakify(self);
     [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
         [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-            [Wself payPushController:YES];
+            [Wself payPushController:nil WithPayType:nil];
         }];
     } Failure:nil andNavigation:self.navigationController];
 }
 -(void)failure{
     Weakify(self);
     [Master showSVProgressHUD:@"订单支付失败" withType:ShowSVProgressTypeError withShowBlock:^{
-        [Wself payPushController:NO];
+        [Wself payPushController:_model WithPayType:_isPayType];
     }];
 }
--(void)payPushController:(BOOL)isType{
+-(void)payPushController:(OrderInfoModel*)model WithPayType:(NSString*)type{
     PayInfoController *controller=[[PayInfoController alloc]init];
-    controller.isStatus=isType;
+    controller.model=model;
+    controller.isPayType=type;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)initializeViews {

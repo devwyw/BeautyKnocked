@@ -74,8 +74,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan2"] highlightedImage:[UIImage imageNamed:@"gouxuanh"]];
     cell.backgroundColor=[UIColor clearColor];
+    
+    UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan2"] highlightedImage:[UIImage imageNamed:@"gouxuanh"]];
+    image.highlighted=[_index integerValue]==indexPath.row;
+    cell.accessoryView =image;
+    
     if (indexPath.row==0) {
         cell.textLabel.text = @"默认邮费到付";
     }else{

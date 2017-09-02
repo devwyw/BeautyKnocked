@@ -32,6 +32,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.BarAlpha=@"1";
     _carItem.count=100;
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];

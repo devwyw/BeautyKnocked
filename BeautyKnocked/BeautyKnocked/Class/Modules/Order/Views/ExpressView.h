@@ -11,4 +11,5 @@
 
 @interface ExpressView : UIView
 @property (nonatomic,strong) RACSubject * subType;
+@property (nonatomic,copy) NSString * index;
 @end

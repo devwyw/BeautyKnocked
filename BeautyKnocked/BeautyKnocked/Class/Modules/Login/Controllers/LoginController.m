@@ -38,7 +38,10 @@
     [super viewWillAppear:animated];
     self.BarAlpha=@"0";
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.BarAlpha=@"1";
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];

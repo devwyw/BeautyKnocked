@@ -111,7 +111,6 @@
                     Acount *user=[Acount shareManager];
                     [Master HttpPostRequestByParams:@{@"id":user.id} url:mlqqm serviceCode:tcdl Success:^(id json) {
                         [JPUSHService deleteAlias:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
-                            NSLog(@"极光推送删除别名:%@",iAlias);
                         } seq:[user.id integerValue]];
                         [user SignOutAcount];
                         [Master showSVProgressHUD:@"退出成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{

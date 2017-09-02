@@ -12,7 +12,6 @@
 @interface ConfirmOrderAddCell : UITableViewCell
 
 @property (nonatomic,copy) NSString *title;
-@property (nonatomic,copy) NSString * colorStr;
 @property (nonatomic,strong) RACSignal * addMore;
 
 @end

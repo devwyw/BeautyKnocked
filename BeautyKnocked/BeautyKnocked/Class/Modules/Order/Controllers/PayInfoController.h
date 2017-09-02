@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class OrderInfoModel;
 
 @interface PayInfoController : UIViewController
-@property (nonatomic,assign) BOOL isStatus;
+@property (nonatomic,strong) OrderInfoModel * model;
+@property (nonatomic,copy) NSString * isPayType;
 @end

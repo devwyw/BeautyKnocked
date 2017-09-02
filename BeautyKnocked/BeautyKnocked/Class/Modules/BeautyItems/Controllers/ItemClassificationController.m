@@ -39,7 +39,6 @@ static CGFloat const kNavigationBarHeight = 64;
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.BarAlpha = @"1";
-    self.BarColor = [ThemeColor toColorString];
     [_item setHidden:NO];
     [_searchBar setHidden:_item.isHidden];
 }
@@ -78,8 +77,10 @@ static CGFloat const kNavigationBarHeight = 64;
     /** 搜索栏 */
     NSArray *hotSeaches = @[@"美白", @"补水", @"背部", @"清洁", @"化妆水", @"精油", @"按摩", @"养肤系列", @"长效系列", @"水光疗养"];
     PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"关键词" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        [searchViewController dismissViewControllerAnimated:YES completion:nil];
         _searchBar.text=searchText;
+        [searchViewController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
     }];
     {
         /** 配置 */

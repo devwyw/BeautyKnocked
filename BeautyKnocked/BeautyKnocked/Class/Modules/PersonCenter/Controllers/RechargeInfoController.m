@@ -12,12 +12,15 @@
 #import "BeauticianController.h"
 #import "RechargePayModel.h"
 #import "AppDelegate+Alipay.h"
+#import "RechargeItemModel.h"
+#import "RechargeItemCell.h"
 
 @interface RechargeInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
 @property (nonatomic,strong) UIButton * payDone;
 @property (nonatomic,strong) RechargeModel * rechargeModel;
 @property (nonatomic,strong) RechargePayModel * model;
+@property (nonatomic,strong) RechargeItemModel * itemModel;
 @end
 
 @implementation RechargeInfoController
@@ -36,6 +39,12 @@
         _model=[[RechargePayModel alloc]init];
     }
     return _model;
+}
+-(RechargeItemModel*)itemModel{
+    if (!_itemModel) {
+        _itemModel=[[RechargeItemModel alloc]init];
+    }
+    return _itemModel;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -65,6 +74,7 @@
         if ([_model.payType integerValue]==0) {
             [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
         }else{
+            NSLog(@"%@",_model.mj_keyValues);
             [Master HttpPostRequestByParams:_model.mj_keyValues url:mlqqm serviceCode:czdd Success:^(id json) {
                 if ([_model.payType integerValue]==1) {
                     
@@ -89,6 +99,7 @@
 -(UITableView*)tableview{
     if (!_tableview) {
         _tableview=[[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableview.showsVerticalScrollIndicator=NO;
         _tableview.delegate=self;
         _tableview.dataSource=self;
         _tableview.estimatedRowHeight=Height_Pt(100);
@@ -96,15 +107,18 @@
         _tableview.bounces=NO;
         [_tableview registerClass:[PayInfoCell class] forCellReuseIdentifier:@"PayInfoCell"];
         [_tableview registerClass:[PayTypeCell class] forCellReuseIdentifier:@"PayTypeCell"];
+        [_tableview registerClass:[RechargeItemCell class] forCellReuseIdentifier:@"RechargeItemCell"];
     }
     return _tableview;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     switch (section) {
         case 2:
+            return self.itemModel.list.count+1;
+        case 3:
             return 3;
         default:
             return 1;
@@ -118,7 +132,23 @@
             cell.model=self.rechargeModel;
             return cell;
         }
+            break;
         case 2:
+        {
+            if (indexPath.row==0) {
+                UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefault"];
+                cell.selectionStyle=UITableViewCellSelectionStyleNone;
+                cell.textLabel.font=[UIFont systemFontOfSize:Font_Size(40)];
+                cell.textLabel.text=[NSString stringWithFormat:@"赠送列表: %@选%@",self.itemModel.num,self.itemModel.choose];
+                return cell;
+            }else{
+                RechargeItemCell *cell=[tableView dequeueReusableCellWithIdentifier:@"RechargeItemCell" forIndexPath:indexPath];
+                cell.model=[RechargeItemInfoModel mj_objectWithKeyValues:self.itemModel.list[indexPath.row-1]];
+                return cell;
+            }
+        }
+            break;
+        case 3:
         {
             if (indexPath.row==0) {
                 UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefault"];
@@ -137,6 +167,7 @@
                 return cell;
             }
         }
+            break;
         default:
         {
             UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"UITableViewCellStyleValue1"];
@@ -153,21 +184,37 @@
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }
+            break;
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section==1) {
-        BeauticianController *controller=[[BeauticianController alloc]init];
-        controller.isType=1;
-        controller.beauticianId=[RACSubject subject];
-        [controller.beauticianId subscribeNext:^(id  _Nullable x) {
-            _model.beauticianId=x;
-            [_tableview reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-        }];
-        [self.navigationController pushViewController:controller animated:YES];
-    }else if (indexPath.section==2 && indexPath.row>0){
-        _model.payType=[NSString stringWithFormat:@"%ld",indexPath.row];
-        [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+    switch (indexPath.section) {
+        case 1:
+        {
+            BeauticianController *controller=[[BeauticianController alloc]init];
+            controller.isType=1;
+            controller.beauticianId=[RACSubject subject];
+            [controller.beauticianId subscribeNext:^(id  _Nullable x) {
+                _model.beauticianId=x;
+                [_tableview reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+            }];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+            case 2:
+        {
+            
+        }
+            break;
+        case 3:
+        {
+            if (indexPath.row==0) return;
+            _model.payType=[NSString stringWithFormat:@"%ld",indexPath.row];
+            [_tableview reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+        }
+            break;
+        default:
+            break;
     }
 }
 -(void)loadHttpData{
@@ -177,8 +224,13 @@
     self.model.payType=@"0";
     self.model.rechargeId=_Cid;
     
+    Weakify(self);
     [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czxq Success:^(id json) {
         self.rechargeModel=[RechargeModel mj_objectWithKeyValues:json[@"info"]];
+        [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czzslb Success:^(id json) {
+            self.itemModel=[RechargeItemModel mj_objectWithKeyValues:json[@"info"]];
+            [_tableview reloadData];
+        } Failure:nil andNavigation:Wself.navigationController];
         [_tableview reloadData];
     } Failure:nil andNavigation:self.navigationController];
 }

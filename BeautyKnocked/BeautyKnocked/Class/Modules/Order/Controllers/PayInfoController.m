@@ -7,6 +7,9 @@
 //
 
 #import "PayInfoController.h"
+#import "OrderInfoModel.h"
+#import "AppDelegate+WXApi.h"
+#import "AppDelegate+Alipay.h"
 
 @interface PayInfoController ()
 @property (nonatomic,strong) UIImageView * image;
@@ -21,7 +24,9 @@
 @end
 
 @implementation PayInfoController
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -29,6 +34,8 @@
     self.title=@"支付页面";
     [self initializeViews];
     [self addConstraints];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(success) name:paySuccess object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(failure) name:payFailure object:nil];
     // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -80,7 +87,7 @@
     [_btn2 addTarget:self action:@selector(backinfo:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn2];
     
-    if (_isStatus) {
+    if (isObjectEmpty(_model)&&isStringEmpty(_isPayType)) {
         _image.image=[UIImage imageNamed:@"zhifuchenggong"];
         _label1.text=@"支付成功";
         _label3.text=@"您的订单已经成功受理，感谢您的购买~";
@@ -130,11 +137,33 @@
 }
 
 -(void)payinfo:(UIButton*)btn{
-    if (_isStatus) {
+    if (isObjectEmpty(_model)&&isStringEmpty(_isPayType)) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
-        [self.navigationController popViewControllerAnimated:YES];
+        /** 立即支付 */
+        switch ([_isPayType integerValue]) {
+            case 0:
+                
+                break;
+            case 1:
+                [AppDelegate WXPayWithPrepayId:_model.orderStr];
+                break;
+            default:
+                [AppDelegate AliPayWithPayOrder:_model.orderStr];
+                break;
+        }
     }
+}
+-(void)success{
+    Weakify(self);
+    [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
+        [Master showSVProgressHUD:@"订单支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+            [Wself.navigationController pushViewController:[[PayInfoController alloc]init] animated:YES];
+        }];
+    } Failure:nil andNavigation:self.navigationController];
+}
+-(void)failure{
+    [Master showSVProgressHUD:@"订单支付失败" withType:ShowSVProgressTypeError withShowBlock:nil];
 }
 -(void)backinfo:(UIButton*)btn{
     [Master setTabBarItem:3 withNavigationController:self.navigationController];

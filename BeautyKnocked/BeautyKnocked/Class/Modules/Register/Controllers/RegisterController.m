@@ -47,6 +47,7 @@ static int const timeCode = 60;
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    self.BarAlpha=@"1";
     [self stopTime];
 }
 -(void)dealloc{
@@ -361,6 +362,45 @@ static int const timeCode = 60;
                     [Master showSVProgressHUD:@"确认密码与密码不相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
                 }
             }
+//            if (_phoneNumberTextField.text.length==11
+//                &&_varificationCodeTextField.text.length==4
+//                &&_passwordTextField.text.length>=6
+//                &&[_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]
+//                ) {
+//                if (_isType) {
+//                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"password":_passwordTextField.text} url:mlqqm serviceCode:zc Success:^(id json) {
+//                        [Master showSVProgressHUD:@"注册成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+//                            [Wself dismissViewControllerAnimated:YES completion:^{
+//                                [Master HttpPostRequestByParams:@{@"account":_phoneNumberTextField.text,
+//                                                                  @"password":_passwordTextField.text
+//                                                                  }
+//                                                            url:mlqqm serviceCode:dl Success:^(id json) {
+//                                                                Acount *user=[Acount shareManager];
+//                                                                user=[Acount mj_objectWithKeyValues:json[@"info"]];
+//                                                                [user SignInAcount];
+//                                                                [Master setTabBarItem:0 withNavigationController:Wself.navigationController];
+//                                                            } Failure:nil andNavigation:Wself.navigationController];
+//                            }];
+//                        }];
+//                    } Failure:nil andNavigation:Wself.navigationController];
+//                }else{
+//                    [Master HttpPostRequestByParams:@{@"phone":_phoneNumberTextField.text,@"code":_varificationCodeTextField.text,@"password":_passwordTextField.text} url:mlqqm serviceCode:wjmm Success:^(id json) {
+//                        [Master showSVProgressHUD:@"重置成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+//                            [Wself.navigationController popViewControllerAnimated:YES];
+//                        }];
+//                    } Failure:nil andNavigation:Wself.navigationController];
+//                }
+//            }else{
+//                if (_phoneNumberTextField.text.length!=11) {
+//                    [Master showSVProgressHUD:@"请输入有效的11位手机号" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+//                }else if (_varificationCodeTextField.text.length!=4){
+//                    [Master showSVProgressHUD:@"请输入有效的4位验证码" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+//                }else if (_passwordTextField.text.length<6){
+//                    [Master showSVProgressHUD:@"您的密码小于6位" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+//                }else if (![_passwordTextField.text isEqualToString:_confirmPasswordTextField.text]){
+//                    [Master showSVProgressHUD:@"确认密码与密码不相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+//                }
+//            }
         }];
     }
     return _registerBtn;

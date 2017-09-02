@@ -243,7 +243,7 @@ static NSInteger netWorkingStatus=0;
     }
 }
 +(void)setTabBarItem:(NSInteger)item withNavigationController:(UINavigationController*)navigationController{
-    UITabBarController *controller=(UITabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+    TabBarController *controller=(TabBarController*)[UIApplication sharedApplication].keyWindow.rootViewController;
     controller.selectedIndex=item;
     [navigationController popToRootViewControllerAnimated:NO];
 }

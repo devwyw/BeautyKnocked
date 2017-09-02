@@ -52,7 +52,7 @@ static NSString *const cellReuseIdentifier = @"ItemDetailUITableViewCell";
 -(void)setModel:(ProductModel *)model{
     _model=model;
     self.titleView.title=model.name;
-    self.titleView.price=model.vipPrice;
+    self.titleView.price=model.price;
 
     self.introduceView.capacitys=model.capacity;
     self.introduceView.address=model.address;

@@ -29,15 +29,6 @@ static NSString *const addressCellReuseIdentifier = @"CommonAddressCell";
     [super viewWillAppear:animated];
     [self loadHttpData];
 }
--(void)setIsSelected:(BOOL)isSelected{
-    _isSelected=isSelected;
-    if (_isSelected) {
-        self.addNewAddressBtn.hidden=YES;
-        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
-}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_isSelected) {
         [self.addressId sendNext:self.listArray[indexPath.row]];

@@ -136,7 +136,6 @@
 -(void)wantAddMore:(NSString *)currentTitle{
     NSLog(@"添加项目");
     PayInfoController *controller=[[PayInfoController alloc]init];
-    controller.isStatus=YES;
     [self.navigationController pushViewController:controller animated:YES];
 }
 - (void)didReceiveMemoryWarning {

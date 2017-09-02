@@ -18,7 +18,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 -(void)setIsSelected:(BOOL)isSelected{
     _selectImage.highlighted=isSelected;
@@ -35,9 +34,6 @@
     }
     _payImage.image=[UIImage imageNamed:image];
     _payType.text=title;
-}
--(void)setImage:(NSString*)image andTitle:(NSString*)title{
-    
 }
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -58,7 +54,6 @@
     
     _payType=[[UILabel alloc]init];
     _payType.font=[UIFont systemFontOfSize:Font_Size(40)];
-    
     [self.contentView addSubview:_payType];
 }
 -(void)addConstraints {

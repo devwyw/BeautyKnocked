@@ -77,11 +77,14 @@
     self.productDetailViewModel.navigationController = self.navigationController;
     
     _addReserveView = [[AddAndReserveView alloc] init];
+    Weakify(self);
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
-        ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
-        confirmController.orderStyle = MLProduct;
-        confirmController.productModel=self.productDetailViewModel.model;
-        [self.navigationController pushViewController:confirmController animated:YES];
+        if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+            ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
+            confirmController.orderStyle = MLProduct;
+            confirmController.productModel=_productDetailViewModel.model;
+            [Wself.navigationController pushViewController:confirmController animated:YES];
+        }
     }];
     
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
