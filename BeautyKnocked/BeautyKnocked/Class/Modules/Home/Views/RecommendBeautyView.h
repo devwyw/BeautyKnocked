@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class BeauticianModel;
 
 @interface RecommendBeautyView : UIControl
-
+@property (nonatomic,strong) UIButton * button;
+@property (nonatomic,strong) BeauticianModel * model;
 @end

@@ -85,22 +85,28 @@
             }];
             _nowPay.hidden=YES;
         }
-        NSString *type=@"类型";
+        NSString *type=nil;
         switch ([model.type integerValue]) {
             case 1:
                 type=@"项目";
                 break;
+            case 2:
+                type=@"项目现金抵用券";
+                break;
             case 4:
-                type=@"闺蜜";
+                type=@"闺蜜券";
                 break;
             case 5:
                 type=@"产品";
                 break;
+            case 6:
+                type=@"产品现金抵用券";
+                break;
             default:
                 break;
         }
-        _label1.text=[NSString stringWithFormat:@"• 此优惠券%@;",model.commName];
-        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，可抵扣%@VIP价%ld元;",model.money,type,[model.money integerValue]+10];
+        _label1.text=[NSString stringWithFormat:@"• 此优惠券为%@;",type];
+        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，可抵扣一定金额的VIP价;",model.money];
         _label3.text=@"• 每笔订单最多限用一张，不叠加使用优惠券;";
         
         NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"• 券不找零，不兑换现金，最终解释权归美丽敲敲门所有;"];

@@ -7,13 +7,64 @@
 //
 
 #import <Foundation/Foundation.h>
+/** 服务器接口->简写拼音 */
+#define zc @"/manager/client/base/registerManager/register"
+#define zcyzm @"/manager/client/base/smsVerificationManager/sendVerification"
+#define ptyzm @"/manager/client/base/smsVerificationManager/sendCode"
+#define dl @"/manager/client/base/loginManager/login"
+#define tcdl @"/manager/client/base/loginManager/outLongin"
+#define wjmm @"/manager/client/base/loginManager/forgetPassword"
+#define lbt @"/manager/client/base/bannerManager/queryList"
+#define ghtx @"/manager/client/base/clientManager/updateHeadPath"
+#define ggnc @"/manager/client/base/clientManager/updateNickName"
+#define ggmm @"/manager/client/base/clientManager/updatePassword"
+#define xmlb @"/manager/client/goods/projectManager/queryList"
+#define xmlbpx @"/manager/client/goods/projectManager/queryListSort"
+#define bqlb @"/manager/client/goods/labelManager/queryList"
+#define xmxq @"/manager/client/goods/projectManager/queryDetail"
+#define pllb @"/manager/client/goods/commentManager/queryListByCommId"
+#define tjddpl @"/manager/client/goods/commentManager/submitBillComment"
+#define tjxmlb @"/manager/client/goods/recommendManager/queryRecommendProject"
+#define tclb @"/manager/client/goods/packageManager/queryList"
+#define tclbpx @"/manager/client/goods/packageManager/queryListSort"
+#define tcxq @"/manager/client/goods/packageManager/queryDetail"
+#define cplb @"/manager/client/goods/productManager/queryList"
+#define cplbpx @"/manager/client/goods/productManager/queryListSort"
+#define cpxq @"/manager/client/goods/productManager/queryDetail"
+#define czlb @"/manager/client/recharge/rechargeManager/queryListNormal"
+#define czxq @"/manager/client/recharge/rechargeManager/queryDetail"
+#define czdd @"/manager/client/bill/rechargeBill/insert"
+#define khyhqlb @"/manager/client/personal/clientCouponManager/queryList"
+#define xzfwdz @"/manager/client/base/serviceAddressManager/addAddress"
+#define xgfwdz @"/manager/client/base/serviceAddressManager/updateAddress"
+#define fwdzlb @"/manager/client/base/serviceAddressManager/queryList"
+#define mrslb @"/manager/client/base/beauticianManager/queryList"
+#define mrslbpx @"/manager/client/base/beauticianManager/queryListSort"
+#define khsc @"/manager/client/base/clientCollectManager/addCollect"
+#define mrsskb @"/manager/client/base/beauticianTimeManager/queryList"
+#define yhqsx @"/manager/client/personal/clientCouponManager/clientCouponScreen"
+#define mrsskbsx @"/manager/client/base/beauticianManager/queryListScreen"
+#define xeczlb @"/manager/client/recharge/rechargeManager/queryListSmall"
+#define tjxmdd @"/manager/client/bill/projectBillManager/addBill"
+#define qrxmdd @"/manager/client/bill/projectBillManager/addYesBill"
+#define scfwdz @"/manager/client/base/serviceAddressManager/deleteAddress"
+#define mrssx @"/manager/client/base/beauticianManager/queryScreen"
+#define tjtcdd @"/manager/client/bill/packagerBillManager/addBill"
+#define tjcpdd @"/manager/client/bill/productBillManager/addBill"
+#define czzslb @"/manager/client/recharge/rechargeRuleManager/queryByRId"
+#define mhss @"/manager/client/goods/searchManager/queryLike"
+#define tjmrs @"/manager/client/base/beauticianManager/recommen"
+#define lxrq @"/manager/client/coupon/collarCouponManager/newCoupon"
+#define gyxm @"/manager/client/goods/aboutManager/aboutProject"
+#define mldt @"/manager/client/bill/projectBillManager/dynamic"
 
+/** 提示框风格 */
 typedef enum : NSUInteger {
     ShowSVProgressTypeInfo,
     ShowSVProgressTypeSuccess,
     ShowSVProgressTypeError
 } ShowSVProgressType;
-
+/** 自定义代码块 */
 typedef void(^HttpSuccessBlock)(id json);
 typedef void(^HttpFalureBlock)(NSError *error);
 typedef void(^ShowSVProgressBlock)();

@@ -27,12 +27,13 @@
 #import "ProductDetailController.h"
 #import "MoneyController.h"
 #import "LoginController.h"
+#import "BeauticianItemPageController.h"
 
 static NSString *const sectionZeroReuseIdentifier = @"sectionZeroReuseIdentifier";
 static NSString *const homePageMuduleCellReuseIdentifier = @"HomePageMuduleCell";
 static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnjoyTableViewCell";
 
-@interface HomePageViewModel ()<SDCycleScrollViewDelegate,MenuItemViewDelegate,HomePageMuduleCellDelegate,FeaturedRecommenDelegate>
+@interface HomePageViewModel ()<SDCycleScrollViewDelegate,MenuItemViewDelegate,HomePageMuduleCellDelegate>
 
 @property (nonatomic, strong) SDCycleScrollView *sdCycleBannerView;
 @property (nonatomic, strong) BKHotItemsView *hotItemsView;
@@ -329,38 +330,50 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
     return _hotItemsView;
 }
-
+-(void)setBeauticianmodel:(BeauticianModel *)beauticianmodel{
+    _beauticianmodel=beauticianmodel;
+    _recommendView.model=beauticianmodel;
+}
 -(FeaturedRecommendationsView *)recommendView {
     if (!_recommendView) {
-        _recommendView = [[FeaturedRecommendationsView alloc] init];
-        [_recommendView setViewDelegate:self];
+        _recommendView = [[FeaturedRecommendationsView alloc]init];
+        _recommendView.model=_beauticianmodel;
+        _recommendView.subTag=[RACSubject subject];
+        [_recommendView.subTag subscribeNext:^(id  _Nullable x) {
+            switch ([x integerValue]) {
+                case 0:
+                {
+                    /** 推荐技师 */
+                    BeauticianItemPageController *beauticianPageController = [[BeauticianItemPageController alloc] init];
+                    [beauticianPageController setHidesBottomBarWhenPushed:YES];
+                    [self.navigationController pushViewController:beauticianPageController animated:YES];
+                }
+                    break;
+                case 1:
+                {
+                    /** 新人领券 */
+                    if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
+                        NewUserController *controller=[[NewUserController alloc]init];
+                        controller.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:controller animated:YES];
+                    }
+                }
+                    break;
+                case 2:
+                {
+                    /** 产品商城 */
+                    SonItemController *controller=[[SonItemController alloc]init];
+                    controller.index=6;
+                    controller.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }];
     }
     return _recommendView;
-}
--(void)buttonMore:(UIButton *)button{
-    switch (button.tag) {
-        case 1:
-        {
-            /** 新人领券 */
-            if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
-                NewUserController *controller=[[NewUserController alloc]init];
-                controller.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:controller animated:YES];
-            }
-        }
-            break;
-        case 2:
-        {
-            /** 产品商城 */
-            SonItemController *controller=[[SonItemController alloc]init];
-            controller.index=6;
-            controller.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:controller animated:YES];
-        }
-            break;
-        default:
-            break;
-    }
 }
 -(ItemTitleView *)enjoyTitileView {
     if (!_enjoyTitileView) {

@@ -66,11 +66,9 @@
     }];
     
     [_button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_offset(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.edges.equalTo(self);
     }];
 }
-
-
 -(void)setTitle:(NSString *)title {
     _titleLabel.text = title;
 }
@@ -81,19 +79,15 @@
 
 -(void)setImage:(UIImage *)image {
     [_imgView setImage:image];
-    
 }
-
 -(void)setImageSize:(CGSize)imageSize {
     [_imgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(imageSize);
     }];
 }
-
 -(void)setTitleFont:(UIFont *)titleFont {
     _titleLabel.font = titleFont;
 }
-
 -(void)setDescrFont:(UIFont *)descrFont {
     _detailLabel.font = descrFont;
 }

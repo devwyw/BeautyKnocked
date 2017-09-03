@@ -14,11 +14,8 @@
 @interface ModifyPasswordController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) TextField *currentPasswordTF;
-
 @property (nonatomic, strong) TextField *passwordTF;
-
 @property (nonatomic, strong) TextField *confirmPasswordTF;
-
 @property (nonatomic, strong) UIButton *submitButton;
 
 @end
@@ -43,35 +40,48 @@
 
 -(void)createViews {
     Acount *user=[Acount shareManager];
-    _currentPasswordTF = [TextField textFieldWithPlaceholder:@"当前密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    UIColor *endColor=[UIColor grayColor];
+    Weakify(self);
+    _currentPasswordTF = [TextField textFieldWithPlaceholder:@"当前密码" textSize:Font_Size(48) borderColor:endColor];
     _currentPasswordTF.keyboardType = UIKeyboardTypeNumberPad;
     _currentPasswordTF.secureTextEntry=YES;
     _currentPasswordTF.delegate=self;
     [[_currentPasswordTF rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [_currentPasswordTF setFieldtext:18];
+        [Wself getStatusColor:_currentPasswordTF WithStatus:NO];
+    }];
+    [[_currentPasswordTF rac_signalForControlEvents:UIControlEventEditingDidBegin] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Wself getStatusColor:_currentPasswordTF WithStatus:YES];
     }];
     
-    _passwordTF = [TextField textFieldWithPlaceholder:@"请输入新密码(6-18个数字)" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    _passwordTF = [TextField textFieldWithPlaceholder:@"请输入新密码(6-18个数字)" textSize:Font_Size(48) borderColor:endColor];
     _passwordTF.keyboardType = UIKeyboardTypeNumberPad;
     _passwordTF.secureTextEntry=YES;
     _passwordTF.delegate=self;
     [[_passwordTF rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [_passwordTF setFieldtext:18];
+        [Wself getStatusColor:_passwordTF WithStatus:NO];
+    }];
+    [[_passwordTF rac_signalForControlEvents:UIControlEventEditingDidBegin] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Wself getStatusColor:_passwordTF WithStatus:YES];
     }];
     
-    _confirmPasswordTF = [TextField textFieldWithPlaceholder:@"确认新密码" textSize:Font_Size(48) borderColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    _confirmPasswordTF = [TextField textFieldWithPlaceholder:@"确认新密码" textSize:Font_Size(48) borderColor:endColor];
     _confirmPasswordTF.keyboardType = UIKeyboardTypeNumberPad;
     _confirmPasswordTF.secureTextEntry=YES;
     _confirmPasswordTF.delegate=self;
     [[_confirmPasswordTF rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [_confirmPasswordTF setFieldtext:18];
+        [Wself getStatusColor:_confirmPasswordTF WithStatus:NO];
+    }];
+    [[_confirmPasswordTF rac_signalForControlEvents:UIControlEventEditingDidBegin] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Wself getStatusColor:_confirmPasswordTF WithStatus:YES];
     }];
     
     _submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_submitButton setTitle:@"确认提交" forState:UIControlStateNormal];
     _submitButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [_submitButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
-    Weakify(self);
     [[_submitButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         if (_currentPasswordTF.text.length>=6
             &&_passwordTF.text.length>=6
@@ -99,6 +109,13 @@
             }
         }
     }];
+}
+-(void)getStatusColor:(TextField*)textfield WithStatus:(BOOL)status{
+    if (status) {
+        [textfield makeBorderWidth:0.85 withColor:[UIColor colorWithHexString:@"#E1C06C"]];
+    }else{
+        [textfield makeBorderWidth:0.85 withColor:[UIColor grayColor]];
+    }
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     return [textField setRange:range whitString:string whitCount:18];

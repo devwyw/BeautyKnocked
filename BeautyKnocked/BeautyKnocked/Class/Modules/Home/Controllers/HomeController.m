@@ -114,7 +114,6 @@
         }];
         [self.view addSubview:_carItem];
     }
-    [self loadHttpImageData];
 }
 -(UITableView *)tableView {
     if (!_tableView) {
@@ -152,11 +151,18 @@
     [super didReceiveMemoryWarning];
 }
 -(void)loadHttpImageData{
+    Weakify(self);
     [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
-        [self.homePageViewModel.imageArray removeAllObjects];
-        self.homePageViewModel.imageArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
-        [_tableView.mj_header endRefreshing];
-        [_tableView reloadData];
+        [_homePageViewModel.imageArray removeAllObjects];
+        _homePageViewModel.imageArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+        [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:tjmrs Success:^(id json) {
+            _homePageViewModel.beauticianmodel=[BeauticianModel mj_objectWithKeyValues:json[@"info"]];
+            [_tableView.mj_header endRefreshing];
+            [_tableView reloadData];
+        } Failure:^(NSError *error) {
+            [_tableView.mj_header endRefreshing];
+            [_tableView reloadData];
+        } andNavigation:Wself.navigationController];
     } Failure:nil andNavigation:self.navigationController];
 }
 @end

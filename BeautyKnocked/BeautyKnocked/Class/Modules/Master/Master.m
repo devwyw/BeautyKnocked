@@ -156,7 +156,6 @@ static NSInteger netWorkingStatus=0;
     }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
         [SVProgressHUD dismiss];
-        
         NSLog(@"json错误: %@",error);
         switch (error.code) {
             case -1004:
@@ -182,7 +181,7 @@ static NSInteger netWorkingStatus=0;
     }];
 }
 +(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url{
-    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,Url]] placeholderImage:[UIImage imageNamed:@"touxiang_03"]];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,Url]] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
 }
 #pragma mark ===== Other =====
 -(void)getSub:(UIView *)view andLevel:(int)level{

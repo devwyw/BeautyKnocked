@@ -789,6 +789,7 @@
 		152863BC1F29DB2700AD55C7 /* PJBeautViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 152863BB1F29DB2700AD55C7 /* PJBeautViewCell.m */; };
 		154662181F3202FE00ED146E /* MessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 154662171F3202FE00ED146E /* MessageView.m */; };
 		157BBBEE1F24BAE900D8FED0 /* SectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157BBBED1F24BAE900D8FED0 /* SectionHeaderView.m */; };
+		157EFFF91F5C0EDD00CCDA60 /* placeholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 157EFFF81F5C0EDD00CCDA60 /* placeholderImage.png */; };
 		15C50BB81F320DBC0062D53B /* AddCarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C50BB71F320DBC0062D53B /* AddCarView.m */; };
 		15C580231F58256B000DD066 /* y1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 15C5801F1F58256B000DD066 /* y1.jpg */; };
 		15C580241F58256B000DD066 /* y2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 15C580201F58256B000DD066 /* y2.jpg */; };
@@ -1834,6 +1835,7 @@
 		154662171F3202FE00ED146E /* MessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageView.m; sourceTree = "<group>"; };
 		157BBBEC1F24BAE900D8FED0 /* SectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionHeaderView.h; sourceTree = "<group>"; };
 		157BBBED1F24BAE900D8FED0 /* SectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionHeaderView.m; sourceTree = "<group>"; };
+		157EFFF81F5C0EDD00CCDA60 /* placeholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderImage.png; sourceTree = "<group>"; };
 		15C50BB61F320DBC0062D53B /* AddCarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCarView.h; sourceTree = "<group>"; };
 		15C50BB71F320DBC0062D53B /* AddCarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCarView.m; sourceTree = "<group>"; };
 		15C5801F1F58256B000DD066 /* y1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = y1.jpg; sourceTree = "<group>"; };
@@ -2815,6 +2817,7 @@
 		04E7C1381F2C392B00D03A79 /* shouye */ = {
 			isa = PBXGroup;
 			children = (
+				157EFFF81F5C0EDD00CCDA60 /* placeholderImage.png */,
 				04E7C1391F2C392B00D03A79 /* banner1.jpg */,
 				04E7C13A1F2C392B00D03A79 /* cell-phone_03@2x.png */,
 				04E7C13B1F2C392B00D03A79 /* cell-phone_03@3x.png */,
@@ -5013,6 +5016,7 @@
 				04E7C3A01F2C392B00D03A79 /* QQ-@3x.png in Resources */,
 				04E7C4E01F2C392C00D03A79 /* kexuankuangs@3x.png in Resources */,
 				04E7C2AF1F2C392B00D03A79 /* quxiao_03@2x.png in Resources */,
+				157EFFF91F5C0EDD00CCDA60 /* placeholderImage.png in Resources */,
 				04E7C33F1F2C392B00D03A79 /* zhaopian1@2x.png in Resources */,
 				04E7C4AC1F2C392C00D03A79 /* yuyuekuang@3x.png in Resources */,
 				04E7C4421F2C392B00D03A79 /* xiangmubj_03@2x.png in Resources */,

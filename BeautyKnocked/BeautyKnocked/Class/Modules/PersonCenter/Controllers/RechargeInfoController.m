@@ -230,8 +230,9 @@
         [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czzslb Success:^(id json) {
             self.itemModel=[RechargeItemModel mj_objectWithKeyValues:json[@"info"]];
             [_tableview reloadData];
-        } Failure:nil andNavigation:Wself.navigationController];
-        [_tableview reloadData];
+        } Failure:^(NSError *error) {
+            [_tableview reloadData];
+        } andNavigation:Wself.navigationController];
     } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {

@@ -10,21 +10,15 @@
 #import "NewPersonView.h"
 #import "RecommendBeautyView.h"
 #import "ItemTitleView.h"
+#import "BeauticianModel.h"
 
 @interface FeaturedRecommendationsView ()
-
 @property (nonatomic, strong) ItemTitleView *titleView;
-
 @property (nonatomic, strong) NewPersonView *lotteryView;
-
 @property (nonatomic, strong) NewPersonView *productMallView;
-
 @property (nonatomic, strong) RecommendBeautyView *goldBeautyView;
-
 @property (nonatomic, strong) UIView *line;
-
 @property (nonatomic, strong) UIView *line1;
-
 @property (nonatomic, strong) UIView *line2;
 
 @end
@@ -39,13 +33,22 @@
     }
     return self;
 }
-
+-(void)setModel:(BeauticianModel *)model{
+    _model=model;
+    _goldBeautyView.model=model;
+}
 -(void)createInterface {
     _titleView = [[ItemTitleView alloc] init];
     _titleView.titleName = @"精选推荐";
     _titleView.leftImageName = @"tuijian_03";
     _titleView.titleFont = [UIFont systemFontOfSize:Font_Size(38)];
     [self addSubview:_titleView];
+    
+    _goldBeautyView = [[RecommendBeautyView alloc] init];
+    [[_goldBeautyView.button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [_subTag sendNext:@"0"];
+    }];
+    [self addSubview:_goldBeautyView];
     
     _lotteryView = [[NewPersonView alloc] init];
     _lotteryView.titleFont = [UIFont systemFontOfSize:Font_Size(38)];
@@ -54,8 +57,9 @@
     _lotteryView.descr = @"即领即用,领券更实惠";
     _lotteryView.image = [UIImage imageNamed:@"xinrenlingquan_03"];
     _lotteryView.imageSize = CGSizeMake(Width_Pt(175), Height_Pt(117));
-    [_lotteryView.button addTarget:self action:@selector(button:) forControlEvents:UIControlEventTouchUpInside];
-    [_lotteryView.button setTag:1];
+    [[_lotteryView.button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [_subTag sendNext:@"1"];
+    }];
     [self addSubview:_lotteryView];
     
     _productMallView = [[NewPersonView alloc] init];
@@ -65,12 +69,10 @@
     _productMallView.descr = @"大牌尖货通通等你来抢";
     _productMallView.image = [UIImage imageNamed:@"chanpinshangcheng_03"];
     _productMallView.imageSize = CGSizeMake(Width_Pt(123), Height_Pt(140));
-    [_productMallView.button addTarget:self action:@selector(button:) forControlEvents:UIControlEventTouchUpInside];
-    [_productMallView.button setTag:2];
+    [[_productMallView.button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [_subTag sendNext:@"2"];
+    }];
     [self addSubview:_productMallView];
-    
-    _goldBeautyView = [[RecommendBeautyView alloc] init];
-    [self addSubview:_goldBeautyView];
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = [UIColor lightGrayColor];
@@ -83,9 +85,6 @@
     _line2 = [[UIView alloc] init];
     _line2.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:_line2];
-}
--(void)button:(UIButton*)button{
-    [_viewDelegate buttonMore:button];
 }
 -(void)configureConstraints {
     [_titleView mas_makeConstraints:^(MASConstraintMaker *make) {

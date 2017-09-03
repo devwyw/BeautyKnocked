@@ -8,19 +8,15 @@
 
 #import "RecommendBeautyView.h"
 #import "StarView.h"
+#import "BeauticianModel.h"
 
 @interface RecommendBeautyView ()
 
 @property (nonatomic, strong) UILabel *textLabel;
-
 @property (nonatomic, strong) UIImageView *flowerBasketsImgView;
-
 @property (nonatomic, strong) UIImageView *beautyImgView;
-
 @property (nonatomic, strong) UIImageView *optimalImgView;
-
 @property (nonatomic, strong) StarView *starRateview;
-
 @end
 
 @implementation RecommendBeautyView
@@ -33,8 +29,14 @@
     }
     return self;
 }
+-(void)setModel:(BeauticianModel *)model{
+    _model=model;
+    [Master GetWebImage:_beautyImgView withUrl:model.headPath];
+    if (!isStringEmpty(model.score)) {
+        _starRateview.starCount=[model.score integerValue];
+    }
+}
 -(void)createInterface {
-    
     _textLabel = [[UILabel alloc] init];
     _textLabel.text = @"推荐技师";
     _textLabel.font = [UIFont systemFontOfSize:Font_Size(38)];
@@ -45,7 +47,7 @@
     [self addSubview:_flowerBasketsImgView];
     
     _beautyImgView = [[UIImageView alloc] init];
-    [_beautyImgView setImage:[UIImage imageNamed:@"meirongshi_03"]];
+    [_beautyImgView makeCornerRadius:Width_Pt(175)/2];
     [_flowerBasketsImgView addSubview:_beautyImgView];
     
     _optimalImgView = [[UIImageView alloc] init];
@@ -53,10 +55,12 @@
     [_flowerBasketsImgView addSubview:_optimalImgView];
     
     _starRateview = [StarView evaluationViewWithChooseStarBlock:nil];
-    _starRateview.starCount=5;
     _starRateview.spacing=0.1;
     _starRateview.tapEnabled=NO;
     [self addSubview:_starRateview];
+    
+    _button=[[UIButton alloc]init];
+    [self addSubview:_button];
 }
 -(void)configureConstraints {
     [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -72,9 +76,9 @@
     }];
     
     [_beautyImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_flowerBasketsImgView).with.offset(Height_Pt(34));
-        make.centerX.equalTo(_flowerBasketsImgView);
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(178), Height_Pt(176)));
+        make.top.equalTo(_flowerBasketsImgView).with.offset(Height_Pt(33.5));
+        make.centerX.equalTo(_flowerBasketsImgView).offset(-2.2);
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(175), Height_Pt(175)));
     }];
     
     [_optimalImgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -88,6 +92,10 @@
         make.top.equalTo(_flowerBasketsImgView.mas_bottom);
         make.bottom.equalTo(self.mas_bottom);
         make.width.mas_equalTo(Width_Pt(200));
+    }];
+    
+    [_button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
     }];
 }
 

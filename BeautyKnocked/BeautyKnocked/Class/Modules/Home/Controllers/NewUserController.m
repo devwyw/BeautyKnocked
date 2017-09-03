@@ -7,34 +7,30 @@
 //
 
 #import "NewUserController.h"
+#import "CouponController.h"
 
 @interface NewUserController ()
-
+@property (nonatomic,strong) UIButton * item;
+@property (nonatomic,strong) UIButton * preson;
+@property (nonatomic,assign) BOOL isType;
 @end
 
 @implementation NewUserController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    {
-        UIButton *item = [[UIButton alloc]initWithFrame:CGRectMake(Width-Width_Pt(80)-15, 22-Height_Pt(80)/2, Width_Pt(80), Height_Pt(80))];
-        [item setTag:105];
-        [item setImage:[UIImage imageNamed:@"fenxiang-bai"] forState:UIControlStateNormal];
-        [item setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateHighlighted];
-        [item addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
-        [self.navigationController.navigationBar addSubview:item];
-    }
+    _item = [[UIButton alloc]initWithFrame:CGRectMake(Width-Width_Pt(80)-15, 22-Height_Pt(80)/2, Width_Pt(80), Height_Pt(80))];
+    [_item setImage:[UIImage imageNamed:@"fenxiang-bai"] forState:UIControlStateNormal];
+    [_item setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateHighlighted];
+    [_item addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:_item];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    {
-        UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:105];
-        [item removeFromSuperview];
-    }
+    [_item removeFromSuperview];
 }
 -(void)share:(UIButton*)button{
     NSLog(@"分享");
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"新人领券"];
@@ -47,18 +43,26 @@
     [image setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:image];
     
-    UIButton *button=[[UIButton alloc]init];
-    [button setImage:[UIImage imageNamed:@"lijilingqu"] forState:UIControlStateNormal];
-    [[button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-        [button setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
+    _preson=[[UIButton alloc]init];
+    [_preson setImage:[UIImage imageNamed:@"lijilingqu"] forState:UIControlStateNormal];
+    Weakify(self);
+    [[_preson rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if (!_isType) {
+            [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:lxrq Success:^(id json) {
+                _isType=YES;
+                [_preson setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
+            } Failure:nil andNavigation:Wself.navigationController];
+        }else{
+            CouponController *controler=[[CouponController alloc]init];
+            [Wself.navigationController pushViewController:controler animated:YES];
+        }
     }];
+    [self.view addSubview:_preson];
     
-    [self.view addSubview:button];
-    
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_preson mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.bottom.equalTo(self.view.mas_bottom).offset(-Height_Pt(140));
-        make.width.height.mas_equalTo(CGSizeMake(Width_Pt(920),Height_Pt(200)));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(920),Height_Pt(200)));
     }];
 }
 - (void)didReceiveMemoryWarning {

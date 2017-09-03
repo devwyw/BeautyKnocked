@@ -70,20 +70,17 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 }
 -(void)createViews {
     self.userCenterViewModel.navigationController = self.navigationController;
-    self.tableView = ({
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.tableView.backgroundColor=[UIColor clearColor];
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
-        self.tableView.showsVerticalScrollIndicator = NO;
-        self.tableView.bounces=NO;
-        [self.view addSubview:self.tableView];
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(-20, 0, 0, 0));
-        }];
-        self.tableView;
-    });
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor=[UIColor clearColor];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.bounces=NO;
+    [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(-20, 0, 0, 0));
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

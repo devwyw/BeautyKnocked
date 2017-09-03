@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol FeaturedRecommenDelegate <NSObject>
-
--(void)buttonMore:(UIButton *)button;
-
-@end
+@class BeauticianModel;
+@class RACSubject;
 
 @interface FeaturedRecommendationsView : UIView
-@property (nonatomic,strong) id<FeaturedRecommenDelegate> viewDelegate;
+@property (nonatomic,strong) RACSubject * subTag;
+@property (nonatomic,strong) BeauticianModel * model;
 @end

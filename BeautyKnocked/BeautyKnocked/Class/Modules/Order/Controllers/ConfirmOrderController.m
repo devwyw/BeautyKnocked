@@ -183,7 +183,6 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                 if (indexPath.row==0) {
                     /** 选择技师 */
                     cell.title = self.titles[indexPath.section][indexPath.row];
-                    
                     NSString *beauticianId=nil;
                     if (_orderStyle==MLItem) {
                         beauticianId=self.detailOrderModel.beauticianId;
@@ -193,7 +192,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                             cell.content=[NSString stringWithFormat:@"%@号技师",beauticianId];
                         }
                     }else{
-                        beauticianId=self.packageOrderModel.beauticianId;
+                        beauticianId=self.productOrderModel.beauticianId;
                         if ([beauticianId integerValue]==0) {
                             cell.content=@"默认随机";
                         }else{

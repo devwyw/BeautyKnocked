@@ -7,20 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BeauticianModel.h"
 
 @interface HomePageViewModel : NSObject
 
-
 @property (nonatomic,strong) UINavigationController *navigationController;
 @property (nonatomic,strong) NSMutableArray * imageArray;
+@property (nonatomic,strong) BeauticianModel * beauticianmodel;
 
 -(NSUInteger)numberOfSectionsInHomePageTableView;
 
 -(NSUInteger)numberOfRowsInHomePageTableViewAtSection:(NSUInteger)section;
 
 -(UITableViewCell *)configureTableView:(UITableView *)tableView AtIndexPath:(NSIndexPath *)indexPath andObject:(id)Cself;
-
-//-(UIView *)configureFooterViewInSection:(NSUInteger)section;
 
 -(CGFloat)configureHeaderHeightAtSection:(NSUInteger )section;
 
