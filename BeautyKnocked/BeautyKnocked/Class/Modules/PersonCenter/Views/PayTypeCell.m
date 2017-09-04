@@ -47,6 +47,7 @@
 -(void)initializeViews {
     _selectImage= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan"] highlightedImage:[UIImage imageNamed:@"gouxuan"]];
     self.accessoryView =_selectImage;
+    [self.accessoryView setFrame:CGRectMake(0, 0, Width_Pt(60), Height_Pt(60))];
     
     _payImage=[[UIImageView alloc]init];
     [_payImage setContentMode:UIViewContentModeScaleAspectFit];

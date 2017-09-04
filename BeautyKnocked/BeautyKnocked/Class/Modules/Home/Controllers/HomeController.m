@@ -124,6 +124,7 @@
         _tableView.showsVerticalScrollIndicator=NO;
         _tableView.estimatedRowHeight = 100;
         _tableView.rowHeight = UITableViewAutomaticDimension;
+        [self.homePageViewModel registerClassWith:_tableView];
         _tableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadHttpImageData)];
         [_tableView.mj_header beginRefreshing];
     }
@@ -150,19 +151,33 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.homePageViewModel tableviewWithDidSelected:indexPath];
+}
 -(void)loadHttpImageData{
     Weakify(self);
     [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
         [_homePageViewModel.imageArray removeAllObjects];
         _homePageViewModel.imageArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
-        [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:tjmrs Success:^(id json) {
-            _homePageViewModel.beauticianmodel=[BeauticianModel mj_objectWithKeyValues:json[@"info"]];
-            [_tableView.mj_header endRefreshing];
-            [_tableView reloadData];
-        } Failure:^(NSError *error) {
-            [_tableView.mj_header endRefreshing];
-            [_tableView reloadData];
-        } andNavigation:Wself.navigationController];
+        [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        
+        [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:mldt Success:^(id json) {
+            [_homePageViewModel.dataArray removeAllObjects];
+            _homePageViewModel.dataArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+            
+            [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:tjmrs Success:^(id json) {
+                _homePageViewModel.beauticianmodel=[BeauticianModel mj_objectWithKeyValues:json[@"info"]];
+                [_tableView reloadSections:[NSIndexSet indexSetWithIndex:4] withRowAnimation:UITableViewRowAnimationNone];
+                
+                [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:gyxm Success:^(id json) {
+                    [_homePageViewModel.itemArray removeAllObjects];
+                    _homePageViewModel.itemArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+                    [_tableView.mj_header endRefreshing];
+                    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:9] withRowAnimation:UITableViewRowAnimationNone];
+                } Failure:nil andNavigation:Wself.navigationController];
+            } Failure:nil andNavigation:Wself.navigationController];
+        } Failure:nil andNavigation:Wself.navigationController];
     } Failure:nil andNavigation:self.navigationController];
 }
 @end

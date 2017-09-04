@@ -14,12 +14,11 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 
 @interface HomePageMuduleCell ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIView *line;
-@property (nonatomic, strong) UIButton *moreBtn;
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, assign) NSInteger section;
-@property (nonatomic, strong) NSMutableArray * itemArray;
+@property (nonatomic,strong) UILabel *titleLabel;
+@property (nonatomic,strong) UIView *line;
+@property (nonatomic,strong) UIButton *moreBtn;
+@property (nonatomic,strong) UICollectionView *collectionView;
+@property (nonatomic,strong) NSMutableArray * itemArray;
 
 @end
 
@@ -36,22 +35,19 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     }
     return _itemArray;
 }
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andSection:(NSInteger)section{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.section=section;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupInterface];
         [self setupConstraints];
-        [self loadHttpData];
     }
     return self;
 }
-
--(void)setupInterface {
-    _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
-    switch (_section) {
+-(void)setSection:(NSString *)section{
+    _section=section;
+    switch ([section integerValue]) {
         case 5:
             _titleLabel.text = @"每日推荐";
             break;
@@ -64,6 +60,11 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
         default:
             break;
     }
+    [self loadHttpDataWithSection:section];
+}
+-(void)setupInterface {
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [self.contentView addSubview:_titleLabel];
     
     _line = [[UIView alloc] init];
@@ -74,8 +75,9 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     _moreBtn.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [_moreBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_moreBtn setTitle:@"更多" forState:UIControlStateNormal];
-    [_moreBtn setTag:_section];
-    [_moreBtn addTarget:self action:@selector(moreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [[_moreBtn rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [_subPush sendNext:_section];
+    }];
     [self.contentView addSubview:_moreBtn];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -87,10 +89,6 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     _collectionView.backgroundColor = [UIColor whiteColor];
     [_collectionView registerClass:[HomePageItemCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [self.contentView addSubview:_collectionView];
-}
-//更多
--(void)moreBtn:(UIButton*)button{
-    [_cellDelegate more:button];
 }
 -(void)setupConstraints {
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -116,7 +114,6 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     [_collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_titleLabel.mas_bottom).with.offset(Height_Pt(20));
         make.left.and.right.equalTo(self.contentView);
-        //make.height.mas_equalTo(Height_Pt(447));
         make.bottom.equalTo(self.contentView);
     }];
 }
@@ -132,7 +129,7 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     ItemClassModel * model=[[ItemClassModel alloc]init];
     model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
-    [self.cellDelegate didSection:_section withSelectedItem:model.id];
+    [_subTypeModel sendNext:@{@"section":_section,@"row":model.id}];
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake((Width - Width_Pt(52)*2 -Width_Pt(42) * 2) / 3, Height_Pt(442));
@@ -146,14 +143,12 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, Width_Pt(42), 0, Width_Pt(42));
 }
--(void)loadHttpData{
-    [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",_section-4]} url:mlqqm serviceCode:tjxmlb Success:^(id json) {
-        [self.itemArray removeAllObjects];
-        for (NSDictionary *dict in json[@"info"]) {
-            [self.itemArray addObject:dict];
-        }
-        [_collectionView reloadData];
-    } Failure:nil andNavigation:nil];
+-(void)loadHttpDataWithSection:(NSString*)section{
+    if (_itemArray.count==0) {
+        [Master HttpPostRequestByParams:@{@"type":[NSString stringWithFormat:@"%ld",[section integerValue]-4]} url:mlqqm serviceCode:tjxmlb Success:^(id json) {
+            _itemArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+            [_collectionView reloadData];
+        } Failure:nil andNavigation:nil];
+    }
 }
-
 @end

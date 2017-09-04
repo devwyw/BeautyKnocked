@@ -12,6 +12,7 @@
 #import "BeauticianController.h"
 #import "RechargePayModel.h"
 #import "AppDelegate+Alipay.h"
+#import "AppDelegate+WXApi.h"
 #import "RechargeItemModel.h"
 #import "RechargeItemCell.h"
 
@@ -71,13 +72,26 @@
     [_payDone setBackgroundColor:[UIColor colorWithHexString:@"#67D75A"]];
     Weakify(self);
     [[_payDone rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-        if ([_model.payType integerValue]==0) {
+        if ([_itemModel.choose integerValue]>0){
+            [Master showSVProgressHUD:@"请选择选择赠品" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+        }else if ([_model.payType integerValue]==0) {
             [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
         }else{
+            _model.rules=nil;
+            for (NSDictionary *dict in _itemModel.list) {
+                RechargeItemInfoModel *model=[RechargeItemInfoModel mj_objectWithKeyValues:dict];
+                if (model.isSelected) {
+                    if (!isStringEmpty(_model.rules)) {
+                        _model.rules=[NSString stringWithFormat:@"%@,%@",_model.rules,model.id];
+                    }else{
+                        _model.rules=[NSString stringWithFormat:@"%@",model.id];
+                    }
+                }
+            }
             NSLog(@"%@",_model.mj_keyValues);
             [Master HttpPostRequestByParams:_model.mj_keyValues url:mlqqm serviceCode:czdd Success:^(id json) {
                 if ([_model.payType integerValue]==1) {
-                    
+                    [AppDelegate WXPayWithPrepayId:json[@"info"]];
                 }else{
                     [AppDelegate AliPayWithPayOrder:json[@"info"]];
                 }
@@ -203,7 +217,21 @@
             break;
             case 2:
         {
-            
+            if (indexPath.row!=0) {
+                RechargeItemInfoModel *model=[RechargeItemInfoModel mj_objectWithKeyValues:self.itemModel.list[indexPath.row-1]];
+                if (!model.isSelected) {
+                    if ([_itemModel.choose integerValue]==0)break;
+                    model.isSelected=!model.isSelected;
+                    _itemModel.choose=[NSString stringWithFormat:@"%ld",[_itemModel.choose integerValue]-1];
+                    [_itemModel.list replaceObjectAtIndex:indexPath.row-1 withObject:model.mj_keyValues];
+                    [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                }else{
+                    model.isSelected=!model.isSelected;
+                    _itemModel.choose=[NSString stringWithFormat:@"%ld",[_itemModel.choose integerValue]+1];
+                    [_itemModel.list replaceObjectAtIndex:indexPath.row-1 withObject:model.mj_keyValues];
+                    [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                }
+            }
         }
             break;
         case 3:
@@ -226,12 +254,13 @@
     
     Weakify(self);
     [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czxq Success:^(id json) {
-        self.rechargeModel=[RechargeModel mj_objectWithKeyValues:json[@"info"]];
-        [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czzslb Success:^(id json) {
-            self.itemModel=[RechargeItemModel mj_objectWithKeyValues:json[@"info"]];
-            [_tableview reloadData];
+        Wself.rechargeModel=[RechargeModel mj_objectWithKeyValues:json[@"info"]];
+        [_tableview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        [Master HttpPostRequestByParams:@{@"rId":_model.rechargeId} url:mlqqm serviceCode:czzslb Success:^(id json) {
+            Wself.itemModel=[RechargeItemModel mj_objectWithKeyValues:json[@"info"]];
+            [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
         } Failure:^(NSError *error) {
-            [_tableview reloadData];
+            [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
         } andNavigation:Wself.navigationController];
     } Failure:nil andNavigation:self.navigationController];
 }

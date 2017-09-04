@@ -27,6 +27,7 @@
     return self;
 }
 -(void)setModel:(RechargeItemInfoModel *)model{
+    _model=model;
     _name.text=model.name;
     _num.text=[NSString stringWithFormat:@"x%@",model.num];
     _image.highlighted=model.isSelected;
@@ -34,6 +35,7 @@
 -(void)setMyViews{
     _image= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"weigouxuan2"] highlightedImage:[UIImage imageNamed:@"gouxuanh"]];
     self.accessoryView =_image;
+    [self.accessoryView setFrame:CGRectMake(0, 0, Width_Pt(60), Height_Pt(60))];
     
     _name=[[UILabel alloc]init];
     _name.font=[UIFont systemFontOfSize:Font_Size(40)];
@@ -45,18 +47,15 @@
 }
 -(void)setMyFrames{
     [_name mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(Height_Pt(20));
+        make.top.equalTo(self.contentView).offset(Height_Pt(40));
         make.left.equalTo(self.contentView).offset(Width_Pt(60));
-        make.bottom.equalTo(self.contentView).offset(-Height_Pt(20));
+        make.bottom.equalTo(self.contentView).offset(-Height_Pt(40));
     }];
     
     [_num mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.contentView);
+        make.center.equalTo(self.contentView);
     }];
 }
-
-
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

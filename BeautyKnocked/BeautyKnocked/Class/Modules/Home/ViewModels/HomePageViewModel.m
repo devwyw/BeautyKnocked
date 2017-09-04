@@ -30,10 +30,11 @@
 #import "BeauticianItemPageController.h"
 
 static NSString *const sectionZeroReuseIdentifier = @"sectionZeroReuseIdentifier";
+
 static NSString *const homePageMuduleCellReuseIdentifier = @"HomePageMuduleCell";
 static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnjoyTableViewCell";
 
-@interface HomePageViewModel ()<SDCycleScrollViewDelegate,MenuItemViewDelegate,HomePageMuduleCellDelegate>
+@interface HomePageViewModel ()<SDCycleScrollViewDelegate,MenuItemViewDelegate>
 
 @property (nonatomic, strong) SDCycleScrollView *sdCycleBannerView;
 @property (nonatomic, strong) BKHotItemsView *hotItemsView;
@@ -53,15 +54,29 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
     return _imageArray;
 }
+-(NSMutableArray*)itemArray{
+    if (!_itemArray) {
+        _itemArray=[[NSMutableArray alloc]init];
+    }
+    return _itemArray;
+}
+-(void)registerClassWith:(UITableView*)tableview{
+    [tableview registerClass:[HomePageMuduleCell class] forCellReuseIdentifier:homePageMuduleCellReuseIdentifier];
+    [tableview registerClass:[HomePageEnjoyTableViewCell class] forCellReuseIdentifier:homePageEnjoyTableViewCellReuseIdentifier];
+}
 -(NSUInteger)numberOfSectionsInHomePageTableView {
-    return 14;
+    return 11;
 }
 -(NSUInteger)numberOfRowsInHomePageTableViewAtSection:(NSUInteger)section {
-    return 1;
+    if (section==9) {
+        return self.itemArray.count;
+    }else{
+        return 1;
+    }
 }
 -(UITableViewCell *)configureTableView:(UITableView *)tableView AtIndexPath:(NSIndexPath *)indexPath andObject:(id)Cself{
     NSUInteger section = indexPath.section;
-    if (section < 5 || section == 8 || section == 13) {
+    if (section < 5 || section == 8 || section == 10) {
         UITableViewCell *cell = nil;
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:sectionZeroReuseIdentifier];
@@ -105,7 +120,7 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
             [self.enjoyTitileView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(cell.contentView);
             }];
-        }else if (section == 13){
+        }else if (section == 10){
             /** 小尾巴 */
             [cell.contentView addSubview:self.endView];
             [self.endView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -116,21 +131,39 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
 
     }else if (section == 5 || section == 6 || section == 7) {
         /** 每日推荐等 */
-        HomePageMuduleCell *cell = [tableView dequeueReusableCellWithIdentifier:homePageMuduleCellReuseIdentifier];
-        if (!cell) {
-            cell = [[HomePageMuduleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homePageMuduleCellReuseIdentifier andSection:section];
-        }
-        [cell setCellDelegate:self];
+        HomePageMuduleCell *cell=[tableView dequeueReusableCellWithIdentifier:homePageMuduleCellReuseIdentifier forIndexPath:indexPath];
+        cell.section=[NSString stringWithFormat:@"%ld",section];
+        cell.subPush=[RACSubject subject];
+        cell.subTypeModel=[RACSubject subject];
+        Weakify(self);
+        [[cell.subPush takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+           [Master setTabBarItem:1 withNavigationController:Wself.navigationController];
+        }];
+        [[cell.subTypeModel takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+            ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
+            itemDetailController.alpha=@"0";
+            itemDetailController.hidesBottomBarWhenPushed = YES;
+            itemDetailController.detailID=x[@"row"];
+            [Wself.navigationController pushViewController:itemDetailController animated:YES];
+        }];
         return cell;
-    }else if (section == 9 || section == 10 || section == 11 || section == 12) {
+    }else if (section == 9) {
         /** 感兴趣的课程等 */
-        HomePageEnjoyTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (!cell) {
-            cell = [[HomePageEnjoyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:homePageEnjoyTableViewCellReuseIdentifier];
-        }
+        HomePageEnjoyTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:homePageEnjoyTableViewCellReuseIdentifier forIndexPath:indexPath];
+        cell.model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
         return cell;
     }
     return nil;
+}
+-(void)tableviewWithDidSelected:(NSIndexPath*)indexPath{
+    if (indexPath.section==9) {
+        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
+        ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
+        itemDetailController.alpha=@"0";
+        itemDetailController.hidesBottomBarWhenPushed = YES;
+        itemDetailController.detailID=model.id;
+        [self.navigationController pushViewController:itemDetailController animated:YES];
+    }
 }
 -(CGFloat)congigureCellheightAtIndexPath:(NSIndexPath *)indexPath {
     NSUInteger section = indexPath.section;
@@ -141,27 +174,36 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }else if (section == 2) {
         return Height_Pt(480);
     }else if (section == 3) {
-        return Height_Pt(132);
+        if (self.dataArray.count==0) {
+            return CGFLOAT_MIN;
+        }else{
+            return Height_Pt(132);
+        }
     }else if (section == 4) {
         return Height_Pt(400);
     }else if (section == 5 || section == 6 || section == 7) {
         return Height_Pt(523);
     }else if (section == 8) {
-        return Height_Pt(102);
-    }else if (section == 9 || section == 10 || section == 11 || section == 12) {
-        return Height_Pt(320);
-    }else if (section == 13) {
+        return Height_Pt(100);
+    }else if (section == 9) {
+        return Height_Pt(340);
+    }else if (section == 10) {
         return Height_Pt(182);
     }
-    
     return CGFLOAT_MIN;
 }
 -(CGFloat)configureHeaderHeightAtSection:(NSUInteger )section {
     return CGFLOAT_MIN;
 }
 -(CGFloat)configureFooterHeightAtSection:(NSUInteger )section {
-    if ( section == 0 || section == 12 || section == 13) {
+    if ( section == 0 || section == 9 || section == 10) {
         return CGFLOAT_MIN;
+    }else if (section == 3){
+        if (self.dataArray.count==0) {
+            return CGFLOAT_MIN;
+        }else{
+            return Height_Pt(12);
+        }
     }else if (section == 8){
         return Height_Pt(5);
     }
@@ -299,25 +341,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         }
     }
 }
-#pragma mark ##### 每日推荐等#####
--(void)didSection:(NSInteger)section withSelectedItem:(NSString*)itemID{
-    if (section==7) {
-        ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
-        productDetailController.alpha=@"0";
-        productDetailController.hidesBottomBarWhenPushed = YES;
-        productDetailController.productID=itemID;
-        [self.navigationController pushViewController:productDetailController animated:YES];
-    }else {
-        ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
-        itemDetailController.alpha=@"0";
-        itemDetailController.hidesBottomBarWhenPushed = YES;
-        itemDetailController.detailID=itemID;
-        [self.navigationController pushViewController:itemDetailController animated:YES];
-    }
-}
--(void)more:(UIButton *)button{
-    [Master setTabBarItem:1 withNavigationController:self.navigationController];
-}
 -(HomePageEndView *)endView {
     if (!_endView) {
         _endView = [[HomePageEndView alloc] init];
@@ -333,6 +356,10 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
 -(void)setBeauticianmodel:(BeauticianModel *)beauticianmodel{
     _beauticianmodel=beauticianmodel;
     _recommendView.model=beauticianmodel;
+}
+-(void)setDataArray:(NSMutableArray *)dataArray{
+    _dataArray=dataArray;
+    _beautyDynamicView.dataArray=[[NSMutableArray alloc]initWithArray:dataArray];
 }
 -(FeaturedRecommendationsView *)recommendView {
     if (!_recommendView) {
@@ -386,7 +413,6 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
     }
     return _enjoyTitileView;
 }
-
 -(BeautifulDynamicView *)beautyDynamicView {
     if (!_beautyDynamicView) {
         _beautyDynamicView = [[BeautifulDynamicView alloc] init];

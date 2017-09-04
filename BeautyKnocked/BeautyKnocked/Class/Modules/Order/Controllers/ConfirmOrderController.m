@@ -463,6 +463,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                             _productOrderModel.clientCouponId=x;
                         }
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                     }];
                     [Wself.navigationController pushViewController:controller animated:YES];
                 } Failure:nil andNavigation:self.navigationController];

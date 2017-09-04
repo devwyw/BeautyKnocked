@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ItemClassModel.h"
 
 @interface HomePageEnjoyTableViewCell : UITableViewCell
-
-
+@property (nonatomic,strong) ItemClassModel * model;
 @end

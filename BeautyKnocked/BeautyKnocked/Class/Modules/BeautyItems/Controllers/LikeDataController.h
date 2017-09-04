@@ -1,13 +1,14 @@
 //
-//  BeautifulDynamicView.h
+//  LikeDataController.h
 //  BeautyKnocked
 //
-//  Created by zhongweiping on 2017/5/22.
+//  Created by Mac on 2017/9/4.
 //  Copyright © 2017年 Dadichushi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface BeautifulDynamicView : UIView
+@interface LikeDataController : UIViewController
+@property (nonatomic,strong) NSString * data;
 @property (nonatomic,strong) NSMutableArray * dataArray;
 @end

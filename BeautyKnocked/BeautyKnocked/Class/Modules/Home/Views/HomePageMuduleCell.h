@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol HomePageMuduleCellDelegate <NSObject>
--(void)more:(UIButton *)button;
--(void)didSection:(NSInteger)section withSelectedItem:(NSString*)itemID;
-@end
+@class RACSubject;
 
 @interface HomePageMuduleCell : UITableViewCell
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andSection:(NSInteger)section;
-@property (nonatomic, strong)id <HomePageMuduleCellDelegate> cellDelegate;
+@property (nonatomic,copy) NSString * section;
+@property (nonatomic,strong) RACSubject * subPush;
+@property (nonatomic,strong) RACSubject * subTypeModel;
 @end

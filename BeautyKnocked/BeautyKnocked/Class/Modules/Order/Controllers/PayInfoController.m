@@ -19,8 +19,7 @@
 @property (nonatomic,strong) UILabel * label3;
 @property (nonatomic,strong) UIButton * btn1;
 @property (nonatomic,strong) UIButton * btn2;
-
-
+@property (nonatomic,strong) UIButton * done;
 @end
 
 @implementation PayInfoController
@@ -41,10 +40,21 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationItem setHidesBackButton:YES animated:NO];
+    
+    _done = [[UIButton alloc]initWithFrame:CGRectMake(Width-50, 2, 40, 40)];
+    [_done setTitle:@"完成" forState:UIControlStateNormal];
+    [_done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_done setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    Weakify(self);
+    [[_done rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Wself.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    [self.navigationController.navigationBar addSubview:_done];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationItem setHidesBackButton:NO animated:NO];
+    [_done removeFromSuperview];
 }
 -(void)initializeViews {
     _image=[[UIImageView alloc]init];
@@ -57,7 +67,6 @@
     _line=[[UIView alloc]init];
     _line.backgroundColor=[UIColor colorWithHexString:@"#E0E0E0"];
     [self.view addSubview:_line];
-    
     
     _label2=[[UILabel alloc]init];
     _label2.font=[UIFont systemFontOfSize:Font_Size(38)];

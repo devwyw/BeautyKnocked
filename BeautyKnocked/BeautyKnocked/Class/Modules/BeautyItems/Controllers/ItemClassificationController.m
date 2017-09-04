@@ -13,6 +13,7 @@
 #import "UIButton+Category.h"
 #import <PYSearchViewController.h>
 #import "UIImage+Original.h"
+#import "LikeDataController.h"
 
 @interface ItemClassificationController () <UIGestureRecognizerDelegate,SDCycleScrollViewDelegate,UITextFieldDelegate,PYSearchViewControllerDelegate>
 
@@ -22,8 +23,8 @@
 @property (nonatomic, strong) SDCycleScrollView *classBannerView;
 @property (nonatomic, strong) UISearchBar * searchBar;
 @property (nonatomic, strong) UIButton * item;
-
 @property (nonatomic, assign) CGFloat viewTop;
+
 @end
 static CGFloat const kWMHeaderViewHeight = 124;
 static CGFloat const kNavigationBarHeight = 64;
@@ -72,14 +73,25 @@ static CGFloat const kNavigationBarHeight = 64;
     iconView.frame = CGRectMake(0, 0, 13 , 13);
     searchField.leftView = iconView;
 }
+-(void)setData:(NSString *)data{
+    _searchBar.text=data;
+}
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)textField{
     [textField resignFirstResponder];
     /** 搜索栏 */
     NSArray *hotSeaches = @[@"美白", @"补水", @"背部", @"清洁", @"化妆水", @"精油", @"按摩", @"养肤系列", @"长效系列", @"水光疗养"];
+    Weakify(self);
     PYSearchViewController *controller = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"关键词" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         _searchBar.text=searchText;
         [searchViewController dismissViewControllerAnimated:YES completion:^{
-            
+            if (!isStringEmpty(searchText)) {
+                [Master HttpPostRequestByParams:@{@"name":searchText} url:mlqqm serviceCode:mhss Success:^(id json) {
+                    LikeDataController *likeController=[[LikeDataController alloc]init];
+                    likeController.dataArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+                    likeController.data=searchText;
+                    [Wself.navigationController pushViewController:likeController animated:YES];
+                } Failure:nil andNavigation:Wself.navigationController];
+            }
         }];
     }];
     {

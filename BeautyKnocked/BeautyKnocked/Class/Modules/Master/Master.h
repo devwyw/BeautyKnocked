@@ -53,7 +53,7 @@
 #define tjcpdd @"/manager/client/bill/productBillManager/addBill"
 #define czzslb @"/manager/client/recharge/rechargeRuleManager/queryByRId"
 #define mhss @"/manager/client/goods/searchManager/queryLike"
-#define tjmrs @"/manager/client/base/beauticianManager/recommen"
+#define tjmrs @"/manager/client/base/beauticianManager/recommend"
 #define lxrq @"/manager/client/coupon/collarCouponManager/newCoupon"
 #define gyxm @"/manager/client/goods/aboutManager/aboutProject"
 #define mldt @"/manager/client/bill/projectBillManager/dynamic"

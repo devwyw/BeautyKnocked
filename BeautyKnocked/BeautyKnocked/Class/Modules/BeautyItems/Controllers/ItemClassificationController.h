@@ -9,5 +9,5 @@
 #import <WMPageController/WMPageController.h>
 
 @interface ItemClassificationController : WMPageController
-
+@property (nonatomic,copy) NSString * data;
 @end
