@@ -7,7 +7,7 @@
 //
 
 #import "LikeDataController.h"
-#import <PYSearchViewController.h>
+#import <PYSearch.h>
 #import "UIImage+Original.h"
 #import "LikeModel.h"
 #import "ItemDetailController.h"

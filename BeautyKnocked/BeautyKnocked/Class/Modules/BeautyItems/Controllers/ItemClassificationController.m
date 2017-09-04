@@ -11,7 +11,7 @@
 #import "WMPanGestureRecognizer.h"
 #import <SDCycleScrollView.h>
 #import "UIButton+Category.h"
-#import <PYSearchViewController.h>
+#import <PYSearch.h>
 #import "UIImage+Original.h"
 #import "LikeDataController.h"
 
