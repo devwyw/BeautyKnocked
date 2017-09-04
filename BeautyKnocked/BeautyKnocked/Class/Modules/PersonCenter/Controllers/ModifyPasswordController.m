@@ -112,9 +112,9 @@
 }
 -(void)getStatusColor:(TextField*)textfield WithStatus:(BOOL)status{
     if (status) {
-        [textfield makeBorderWidth:0.85 withColor:[UIColor colorWithHexString:@"#E1C06C"]];
+        [textfield makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#E1C06C"]];
     }else{
-        [textfield makeBorderWidth:0.85 withColor:[UIColor grayColor]];
+        [textfield makeBorderWidth:0.5 withColor:[UIColor grayColor]];
     }
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{

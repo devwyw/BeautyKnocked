@@ -20,7 +20,7 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 -(instancetype)init {
     self = [super init];
     if (self) {
-        self.userCenterViewModel = [UserCnterViewModel new];
+        _userCenterViewModel = [[UserCnterViewModel alloc]init];
     }
     return self;
 }
