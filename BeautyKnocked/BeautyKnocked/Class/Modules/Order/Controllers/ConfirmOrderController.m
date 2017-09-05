@@ -84,7 +84,11 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
 }
 -(NSArray *)titles {
     if (!_titles) {
-        _titles = @[@[@""],@[@"选择技师:",@"预约时间:",@"配送方式:"],@[@"选择优惠券:",@"备注:"]];
+        _titles = @[@[@""],@[@"选择技师:",@"预约时间:",@"配送方式:"],@[@"选择优惠券:",@"备注:"],@[
+  @{@"name":@"支付方式",@"image":@"yu-e"},
+  @{@"name":@"余额支付",@"image":@"yu-e"},
+  @{@"name":@"微信支付",@"image":@"weixin"},
+  @{@"name":@"支付宝支付",@"image":@"zhifubao"}]];
     }
     return _titles;
 }
@@ -101,7 +105,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     if (_orderStyle==MLPackage) {
         return 2;
     }else{
-        return self.titles.count+1;
+        return self.titles.count;
     }
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -109,27 +113,15 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         if (section==0) {
             return self.addArray.count+2;
         }else{
-            return 3;
+            NSArray *arrayCounts=[[NSArray alloc]initWithArray:self.titles[3]];
+            return arrayCounts.count;
         }
     }else{
         if (section == 1) {
             return self.addArray.count+3;
         }else{
-            /**
-             @{@"name":@"余额支付",@"image":@"yu-e"},
-             @{@"name":@"微信支付",@"image":@"weixin"},
-             @{@"name":@"支付宝支付",@"image":@"zhifubao"}
-             */
-            if (section==3) {
-                if (_orderStyle==MLItem) {
-                    return 3;
-                }else{
-                    return 4;
-                }
-            }else{
-                NSArray *arrayCounts=[[NSArray alloc]initWithArray:self.titles[section]];
-                return arrayCounts.count;
-            }
+            NSArray *arrayCounts=[[NSArray alloc]initWithArray:self.titles[section]];
+            return arrayCounts.count;
         }
     }
 }
@@ -204,8 +196,11 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     return cell;
                 }else{
                     PayTypeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayTypeCell" forIndexPath:indexPath];
+                    cell.isNode=indexPath.row==1 ? YES:NO;
                     cell.model=self.titles[indexPath.section+2][indexPath.row];
-                    cell.isSelected=[_packageOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                    if (indexPath.row>1) {
+                        cell.isSelected=[_packageOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                    }
                     return cell;
                 }
             }else{
@@ -341,7 +336,10 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                 if (_orderStyle==MLItem) {
                     cell.isSelected=[_detailOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
                 }else{
-                    cell.isSelected=[_productOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                    cell.isNode=indexPath.row==1 ? YES:NO;
+                    if (indexPath.row>1) {
+                        cell.isSelected=[_productOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                    }
                 }
                 return cell;
             }
@@ -439,7 +437,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         {
             if (_orderStyle==MLPackage) {
                 /** 支付方式 */
-                if (indexPath.row!=0) {
+                if (indexPath.row>1) {
                     _packageOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
                     [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
                 }
@@ -508,16 +506,19 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             break;
         case 3:
         {
-            if (indexPath.row!=0) {
-                /** 支付方式 */
-                if (_orderStyle==MLItem) {
-                    _detailOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
-                    [tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
-                }else{
-                    _productOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
-                    [tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+            /** 支付方式 */
+            if (_orderStyle==MLItem) {
+                _detailOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
+                [tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+            }else{
+                if (indexPath.row!=0) {
+                    if (indexPath.row>1) {
+                        _productOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
+                        [tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+                    }
                 }
             }
+            
         }
             break;
         default:
@@ -577,6 +578,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             _submitOrderView.totalPrice=self.productModel.price;
             break;
     }
+    /** 提交订单 */
     Weakify(self);
     [_submitOrderView.payInfo subscribeNext:^(id  _Nullable x) {
         switch (_orderStyle) {
@@ -647,7 +649,6 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             self.packageOrderModel.ip=ip;
             _packageOrderModel.clientId=clientId;
             _packageOrderModel.beauticianId=@"0";
-            _packageOrderModel.payType=@"0";
             _packageOrderModel.packageIds=self.packageInfoModel.id;
             [self.addArray addObject:_packageInfoModel.mj_keyValues];
             break;
@@ -667,7 +668,6 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             _productOrderModel.beauticianId=@"0";
             _productOrderModel.clientCouponId=@"0";
             _productOrderModel.expressMode=@"0";
-            _productOrderModel.payType=@"0";
             _productOrderModel.productIds=self.productModel.id;
             [self.addArray addObject:_productModel.mj_keyValues];
             break;

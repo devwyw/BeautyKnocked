@@ -99,11 +99,7 @@
         switch ([_isPayType integerValue]) {
             case 0:
             {
-                [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
-                    [Master showSVProgressHUD:@"余额支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-                        [Wself payPushController:nil WithPayType:nil];
-                    }];
-                } Failure:nil andNavigation:self.navigationController];
+                [Wself success];
             }
                 break;
             case 1:

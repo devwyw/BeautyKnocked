@@ -151,14 +151,14 @@
     }else{
         /** 立即支付 */
         switch ([_isPayType integerValue]) {
-            case 0:
-                
-                break;
             case 1:
                 [AppDelegate WXPayWithPrepayId:_model.orderStr];
                 break;
-            default:
+            case 2:
                 [AppDelegate AliPayWithPayOrder:_model.orderStr];
+                break;
+            default:
+                [Master showSVProgressHUD:@"本次交易有误，请重新购买" withType:ShowSVProgressTypeError withShowBlock:nil];
                 break;
         }
     }

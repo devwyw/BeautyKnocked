@@ -33,13 +33,7 @@
     NSMutableArray *addArray=[[NSMutableArray alloc]init];
     for (NSDictionary *dict in dataArray) {
         DynamicModel *model=[DynamicModel mj_objectWithKeyValues:dict];
-        
-        
-        
-        
-        
-       
-        NSString *addString=[NSString stringWithFormat:@"用户%@ %@分钟前 预约了%@",[model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"],model.minue,model.name];
+        NSString *addString=[NSString stringWithFormat:@"用户%@ 在%@前 预约了%@",[model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"],[self getCountDownStringWithEndTime:model.minue],model.name];
         [addArray addObject:addString];
     }
     if (addArray.count!=0) {
@@ -49,16 +43,31 @@
     }
 }
 -(NSString *)getCountDownStringWithEndTime:(NSString *)endTime {
-    NSDate *now = [NSDate date];
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];//设置时区
-    NSInteger interval = [zone secondsFromGMTForDate: now];
-    NSDate *localDate = [now dateByAddingTimeInterval: interval];
-    
-    
+    NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
+    dateFomatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    //当前时间
+    NSDate *nowDate = [NSDate date];
+    //结束时间
     NSTimeInterval endInterval=[[endTime substringToIndex:10] doubleValue];
-    
-
-    return nil;
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:endInterval];
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:endDate toDate:nowDate options:0];
+    NSString *time=nil;
+    if (dateCom.second<60) {
+        time=[NSString stringWithFormat:@"%ld秒",dateCom.second];
+    }else if (dateCom.minute<60){
+        time=[NSString stringWithFormat:@"%ld分钟%ld",dateCom.minute,dateCom.second];
+    }else if (dateCom.hour<24){
+        time=[NSString stringWithFormat:@"%ld小时%ld分钟%ld",dateCom.hour,dateCom.minute,dateCom.second];
+    }else{
+        time=@"一天";
+    }
+    return time;
 }
 -(void)createViews {
     _imgView = [[UIImageView alloc] init];

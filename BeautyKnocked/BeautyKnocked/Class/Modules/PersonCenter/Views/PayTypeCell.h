@@ -10,5 +10,6 @@
 
 @interface PayTypeCell : UITableViewCell
 @property (nonatomic,strong) NSDictionary * model;
+@property (nonatomic,assign) BOOL isNode;
 @property (nonatomic,assign) BOOL isSelected;
 @end

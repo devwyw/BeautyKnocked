@@ -12,12 +12,22 @@
 @property (nonatomic,strong) UIImageView * selectImage;
 @property (nonatomic,strong) UIImageView * payImage;
 @property (nonatomic,strong) UILabel * payType;
+@property (nonatomic,strong) UILabel * node;
 @end
 
 @implementation PayTypeCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+}
+-(void)setIsNode:(BOOL)isNode{
+    if (isNode) {
+        _payType.textColor=[UIColor lightGrayColor];
+        _node.hidden=NO;
+    }else{
+        _payType.textColor=[UIColor blackColor];
+        _node.hidden=YES;
+    }
 }
 -(void)setIsSelected:(BOOL)isSelected{
     _selectImage.highlighted=isSelected;
@@ -47,6 +57,13 @@
     _payType=[[UILabel alloc]init];
     _payType.font=[UIFont systemFontOfSize:Font_Size(40)];
     [self.contentView addSubview:_payType];
+    
+    _node=[[UILabel alloc]init];
+    _node.text=@"(*本次交易不支持)";
+    _node.textColor=[UIColor lightGrayColor];
+    _node.font=[UIFont systemFontOfSize:Font_Size(40)];
+    _node.hidden=YES;
+    [self.contentView addSubview:_node];
 }
 -(void)addConstraints {
     [_payImage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,6 +75,10 @@
     [_payType mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_payImage);
         make.left.equalTo(_payImage.mas_right).offset(Width_Pt(65));
+    }];
+    [_node mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_payType);
+        make.left.equalTo(_payType.mas_right).offset(Width_Pt(20));
     }];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

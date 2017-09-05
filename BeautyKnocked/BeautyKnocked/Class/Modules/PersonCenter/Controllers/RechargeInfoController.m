@@ -15,6 +15,8 @@
 #import "AppDelegate+WXApi.h"
 #import "RechargeItemModel.h"
 #import "RechargeItemCell.h"
+#import <AFNetworking.h>
+#import <SVProgressHUD.h>
 
 @interface RechargeInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
@@ -173,7 +175,7 @@
             }else{
                 PayTypeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayTypeCell" forIndexPath:indexPath];
                 NSArray *array=[[NSArray alloc]initWithObjects:@{@"name":@"微信支付",@"image":@"weixin"},@{@"name":@"支付宝支付",@"image":@"zhifubao"},nil];
-                cell.model=array[indexPath.row];
+                cell.model=array[indexPath.row-1];
                 if ([self.model.payType integerValue]==indexPath.row) {
                     cell.isSelected=YES;
                 }else{
@@ -252,18 +254,45 @@
     self.model.beauticianId=@"0";
     self.model.payType=@"0";
     self.model.rechargeId=_Cid;
-    
-    Weakify(self);
-    [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czxq Success:^(id json) {
-        Wself.rechargeModel=[RechargeModel mj_objectWithKeyValues:json[@"info"]];
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    {/** 菊花 */
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD setMinimumDismissTimeInterval:3];
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 20;
+    manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
+    /** 第一次请求 */
+    [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,czxq] parameters:@{@"id":_model.rechargeId} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSData *data = responseObject;
+        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        _rechargeModel=[RechargeModel mj_objectWithKeyValues:resultDic[@"info"]];
         [_tableview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        [Master HttpPostRequestByParams:@{@"rId":_model.rechargeId} url:mlqqm serviceCode:czzslb Success:^(id json) {
-            Wself.itemModel=[RechargeItemModel mj_objectWithKeyValues:json[@"info"]];
+        /** 第二次请求 */
+        [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,czzslb] parameters:@{@"rId":_model.rechargeId} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
+            [SVProgressHUD dismiss];
+            NSData *data = responseObject;
+            NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            _itemModel=[RechargeItemModel mj_objectWithKeyValues:resultDic[@"info"]];
             [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-        } Failure:^(NSError *error) {
-            [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-        } andNavigation:Wself.navigationController];
-    } Failure:nil andNavigation:self.navigationController];
+        }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
+            [SVProgressHUD dismiss];
+            NSLog(@"网络请求错误: %@",error);
+            [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
+        }];
+    }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
+        [SVProgressHUD dismiss];
+        NSLog(@"网络请求错误: %@",error);
+        [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
