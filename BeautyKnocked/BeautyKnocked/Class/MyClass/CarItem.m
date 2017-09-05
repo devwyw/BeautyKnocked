@@ -28,7 +28,7 @@
         [_carCount setFont:[UIFont systemFontOfSize:10]];
         [_carCount setTextAlignment:NSTextAlignmentCenter];
         [_carCount setTextColor:[UIColor whiteColor]];
-        [_carCount setBackgroundColor:[UIColor blackColor]];
+        [_carCount setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"heiquan_03"]]];
         [_carCount.layer setCornerRadius:11];
         [_carCount.layer setMasksToBounds:YES];
         [_carAction addSubview:_carCount];

@@ -12,7 +12,6 @@
 @interface AddAndReserveView ()
 
 @property (nonatomic, strong) UIButton *addShoppingCart;
-
 @property (nonatomic, strong) UIButton *appointNow;
 
 @end
@@ -26,45 +25,66 @@
     // Drawing code
 }
 */
-
+-(void)setType:(NSString *)type{
+    switch ([type integerValue]) {
+        case 0:
+        {
+            [_appointNow setTitle:@"立即预约" forState:UIControlStateNormal];
+            [_appointNow makeCornerRadius:8];
+            [_appointNow mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.offset(Width/2);
+                make.top.bottom.equalTo(self);
+                make.centerX.equalTo(self);
+            }];
+        }
+            break;
+        case 1:
+        {
+            [_appointNow setTitle:@"立即购买" forState:UIControlStateNormal];
+            [_appointNow makeCornerRadius:8];
+            [_appointNow mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.offset(Width/2);
+                make.top.bottom.equalTo(self);
+                make.centerX.equalTo(self);
+            }];
+        }
+            break;
+        default:
+            [_appointNow setTitle:@"立即购买" forState:UIControlStateNormal];
+            
+            _addShoppingCart = [UIButton buttonWithType:UIButtonTypeCustom];
+            _addShoppingCart.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
+            [_addShoppingCart setBackgroundImage:[UIImage imageNamed:@"gouwuchekuang"] forState:UIControlStateNormal];
+            [_addShoppingCart setTitle:@"加入购物车" forState:UIControlStateNormal];
+            [_addShoppingCart setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [_addShoppingCart setImage:[UIImage imageNamed:@"jiarugouwuche"] forState:UIControlStateNormal];
+            [_addShoppingCart setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiarugouwuche"].size space:5];
+            [self addSubview:_addShoppingCart];
+            [_addShoppingCart mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, Width/2));
+            }];
+            
+            [_appointNow mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, Width/2, 0, 0));
+            }];
+            break;
+    }
+}
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor=[UIColor whiteColor];
         [self initializeButtons];
-        [self addConstraints];
     }
     return self;
 }
 
 -(void)initializeButtons {
-    _addShoppingCart = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addShoppingCart.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    [_addShoppingCart setBackgroundImage:[UIImage imageNamed:@"gouwuchekuang"] forState:UIControlStateNormal];
-    [_addShoppingCart setTitle:@"加入购物车" forState:UIControlStateNormal];
-    [_addShoppingCart setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_addShoppingCart setImage:[UIImage imageNamed:@"jiarugouwuche"] forState:UIControlStateNormal];
-    [_addShoppingCart setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:@"jiarugouwuche"].size space:5];
-    [self addSubview:_addShoppingCart];
-    
     _appointNow = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_appointNow setTitle:@"立即预约" forState:UIControlStateNormal];
     _appointNow.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
     [_appointNow setBackgroundImage:[UIImage imageNamed:@"yuyuekuang"] forState:UIControlStateNormal];
     [self addSubview:_appointNow];
-    
 }
-
--(void)addConstraints {
-    [_addShoppingCart mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, Width/2));
-    }];
-    
-    [_appointNow mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, Width/2, 0, 0));
-    }];
-    
-}
-
 -(RACSignal *)reserveNowSignal {
     return [_appointNow rac_signalForControlEvents:UIControlEventTouchUpInside];
 }

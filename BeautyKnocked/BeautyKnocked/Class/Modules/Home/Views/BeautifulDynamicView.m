@@ -36,6 +36,8 @@
         
         
         
+        
+        
        
         NSString *addString=[NSString stringWithFormat:@"用户%@ %@分钟前 预约了%@",[model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"],model.minue,model.name];
         [addArray addObject:addString];
@@ -45,6 +47,18 @@
         [_imgView setImage:[UIImage imageNamed:@"meilidongtai_03"]];
         _BlackSpots.backgroundColor  = [UIColor grayColor];
     }
+}
+-(NSString *)getCountDownStringWithEndTime:(NSString *)endTime {
+    NSDate *now = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];//设置时区
+    NSInteger interval = [zone secondsFromGMTForDate: now];
+    NSDate *localDate = [now dateByAddingTimeInterval: interval];
+    
+    
+    NSTimeInterval endInterval=[[endTime substringToIndex:10] doubleValue];
+    
+
+    return nil;
 }
 -(void)createViews {
     _imgView = [[UIImageView alloc] init];

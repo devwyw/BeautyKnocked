@@ -77,6 +77,7 @@
     self.productDetailViewModel.navigationController = self.navigationController;
     
     _addReserveView = [[AddAndReserveView alloc] init];
+    _addReserveView.type=@"2";
     Weakify(self);
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
         if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {

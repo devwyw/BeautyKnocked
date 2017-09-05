@@ -22,18 +22,9 @@
 -(void)setIsSelected:(BOOL)isSelected{
     _selectImage.highlighted=isSelected;
 }
--(void)setRow:(NSInteger)row{
-    NSString *image=[NSString string];
-    NSString *title=[NSString string];
-    if (row==1) {
-        image=@"weixin";
-        title=@"微信支付";
-    }else{
-        image=@"zhifubao";
-        title=@"支付宝支付";
-    }
-    _payImage.image=[UIImage imageNamed:image];
-    _payType.text=title;
+-(void)setModel:(NSDictionary *)model{
+    _payImage.image=[UIImage imageNamed:model[@"image"]];
+    _payType.text=model[@"name"];
 }
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

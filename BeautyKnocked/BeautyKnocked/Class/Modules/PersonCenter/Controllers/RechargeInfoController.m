@@ -172,7 +172,8 @@
                 return cell;
             }else{
                 PayTypeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayTypeCell" forIndexPath:indexPath];
-                cell.row=indexPath.row;
+                NSArray *array=[[NSArray alloc]initWithObjects:@{@"name":@"微信支付",@"image":@"weixin"},@{@"name":@"支付宝支付",@"image":@"zhifubao"},nil];
+                cell.model=array[indexPath.row];
                 if ([self.model.payType integerValue]==indexPath.row) {
                     cell.isSelected=YES;
                 }else{

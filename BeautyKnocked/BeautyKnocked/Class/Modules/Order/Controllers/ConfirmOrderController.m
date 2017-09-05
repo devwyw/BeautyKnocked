@@ -19,12 +19,12 @@
 #import "BeauticianController.h"
 #import "SonItemController.h"
 #import "SonCouponTableController.h"
-#import "PaySheetView.h"
 #import "PayViewController.h"
 #import "OrderModel.h"
 #import "PackageOrderModel.h"
 #import "ProductOrderModel.h"
 #import "ExpressView.h"
+#import "PayTypeCell.h"
 
 static NSString *const addressCell = @"ConfirmOrderAddressCell";
 static NSString *const FillCell = @"ConfirmOrderFillCell";
@@ -99,20 +99,37 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
 #pragma mark UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (_orderStyle==MLPackage) {
-        return 1;
+        return 2;
     }else{
-        return self.titles.count;
+        return self.titles.count+1;
     }
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_orderStyle==MLPackage) {
-        return self.addArray.count+2;
+        if (section==0) {
+            return self.addArray.count+2;
+        }else{
+            return 3;
+        }
     }else{
         if (section == 1) {
             return self.addArray.count+3;
         }else{
-            NSArray *arrayCounts=[[NSArray alloc]initWithArray:self.titles[section]];
-            return arrayCounts.count;
+            /**
+             @{@"name":@"余额支付",@"image":@"yu-e"},
+             @{@"name":@"微信支付",@"image":@"weixin"},
+             @{@"name":@"支付宝支付",@"image":@"zhifubao"}
+             */
+            if (section==3) {
+                if (_orderStyle==MLItem) {
+                    return 3;
+                }else{
+                    return 4;
+                }
+            }else{
+                NSArray *arrayCounts=[[NSArray alloc]initWithArray:self.titles[section]];
+                return arrayCounts.count;
+            }
         }
     }
 }
@@ -177,119 +194,156 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             break;
         case 1:
         {
-            if (indexPath.row < 2) {
-                 ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:FillCell forIndexPath:indexPath];
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (_orderStyle==MLPackage) {
+                /** 支付方式 */
                 if (indexPath.row==0) {
-                    /** 选择技师 */
-                    cell.title = self.titles[indexPath.section][indexPath.row];
-                    NSString *beauticianId=nil;
-                    if (_orderStyle==MLItem) {
-                        beauticianId=self.detailOrderModel.beauticianId;
-                        if ([beauticianId integerValue]==0) {
-                            cell.content=@"默认随机";
-                        }else{
-                            cell.content=[NSString stringWithFormat:@"%@号技师",beauticianId];
-                        }
-                    }else{
-                        beauticianId=self.productOrderModel.beauticianId;
-                        if ([beauticianId integerValue]==0) {
-                            cell.content=@"默认随机";
-                        }else{
-                            cell.content=[NSString stringWithFormat:@"%@号技师",beauticianId];
-                        }
-                    }
-                }else{
-                    /** 时间-邮寄 */
-                    cell.title = self.orderStyle == MLItem ? self.titles[indexPath.section][indexPath.row]:self.titles[indexPath.section][indexPath.row+1];
-                    
-                    if (_orderStyle==MLItem) {
-                        NSString *time=self.detailOrderModel.pactServiceTime;
-                        if (!isStringEmpty(time)) {
-                            time=[time substringToIndex:time.length-3];
-                        }
-                        cell.content=time;
-                    }else{
-                        if ([_productOrderModel.expressMode integerValue]==0) {
-                            cell.content=@"默认邮费到付";
-                        }else{
-                            cell.content=@"美容师携带";
-                        }
-                    }
-                }
-                return cell;
-            }else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
-                /** 添加项目 */
-                ConfirmOrderAddCell *cell = [tableView dequeueReusableCellWithIdentifier:AddCell forIndexPath:indexPath];
-                cell.title = self.orderStyle == MLItem ? @"添加项目":@"添加产品";
-                Weakify(self);
-                [[cell.addMore takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
-                    /** 添加 */
-                    if (_addArray.count>=4) {
-                        if (_orderStyle==MLItem) {
-                            [Master showSVProgressHUD:@"您已添加四个项目，考虑时间因素不能再继续添加项目咯~" withType:ShowSVProgressTypeInfo withShowBlock:nil];
-                        }else{
-                            [Master showSVProgressHUD:@"您已添加四个产品，不能再继续添加产品咯~" withType:ShowSVProgressTypeInfo withShowBlock:nil];
-                        }
-                    }else{
-                        SonItemController *controller=[[SonItemController alloc]init];
-                        controller.isSelected=YES;
-                        controller.subModel=[RACSubject subject];
-                        if (_orderStyle==MLItem) {
-                            controller.index=0;
-                            [controller.subModel subscribeNext:^(id  _Nullable x) {
-                                DetailModel *model=[DetailModel mj_objectWithKeyValues:x];
-                                _detailOrderModel.projectIds=[NSString stringWithFormat:@"%@,%@",_detailOrderModel.projectIds,model.id];
-                                _detailOrderModel.serviceTime=[NSString stringWithFormat:@"%ld",[_detailOrderModel.serviceTime integerValue]+[model.serviceTime integerValue]];
-                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
-                                [Wself reloadWithAddArray:x];
-                            }];
-                        }else{
-                            controller.index=6;
-                            [controller.subModel subscribeNext:^(id  _Nullable x) {
-                                ProductModel *model=[ProductModel mj_objectWithKeyValues:x];
-                                _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,model.id];
-                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
-                                
-                                [Wself reloadWithAddArray:x];
-                            }];
-                        }
-                        [Wself.navigationController pushViewController:controller animated:YES];
-                    }
-                }];
-                return cell;
-            }else{
-                if (self.orderStyle == MLItem) {
-                    /** 项目列表 */
-                    ConfirmOrderItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:ItemCell forIndexPath:indexPath];
-                    cell.model = [DetailModel mj_objectWithKeyValues:self.addArray[indexPath.row-2]];
+                    UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefault"];
+                    cell.selectionStyle=UITableViewCellSelectionStyleNone;
+                    cell.textLabel.font=[UIFont systemFontOfSize:Font_Size(40)];
+                    cell.textLabel.text=@"支付方式";
                     return cell;
                 }else{
-                    /** 产品列表 */
-                    ProductModel *model=[ProductModel mj_objectWithKeyValues:_addArray[indexPath.row-2]];
-                    ConfirmOrderProductCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCell forIndexPath:indexPath];
-                    cell.model=model;
-                    cell.subCount=[RACSubject subject];
-                    [[cell.subCount takeUntil:cell.rac_prepareForReuseSignal] subscribeNext:^(id  _Nullable x) {
-                        _submitOrderView.totalPrice=nil;
-                        _productOrderModel.productIds=nil;
-                        model.count=x;
-                        [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:model.mj_keyValues];
-                        
-                        for (NSDictionary *dict in _addArray) {
-                            _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([dict[@"count"] integerValue]*[dict[@"price"] floatValue])+[_submitOrderView.totalPrice floatValue]];
-                            for (int i=1; i<=[dict[@"count"] integerValue]; i++) {
-                                if (!isStringEmpty(_productOrderModel.productIds)) {
-                                    _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,dict[@"id"]];
-                                }else{
-                                    _productOrderModel.productIds=dict[@"id"];
-                                }
+                    PayTypeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayTypeCell" forIndexPath:indexPath];
+                    cell.model=self.titles[indexPath.section+2][indexPath.row];
+                    cell.isSelected=[_packageOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                    return cell;
+                }
+            }else{
+                if (indexPath.row < 2) {
+                    ConfirmOrderFillCell *cell = [tableView dequeueReusableCellWithIdentifier:FillCell forIndexPath:indexPath];
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    if (indexPath.row==0) {
+                        /** 选择技师 */
+                        cell.title = self.titles[indexPath.section][indexPath.row];
+                        NSString *beauticianId=nil;
+                        if (_orderStyle==MLItem) {
+                            beauticianId=self.detailOrderModel.beauticianId;
+                            if ([beauticianId integerValue]==0) {
+                                cell.content=@"默认随机";
+                            }else{
+                                cell.content=[NSString stringWithFormat:@"%@号技师",beauticianId];
+                            }
+                        }else{
+                            beauticianId=self.productOrderModel.beauticianId;
+                            if ([beauticianId integerValue]==0) {
+                                cell.content=@"默认随机";
+                            }else{
+                                cell.content=[NSString stringWithFormat:@"%@号技师",beauticianId];
                             }
                         }
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    }else{
+                        /** 时间-邮寄 */
+                        cell.title = self.orderStyle == MLItem ? self.titles[indexPath.section][indexPath.row]:self.titles[indexPath.section][indexPath.row+1];
+                        
+                        if (_orderStyle==MLItem) {
+                            NSString *time=self.detailOrderModel.pactServiceTime;
+                            if (!isStringEmpty(time)) {
+                                time=[time substringToIndex:time.length-3];
+                            }
+                            cell.content=time;
+                        }else{
+                            if ([_productOrderModel.expressMode integerValue]==0) {
+                                cell.content=@"默认邮费到付";
+                            }else{
+                                cell.content=@"美容师携带";
+                            }
+                        }
+                    }
+                    return cell;
+                }else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
+                    /** 添加项目 */
+                    ConfirmOrderAddCell *cell = [tableView dequeueReusableCellWithIdentifier:AddCell forIndexPath:indexPath];
+                    cell.title = self.orderStyle == MLItem ? @"添加项目":@"添加产品";
+                    Weakify(self);
+                    [[cell.addMore takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
+                        /** 添加 */
+                        if (_addArray.count>=4) {
+                            if (_orderStyle==MLItem) {
+                                [Master showSVProgressHUD:@"您已添加四个项目，考虑时间因素不能再继续添加项目咯~" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                            }else{
+                                [Master showSVProgressHUD:@"您已添加四个产品，不能再继续添加产品咯~" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                            }
+                        }else{
+                            SonItemController *controller=[[SonItemController alloc]init];
+                            controller.isSelected=YES;
+                            controller.subModel=[RACSubject subject];
+                            if (_orderStyle==MLItem) {
+                                controller.index=0;
+                                [controller.subModel subscribeNext:^(id  _Nullable x) {
+                                    DetailModel *model=[DetailModel mj_objectWithKeyValues:x];
+                                    _detailOrderModel.projectIds=[NSString stringWithFormat:@"%@,%@",_detailOrderModel.projectIds,model.id];
+                                    _detailOrderModel.serviceTime=[NSString stringWithFormat:@"%ld",[_detailOrderModel.serviceTime integerValue]+[model.serviceTime integerValue]];
+                                    _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
+                                    [Wself reloadWithAddArray:x];
+                                }];
+                            }else{
+                                controller.index=6;
+                                [controller.subModel subscribeNext:^(id  _Nullable x) {
+                                    ProductModel *model=[ProductModel mj_objectWithKeyValues:x];
+                                    _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,model.id];
+                                    _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",[_submitOrderView.totalPrice floatValue]+[model.price floatValue]];
+                                    [Wself reloadWithAddArray:x];
+                                }];
+                            }
+                            [Wself.navigationController pushViewController:controller animated:YES];
+                        }
                     }];
                     return cell;
+                }else{
+                    if (self.orderStyle == MLItem) {
+                        /** 项目列表 */
+                        ConfirmOrderItemCell *cell  = [tableView dequeueReusableCellWithIdentifier:ItemCell forIndexPath:indexPath];
+                        cell.model = [DetailModel mj_objectWithKeyValues:self.addArray[indexPath.row-2]];
+                        return cell;
+                    }else{
+                        /** 产品列表 */
+                        ProductModel *model=[ProductModel mj_objectWithKeyValues:_addArray[indexPath.row-2]];
+                        ConfirmOrderProductCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCell forIndexPath:indexPath];
+                        cell.model=model;
+                        [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:cell.model.mj_keyValues];
+                        cell.subCount=[RACSubject subject];
+                        [[cell.subCount takeUntil:cell.rac_prepareForReuseSignal] subscribeNext:^(id  _Nullable x) {
+                            _productOrderModel.productIds=nil;
+                            _submitOrderView.totalPrice=nil;
+                            model.count=x;
+                            [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:model.mj_keyValues];
+                            
+                            for (NSDictionary *dict in _addArray) {
+                                _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([dict[@"count"] integerValue]*[dict[@"price"] floatValue])+[_submitOrderView.totalPrice floatValue]];
+                                for (int i=0; i<[dict[@"count"] integerValue]; i++) {
+                                    if (!isStringEmpty(_productOrderModel.productIds)) {
+                                        _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,dict[@"id"]];
+                                    }else{
+                                        _productOrderModel.productIds=dict[@"id"];
+                                    }
+                                }
+                            }
+                            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        }];
+                        return cell;
+                    }
                 }
+            }
+        }
+            break;
+            case 3:
+        {
+            /** 支付方式 */
+            if (indexPath.row==0) {
+                UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefault"];
+                cell.selectionStyle=UITableViewCellSelectionStyleNone;
+                cell.textLabel.font=[UIFont systemFontOfSize:Font_Size(40)];
+                cell.textLabel.text=@"支付方式";
+                return cell;
+            }else{
+                PayTypeCell *cell=[tableView dequeueReusableCellWithIdentifier:@"PayTypeCell" forIndexPath:indexPath];
+                cell.model=self.titles[indexPath.section][indexPath.row];
+                if (_orderStyle==MLItem) {
+                    cell.isSelected=[_detailOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                }else{
+                    cell.isSelected=[_productOrderModel.payType integerValue]+1==indexPath.row ? YES:NO;
+                }
+                return cell;
             }
         }
             break;
@@ -382,65 +436,89 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
         }
             break;
             case 1:
-            switch (indexPath.row) {
-                    case 0:
-                {
-                    /** 选择技师 */
-                    BeauticianController *controller=[[BeauticianController alloc]init];
-                    controller.isType=1;
-                    controller.beauticianId=[RACSubject subject];
-                    [controller.beauticianId subscribeNext:^(id  _Nullable x) {
-                        if (_orderStyle==MLItem) {
-                            _detailOrderModel.beauticianId=x;
-                        }else{
-                            _productOrderModel.beauticianId=x;
-                        }
-                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-                    }];
-                    if (!isStringEmpty(self.detailOrderModel.pactServiceTime)) {
-                        /** 时间筛选技师 */
-                        controller.serviceTime=self.detailOrderModel.serviceTime;
-                        controller.pactServiceTime=self.detailOrderModel.pactServiceTime;
-                    }
-                    [self.navigationController pushViewController:controller animated:YES];
+        {
+            if (_orderStyle==MLPackage) {
+                /** 支付方式 */
+                if (indexPath.row!=0) {
+                    _packageOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
+                    [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
                 }
-                    break;
-                case 1:
-                {
-                    if (self.orderStyle==MLItem) {
-                        /** 项目-预约时间 */
-                        [Master HttpPostRequestByParams:@{@"beauticianId":self.detailOrderModel.beauticianId,@"timeLength":self.detailOrderModel.serviceTime} url:mlqqm serviceCode:mrsskb Success:^(id json) {
-                            WebTimeModel *model=[WebTimeModel mj_objectWithKeyValues:json[@"info"]];
-                            /** 初始化 */
-                            OrderSubDay *view=[OrderSubDay shareManager];
-                            /** 开始时间 */
-                            view.startDay=[[DayModel alloc]initGetHttpData:model.startTime];
-                            /** 时间段 */
-                            view.model=model;
-                            /** 选中时间 */
-                            view.subData=[RACSubject subject];
-                            [view.subData subscribeNext:^(id  _Nullable x) {
-                                _detailOrderModel.pactServiceTime=x;
-                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-                            }];
-                            [Master PopAlertView:view];
-                        } Failure:nil andNavigation:self.navigationController];
-                    }else{
-                        /** 产品-配送方式 */
-                        ExpressView *expview=[[ExpressView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(150*7))];
-                        expview.index=_productOrderModel.expressMode;
-                        expview.subType=[RACSubject subject];
-                        [expview.subType subscribeNext:^(id  _Nullable x) {
-                            _productOrderModel.expressMode=x;
+            }else{
+                switch (indexPath.row) {
+                    case 0:
+                    {
+                        /** 选择技师 */
+                        BeauticianController *controller=[[BeauticianController alloc]init];
+                        controller.isType=1;
+                        controller.beauticianId=[RACSubject subject];
+                        [controller.beauticianId subscribeNext:^(id  _Nullable x) {
+                            if (_orderStyle==MLItem) {
+                                _detailOrderModel.beauticianId=x;
+                            }else{
+                                _productOrderModel.beauticianId=x;
+                            }
                             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
                         }];
-                        [Master PopSheetView:expview];
+                        if (!isStringEmpty(self.detailOrderModel.pactServiceTime)) {
+                            /** 时间筛选技师 */
+                            controller.serviceTime=self.detailOrderModel.serviceTime;
+                            controller.pactServiceTime=self.detailOrderModel.pactServiceTime;
+                        }
+                        [self.navigationController pushViewController:controller animated:YES];
                     }
+                        break;
+                    case 1:
+                    {
+                        if (self.orderStyle==MLItem) {
+                            /** 项目-预约时间 */
+                            [Master HttpPostRequestByParams:@{@"beauticianId":self.detailOrderModel.beauticianId,@"timeLength":self.detailOrderModel.serviceTime} url:mlqqm serviceCode:mrsskb Success:^(id json) {
+                                WebTimeModel *model=[WebTimeModel mj_objectWithKeyValues:json[@"info"]];
+                                /** 初始化 */
+                                OrderSubDay *view=[OrderSubDay shareManager];
+                                /** 开始时间 */
+                                view.startDay=[[DayModel alloc]initGetHttpData:model.startTime];
+                                /** 时间段 */
+                                view.model=model;
+                                /** 选中时间 */
+                                view.subData=[RACSubject subject];
+                                [view.subData subscribeNext:^(id  _Nullable x) {
+                                    _detailOrderModel.pactServiceTime=x;
+                                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                                }];
+                                [Master PopAlertView:view];
+                            } Failure:nil andNavigation:self.navigationController];
+                        }else{
+                            /** 产品-配送方式 */
+                            ExpressView *expview=[[ExpressView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(150*7))];
+                            expview.index=_productOrderModel.expressMode;
+                            expview.subType=[RACSubject subject];
+                            [expview.subType subscribeNext:^(id  _Nullable x) {
+                                _productOrderModel.expressMode=x;
+                                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                            }];
+                            [Master PopSheetView:expview];
+                        }
+                    }
+                        break;
+                    default:
+                        break;
                 }
-                    break;
-                default:
-                    break;
             }
+        }
+            break;
+        case 3:
+        {
+            if (indexPath.row!=0) {
+                /** 支付方式 */
+                if (_orderStyle==MLItem) {
+                    _detailOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
+                    [tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+                }else{
+                    _productOrderModel.payType=[NSString stringWithFormat:@"%ld",indexPath.row-1];
+                    [tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+                }
+            }
+        }
             break;
         default:
             if (indexPath.row==0) {
@@ -463,7 +541,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                             _productOrderModel.clientCouponId=x;
                         }
                         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-                        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:3] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                     }];
                     [Wself.navigationController pushViewController:controller animated:YES];
                 } Failure:nil andNavigation:self.navigationController];
@@ -476,12 +554,14 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.estimatedRowHeight = 100;
+    _tableView.scrollsToTop=NO;
     [_tableView registerClass:[ConfirmOrderAddressCell class] forCellReuseIdentifier:addressCell];
     [_tableView registerClass:[ConfirmOrderFillCell class] forCellReuseIdentifier:FillCell];
     [_tableView registerClass:[ConfirmOrderProductCell class] forCellReuseIdentifier:ProductCell];
     [_tableView registerClass:[ConfirmOrderItemCell class] forCellReuseIdentifier:ItemCell];
     [_tableView registerClass:[ConfirmOrderAddCell class] forCellReuseIdentifier:AddCell];
     [_tableView registerClass:[ConfirmOrderRemarksCell class] forCellReuseIdentifier:RemarksCell];
+    [_tableView registerClass:[PayTypeCell class] forCellReuseIdentifier:@"PayTypeCell"];
     [self.view addSubview:self.tableView];
     
     _submitOrderView = [[ConfirmOrderSubmitView alloc] init];
@@ -499,18 +579,15 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     }
     Weakify(self);
     [_submitOrderView.payInfo subscribeNext:^(id  _Nullable x) {
-        /** 支付订单 */
-        PaySheetView *paysheet=[[PaySheetView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(205+180*4))];
         switch (_orderStyle) {
             case MLPackage:
             {
                 NSLog(@"%@",_packageOrderModel.mj_keyValues);
-                paysheet.subType=[RACSubject subject];
-                [paysheet.subType subscribeNext:^(id  _Nullable x) {
-                    _packageOrderModel.payType=x;
+                if (isStringEmpty(_packageOrderModel.payType)) {
+                    [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else{
                     [Wself payOrder:_packageOrderModel.mj_keyValues WithCode:tjtcdd];
-                }];
-                [Master PopSheetView:paysheet];
+                }
             }
                 break;
             case MLItem:
@@ -520,13 +597,10 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     [Master showSVProgressHUD:@"请选择服务地址" withType:ShowSVProgressTypeInfo withShowBlock:nil];
                 }else if (isStringEmpty(_detailOrderModel.pactServiceTime)){
                     [Master showSVProgressHUD:@"请选择预约时间" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else if (isStringEmpty(_detailOrderModel.payType)) {
+                    [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
                 }else{
-                    paysheet.subType=[RACSubject subject];
-                    [paysheet.subType subscribeNext:^(id  _Nullable x) {
-                        _detailOrderModel.payType=x;
-                        [Wself payOrder:_detailOrderModel.mj_keyValues WithCode:tjxmdd];
-                    }];
-                    [Master PopSheetView:paysheet];
+                    [Wself payOrder:_detailOrderModel.mj_keyValues WithCode:tjxmdd];
                 }
             }
                 break;
@@ -535,13 +609,10 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                 NSLog(@"%@",_productOrderModel.mj_keyValues);
                 if (isStringEmpty(_productOrderModel.addressId)) {
                     [Master showSVProgressHUD:@"请选择服务地址" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+                }else if (isStringEmpty(_productOrderModel.payType)) {
+                    [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
                 }else{
-                    paysheet.subType=[RACSubject subject];
-                    [paysheet.subType subscribeNext:^(id  _Nullable x) {
-                        _productOrderModel.payType=x;
-                        [Wself payOrder:_productOrderModel.mj_keyValues WithCode:tjcpdd];
-                    }];
-                    [Master PopSheetView:paysheet];
+                    [Wself payOrder:_productOrderModel.mj_keyValues WithCode:tjcpdd];
                 }
             }
                 break;
@@ -576,6 +647,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             self.packageOrderModel.ip=ip;
             _packageOrderModel.clientId=clientId;
             _packageOrderModel.beauticianId=@"0";
+            _packageOrderModel.payType=@"0";
             _packageOrderModel.packageIds=self.packageInfoModel.id;
             [self.addArray addObject:_packageInfoModel.mj_keyValues];
             break;
@@ -585,6 +657,7 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             _detailOrderModel.beauticianId=@"0";
             _detailOrderModel.projectIds=self.detailModel.id;
             _detailOrderModel.clientCouponId=@"0";
+            _detailOrderModel.payType=@"0";
             _detailOrderModel.serviceTime=_detailModel.serviceTime;
             [self.addArray addObject:_detailModel.mj_keyValues];
             break;
@@ -592,9 +665,10 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             self.productOrderModel.ip=ip;
             _productOrderModel.clientId=clientId;
             _productOrderModel.beauticianId=@"0";
-            _productOrderModel.productIds=self.productModel.id;
             _productOrderModel.clientCouponId=@"0";
             _productOrderModel.expressMode=@"0";
+            _productOrderModel.payType=@"0";
+            _productOrderModel.productIds=self.productModel.id;
             [self.addArray addObject:_productModel.mj_keyValues];
             break;
     }

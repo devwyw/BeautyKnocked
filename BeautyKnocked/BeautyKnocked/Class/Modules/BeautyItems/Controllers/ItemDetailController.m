@@ -9,7 +9,6 @@
 #import "ItemDetailController.h"
 #import "AddAndReserveView.h"
 #import "ConfirmOrderController.h"
-#import "AddCarView.h"
 #import "CarItem.h"
 #import "ItemDetailViewModel.h"
 
@@ -69,9 +68,7 @@
     {
         _carItem=[[CarItem alloc]initWithOriginY:Height-111];
         [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
-            [Master RemovePopViewWithBlock:^{
-                NSLog(@"购物车");
-            }];
+            NSLog(@"购物车");
         }];
         [self.view addSubview:_carItem];
     }
@@ -90,6 +87,11 @@
     [self.view addSubview:_tableView];
 
     _addReserveView = [[AddAndReserveView alloc] init];
+    if (isStringEmpty(self.projectId)) {
+        _addReserveView.type=@"0";
+    }else{
+        _addReserveView.type=@"1";
+    }
     Weakify(self);
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
         //立即预约
@@ -104,15 +106,6 @@
             }
             [Wself.navigationController pushViewController:confirmController animated:YES];
         }
-    }];
-
-    [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
-        //购物车
-        AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
-        [view.doneAction subscribeNext:^(id  _Nullable x) {
-            
-        }];
-        [Master PopSheetView:view];
     }];
     [self.view addSubview:_addReserveView];
     

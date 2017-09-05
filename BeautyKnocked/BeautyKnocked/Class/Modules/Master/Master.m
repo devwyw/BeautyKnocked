@@ -41,14 +41,12 @@ static NSInteger netWorkingStatus=0;
             {
                 netWorkingStatus=1;
                 [LEEAlert alert].config
-                .LeeTitle(@"网络未连接")
-                .LeeContent(@"我们未在地球上找到您的连接")
+                .LeeTitle(@"网络连接超时")
+                .LeeContent(@"您的连接请求超时，请检查您的网络设置")
                 .LeeCancelAction(@"网络设置", ^{
-                    netWorkingStatus=0;
                     [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
                 })
                 .LeeAction(@"确定", ^{
-                    netWorkingStatus=0;
                 })
                 .LeeShow();
             }
@@ -138,7 +136,7 @@ static NSInteger netWorkingStatus=0;
     /** Post网络请求 */
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 20;
+    manager.requestSerializer.timeoutInterval = 30;
     manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -160,13 +158,13 @@ static NSInteger netWorkingStatus=0;
         switch (error.code) {
             case -1004:
                 if (netWorkingStatus==1)break;
-                [Master showSVProgressHUD:@"我们未能与您连接，请您再试一试~" withType:ShowSVProgressTypeError withShowBlock:nil];
+                [Master showSVProgressHUD:@"网络连接超时，请您再试一试~" withType:ShowSVProgressTypeError withShowBlock:nil];
                 break;
             default:
                 if (netWorkingStatus==1)break;
                 [LEEAlert alert].config
-                .LeeTitle(@"网络未连接")
-                .LeeContent(@"我们未在地球上找到您的连接")
+                .LeeTitle(@"网络连接超时")
+                .LeeContent(@"您的连接请求超时，请检查您的网络设置")
                 .LeeCancelAction(@"网络设置", ^{
                     [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
                 })

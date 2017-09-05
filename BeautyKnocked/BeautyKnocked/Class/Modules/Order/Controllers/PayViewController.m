@@ -93,11 +93,18 @@
     [_pushPay setBackgroundColor:[UIColor colorWithHexString:@"#67d75a"]];
     [_pushPay setTitle:@"确认支付" forState:UIControlStateNormal];
     [_pushPay.titleLabel setFont:[UIFont systemFontOfSize:Font_Size(50)]];
+    Weakify(self);
     [[_pushPay rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
         /** 立即支付 */
         switch ([_isPayType integerValue]) {
             case 0:
-                
+            {
+                [Master HttpPostRequestByParams:@{@"billId":_model.id} url:mlqqm serviceCode:qrxmdd Success:^(id json) {
+                    [Master showSVProgressHUD:@"余额支付成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                        [Wself payPushController:nil WithPayType:nil];
+                    }];
+                } Failure:nil andNavigation:self.navigationController];
+            }
                 break;
             case 1:
                 [AppDelegate WXPayWithPrepayId:_model.orderStr];
