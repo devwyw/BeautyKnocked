@@ -104,4 +104,6 @@ typedef void(^PopViewHideBlock)();
 +(void)PopAlertView:(UIView*)view;
 /** 关闭PopVIew */
 +(void)RemovePopViewWithBlock:(PopViewHideBlock)block;
+/** Line */
++(UIView*)getLineView:(UIColor*)color;
 @end

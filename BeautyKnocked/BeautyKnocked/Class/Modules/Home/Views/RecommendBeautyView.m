@@ -15,7 +15,6 @@
 @property (nonatomic, strong) UILabel *textLabel;
 @property (nonatomic, strong) UIImageView *flowerBasketsImgView;
 @property (nonatomic, strong) UIImageView *beautyImgView;
-@property (nonatomic, strong) UIImageView *optimalImgView;
 @property (nonatomic, strong) StarView *starRateview;
 @end
 
@@ -42,17 +41,13 @@
     _textLabel.font = [UIFont systemFontOfSize:Font_Size(38)];
     [self addSubview:_textLabel];
     
-    _flowerBasketsImgView = [[UIImageView alloc] init];
-    [_flowerBasketsImgView setImage:[UIImage imageNamed:@"huaquan_03"]];
-    [self addSubview:_flowerBasketsImgView];
-    
     _beautyImgView = [[UIImageView alloc] init];
-    [_beautyImgView makeCornerRadius:Width_Pt(175)/2];
-    [_flowerBasketsImgView addSubview:_beautyImgView];
+    [_beautyImgView makeCornerRadius:Width_Pt(180)/2];
+    [self addSubview:_beautyImgView];
     
-    _optimalImgView = [[UIImageView alloc] init];
-    [_optimalImgView setImage:[UIImage imageNamed:@"jinpaijishi_03 (2)"]];
-    [_flowerBasketsImgView addSubview:_optimalImgView];
+    _flowerBasketsImgView = [[UIImageView alloc] init];
+    [_flowerBasketsImgView setImage:[UIImage imageNamed:@"jinpaijishi_03"]];
+    [self addSubview:_flowerBasketsImgView];
     
     _starRateview = [StarView evaluationViewWithChooseStarBlock:nil];
     _starRateview.spacing=0.1;
@@ -69,22 +64,15 @@
         make.height.mas_equalTo(Height_Pt(46));
     }];
     
-    [_flowerBasketsImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self);
-        make.top.equalTo(self).with.offset(Height_Pt(28));
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(248), Height_Pt(235)));
-    }];
-    
     [_beautyImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_flowerBasketsImgView).with.offset(Height_Pt(33.5));
-        make.centerX.equalTo(_flowerBasketsImgView).offset(-2.2);
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(175), Height_Pt(175)));
+        make.center.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(180), Height_Pt(180)));
     }];
     
-    [_optimalImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_beautyImgView.mas_bottom).with.offset( - Height_Pt(8));
-        make.centerX.equalTo(_flowerBasketsImgView);
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(142), Height_Pt(30)));
+    [_flowerBasketsImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.mas_centerY).offset(-1);
+        make.centerX.equalTo(self.mas_centerX).offset(2.2);
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(248), Height_Pt(235)));
     }];
     
     [_starRateview mas_makeConstraints:^(MASConstraintMaker *make) {

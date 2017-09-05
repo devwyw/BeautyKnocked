@@ -208,24 +208,28 @@
                 }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                     [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
                     [SVProgressHUD dismiss];
+                    [_tableView.mj_header endRefreshing];
                     NSLog(@"网络请求错误: %@",error);
                     [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
                 }];
             }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
                 [SVProgressHUD dismiss];
+                [_tableView.mj_header endRefreshing];
                 NSLog(@"网络请求错误: %@",error);
                 [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
             }];
         }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
             [SVProgressHUD dismiss];
+            [_tableView.mj_header endRefreshing];
             NSLog(@"网络请求错误: %@",error);
             [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
         }];
     }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
         [SVProgressHUD dismiss];
+        [_tableView.mj_header endRefreshing];
         NSLog(@"网络请求错误: %@",error);
         [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
     }];

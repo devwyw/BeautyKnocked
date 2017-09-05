@@ -12,7 +12,6 @@
 #import <SVProgressHUD.h>
 #import <UIImageView+WebCache.h>
 #import <LEEAlert.h>
-#import "RegisterController.h"
 #import "LoginController.h"
 #import "TabBarController.h"
 #import "NSString+Attribute.h"
@@ -40,15 +39,7 @@ static NSInteger netWorkingStatus=0;
             case AFNetworkReachabilityStatusNotReachable:
             {
                 netWorkingStatus=1;
-                [LEEAlert alert].config
-                .LeeTitle(@"网络连接超时")
-                .LeeContent(@"网络请求超时，请检查您的网络设置")
-                .LeeCancelAction(@"网络设置", ^{
-                    [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
-                })
-                .LeeAction(@"确定", ^{
-                })
-                .LeeShow();
+                [Master PopNetWorkingView];
             }
                 break;
             default:
@@ -136,7 +127,7 @@ static NSInteger netWorkingStatus=0;
     /** Post网络请求 */
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 20;
+    manager.requestSerializer.timeoutInterval = 15;
     manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -158,25 +149,30 @@ static NSInteger netWorkingStatus=0;
         switch (error.code) {
             case -1004:
                 if (netWorkingStatus==1)break;
-                [Master showSVProgressHUD:@"网络连接超时，请您再试一试~" withType:ShowSVProgressTypeError withShowBlock:nil];
+                [Master PopNetWorkingView];
                 break;
             default:
                 if (netWorkingStatus==1)break;
-                [LEEAlert alert].config
-                .LeeTitle(@"网络连接超时")
-                .LeeContent(@"网络请求超时，请检查您的网络设置")
-                .LeeCancelAction(@"网络设置", ^{
-                    [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
-                })
-                .LeeAction(@"确定", ^{
-                })
-                .LeeShow();
+                [Master PopNetWorkingView];
                 break;
         }
         if (!isObjectEmpty(failure)){
             failure(error);
         }
     }];
+}
++(void)PopNetWorkingView{
+    [LEEAlert alert].config
+    .LeeAddCustomView(^(LEECustomView *custom) {
+        UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"kulian"]];
+        custom.view=image;
+    })
+    .LeeTitle(@"网络不给力，请检查您的网络设置")
+    .LeeCancelAction(@"网络设置", ^{
+        [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
+    })
+    .LeeAction(@"确定", ^{})
+    .LeeShow();
 }
 +(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url{
     [imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",mlqqm,Url]] placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
@@ -348,5 +344,11 @@ static NSInteger netWorkingStatus=0;
             block();
         }
     }];
+}
+/** Line */
++(UIView*)getLineView:(UIColor*)color{
+    UIView *line=[[UIView alloc]init];
+    line.backgroundColor=color;
+    return line;
 }
 @end
