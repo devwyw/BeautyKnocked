@@ -10,6 +10,6 @@
 
 @interface DynamicModel : NSObject
 @property (nonatomic,copy) NSString * account;
-@property (nonatomic,copy) NSString * minue;
+@property (nonatomic,copy) NSString * createDate;
 @property (nonatomic,copy) NSString * name;
 @end

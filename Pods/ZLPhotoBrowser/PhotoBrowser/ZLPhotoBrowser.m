@@ -25,8 +25,8 @@
     self = [super initWithRootViewController:rootViewController];
     if (self) {
         [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: kNavBar_tintColor}];
-        //[self.navigationBar setBackgroundImage:[self imageWithColor:kNavBar_color] forBarMetrics:UIBarMetricsDefault];
-        [self.navigationBar setTintColor:kNavBar_tintColor];
+        //[self.navigationBar setBackgroundImage:[self imageWithColor:kDoneButton_bgColor] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setTintColor:[UIColor clearColor]];
         self.navigationBar.barStyle = UIBarStyleBlack;
         self.navigationBar.translucent = YES;
     }

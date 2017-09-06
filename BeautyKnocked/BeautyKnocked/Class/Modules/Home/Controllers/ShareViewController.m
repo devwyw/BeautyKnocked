@@ -10,9 +10,7 @@
 #import "UIButton+Category.h"
 
 @interface ShareViewController ()
-
 @property (nonatomic,strong) UIView * Jview;
-
 @end
 
 @implementation ShareViewController
@@ -35,7 +33,6 @@
         [item removeFromSuperview];
     }
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"分享有礼"];

@@ -29,9 +29,7 @@ static NSString *defaultCellReuseIdentifier = @"defaultBeauticianRegisterCell";
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section {
     return 11;
 }
-
 -(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.row == 1 || indexPath.row == 6 || indexPath.row == 10) {
         UITableViewCell *cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:defaultCellReuseIdentifier];
@@ -52,14 +50,11 @@ static NSString *defaultCellReuseIdentifier = @"defaultBeauticianRegisterCell";
                 make.edges.equalTo(cell.contentView).with.insets(UIEdgeInsetsMake(Height_Pt(59), Width_Pt(50), 0, Width_Pt(50)));
             }];
         }
-        
         return cell;
-        
     }else {
         BeauticianRegisterInputCell *cell = [tableView dequeueReusableCellWithIdentifier:inputCellReuseIdentifier forIndexPath:indexPath];
         cell.title = self.titles[indexPath.row];
         cell.placeholder = self.placeholders[indexPath.row];
-        
         return cell;
     }
     return nil;

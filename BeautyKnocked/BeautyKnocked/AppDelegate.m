@@ -27,7 +27,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     /** 首次启动 */
     if (isStringEmpty([[NSUserDefaults standardUserDefaults] objectForKey:@"isStartUp"])) {
-        [[NSUserDefaults standardUserDefaults]setObject:@"1" forKey:@"isStartUp"];
+        [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"isStartUp"];
         self.window.rootViewController = [[StartImageController alloc]init];
     }else{
         self.window.rootViewController = [[TabBarController alloc]init];

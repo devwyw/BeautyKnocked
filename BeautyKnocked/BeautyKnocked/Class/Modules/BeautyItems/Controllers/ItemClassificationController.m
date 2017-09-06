@@ -89,6 +89,7 @@ static CGFloat const kNavigationBarHeight = 64;
                     LikeDataController *likeController=[[LikeDataController alloc]init];
                     likeController.dataArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
                     likeController.data=searchText;
+                    likeController.hidesBottomBarWhenPushed=YES;
                     [Wself.navigationController pushViewController:likeController animated:YES];
                 } Failure:nil andNavigation:Wself.navigationController];
             }

@@ -18,4 +18,5 @@
 -(void)configTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 -(CGFloat)configTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 -(void)getUserNotificationSwitchWithTableView:(UITableView*)tableview;
+-(UIView*)configTableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section;
 @end

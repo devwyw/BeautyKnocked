@@ -37,8 +37,6 @@ static NSString *const cellReuseIdentifier2 = @"reuseIdentifier2";
     UITableViewCell *cell = nil;
     NSUInteger section = indexPath.section;
     NSUInteger row = indexPath.row;
-    
-    
     if (section == 0) {
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier0];

@@ -9,7 +9,6 @@
 #import "ModifyPersonInfoView.h"
 #import "PersonInfoTextField.h"
 #import "LoginPasswordView.h"
-#import "UIView+CornerRadius.h"
 
 @interface ModifyPersonInfoView ()
 
@@ -56,7 +55,7 @@
     [_headIconButton addSubview:_headIcon];
     
     _cameraView = [[UIImageView alloc] init];
-    _cameraView.image = [UIImage imageNamed:@"zhaopian"];
+    _cameraView.image = [UIImage imageNamed:@"zhaopian1"];
     _cameraView.contentMode=UIViewContentModeScaleAspectFit;
     [_headIconButton addSubview:_cameraView];
     
@@ -93,7 +92,7 @@
     [_cameraView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_headIconButton.mas_right);
         make.bottom.equalTo(_headIconButton.mas_bottom);
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(56), Height_Pt(56)));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(50), Height_Pt(50)));
     }];
     
     [_nicknameTextField mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -61,7 +61,6 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return CGFLOAT_MIN;
 }
-
 -(void)configureValue1Cell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = self.dataSource[indexPath.row];
@@ -78,7 +77,6 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
     }else if (indexPath.row == 2 || indexPath.row == 3) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -88,12 +86,10 @@ static NSString *const value1CellReuseIdentifier = @"value1CellReuseIdentifier";
         [self.navigationController pushViewController:[[OurcommitmentController alloc] init] animated:YES];
     }
 }
-
 -(NSArray *)detailText {
     if (!_detailText) {
-        NSString *version = [NSString stringWithFormat:@"v%@",[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+        NSString *version = [NSString stringWithFormat:@"v%@",AppVersion];
         NSString *weChatPublicNumber = @"mlqqm0791";
-        
         _detailText = @[version,weChatPublicNumber];
     }
     return _detailText;

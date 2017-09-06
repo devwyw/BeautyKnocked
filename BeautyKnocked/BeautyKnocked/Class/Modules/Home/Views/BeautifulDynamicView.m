@@ -33,7 +33,7 @@
     NSMutableArray *addArray=[[NSMutableArray alloc]init];
     for (NSDictionary *dict in dataArray) {
         DynamicModel *model=[DynamicModel mj_objectWithKeyValues:dict];
-        NSString *addString=[NSString stringWithFormat:@"用户%@ 在%@前 预约了%@",[model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"],[self getCountDownStringWithEndTime:model.minue],model.name];
+        NSString *addString=[NSString stringWithFormat:@"用户%@ 在%@前 预约了%@",[model.account stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"],[self getCountDownStringWithEndTime:model.createDate],model.name];
         [addArray addObject:addString];
     }
     if (addArray.count!=0) {
@@ -58,14 +58,14 @@
     // 对比时间差
     NSDateComponents *dateCom = [calendar components:unit fromDate:endDate toDate:nowDate options:0];
     NSString *time=nil;
-    if (dateCom.second<60) {
-        time=[NSString stringWithFormat:@"%ld秒",dateCom.second];
-    }else if (dateCom.minute<60){
-        time=[NSString stringWithFormat:@"%ld分钟%ld",dateCom.minute,dateCom.second];
-    }else if (dateCom.hour<24){
-        time=[NSString stringWithFormat:@"%ld小时%ld分钟%ld",dateCom.hour,dateCom.minute,dateCom.second];
-    }else{
+    if (dateCom.day>=1) {
         time=@"一天";
+    }else if (dateCom.hour>=1) {
+        time=[NSString stringWithFormat:@"%ld小时",dateCom.hour];
+    }else if (dateCom.minute>=1){
+        time=[NSString stringWithFormat:@"%ld分钟",dateCom.minute];
+    }else if (dateCom.second>=1){
+        time=[NSString stringWithFormat:@"%ld秒",dateCom.second];
     }
     return time;
 }

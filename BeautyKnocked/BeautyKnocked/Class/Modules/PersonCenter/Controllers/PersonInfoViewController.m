@@ -12,13 +12,10 @@
 #import <ZLPhotoActionSheet.h>
 
 @interface PersonInfoViewController ()
-
-@property (nonatomic, strong) ModifyPersonInfoView *modifyInfoView;
-
+@property (nonatomic,strong) ModifyPersonInfoView *modifyInfoView;
 @end
 
 @implementation PersonInfoViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -73,7 +70,7 @@
                     [Master showSVProgressHUD:@"头像修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
                 } Failure:nil andNavigation:Wself.navigationController];
             }else{
-                [Master showSVProgressHUD:@"请重新选择头像图片" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
+                [Master showSVProgressHUD:@"请重新选择头像图片" withType:ShowSVProgressTypeInfo withShowBlock:nil];
             }
         }];
         [actionSheet showPreviewAnimated:YES sender:Wself];

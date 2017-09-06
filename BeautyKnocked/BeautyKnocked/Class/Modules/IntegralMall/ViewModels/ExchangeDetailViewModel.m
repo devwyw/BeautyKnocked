@@ -37,7 +37,7 @@ static NSString *const cellReuseIdentifier = @"UITableViewCell";
 
 -(UITableViewCell *)ddcs_tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell;
+    UITableViewCell *cell=nil;
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -75,8 +75,6 @@ static NSString *const cellReuseIdentifier = @"UITableViewCell";
             
             descriptionCell.title = @"优惠券简介";
             descriptionCell.descrText = @"fsdkjlfsdiofio\nisdifkjsdklfkl\ndsfijojklsdfkjl";
-            
-            
             return descriptionCell;
         }
     }

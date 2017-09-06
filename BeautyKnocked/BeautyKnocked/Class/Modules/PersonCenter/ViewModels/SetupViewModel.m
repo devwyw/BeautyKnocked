@@ -12,9 +12,8 @@
 #import "AppDelegate+JPush.h"
 
 @interface SetupViewModel ()
-@property (nonatomic, strong) UIButton *loginOutButton;
-@property (nonatomic, strong) NSArray *dataSource;
-@property (nonatomic, strong) UISwitch * userNotificationSwitch;
+@property (nonatomic,strong) UIButton *loginOutButton;
+@property (nonatomic,strong) NSArray *dataSource;
 @property (nonatomic,assign) BOOL isStart;
 @end
 
@@ -50,22 +49,23 @@
     }
 }
 -(NSUInteger)numberOfRowsAtSection:(NSUInteger)section {
-    return _dataSource.count + 1;
+    return _dataSource.count;
 }
 -(UITableViewCell *)configureTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    UITableViewCell *cell = nil;
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row < 4) {
         if (indexPath.row==0) {
             Weakify(self);
-            _userNotificationSwitch= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
-            _userNotificationSwitch.onTintColor = ThemeColor;
-            _userNotificationSwitch.on=_isStart;
-            [[_userNotificationSwitch rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
+            UISwitch *notificationSwitchs= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
+            notificationSwitchs.onTintColor = ThemeColor;
+            notificationSwitchs.on=_isStart;
+            [[notificationSwitchs rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
                 [Master pushSystemSettingWithUrl:@"App-Prefs:root=www.paisen.com.BeautyKnocked"];
                 [Wself.navigationController popViewControllerAnimated:YES];
             }];
-            cell.accessoryView = _userNotificationSwitch;
+            cell.accessoryView = notificationSwitchs;
         }else if(indexPath.row<3){
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -74,7 +74,7 @@
     }else {
         [cell.contentView addSubview:self.loginOutButton];
         [self.loginOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(cell.contentView).with.insets(UIEdgeInsetsMake(Height_Pt(66), Width_Pt(49), 0, Width_Pt(49)));
+            make.edges.equalTo(cell.contentView).with.insets(UIEdgeInsetsMake(Height_Pt(66), Width_Pt(50), 0, Width_Pt(50)));
         }];
     }
     return cell;
@@ -94,6 +94,14 @@
         AboutUsTableViewController *aboutVC = [[AboutUsTableViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
     }
+}
+-(UIView*)configTableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(214))];
+    [view addSubview:self.loginOutButton];
+    [self.loginOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(view).with.insets(UIEdgeInsetsMake(Height_Pt(66), Width_Pt(50), 0, Width_Pt(50)));
+    }];
+    return view;
 }
 -(UIButton *)loginOutButton {
     if (!_loginOutButton) {

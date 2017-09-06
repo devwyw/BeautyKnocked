@@ -10,7 +10,7 @@
 #import "UserCnterViewModel.h"
 
 static NSString *const cellIdentifier = @"UserCenterTableViewCell";
-@interface MineController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MineController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UserCnterViewModel *userCenterViewModel;
 @end
@@ -39,7 +39,6 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
     self.BarColor = [ThemeColor toColorString];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
     [self createViews];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -70,14 +69,14 @@ static NSString *const cellIdentifier = @"UserCenterTableViewCell";
 }
 -(void)createViews {
     self.userCenterViewModel.navigationController = self.navigationController;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor=[UIColor clearColor];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.bounces=NO;
-    [self.view addSubview:self.tableView];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor=[UIColor clearColor];
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.bounces=NO;
+    [self.view addSubview:_tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(-20, 0, 0, 0));
     }];

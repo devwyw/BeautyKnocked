@@ -30,7 +30,6 @@
     [self createViews];
     [self addViews];
     [self addConstraints];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,7 +111,7 @@
 }
 -(void)getStatusColor:(TextField*)textfield WithStatus:(BOOL)status{
     if (status) {
-        [textfield makeBorderWidth:0.5 withColor:[UIColor colorWithHexString:@"#E1C06C"]];
+        [textfield makeBorderWidth:0.5 withColor:ThemeColor];
     }else{
         [textfield makeBorderWidth:0.5 withColor:[UIColor grayColor]];
     }
