@@ -19,29 +19,18 @@
 
 @property (nonatomic, strong) UIImageView *backImgView;
 
-@property (nonatomic, strong) UIButton *headIconBtn;
-@property (nonatomic, strong) UIImageView * headIcon;
-
-@property (nonatomic, strong) UILabel *nameLabel;
-
-@property (nonatomic, strong) UIButton *balanceBtn;
-
-@property (nonatomic, strong) UIButton *levelBtn;
-
-@property (nonatomic, strong) UIButton *couponBtn;
-
-@property (nonatomic, strong) UILabel *groupsLabel;
-
-@property (nonatomic, strong) UIButton *allGroupsBtn;
-
-@property (nonatomic, strong) UIButton *waitGroup;
-
-@property (nonatomic, strong) UIButton *successGroup;
-
-@property (nonatomic, strong) UIButton *failGroup;
-
+@property (nonatomic,strong) UIButton *headIconBtn;
+@property (nonatomic,strong) UIImageView * headIcon;
+@property (nonatomic,strong) UILabel *nameLabel;
+@property (nonatomic,strong) UIButton *balanceBtn;
+@property (nonatomic,strong) UIButton *levelBtn;
+@property (nonatomic,strong) UIButton *couponBtn;
+@property (nonatomic,strong) UILabel *groupsLabel;
+@property (nonatomic,strong) UIButton *allGroupsBtn;
+@property (nonatomic,strong) UIButton *waitGroup;
+@property (nonatomic,strong) UIButton *successGroup;
+@property (nonatomic,strong) UIButton *failGroup;
 @property (nonatomic,strong) Acount * user;
-
 @end
 
 @implementation PersonCenterHeadView
@@ -73,10 +62,8 @@
     _setupButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_setupButton setImage:[UIImage imageOriginalImageName:@"shezhi"] forState:UIControlStateNormal];
     
-    
     _messageButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_messageButton setImage:[UIImage imageOriginalImageName:@"xiaoxi"] forState:UIControlStateNormal];
-    
     
     _headIconBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     _headIcon=[[UIImageView alloc]init];
@@ -160,16 +147,16 @@
         make.height.mas_equalTo(Height_Pt(682));
     }];
     
-    [_messageButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(_backImgView).with.offset( - 15);
-        make.top.equalTo(_backImgView).with.offset(20);
-        make.size.mas_equalTo(CGSizeMake(30, 44));
+    [_setupButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_backImgView).with.offset( - Width_Pt(46));
+        make.top.equalTo(_backImgView).offset(Height_Pt(85));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(75), Height_Pt(75)));
     }];
     
-    [_setupButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_messageButton);
-        make.right.equalTo(_messageButton.mas_left).with.offset( - 15);
-        make.size.equalTo(_messageButton);
+    [_messageButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_setupButton);
+        make.left.equalTo(_backImgView).with.offset(Width_Pt(46));
+        make.size.equalTo(_setupButton);
     }];
     
     [_headIconBtn mas_makeConstraints:^(MASConstraintMaker *make) {

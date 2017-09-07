@@ -63,9 +63,9 @@ static NSString *unAddTo=@"addto";
     _addTo.userInteractionEnabled=YES;
     [_addTo setImage:[UIImage imageNamed:addTos] forState:UIControlStateNormal];
     [[_addTo rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-        if ([_countText.text integerValue]<99) {
+        if ([_countText.text integerValue]<10) {
             _countText.text=[NSString stringWithFormat:@"%ld",[_countText.text integerValue]+1];
-            if ([_countText.text integerValue]==99) {
+            if ([_countText.text integerValue]==10) {
                 [_addTo setImage:[UIImage imageNamed:unAddTo] forState:UIControlStateNormal];
                 _addTo.userInteractionEnabled=NO;
             }else{
@@ -94,8 +94,8 @@ static NSString *unAddTo=@"addto";
             _reduce.userInteractionEnabled=NO;
             [_addTo setImage:[UIImage imageNamed:addTos] forState:UIControlStateNormal];
             _addTo.userInteractionEnabled=YES;
-        }else if ([_countText.text integerValue]>=99) {
-            _countText.text=@"99";
+        }else if ([_countText.text integerValue]>=10) {
+            _countText.text=@"10";
             [_reduce setImage:[UIImage imageNamed:reduces] forState:UIControlStateNormal];
             _reduce.userInteractionEnabled=YES;
             [_addTo setImage:[UIImage imageNamed:unAddTo] forState:UIControlStateNormal];

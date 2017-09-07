@@ -57,7 +57,7 @@
     _collectionCount.text = model.collects;
     _scoreNumber.text = model.score;
     _descrLabel.text = model.introduce;
-    _collectBtn.selected=[model.is_collect integerValue]==1 ? YES : NO;
+    _collectBtn.selected=[model.isCollect integerValue]==1 ? YES : NO;
 }
 -(void)setIsBeauticianSelect:(BOOL)isBeauticianSelect{
     _isBeauticianSelect=isBeauticianSelect;

@@ -10,7 +10,7 @@
 #import "UIButton+Category.h"
 
 @interface ShareViewController ()
-@property (nonatomic,strong) UIView * Jview;
+@property (nonatomic,strong) UIImageView * popImage;
 @end
 
 @implementation ShareViewController
@@ -91,7 +91,9 @@
     
     [button setAttributedTitle:normalStr forState:UIControlStateNormal];
     [button setAttributedTitle:HighStr forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(JLmessage:) forControlEvents:UIControlEventTouchUpInside];
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Master PopAlertView:_popImage];
+    }];
     [self.view addSubview:button];
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
@@ -114,69 +116,46 @@
     }
     
     /** 奖励细则弹框 */
-    _Jview =[[UIView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
-    [_Jview setBackgroundColor:[[UIColor grayColor]colorWithAlphaComponent:0.3]];
-    [self.view addSubview:_Jview];
+    _popImage=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bj"]];
+    _popImage.userInteractionEnabled=YES;
+    [_popImage setFrame:CGRectMake(0, 0, Width-Width_Pt(180), Height_Pt(1235))];
     
-    UIImageView * Jimage=[[UIImageView alloc]init];
-    [Jimage setImage:[UIImage imageNamed:@"bj"]];
-    [Jimage setContentMode:UIViewContentModeScaleAspectFill];
-    [_Jview addSubview:Jimage];
-    
-    [Jimage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
-        make.left.equalTo(_Jview).offset(25);
-        make.right.equalTo(_Jview).offset(-25);
-        make.width.mas_equalTo(Width_Pt(902));
-        make.height.mas_equalTo(Height_Pt(1236));
+    UIButton *iKnow=[[UIButton alloc]init];
+    [iKnow setBackgroundImage:[UIImage imageNamed:@"wozhidaole"] forState:UIControlStateNormal];
+    [[iKnow rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Master RemovePopViewWithBlock:nil];
+    }];
+    [_popImage addSubview:iKnow];
+    [iKnow mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_popImage.mas_bottom).offset(-Height_Pt(40));
+        make.centerX.equalTo(_popImage);
+        make.size.sizeOffset(CGSizeMake(Width_Pt(409), Height_Pt(111)));
     }];
     
-    UILabel *title=[[UILabel alloc]init];
-    title.text=@"活动细则";
-    [title setFont:[UIFont boldSystemFontOfSize:Font_Size(60)]];
-    [title setTextColor:[UIColor blackColor]];
-    title.numberOfLines=0;
-    [Jimage addSubview:title];
-    [title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(Jimage);
-        make.top.equalTo(Jimage.mas_top).offset(Height_Pt(290));
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(300), Height_Pt(80)));
-    }];
-
-    UITextView *textview=[[UITextView alloc]init];
-    [textview setTextColor:[UIColor blackColor]];
-    textview.font=[UIFont systemFontOfSize:Font_Size(35)];
-    [textview setEditable:NO];
-    [textview setText:@"1.如果您的闺蜜从未在美丽敲敲门APP平台下单，则可以领取您分享的“闺蜜25元优惠券”，优惠券有效期为一个月；\n\n2.您的闺蜜只要完成领券后在一个月内消费并使用了本次活动优惠券，您可以领取25元代金券，该优惠券实时到账，可在“我的优惠券”中查看，使用期限为一个月；\n\n3.分享有礼可根据人数进行累加；\n\n4.拥有相同账户（手机号、设备、银行卡、支付账户）均视为同一用户，仅对首次在APP下单的闺蜜及分享者进行返券活动；\n\n5.一经发现任何违规获取美丽敲敲门优惠券的行为， 不予发放任何优惠券，追究法律责任。"];
-    [_Jview addSubview:textview];
-
-    UIButton *zhidao=[[UIButton alloc]init];
-    [zhidao setImage:[UIImage imageNamed:@"wozhidaole"] forState:UIControlStateNormal];
-    [zhidao addTarget:self action:@selector(zhidao:) forControlEvents:UIControlEventTouchUpInside];
-    [_Jview addSubview:zhidao];
-    [zhidao mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(Jimage);
-        make.bottom.equalTo(Jimage.mas_bottom).offset(-Height_Pt(40));
-        make.width.height.mas_equalTo(CGSizeMake(Width_Pt(440), Height_Pt(145)));
+    UITextView *messageView=[[UITextView alloc]init];
+    [messageView setTextColor:[UIColor blackColor]];
+    messageView.font=[UIFont systemFontOfSize:Font_Size(35)];
+    [messageView setEditable:NO];
+    [messageView setText:@"1.如果您的闺蜜从未在美丽敲敲门APP平台下单，则可以领取您分享的“闺蜜25元优惠券”，优惠券有效期为一个月；\n\n2.您的闺蜜只要完成领券后在一个月内消费并使用了本次活动优惠券，您可以领取25元代金券，该优惠券实时到账，可在“我的优惠券”中查看，使用期限为一个月；\n\n3.分享有礼可根据人数进行累加；\n\n4.拥有相同账户（手机号、设备、银行卡、支付账户）均视为同一用户，仅对首次在APP下单的闺蜜及分享者进行返券活动；\n\n5.一经发现任何违规获取美丽敲敲门优惠券的行为， 不予发放任何优惠券，追究法律责任。"];
+    [_popImage addSubview:messageView];
+    [messageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_popImage).offset(Width_Pt(70));
+        make.right.equalTo(_popImage).offset(-Width_Pt(70));
+        make.bottom.equalTo(iKnow.mas_top).offset(-Height_Pt(45));
+        make.height.offset(Height_Pt(623));
     }];
     
-    [textview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(Jimage);
-        make.top.equalTo(title.mas_bottom).offset(10);
-        make.left.equalTo(Jimage.mas_left).offset(10);
-        make.bottom.equalTo(zhidao.mas_top).offset(-10);
-        make.right.equalTo(Jimage.mas_right).offset(-10);
+    UILabel *popTitle=[[UILabel alloc]init];
+    popTitle.text=@"活动细则";
+    popTitle.font=[UIFont boldSystemFontOfSize:Font_Size(60)];
+    [_popImage addSubview:popTitle];
+    [popTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(_popImage);
+        make.bottom.equalTo(messageView.mas_top).offset(-Height_Pt(65));
     }];
-    [_Jview setHidden:YES];
 }
 -(void)share:(UIButton*)button{
     NSLog(@"分享");
-}
--(void)JLmessage:(UIButton*)button{
-    [_Jview setHidden:NO];
-}
--(void)zhidao:(UIButton*)button{
-    [_Jview setHidden:YES];
 }
 -(void)shareButton:(UIButton*)button{
     switch (button.tag) {

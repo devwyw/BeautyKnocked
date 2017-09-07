@@ -157,6 +157,7 @@
     if (!_passwordTextField) {
         _passwordTextField = [[UITextField alloc] init];
         _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _passwordTextField.clearButtonMode=UITextFieldViewModeWhileEditing;
         _passwordTextField.textColor=[UIColor whiteColor];
         _passwordTextField.placeholder = @"请输入密码";
         _passwordTextField.delegate=self;

@@ -16,5 +16,5 @@
 @property (nonatomic,copy) NSString * introduce;
 @property (nonatomic,copy) NSString * score;
 @property (nonatomic,copy) NSString * collects;
-@property (nonatomic,copy) NSString * is_collect;
+@property (nonatomic,copy) NSString * isCollect;
 @end

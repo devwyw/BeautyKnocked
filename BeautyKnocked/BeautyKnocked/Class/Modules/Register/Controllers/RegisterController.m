@@ -17,7 +17,6 @@
 @interface RegisterController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIImageView *logoImgView;
-
 @property (nonatomic, strong) UIImageView *backImgView;
 
 @property (nonatomic, strong) UITextField *phoneNumberTextField;
@@ -27,13 +26,9 @@
 @property (nonatomic, strong) NSDate *beforeDate;
 
 @property (nonatomic, strong) UITextField *varificationCodeTextField;
-
 @property (nonatomic, strong) UITextField *passwordTextField;
-
 @property (nonatomic, strong) UITextField *confirmPasswordTextField;
-
 @property (nonatomic, strong) UIButton *registerBtn;
-
 @property (nonatomic, strong) UIButton *bookBtn;
 
 @end
@@ -74,7 +69,6 @@ static int const timeCode = 60;
         _getCode.userInteractionEnabled=YES;
     }
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];

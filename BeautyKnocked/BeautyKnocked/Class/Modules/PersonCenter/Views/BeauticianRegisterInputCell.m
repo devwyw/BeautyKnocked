@@ -11,7 +11,6 @@
 @interface BeauticianRegisterInputCell ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
-
 @property (nonatomic, strong) UITextField *textField;
 
 @end

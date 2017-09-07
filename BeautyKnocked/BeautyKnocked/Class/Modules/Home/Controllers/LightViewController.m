@@ -99,7 +99,36 @@
         _text1=[[UITextField alloc]initWithFrame:CGRectMake(5, 5, Width-110, Height_Pt(245)/2-10)];
         _text1.font = [UIFont systemFontOfSize:14.0f];
         _text1.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [_text1 addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [[_text1 rac_signalForControlEvents:UIControlEventEditingChanged]subscribeNext:^(__kindof UIControl * _Nullable x) {
+            UITextField *textField=_text1;
+            int length = 4;//限制的字数
+            NSString *toBeString = textField.text;
+            NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage;
+            if ([lang isEqualToString:@"zh-Hans"]) {
+                UITextRange *selectedRange = [textField markedTextRange];
+                UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+                if (!position || !selectedRange)
+                {
+                    if (toBeString.length > length)
+                    {
+                        NSRange rangeIndex = [toBeString rangeOfComposedCharacterSequenceAtIndex:length];
+                        if (rangeIndex.length == 1)
+                        {
+                            textField.text = [toBeString substringToIndex:length];
+                        }
+                        else
+                        {
+                            NSRange rangeRange = [toBeString rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, length)];
+                            textField.text = [toBeString substringWithRange:rangeRange];
+                        }
+                    }
+                }
+            }else{
+                if (textField.text.length >=20) {
+                    textField.text=[textField.text substringToIndex:20];
+                }
+            }
+        }];
         _text1.placeholder = @"请输入姓名";
         _text1.borderStyle = UITextBorderStyleRoundedRect;
         [_textView addSubview:_text1];
@@ -119,36 +148,6 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     return [textField setRange:range whitString:string whitCount:11];
-}
-- (void)textFieldDidChange:(UITextField *)textField
-{
-    int length = 4;//限制的字数
-    NSString *toBeString = textField.text;
-    NSString *lang = [[UIApplication sharedApplication]textInputMode].primaryLanguage;
-    if ([lang isEqualToString:@"zh-Hans"]) {
-        UITextRange *selectedRange = [textField markedTextRange];
-        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
-        if (!position || !selectedRange)
-        {
-            if (toBeString.length > length)
-            {
-                NSRange rangeIndex = [toBeString rangeOfComposedCharacterSequenceAtIndex:length];
-                if (rangeIndex.length == 1)
-                {
-                    textField.text = [toBeString substringToIndex:length];
-                }
-                else
-                {
-                    NSRange rangeRange = [toBeString rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, length)];
-                    textField.text = [toBeString substringWithRange:rangeRange];
-                }
-            }
-        }
-    }else{
-        if (textField.text.length >=20) {
-            textField.text=[textField.text substringToIndex:20];
-        }
-    }
 }
 -(void)pushSon:(UIButton*)button{
     LightSonViewController *controller=[[LightSonViewController alloc]init];
