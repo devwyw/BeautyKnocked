@@ -150,7 +150,7 @@
     [_setupButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_backImgView).with.offset( - Width_Pt(46));
         make.top.equalTo(_backImgView).offset(Height_Pt(85));
-        make.size.mas_equalTo(CGSizeMake(Width_Pt(75), Height_Pt(75)));
+        make.size.mas_equalTo(CGSizeMake(Width_Pt(70), Height_Pt(70)));
     }];
     
     [_messageButton mas_makeConstraints:^(MASConstraintMaker *make) {
