@@ -67,6 +67,7 @@
 		04CB6C1E1F31CA7E0039B87C /* OrderSubTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CB6C1D1F31CA7E0039B87C /* OrderSubTime.m */; };
 		04DC3AD31F4678A0004F269E /* CouponModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DC3AD21F4678A0004F269E /* CouponModel.m */; };
 		04DF49291F44409900623307 /* CouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF49281F44409900623307 /* CouponCell.m */; };
+		04E14BDC1F62448700EC749B /* OrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E14BDB1F62448700EC749B /* OrderController.m */; };
 		04E3A9A11F5A3F2900F94AAE /* ProductOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3A9A01F5A3F2900F94AAE /* ProductOrderModel.m */; };
 		04E3A9A41F5A520000F94AAE /* ExpressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E3A9A31F5A520000F94AAE /* ExpressView.m */; };
 		04E40AD21F2C586900C4D665 /* MyGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E40AD11F2C586900C4D665 /* MyGroupController.m */; };
@@ -1082,6 +1083,8 @@
 		04DC3AD21F4678A0004F269E /* CouponModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponModel.m; sourceTree = "<group>"; };
 		04DF49271F44409900623307 /* CouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponCell.h; sourceTree = "<group>"; };
 		04DF49281F44409900623307 /* CouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponCell.m; sourceTree = "<group>"; };
+		04E14BDA1F62448700EC749B /* OrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderController.h; sourceTree = "<group>"; };
+		04E14BDB1F62448700EC749B /* OrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderController.m; sourceTree = "<group>"; };
 		04E3A99F1F5A3F2900F94AAE /* ProductOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductOrderModel.h; sourceTree = "<group>"; };
 		04E3A9A01F5A3F2900F94AAE /* ProductOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductOrderModel.m; sourceTree = "<group>"; };
 		04E3A9A21F5A520000F94AAE /* ExpressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressView.h; sourceTree = "<group>"; };
@@ -3740,6 +3743,8 @@
 				736DE2931ECFE1EA00E32717 /* OrderBaseTableViewController.m */,
 				7382800D1EF274240005DC28 /* ConfirmOrderController.h */,
 				7382800E1EF274240005DC28 /* ConfirmOrderController.m */,
+				04E14BDA1F62448700EC749B /* OrderController.h */,
+				04E14BDB1F62448700EC749B /* OrderController.m */,
 				043212B91F26F9F400F29D1B /* OrderMessageViewController.h */,
 				043212BA1F26F9F400F29D1B /* OrderMessageViewController.m */,
 				043212CE1F273B5800F29D1B /* WuLiuController.h */,
@@ -5326,6 +5331,7 @@
 				7319866F1EC1A65300FA7DF0 /* RegisterController.m in Sources */,
 				04EFA4501F554A5E003933A5 /* PayInfoModel.m in Sources */,
 				737A1FE61EDFEAE800CD6FD2 /* NewsCenterModel.m in Sources */,
+				04E14BDC1F62448700EC749B /* OrderController.m in Sources */,
 				0413DB721F1F0DE000357B27 /* LightSonViewController.m in Sources */,
 				04DC3AD31F4678A0004F269E /* CouponModel.m in Sources */,
 				736DE2911ECFE10200E32717 /* OrderPageController.m in Sources */,

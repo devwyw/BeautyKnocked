@@ -11,7 +11,7 @@
 #import "ConfirmOrderController.h"
 #import "CarItem.h"
 #import "ItemDetailViewModel.h"
-
+#import "OrderController.h"
 
 @interface ItemDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -94,17 +94,18 @@
     }
     Weakify(self);
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
-        //立即预约
         if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
-            ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
             if (isStringEmpty(self.projectId)) {
+                ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
                 confirmController.orderStyle = MLItem;
                 confirmController.detailModel=self.itemDetailViewModel.model;
+                [Wself.navigationController pushViewController:confirmController animated:YES];
             }else{
-                confirmController.orderStyle = MLPackage;
-                confirmController.packageInfoModel=self.itemDetailViewModel.Pmodel;
+                OrderController *controller = [[OrderController alloc]init];
+                controller.orderStyle = MLPackage;
+                controller.packageInfoModel=self.itemDetailViewModel.Pmodel;
+                [Wself.navigationController pushViewController:controller animated:YES];
             }
-            [Wself.navigationController pushViewController:confirmController animated:YES];
         }
     }];
     [self.view addSubview:_addReserveView];

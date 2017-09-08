@@ -10,7 +10,7 @@
 
 @interface ConfirmOrderFillCell : UITableViewCell
 
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic,copy) NSString *title;
+@property (nonatomic,copy) NSString *content;
 @property (nonatomic,copy) NSMutableAttributedString * attributed;
 @end

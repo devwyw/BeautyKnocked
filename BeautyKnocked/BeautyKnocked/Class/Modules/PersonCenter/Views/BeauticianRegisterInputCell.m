@@ -39,35 +39,29 @@
     [self.contentView addSubview:_titleLabel];
     
     _textField = [[UITextField alloc] init];
+    _textField.textColor=[UIColor darkGrayColor];
     _textField.font =[UIFont systemFontOfSize:Font_Size(45)];
     [self.contentView addSubview:_textField];
 }
 
 -(void)addConstraints {
-    
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(Width_Pt(45));
         make.centerY.equalTo(self.contentView);
     }];
     
     [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.equalTo(self.contentView);
         make.left.equalTo(self.contentView).with.offset(Width_Pt(335));
-        make.centerY.equalTo(self.contentView);
+        make.centerY.equalTo(_titleLabel);
         make.right.equalTo(self.contentView).with.offset( - 8);
     }];
-    
 }
-
 -(void)setPlaceholder:(NSString *)placeholder {
     _textField.placeholder = placeholder;
 }
-
 -(void)setTitle:(NSString *)title {
     _titleLabel.text = title;
-}
-
--(NSString *)textFieldContent {
-    return _textField.text;
 }
 
 @end

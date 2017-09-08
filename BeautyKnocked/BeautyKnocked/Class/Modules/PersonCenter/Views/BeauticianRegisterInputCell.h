@@ -9,11 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BeauticianRegisterInputCell : UITableViewCell
-
 @property (nonatomic, copy) NSString *placeholder;
-
 @property (nonatomic, copy) NSString *title;
-
-@property (nonatomic, copy) NSString *textFieldContent;
 
 @end
