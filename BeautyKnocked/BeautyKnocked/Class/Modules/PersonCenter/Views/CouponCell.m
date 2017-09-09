@@ -106,7 +106,7 @@
                 break;
         }
         _label1.text=[NSString stringWithFormat:@"• 此优惠券为%@;",type];
-        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，可抵扣相同金额的价格;",model.money];
+        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，可抵扣相等价格的金额;",model.money];
         _label3.text=@"• 每笔订单最多限用一张，不叠加使用优惠券;";
         
         NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"• 券不找零，不兑换现金，最终解释权归美丽敲敲门所有;"];

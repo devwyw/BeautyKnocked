@@ -31,10 +31,14 @@
 -(void)setContentColor:(UIColor *)contentColor {
     _contentLabel.textColor = contentColor;
 }
-
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        [self makeBorderWidth:Width_Pt(2) withColor:[UIColor lightGrayColor]];
+        
+        UIView *selectedView = [[UIView alloc]init];
+        selectedView.backgroundColor = ThemeColor;
+        self.selectedBackgroundView = selectedView;
         [self initializeViews];
         [self addConstraints];
     }

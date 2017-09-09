@@ -33,6 +33,7 @@
     self.view.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
     self.tableView.estimatedRowHeight=100;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.contentInset=UIEdgeInsetsMake(0, 0, Height_Pt(40), 0);
     [self.tableView registerClass:[CouponCell class] forCellReuseIdentifier:@"CouponCell"];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

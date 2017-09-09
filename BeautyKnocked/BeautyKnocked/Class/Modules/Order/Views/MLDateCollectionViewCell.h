@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface MLDateCollectionViewCell : UICollectionViewCell
-
 /**
  first line text
  */
 @property (nonatomic, copy) NSString *dateNumber;
-
 /**
  second line text
  */

@@ -31,18 +31,12 @@
 @property (nonatomic, assign) NSInteger todayWeekDay;
 @property (nonatomic,strong) UIButton * donBtn;
 
-@property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
 @property (nonatomic,copy) NSString * selectDay;
 
 @end
 
 @implementation BeauticianSortMenuView
--(NSMutableDictionary*)cellIdentifierDic{
-    if (!_cellIdentifierDic) {
-        _cellIdentifierDic=[[NSMutableDictionary alloc]init];
-    }
-    return _cellIdentifierDic;
-}
+
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -205,6 +199,7 @@
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:@"MLDateCollectionViewCell"];
         self.collectionView;
     });
     [self.backView addSubview:self.collectionView];
@@ -282,38 +277,25 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
-    if (identifier == nil) {
-        identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
-        [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
-
-        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
-    }
-    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    // 此处可以对Cell做你想做的操作了...
-    [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     MLDateModel *dateModel = self.dataSource[indexPath.item];
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MLDateCollectionViewCell" forIndexPath:indexPath];
     cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
     
-    if (dateModel.isInThirtyDays) {
-        cell.backgroundColor=[UIColor whiteColor];
-        UIView *selectedView = [[UIView alloc] init];
-        selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
-        cell.selectedBackgroundView = selectedView;
-    }
-
     if (indexPath.item + 1 >= _todayWeekDay && dateModel.day == 1 ) {
         cell.content = self.months[dateModel.month];
+    }else{
+        cell.content=nil;
     }
-//    if (indexPath.item + 1 == _todayWeekDay) {
-//        cell.dateNumber = @"今天";
-//        cell.content = @"约满";
-//        cell.numberColor = ThemeColor;
-//        cell.contentColor = ThemeColor;
-//    }
+    
+    if (!dateModel.isInThirtyDays) {
+        cell.backgroundColor=[UIColor clearColor];
+        cell.userInteractionEnabled=NO;
+    }else{
+        cell.backgroundColor=[UIColor whiteColor];
+        cell.userInteractionEnabled=YES;
+    }
     return cell;
 }
-
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     MLDateModel *dateModel = self.dataSource[indexPath.item];
     if (!dateModel.isInThirtyDays) {

@@ -26,7 +26,6 @@ static OrderSubDay *instance=nil;
 @property (nonatomic,strong) NSArray *weekDays;
 
 @property (nonatomic,strong) NSDateComponents *nowCompoents;
-@property (nonatomic,strong) NSMutableDictionary * cellIdentifierDic;
 @property (nonatomic,strong) DayModel * startTime;
 @property (nonatomic,strong) NSMutableDictionary * webTimeData;
 @end
@@ -59,12 +58,6 @@ static OrderSubDay *instance=nil;
         [instance initializeViews];
     }
     return instance;
-}
--(NSMutableDictionary*)cellIdentifierDic{
-    if (!_cellIdentifierDic) {
-        _cellIdentifierDic=[[NSMutableDictionary alloc]init];
-    }
-    return _cellIdentifierDic;
 }
 -(NSMutableDictionary*)webTimeData{
     if (!_webTimeData) {
@@ -182,6 +175,7 @@ static OrderSubDay *instance=nil;
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:@"MLDateCollectionViewCell"];
         self.collectionView;
     });
     
@@ -223,25 +217,13 @@ static OrderSubDay *instance=nil;
     return self.dataSource.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
-    if (identifier == nil) {
-        identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
-        [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
-        
-        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
-    }
-    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    // 此处可以对Cell做你想做的操作了...
-    [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
     MLDateModel *dateModel = self.dataSource[indexPath.item];
-    cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MLDateCollectionViewCell" forIndexPath:indexPath];
     
-    if (dateModel.isInThirtyDays) {
-        cell.backgroundColor=[UIColor whiteColor];
-    }
-
     if (indexPath.item + 1 >= _nowCompoents.weekday && dateModel.day == 1 ) {
         cell.content = self.months[dateModel.month];
+    }else{
+        cell.content = nil;
     }
     
     if (indexPath.item + 1 == _nowCompoents.weekday &&_nowCompoents.day<_startTime.day) {
@@ -249,8 +231,24 @@ static OrderSubDay *instance=nil;
         cell.content = @"约满";
         cell.numberColor = ThemeColor;
         cell.contentColor = ThemeColor;
-        cell.userInteractionEnabled=NO;
+    }else{
+        cell.dateNumber = [NSString stringWithFormat:@"%ld",dateModel.day];
+        cell.numberColor = [UIColor blackColor];
+        cell.contentColor = [UIColor blackColor];
     }
+
+    if (!dateModel.isInThirtyDays) {
+        cell.backgroundColor=[UIColor clearColor];
+        cell.userInteractionEnabled=NO;
+    }else{
+        cell.backgroundColor=[UIColor whiteColor];
+        if (indexPath.item + 1 == _nowCompoents.weekday &&_nowCompoents.day<_startTime.day) {
+            cell.userInteractionEnabled=NO;
+        }else{
+            cell.userInteractionEnabled=YES;
+        }
+    }
+    
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

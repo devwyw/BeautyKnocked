@@ -21,19 +21,12 @@
 @property (nonatomic, strong) UICollectionView * collectionView;
 @property (nonatomic, strong) UIButton * confirmBtn;
 @property (nonatomic, strong) NSMutableArray * dataSource;
-@property (nonatomic, strong) NSMutableDictionary * cellIdentifierDic;
 @property (nonatomic, copy) NSString * selectsTime;
 
 @end
 
 @implementation OrderSubTime
 
--(NSMutableDictionary*)cellIdentifierDic{
-    if (!_cellIdentifierDic) {
-        _cellIdentifierDic=[[NSMutableDictionary alloc]init];
-    }
-    return _cellIdentifierDic;
-}
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
@@ -98,6 +91,7 @@
         _collectionView.dataSource = self;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
+        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:@"MLDateCollectionViewCell"];
         self.collectionView;
     });
     [self addSubview:_collectionView];
@@ -170,20 +164,7 @@
     return self.dataSource.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [self.cellIdentifierDic objectForKey:[NSString stringWithFormat:@"%@",indexPath]];
-    if (identifier == nil) {
-        identifier = [NSString stringWithFormat:@"selected%@", [NSString stringWithFormat:@"%@", indexPath]];
-        [_cellIdentifierDic setObject:identifier forKey:[NSString  stringWithFormat:@"%@",indexPath]];
-        [_collectionView registerClass:[MLDateCollectionViewCell class] forCellWithReuseIdentifier:identifier];
-    }
-    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    
-    UIView *selectedView = [[UIView alloc] init];
-    selectedView.backgroundColor = [UIColor colorWithHexString:@"#E1BF6E"];
-    cell.selectedBackgroundView = selectedView;
-    [cell.contentView makeBorderWidth:0.5 withColor:[UIColor lightGrayColor]];
-    [cell setBackgroundColor:[UIColor whiteColor]];
-    
+    MLDateCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MLDateCollectionViewCell" forIndexPath:indexPath];
     cell.dateNumber = self.dataSource[indexPath.item];
 
     NSArray *nowTime=[[NSArray alloc]init];
@@ -198,6 +179,10 @@
             cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
             cell.content=@"约满";
             cell.userInteractionEnabled=NO;
+        }else{
+            cell.backgroundColor=[UIColor whiteColor];
+            cell.content=nil;
+            cell.userInteractionEnabled=YES;
         }
     }
     for (NSArray *timeArray in _listArray) {
@@ -207,7 +192,8 @@
             cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
             cell.content=@"约满";
             cell.userInteractionEnabled=NO;
-        }else{//局部
+        }else{
+            //局部
             if ([nowTime.firstObject integerValue]==beginModel.hour && [nowTime.lastObject integerValue]>=beginModel.minute) {
                 cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
                 cell.content=@"约满";
@@ -216,6 +202,10 @@
                 cell.backgroundColor=[UIColor colorWithHexString:@"#F0F0F0"];
                 cell.content=@"约满";
                 cell.userInteractionEnabled=NO;
+            }else{
+                cell.backgroundColor=[UIColor whiteColor];
+                cell.content=nil;
+                cell.userInteractionEnabled=YES;
             }
         }
     }
