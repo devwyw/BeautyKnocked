@@ -28,7 +28,7 @@
 -(void)initializeViews {
     
     _exchangeAggain = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_exchangeAggain setBackgroundColor:[UIColor orangeColor]];
+    [_exchangeAggain setBackgroundImage:[UIImage imageNamed:@"duihuankuang"] forState:UIControlStateNormal];
     _exchangeAggain.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [_exchangeAggain setTitle:@"继续兑换" forState:UIControlStateNormal];
     [_exchangeAggain makeCornerRadius:6];
@@ -37,7 +37,7 @@
     [_checkRecording setBackgroundImage:[UIImage imageNamed:@"jilukuang"] forState:UIControlStateNormal];
     _checkRecording.titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [_checkRecording setTitle:@"查看兑换记录" forState:UIControlStateNormal];
-    [_checkRecording setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [_checkRecording setTitleColor:ThemeColor forState:UIControlStateNormal];
     
     // events
     [[_exchangeAggain rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
@@ -51,7 +51,6 @@
             [self.delegate successFooterViewClicked:2];
         }
     }];
-    
     
     [self addSubview:_exchangeAggain];
     [self addSubview:_checkRecording];

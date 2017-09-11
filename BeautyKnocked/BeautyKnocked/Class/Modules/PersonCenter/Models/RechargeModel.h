@@ -15,5 +15,8 @@
 @property (nonatomic,copy) NSString * money;
 @property (nonatomic,copy) NSString * discount;
 @property (nonatomic,copy) NSString * give;
+@property (nonatomic,copy) NSString * num;
+@property (nonatomic,copy) NSString * choose;
+@property (nonatomic,strong) NSMutableArray * list;
 @property (nonatomic,assign) BOOL isSelected;
 @end

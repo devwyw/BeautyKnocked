@@ -13,17 +13,13 @@
 #import "RechargePayModel.h"
 #import "AppDelegate+Alipay.h"
 #import "AppDelegate+WXApi.h"
-#import "RechargeItemModel.h"
 #import "RechargeItemCell.h"
-#import <AFNetworking.h>
-#import <SVProgressHUD.h>
 
 @interface RechargeInfoController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableview;
 @property (nonatomic,strong) UIButton * payDone;
 @property (nonatomic,strong) RechargeModel * rechargeModel;
 @property (nonatomic,strong) RechargePayModel * model;
-@property (nonatomic,strong) RechargeItemModel * itemModel;
 @end
 
 @implementation RechargeInfoController
@@ -42,12 +38,6 @@
         _model=[[RechargePayModel alloc]init];
     }
     return _model;
-}
--(RechargeItemModel*)itemModel{
-    if (!_itemModel) {
-        _itemModel=[[RechargeItemModel alloc]init];
-    }
-    return _itemModel;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,13 +64,13 @@
     [_payDone setBackgroundColor:[UIColor colorWithHexString:@"#67D75A"]];
     Weakify(self);
     [[_payDone rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-        if ([_itemModel.choose integerValue]>0){
+        if ([_rechargeModel.choose integerValue]>0){
             [Master showSVProgressHUD:@"请选择选择赠品" withType:ShowSVProgressTypeInfo withShowBlock:nil];
         }else if ([_model.payType integerValue]==0) {
             [Master showSVProgressHUD:@"请选择支付方式" withType:ShowSVProgressTypeInfo withShowBlock:nil];
         }else{
             _model.rules=nil;
-            for (NSDictionary *dict in _itemModel.list) {
+            for (NSDictionary *dict in _rechargeModel.list) {
                 RechargeItemInfoModel *model=[RechargeItemInfoModel mj_objectWithKeyValues:dict];
                 if (model.isSelected) {
                     if (!isStringEmpty(_model.rules)) {
@@ -133,7 +123,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     switch (section) {
         case 2:
-            return self.itemModel.list.count+1;
+            return self.rechargeModel.list.count+1;
         case 3:
             return 3;
         default:
@@ -155,11 +145,11 @@
                 UITableViewCell *cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefault"];
                 cell.selectionStyle=UITableViewCellSelectionStyleNone;
                 cell.textLabel.font=[UIFont systemFontOfSize:Font_Size(40)];
-                cell.textLabel.text=[NSString stringWithFormat:@"赠送列表: %@选%@",self.itemModel.num,self.itemModel.choose];
+                cell.textLabel.text=[NSString stringWithFormat:@"赠送列表: %@选%@",self.rechargeModel.num,self.rechargeModel.choose];
                 return cell;
             }else{
                 RechargeItemCell *cell=[tableView dequeueReusableCellWithIdentifier:@"RechargeItemCell" forIndexPath:indexPath];
-                cell.model=[RechargeItemInfoModel mj_objectWithKeyValues:self.itemModel.list[indexPath.row-1]];
+                cell.model=[RechargeItemInfoModel mj_objectWithKeyValues:self.rechargeModel.list[indexPath.row-1]];
                 return cell;
             }
         }
@@ -221,17 +211,17 @@
             case 2:
         {
             if (indexPath.row!=0) {
-                RechargeItemInfoModel *model=[RechargeItemInfoModel mj_objectWithKeyValues:self.itemModel.list[indexPath.row-1]];
+                RechargeItemInfoModel *model=[RechargeItemInfoModel mj_objectWithKeyValues:self.rechargeModel.list[indexPath.row-1]];
                 if (!model.isSelected) {
-                    if ([_itemModel.choose integerValue]==0)break;
+                    if ([_rechargeModel.choose integerValue]==0)break;
                     model.isSelected=!model.isSelected;
-                    _itemModel.choose=[NSString stringWithFormat:@"%ld",[_itemModel.choose integerValue]-1];
-                    [_itemModel.list replaceObjectAtIndex:indexPath.row-1 withObject:model.mj_keyValues];
+                    _rechargeModel.choose=[NSString stringWithFormat:@"%ld",[_rechargeModel.choose integerValue]-1];
+                    [_rechargeModel.list replaceObjectAtIndex:indexPath.row-1 withObject:model.mj_keyValues];
                     [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
                 }else{
                     model.isSelected=!model.isSelected;
-                    _itemModel.choose=[NSString stringWithFormat:@"%ld",[_itemModel.choose integerValue]+1];
-                    [_itemModel.list replaceObjectAtIndex:indexPath.row-1 withObject:model.mj_keyValues];
+                    _rechargeModel.choose=[NSString stringWithFormat:@"%ld",[_rechargeModel.choose integerValue]+1];
+                    [_rechargeModel.list replaceObjectAtIndex:indexPath.row-1 withObject:model.mj_keyValues];
                     [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
                 }
             }
@@ -255,44 +245,10 @@
     self.model.payType=@"0";
     self.model.rechargeId=_Cid;
 
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    {/** 菊花 */
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD setMinimumDismissTimeInterval:3];
-    }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 20;
-    manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
-    /** 第一次请求 */
-    [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,czxq] parameters:@{@"id":_model.rechargeId} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSData *data = responseObject;
-        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        _rechargeModel=[RechargeModel mj_objectWithKeyValues:resultDic[@"info"]];
-        [_tableview reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        /** 第二次请求 */
-        [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,czzslb] parameters:@{@"rId":_model.rechargeId} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-            [SVProgressHUD dismiss];
-            NSData *data = responseObject;
-            NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            _itemModel=[RechargeItemModel mj_objectWithKeyValues:resultDic[@"info"]];
-            [_tableview reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-        }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-            [SVProgressHUD dismiss];
-            NSLog(@"网络请求错误: %@",error);
-            [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
-        }];
-    }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-        [SVProgressHUD dismiss];
-        NSLog(@"网络请求错误: %@",error);
-        [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
-    }];
+    [Master HttpPostRequestByParams:@{@"id":_model.rechargeId} url:mlqqm serviceCode:czxq Success:^(id json) {
+        _rechargeModel=[RechargeModel mj_objectWithKeyValues:json[@"info"]];
+        [_tableview reloadData];
+    } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

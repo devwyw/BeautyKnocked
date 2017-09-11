@@ -10,7 +10,9 @@
 
 @interface IntegralMallViewModel : NSObject
 
-@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic,strong) UINavigationController *navigationController;
+@property (nonatomic,strong) NSArray * dataArray;
+@property (nonatomic,assign) NSInteger integral;
 
 -(void)ddcs_configureCollectionView:(UICollectionView *)collectionView;
 

@@ -37,6 +37,10 @@
 		045C8ACE1F452C71002C2F8B /* SonCouponTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C8ACD1F452C71002C2F8B /* SonCouponTableController.m */; };
 		045C8AD11F454783002C2F8B /* CouponInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C8AD01F454783002C2F8B /* CouponInfoController.m */; };
 		045C8AD41F456E77002C2F8B /* CouponUseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045C8AD31F456E77002C2F8B /* CouponUseCell.m */; };
+		046489F01F661E8600390628 /* IntegraListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 046489EF1F661E8600390628 /* IntegraListModel.m */; };
+		046489F31F6658F900390628 /* IntegraHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046489F21F6658F900390628 /* IntegraHeaderCell.m */; };
+		046489F61F66591E00390628 /* IntegraDataCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046489F51F66591E00390628 /* IntegraDataCell.m */; };
+		046489F91F66593400390628 /* IntegraInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 046489F81F66593400390628 /* IntegraInfoCell.m */; };
 		0465F6971F53AABA00F9FF90 /* ServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0465F6961F53AABA00F9FF90 /* ServiceCell.m */; };
 		0465F69A1F53B32700F9FF90 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0465F6991F53B32700F9FF90 /* PayViewController.m */; };
 		046A7EC71F4D7D7B005AD5FF /* NSDictionary+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 046A7EC51F4D7D7B005AD5FF /* NSDictionary+Log.m */; };
@@ -810,7 +814,6 @@
 		15EE59E61F5AC21600660757 /* unaddto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15EE59DE1F5AC21600660757 /* unaddto@3x.png */; };
 		15EE59E71F5AC21600660757 /* unreduce@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15EE59DF1F5AC21600660757 /* unreduce@2x.png */; };
 		15EE59E81F5AC21600660757 /* unreduce@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15EE59E01F5AC21600660757 /* unreduce@3x.png */; };
-		15EE59EB1F5AF75F00660757 /* RechargeItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15EE59EA1F5AF75F00660757 /* RechargeItemModel.m */; };
 		15EE59EE1F5AF9CC00660757 /* RechargeItemInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 15EE59ED1F5AF9CC00660757 /* RechargeItemInfoModel.m */; };
 		15EE59F11F5AFE4200660757 /* RechargeItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 15EE59F01F5AFE4200660757 /* RechargeItemCell.m */; };
 		5D8095F77245647DFC0B0685 /* libPods-CommonLib-BeautyKnocked.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCA16B93354FD6F29A02D2E /* libPods-CommonLib-BeautyKnocked.a */; };
@@ -884,9 +887,6 @@
 		738280081EF22F870005DC28 /* FightGroupInvitationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 738280071EF22F870005DC28 /* FightGroupInvitationView.m */; };
 		7382800F1EF274240005DC28 /* ConfirmOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382800E1EF274240005DC28 /* ConfirmOrderController.m */; };
 		738280151EF27ED60005DC28 /* ConfirmOrderAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 738280141EF27ED60005DC28 /* ConfirmOrderAddressCell.m */; };
-		7382AC0C1EE8E3E100FF4542 /* CouponDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC0B1EE8E3E100FF4542 /* CouponDescriptionCell.m */; };
-		7382AC0F1EE8EF6C00FF4542 /* ExchangeDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC0E1EE8EF6C00FF4542 /* ExchangeDetailViewModel.m */; };
-		7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC171EE91D7A00FF4542 /* ExchangeDetailCouponImage.m */; };
 		7382AC211EE9288000FF4542 /* ExchangeSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC201EE9288000FF4542 /* ExchangeSuccessController.m */; };
 		7382AC2C1EE9327600FF4542 /* SuccessFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC2B1EE9327600FF4542 /* SuccessFooterView.m */; };
 		7382AC2F1EE9371100FF4542 /* ExchangeRecordingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7382AC2E1EE9371100FF4542 /* ExchangeRecordingCell.m */; };
@@ -1025,6 +1025,14 @@
 		045C8AD01F454783002C2F8B /* CouponInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponInfoController.m; sourceTree = "<group>"; };
 		045C8AD21F456E77002C2F8B /* CouponUseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponUseCell.h; sourceTree = "<group>"; };
 		045C8AD31F456E77002C2F8B /* CouponUseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponUseCell.m; sourceTree = "<group>"; };
+		046489EE1F661E8600390628 /* IntegraListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegraListModel.h; sourceTree = "<group>"; };
+		046489EF1F661E8600390628 /* IntegraListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegraListModel.m; sourceTree = "<group>"; };
+		046489F11F6658F900390628 /* IntegraHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegraHeaderCell.h; sourceTree = "<group>"; };
+		046489F21F6658F900390628 /* IntegraHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegraHeaderCell.m; sourceTree = "<group>"; };
+		046489F41F66591E00390628 /* IntegraDataCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegraDataCell.h; sourceTree = "<group>"; };
+		046489F51F66591E00390628 /* IntegraDataCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegraDataCell.m; sourceTree = "<group>"; };
+		046489F71F66593400390628 /* IntegraInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegraInfoCell.h; sourceTree = "<group>"; };
+		046489F81F66593400390628 /* IntegraInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegraInfoCell.m; sourceTree = "<group>"; };
 		0465F6951F53AABA00F9FF90 /* ServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCell.h; sourceTree = "<group>"; };
 		0465F6961F53AABA00F9FF90 /* ServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCell.m; sourceTree = "<group>"; };
 		0465F6981F53B32700F9FF90 /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayViewController.h; sourceTree = "<group>"; };
@@ -1868,8 +1876,6 @@
 		15EE59DE1F5AC21600660757 /* unaddto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unaddto@3x.png"; sourceTree = "<group>"; };
 		15EE59DF1F5AC21600660757 /* unreduce@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unreduce@2x.png"; sourceTree = "<group>"; };
 		15EE59E01F5AC21600660757 /* unreduce@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unreduce@3x.png"; sourceTree = "<group>"; };
-		15EE59E91F5AF75F00660757 /* RechargeItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeItemModel.h; sourceTree = "<group>"; };
-		15EE59EA1F5AF75F00660757 /* RechargeItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeItemModel.m; sourceTree = "<group>"; };
 		15EE59EC1F5AF9CC00660757 /* RechargeItemInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeItemInfoModel.h; sourceTree = "<group>"; };
 		15EE59ED1F5AF9CC00660757 /* RechargeItemInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechargeItemInfoModel.m; sourceTree = "<group>"; };
 		15EE59EF1F5AFE4200660757 /* RechargeItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeItemCell.h; sourceTree = "<group>"; };
@@ -2014,12 +2020,6 @@
 		7382800E1EF274240005DC28 /* ConfirmOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderController.m; sourceTree = "<group>"; };
 		738280131EF27ED60005DC28 /* ConfirmOrderAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderAddressCell.h; sourceTree = "<group>"; };
 		738280141EF27ED60005DC28 /* ConfirmOrderAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderAddressCell.m; sourceTree = "<group>"; };
-		7382AC0A1EE8E3E100FF4542 /* CouponDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponDescriptionCell.h; sourceTree = "<group>"; };
-		7382AC0B1EE8E3E100FF4542 /* CouponDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponDescriptionCell.m; sourceTree = "<group>"; };
-		7382AC0D1EE8EF6C00FF4542 /* ExchangeDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeDetailViewModel.h; sourceTree = "<group>"; };
-		7382AC0E1EE8EF6C00FF4542 /* ExchangeDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeDetailViewModel.m; sourceTree = "<group>"; };
-		7382AC161EE91D7A00FF4542 /* ExchangeDetailCouponImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeDetailCouponImage.h; sourceTree = "<group>"; };
-		7382AC171EE91D7A00FF4542 /* ExchangeDetailCouponImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeDetailCouponImage.m; sourceTree = "<group>"; };
 		7382AC1F1EE9288000FF4542 /* ExchangeSuccessController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeSuccessController.h; sourceTree = "<group>"; };
 		7382AC201EE9288000FF4542 /* ExchangeSuccessController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeSuccessController.m; sourceTree = "<group>"; };
 		7382AC2A1EE9327600FF4542 /* SuccessFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessFooterView.h; sourceTree = "<group>"; };
@@ -2202,6 +2202,16 @@
 				04426CA41F4BBB6000B30D5B /* city.plist */,
 			);
 			path = Plist;
+			sourceTree = "<group>";
+		};
+		046489ED1F661E5600390628 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				046489EE1F661E8600390628 /* IntegraListModel.h */,
+				046489EF1F661E8600390628 /* IntegraListModel.m */,
+			);
+			name = Model;
+			path = Controllers/Model;
 			sourceTree = "<group>";
 		};
 		048D545A1F5D0C7200DD0E10 /* Model */ = {
@@ -3597,8 +3607,8 @@
 			isa = PBXGroup;
 			children = (
 				7390F4C21EE6A3DA0059A168 /* Controllers */,
-				7390F4C31EE6A3DA0059A168 /* Models */,
 				7390F4C41EE6A3DA0059A168 /* ViewModels */,
+				046489ED1F661E5600390628 /* Model */,
 				7390F4C51EE6A3DA0059A168 /* Views */,
 			);
 			path = IntegralMall;
@@ -3619,20 +3629,11 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		7390F4C31EE6A3DA0059A168 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		7390F4C41EE6A3DA0059A168 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				737125D11EE78C8A001A02DC /* IntegralMallViewModel.h */,
 				737125D21EE78C8A001A02DC /* IntegralMallViewModel.m */,
-				7382AC0D1EE8EF6C00FF4542 /* ExchangeDetailViewModel.h */,
-				7382AC0E1EE8EF6C00FF4542 /* ExchangeDetailViewModel.m */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3650,14 +3651,16 @@
 				737125FA1EE7D6AF001A02DC /* IntegralBalanceView.m */,
 				737126021EE7DFC7001A02DC /* CouponImageView.h */,
 				737126031EE7DFC7001A02DC /* CouponImageView.m */,
-				7382AC0A1EE8E3E100FF4542 /* CouponDescriptionCell.h */,
-				7382AC0B1EE8E3E100FF4542 /* CouponDescriptionCell.m */,
-				7382AC161EE91D7A00FF4542 /* ExchangeDetailCouponImage.h */,
-				7382AC171EE91D7A00FF4542 /* ExchangeDetailCouponImage.m */,
 				7382AC2A1EE9327600FF4542 /* SuccessFooterView.h */,
 				7382AC2B1EE9327600FF4542 /* SuccessFooterView.m */,
 				7382AC2D1EE9371100FF4542 /* ExchangeRecordingCell.h */,
 				7382AC2E1EE9371100FF4542 /* ExchangeRecordingCell.m */,
+				046489F11F6658F900390628 /* IntegraHeaderCell.h */,
+				046489F21F6658F900390628 /* IntegraHeaderCell.m */,
+				046489F41F66591E00390628 /* IntegraDataCell.h */,
+				046489F51F66591E00390628 /* IntegraDataCell.m */,
+				046489F71F66593400390628 /* IntegraInfoCell.h */,
+				046489F81F66593400390628 /* IntegraInfoCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4171,8 +4174,6 @@
 				737A1FE51EDFEAE800CD6FD2 /* NewsCenterModel.m */,
 				041BFDB51F43D64700903185 /* RechargeModel.h */,
 				041BFDB61F43D64700903185 /* RechargeModel.m */,
-				15EE59E91F5AF75F00660757 /* RechargeItemModel.h */,
-				15EE59EA1F5AF75F00660757 /* RechargeItemModel.m */,
 				15EE59EC1F5AF9CC00660757 /* RechargeItemInfoModel.h */,
 				15EE59ED1F5AF9CC00660757 /* RechargeItemInfoModel.m */,
 				04DC3AD11F4678A0004F269E /* CouponModel.h */,
@@ -5193,14 +5194,12 @@
 				04E3A9A11F5A3F2900F94AAE /* ProductOrderModel.m in Sources */,
 				043212D01F273B5800F29D1B /* WuLiuController.m in Sources */,
 				04F0B0081F32B2FD00D77558 /* TextField.m in Sources */,
-				7382AC181EE91D7A00FF4542 /* ExchangeDetailCouponImage.m in Sources */,
 				0465F69A1F53B32700F9FF90 /* PayViewController.m in Sources */,
 				04EFA4E21F5557C9003933A5 /* BeauticianModel.m in Sources */,
 				043212C11F272F2000F29D1B /* TopMessageView.m in Sources */,
 				042F44561F4A78E700B6AE15 /* AddressModel.m in Sources */,
 				7383EC651ECC419200C87A06 /* HomePageEndView.m in Sources */,
 				7383EC461ECBE99F00C87A06 /* HomePageEnjoyTableViewCell.m in Sources */,
-				7382AC0C1EE8E3E100FF4542 /* CouponDescriptionCell.m in Sources */,
 				7390F4B61EE697030059A168 /* AddressEditView.m in Sources */,
 				738DAAE41EDEBB8600F45DE3 /* UserAgreementController.m in Sources */,
 				73A4850D1EF384D100FA9434 /* ConfirmOrderAddCell.m in Sources */,
@@ -5208,6 +5207,7 @@
 				046A7EC71F4D7D7B005AD5FF /* NSDictionary+Log.m in Sources */,
 				737C5B1C1ED5152F00C46128 /* PSSortDropMenu.m in Sources */,
 				738280081EF22F870005DC28 /* FightGroupInvitationView.m in Sources */,
+				046489F61F66591E00390628 /* IntegraDataCell.m in Sources */,
 				737CD2F71EE1264000B6A5DB /* ServiceContentCollectionViewCell.m in Sources */,
 				737125EB1EE79A9F001A02DC /* ExchangeProductCollectionViewCell.m in Sources */,
 				045C7A0F1F1DBA1600B9C9C4 /* ShareViewController.m in Sources */,
@@ -5224,6 +5224,7 @@
 				04F0AFFB1F32B2FD00D77558 /* UIColor+help.m in Sources */,
 				04EFA4DC1F5557BB003933A5 /* AppDelegate+Alipay.m in Sources */,
 				0439FF6D1F2B10C50087C314 /* PJItemViewCell.m in Sources */,
+				046489F01F661E8600390628 /* IntegraListModel.m in Sources */,
 				15EE59F11F5AFE4200660757 /* RechargeItemCell.m in Sources */,
 				04F0B0021F32B2FD00D77558 /* UIViewController+Cloudox.m in Sources */,
 				040442571F1F54D500E59CF1 /* NewUserController.m in Sources */,
@@ -5242,7 +5243,6 @@
 				04B46E441F20872C007349F2 /* NearbyController.m in Sources */,
 				046AF90A1F41447B00C627D6 /* ImageModel.m in Sources */,
 				739F093A1EC941340023BF0B /* FeaturedRecommendationsView.m in Sources */,
-				15EE59EB1F5AF75F00660757 /* RechargeItemModel.m in Sources */,
 				7373309D1EE290D100DF54AC /* EvaluationFooterView.m in Sources */,
 				7388F53E1EDAA15700EB7EE4 /* BeauticianRegistrationController.m in Sources */,
 				04A3C8FA1F51549800B5856E /* OrderInfoModel.m in Sources */,
@@ -5278,6 +5278,7 @@
 				73A4850A1EF3811F00FA9434 /* ConfirmOrderFillCell.m in Sources */,
 				7390F4AF1EE696F70059A168 /* AddressController.m in Sources */,
 				736DE29D1ED0254300E32717 /* BeauticianPageHeaderView.m in Sources */,
+				046489F91F66593400390628 /* IntegraInfoCell.m in Sources */,
 				737C1E9F1EEA97D20020D342 /* FightGroupRulesController.m in Sources */,
 				04E60CFD1F42A6C10040A579 /* ProductModel.m in Sources */,
 				73A37CD51EBD6A3F00BE60C9 /* AppDelegate.m in Sources */,
@@ -5291,7 +5292,6 @@
 				73440A3D1ED2CFDC003807B8 /* BeauticianItemController.m in Sources */,
 				045C8AD11F454783002C2F8B /* CouponInfoController.m in Sources */,
 				045C8ACE1F452C71002C2F8B /* SonCouponTableController.m in Sources */,
-				7382AC0F1EE8EF6C00FF4542 /* ExchangeDetailViewModel.m in Sources */,
 				048D545D1F5D0C7D00DD0E10 /* DynamicModel.m in Sources */,
 				042DF0611F2847E800429D49 /* PayInfoController.m in Sources */,
 				73440A401ED2D279003807B8 /* PSFooterReserveView.m in Sources */,
@@ -5364,6 +5364,7 @@
 				04E40AD21F2C586900C4D665 /* MyGroupController.m in Sources */,
 				046AF9071F413E4700C627D6 /* DetailModel.m in Sources */,
 				04F0B0061F32B2FD00D77558 /* SusoensionFlowLayout.m in Sources */,
+				046489F31F6658F900390628 /* IntegraHeaderCell.m in Sources */,
 				738DAAD91EDEB39600F45DE3 /* IntroduceUsController.m in Sources */,
 				737CD2FA1EE12BBE00B6A5DB /* EquippedProductsView.m in Sources */,
 				737C1E7A1EEA454B0020D342 /* FightGroupMallViewModel.m in Sources */,

@@ -38,17 +38,19 @@
     // Do any additional setup after loading the view.
 }
 -(void)loadBackView{
+    NSString *userID=[Acount shareManager].id;
+    
     UIImageView *image=[[UIImageView alloc]initWithFrame:CGRectMake(0, 64, Width, Height-64)];
     [image setImage:[UIImage imageNamed:@"xinrenlingquan"]];
     [image setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:image];
     
     _preson=[[UIButton alloc]init];
-    [_preson setImage:[UIImage imageNamed:@"lijilingqu"] forState:UIControlStateNormal];
+    _preson.hidden=YES;
     Weakify(self);
     [[_preson rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
         if (!_isType) {
-            [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:lxrq Success:^(id json) {
+            [Master HttpPostRequestByParams:@{@"clientId":userID} url:mlqqm serviceCode:lxrq Success:^(id json) {
                 _isType=YES;
                 [_preson setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
             } Failure:nil andNavigation:Wself.navigationController];
@@ -58,12 +60,22 @@
         }
     }];
     [self.view addSubview:_preson];
-    
     [_preson mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.bottom.equalTo(self.view.mas_bottom).offset(-Height_Pt(140));
         make.size.mas_equalTo(CGSizeMake(Width_Pt(920),Height_Pt(200)));
     }];
+    
+    [Master HttpPostRequestByParams:@{@"clientId":userID} url:mlqqm serviceCode:pdxrq Success:^(id json) {
+        _preson.hidden=NO;
+        if (![json[@"info"] boolValue]) {
+            _isType=YES;
+            [_preson setImage:[UIImage imageNamed:@"lingquchneggong"] forState:UIControlStateNormal];
+        }else{
+            _isType=NO;
+            [_preson setImage:[UIImage imageNamed:@"lijilingqu"] forState:UIControlStateNormal];
+        }
+    } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

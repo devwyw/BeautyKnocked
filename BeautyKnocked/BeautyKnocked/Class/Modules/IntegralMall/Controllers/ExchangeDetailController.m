@@ -7,101 +7,127 @@
 //
 
 #import "ExchangeDetailController.h"
-#import "ExchangeDetailViewModel.h"
-#import "UIView+CornerRadius.h"
+#import "ExchangeSuccessController.h"
+#import "IntegraHeaderCell.h"
+#import "IntegraDataCell.h"
+#import "IntegraInfoCell.h"
 
 @interface ExchangeDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIButton *exchangeButton;
-@property (nonatomic, strong) ExchangeDetailViewModel *viewModel;
-@property (nonatomic, strong) UIView *exchangeBackView;
+@property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) UIButton *exchangeButton;
+@property (nonatomic,strong) IntegraListModel * model;
 @end
 
 @implementation ExchangeDetailController
 
--(ExchangeDetailViewModel *)viewModel {
-    if (!_viewModel) {
-        _viewModel = [[ExchangeDetailViewModel alloc] init];
-    }
-    return _viewModel;
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.title = @"兑换详情";
-    
+    self.view.backgroundColor=[UIColor whiteColor];
     [self initializeViews];
     [self addConstraints];
-    
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-#pragma mark UITableViewDataSource
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.viewModel ddcs_numnumberOfSectionsInTableView:tableView];
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.viewModel ddcs_tableView:tableView numberOfRowsInSection:section];
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.viewModel ddcs_tableView:tableView cellForRowAtIndexPath:indexPath];
-}
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [self.viewModel ddcs_tableView:tableView heightForHeaderInSection:section];
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return [self.viewModel ddcs_tableView:tableView heightForFooterInSection:section];
+-(IntegraListModel*)model{
+    if (!_model) {
+        _model=[[IntegraListModel alloc]init];
+    }
+    return _model;
 }
 -(void)initializeViews {
-    
-    self.viewModel.navigationController = self.navigationController;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.estimatedRowHeight = 100;
-    [self.viewModel ddcs_registerClassForTableView:_tableView];
+    _tableView.backgroundColor=[UIColor colorWithHexString:@"#f0f0f0"];
+    [_tableView registerClass:[IntegraHeaderCell class] forCellReuseIdentifier:@"IntegraHeaderCell"];
+    [_tableView registerClass:[IntegraDataCell class] forCellReuseIdentifier:@"IntegraDataCell"];
+    [_tableView registerClass:[IntegraInfoCell class] forCellReuseIdentifier:@"IntegraInfoCell"];
+    [self.view addSubview:_tableView];
     
     _exchangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_exchangeButton setTitle:@"立即兑换" forState:UIControlStateNormal];
     _exchangeButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    [_exchangeButton setBackgroundColor:[UIColor greenColor]];
+    [_exchangeButton setBackgroundColor:[UIColor colorWithHexString:@"#67d75a"]];
     [_exchangeButton makeCornerRadius:6];
-    [_exchangeButton addTarget:self action:@selector(exchangeNowClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    _exchangeBackView = [[UIView alloc] init];
-    _exchangeBackView.backgroundColor = [UIColor whiteColor];
-    
-    [self.view addSubview:_tableView];
-    [self.view addSubview:_exchangeBackView];
-    
-    [_exchangeBackView addSubview:_exchangeButton];
+    Weakify(self);
+    [[_exchangeButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"您确定使用%@积分兑换?",_model.integral] message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        [cancelAction setValue:[UIColor darkGrayColor] forKey:@"_titleTextColor"];
+        UIAlertAction *okayAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            /** 兑换 */
+            ExchangeSuccessController *successController = [[ExchangeSuccessController alloc] init];
+            [Wself.navigationController pushViewController:successController animated:YES];
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:okayAction];
+        [Wself.navigationController presentViewController:alertController animated:YES completion:nil];
+    }];
+    [self.view addSubview:_exchangeButton];
+    [self loadHttpData];
 }
-
 -(void)addConstraints {
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, Height_Pt(214), 0));
     }];
     
-    [_exchangeBackView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_tableView.mas_bottom);
-        make.left.and.right.and.bottom.equalTo(self.view);
-    }];
-    
     [_exchangeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(_exchangeBackView).with.insets(UIEdgeInsetsMake(Height_Pt(35), Width_Pt(35), Height_Pt(35), Height_Pt(35)));
+        make.top.equalTo(_tableView.mas_bottom).offset(Height_Pt(35));
+        make.left.equalTo(self.view).offset(Width_Pt(35));
+        make.bottom.equalTo(self.view).offset(-Height_Pt(35));
+        make.right.equalTo(self.view).offset(-Width_Pt(35));
     }];
 }
-
--(void)exchangeNowClicked:(UIButton *)button {
-    [self.viewModel exchangeClicked:button];
+#pragma mark UITableViewDataSource
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
 }
-
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 3;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section==0) {
+        IntegraHeaderCell *cell=[tableView dequeueReusableCellWithIdentifier:@"IntegraHeaderCell" forIndexPath:indexPath];
+        cell.isType=self.isType;
+        if (!isStringEmpty(self.model.id)) {
+            cell.model=_model;
+        }
+        return cell;
+    }else if (indexPath.section==1){
+        IntegraDataCell *cell=[tableView dequeueReusableCellWithIdentifier:@"IntegraDataCell" forIndexPath:indexPath];
+        if (!isStringEmpty(self.model.id)) {
+            cell.model=_model;
+        }
+        return cell;
+    }else{
+        IntegraInfoCell *cell=[tableView dequeueReusableCellWithIdentifier:@"IntegraInfoCell" forIndexPath:indexPath];
+        if (!isStringEmpty(self.model.id)) {
+            cell.model=_model;
+        }
+        return cell;
+    }
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return Height_Pt(20);
+}
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    return [UIView new];
+}
+-(void)loadHttpData{
+    Weakify(self);
+    [Master HttpPostRequestByParams:@{@"id":_aid} url:mlqqm serviceCode:dhxq Success:^(id json) {
+        Wself.model=[IntegraListModel mj_objectWithKeyValues:json[@"info"]];
+        [_tableView reloadData];
+    } Failure:nil andNavigation:self.navigationController];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 @end

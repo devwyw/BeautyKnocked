@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class IntegraListModel;
 
 @interface ExchangeProductCollectionViewCell : UICollectionViewCell
-
-@property (nonatomic, copy) NSString *productName;
-@property (nonatomic, copy) NSString *integralPrice;
-@property (nonatomic, copy) NSString *couponImageName;
-@property (nonatomic, copy) NSString *offsetValue;
-@property (nonatomic, copy) NSString *capacity;
+@property (nonatomic,strong) IntegraListModel * model;
+@property (nonatomic,assign) BOOL isType;
 @end

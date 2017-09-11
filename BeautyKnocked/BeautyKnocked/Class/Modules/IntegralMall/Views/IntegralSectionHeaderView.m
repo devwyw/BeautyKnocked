@@ -28,12 +28,10 @@
 }
 
 -(void)setIntegralBalance:(NSString *)integralBalance {
-
     _integralView.bablance = integralBalance;
 }
 
 -(void)initializeViews {
-    
     _integralView = [[IntegralBalanceView alloc] init];
     
     _recordingButton = [UIButton buttonWithType:UIButtonTypeCustom];

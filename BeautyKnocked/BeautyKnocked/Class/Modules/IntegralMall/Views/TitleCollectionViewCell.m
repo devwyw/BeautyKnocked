@@ -25,10 +25,9 @@
 -(void)initializeViews {
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
-    
+    _titleLabel.text = @"兑换商品";
     [self.contentView addSubview:_titleLabel];
     
-    _titleLabel.text = @"兑换商品";
 }
 -(void)addConstraints {
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

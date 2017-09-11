@@ -9,6 +9,8 @@
 #import "ExchangeSuccessController.h"
 #import "SuccessFooterView.h"
 #import "ExchangeRecordingController.h"
+#import "IntegralMallController.h"
+
 static NSString *const reuseIdentifier = @"ExchangeSuccess";
 
 @interface ExchangeSuccessController ()<SuccessFooterViewDelegate>
@@ -25,9 +27,8 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.tableView.scrollEnabled = NO;
-    
+    self.title=@"兑换成功";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,7 +64,6 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
              make.edges.equalTo(cell.contentView);
          }];
      }else {
-         
          NSArray *titles = @[@"兑换订单编号",@"优惠券金额",@"兑换积分"];
          NSArray *texts = @[@"42215645656",@"¥60",@"400积分"];
          
@@ -74,8 +74,6 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
          cell.textLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
          cell.detailTextLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
      }
-     
- 
      return cell;
  }
 
@@ -115,7 +113,13 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
 #pragma mark SuccessFooterViewDelegate
 -(void)successFooterViewClicked:(NSUInteger)index {
     if (index == 1) {
-        
+        NSArray *temArray = self.navigationController.viewControllers;
+        for (UIViewController *temVC in temArray){
+            if ([temVC isKindOfClass:[IntegralMallController class]])
+            {
+                [self.navigationController popToViewController:temVC animated:YES];
+            }
+        }
     }else if (index == 2) {
         ExchangeRecordingController *recordingController = [[ExchangeRecordingController alloc] init];
         [self.navigationController pushViewController:recordingController animated:YES];

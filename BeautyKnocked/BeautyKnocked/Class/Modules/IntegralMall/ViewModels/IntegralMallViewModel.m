@@ -13,6 +13,7 @@
 #import "IntegralSectionHeaderView.h"
 #import "ExchangeDetailController.h"
 #import "ExchangeRecordingController.h"
+#import "IntegraListModel.h"
 
 static NSString *const titleCollectionViewCellReuseIdentifier = @"TitleCollectionViewCell";
 static NSString *const exchangeProductCollectionViewCellReuseIdentifier = @"ExchangeProductCollectionViewCell";
@@ -23,11 +24,14 @@ static NSString *const integralSectionHeaderViewReuseIdentifier = @"IntegralSect
 @end
 
 @implementation IntegralMallViewModel
-
+-(NSArray*)dataArray{
+    if (!_dataArray) {
+        _dataArray=[[NSArray alloc]init];
+    }
+    return _dataArray;
+}
 -(void)ddcs_configureCollectionView:(UICollectionView *)collectionView {
-    
     collectionView.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
-    
     // register 
     [collectionView registerClass:[TitleCollectionViewCell class] forCellWithReuseIdentifier:titleCollectionViewCellReuseIdentifier];
     [collectionView registerClass:[ExchangeProductCollectionViewCell class] forCellWithReuseIdentifier:exchangeProductCollectionViewCellReuseIdentifier];
@@ -42,47 +46,37 @@ static NSString *const integralSectionHeaderViewReuseIdentifier = @"IntegralSect
 -(NSInteger)ddcs_collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
+    }else{
+        return self.dataArray.count+1;
     }
-    return 13;
 }
 
 -(UICollectionViewCell *)ddcs_collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSUInteger section = indexPath.section;
-    NSUInteger item = indexPath.item;
-    
-    if (section == 0) {
+    if (indexPath.section == 0) {
         EvaluationImageCell *imageSectionCell = [collectionView dequeueReusableCellWithReuseIdentifier:evaluationImageCellReuseIdentifier forIndexPath:indexPath];
         imageSectionCell.imageName = @"jifenbanner";
         return imageSectionCell;
-    }else if (section == 1) {
-        if (item == 0) {
+    }else{
+        if (indexPath.item == 0) {
             TitleCollectionViewCell *titleCell = [collectionView dequeueReusableCellWithReuseIdentifier:titleCollectionViewCellReuseIdentifier forIndexPath:indexPath];
             return titleCell;
+        }else{
+            ExchangeProductCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:exchangeProductCollectionViewCellReuseIdentifier forIndexPath:indexPath];
+            cell.model=[IntegraListModel mj_objectWithKeyValues:self.dataArray[indexPath.item-1]];
+            cell.isType = indexPath.item %2==1;
+            return cell;
         }
-        ExchangeProductCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:exchangeProductCollectionViewCellReuseIdentifier forIndexPath:indexPath];
-        cell.productName = @"紫根护胸膏";
-        cell.capacity = @"4.5g";
-        cell.integralPrice = @"500 积分";
-        cell.couponImageName = item %2 == 1 ? @"youhuiquan1":@"youhuiquan2";
-        cell.offsetValue = @"65";
-        
-        return cell;
     }
-    
-    return nil;
 }
 
 - (UICollectionReusableView *)ddcs_collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    
     if (indexPath.section == 1) {
-        
+        Weakify(self);
         IntegralSectionHeaderView *sectionHeader1 = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:integralSectionHeaderViewReuseIdentifier forIndexPath:indexPath];
-        sectionHeader1.integralBalance = @"500";
-        
-        [sectionHeader1.recordingSignal subscribeNext:^(id  _Nullable x) {
+        sectionHeader1.integralBalance = [NSString stringWithFormat:@"%ld",_integral];
+        [[sectionHeader1.recordingSignal takeUntil:sectionHeader1.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
             ExchangeRecordingController *recordingController = [[ExchangeRecordingController alloc] init];
-            [self.navigationController pushViewController:recordingController animated:YES];
+            [Wself.navigationController pushViewController:recordingController animated:YES];
         }];
         
         return sectionHeader1;
@@ -91,8 +85,13 @@ static NSString *const integralSectionHeaderViewReuseIdentifier = @"IntegralSect
 }
 
 -(void)ddcs_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPat {
-    ExchangeDetailController *detailController = [[ExchangeDetailController alloc] init];
-    [self.navigationController pushViewController:detailController animated:YES];
+    if (indexPat.section==1) {
+        ExchangeDetailController *detailController = [[ExchangeDetailController alloc] init];
+        IntegraListModel *model=[IntegraListModel mj_objectWithKeyValues:self.dataArray[indexPat.item-1]];
+        detailController.aid=model.id;
+        detailController.isType=indexPat.item %2==1;
+        [self.navigationController pushViewController:detailController animated:YES];
+    }
 }
 
 -(CGSize)ddcs_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

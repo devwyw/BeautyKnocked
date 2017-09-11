@@ -63,7 +63,7 @@
     NSLog(@"\n系统:%.2f\n版本:%@\n账号:%@",
           SystemVersion,
           AppVersion,
-          [Acount shareManager].account
+          [Acount shareManager].mj_keyValues
           );
 }
 #pragma mark ===== JPush =====

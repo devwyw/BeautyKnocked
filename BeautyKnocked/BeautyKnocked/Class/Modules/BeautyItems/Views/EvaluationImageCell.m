@@ -30,7 +30,7 @@
 }
 
 -(void)setImageName:(NSString *)imageName {
-    [Master GetWebImage:_imgView withUrl:imageName];
+    _imgView.image=[UIImage imageNamed:imageName];
 }
 
 @end

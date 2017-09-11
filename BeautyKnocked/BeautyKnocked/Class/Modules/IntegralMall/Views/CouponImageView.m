@@ -24,18 +24,23 @@
     }
     return self;
 }
-
--(void)setOffset:(NSString *)offset {
-    _offsetLabel.text = [NSString stringWithFormat:@"¥%@ 优惠券",offset];
+-(void)setModel:(IntegraListModel *)model{
+    NSString *text=[NSString stringWithFormat:@"¥%@",[model.name stringByReplacingOccurrencesOfString:@"元" withString:@" "]];
+    NSString *name=[model.name stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@元",model.price] withString:@""];
+    
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:text];
+    NSRange minRange = [text rangeOfString:name];
+    NSRange maxRange = [text rangeOfString:model.price];
+    [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Font_Size(28)] range:NSMakeRange(0, 1)];
+    [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Font_Size(32.5)] range:minRange];
+    [attributeStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:Font_Size(50)] range:maxRange];
+    [attributeStr addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, text.length)];
+    
+    _offsetLabel.attributedText = attributeStr;
+    _useRangeLabel.text = [NSString stringWithFormat:@"(限购%@)",model.productName];
 }
-
--(void)setProductName:(NSString *)productName {
-    _useRangeLabel.text = [NSString stringWithFormat:@"限购%@",productName];
-}
-
 -(void)initializeViews {
     _offsetLabel = [[UILabel alloc] init];
-    _offsetLabel.textColor = [UIColor whiteColor];
     
     _appointNowImgView = [[UIImageView alloc] init];
     [_appointNowImgView setImage:[UIImage imageNamed:@"lijiduihuan"]];
@@ -47,11 +52,10 @@
     [self addSubview:_offsetLabel];
     [self addSubview:_appointNowImgView];
     [self addSubview:_useRangeLabel];
-
 }
 -(void)addConstraints {
     [_offsetLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).with.offset(Height_Pt(40));
+        make.top.equalTo(self).with.offset(Height_Pt(36));
         make.centerX.equalTo(self);
         make.height.mas_equalTo(Height_Pt(50));
     }];

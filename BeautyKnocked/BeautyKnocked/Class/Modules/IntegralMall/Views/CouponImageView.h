@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IntegraListModel.h"
 
 @interface CouponImageView : UIImageView
-
-@property (nonatomic, copy) NSString *offset;
-@property (nonatomic, copy) NSString *productName;
-
+@property (nonatomic,strong) IntegraListModel * model;
 @end

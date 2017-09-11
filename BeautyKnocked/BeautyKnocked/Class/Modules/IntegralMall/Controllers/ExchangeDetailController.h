@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ExchangeDetailController : UIViewController
-
-
+@property (nonatomic,copy) NSString * aid;
+@property (nonatomic,assign) BOOL isType;
 @end
