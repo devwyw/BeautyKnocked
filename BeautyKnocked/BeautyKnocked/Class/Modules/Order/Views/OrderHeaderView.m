@@ -26,7 +26,7 @@
 -(void)initializeViews {
     _titleLbel=[[UILabel alloc]init];
     [_titleLbel setTextColor:[UIColor grayColor]];
-    _titleLbel.font=[UIFont systemFontOfSize:Font_Size(35)];
+    _titleLbel.font=[UIFont systemFontOfSize:Font_Size(40)];
     [self addSubview:_titleLbel];
 }
 -(void)addConstraints {

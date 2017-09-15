@@ -15,6 +15,7 @@
 @property (nonatomic,strong) RACSignal * collect;
 @property (nonatomic,strong) RACSignal * reserve;
 @property (nonatomic,strong) RACSignal * beaSelect;
+@property (nonatomic,assign) BOOL isCancel;
 @property (nonatomic,strong) BeauticianModel * model;
 @property (nonatomic,assign) BOOL isBeauticianSelect;
 @end

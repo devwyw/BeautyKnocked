@@ -73,7 +73,7 @@ static NSString *const integralSectionHeaderViewReuseIdentifier = @"IntegralSect
     if (indexPath.section == 1) {
         Weakify(self);
         IntegralSectionHeaderView *sectionHeader1 = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:integralSectionHeaderViewReuseIdentifier forIndexPath:indexPath];
-        sectionHeader1.integralBalance = [NSString stringWithFormat:@"%ld",_integral];
+        sectionHeader1.integralBalance = _integral;
         [[sectionHeader1.recordingSignal takeUntil:sectionHeader1.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
             ExchangeRecordingController *recordingController = [[ExchangeRecordingController alloc] init];
             [Wself.navigationController pushViewController:recordingController animated:YES];

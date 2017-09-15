@@ -55,16 +55,14 @@
     
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_imgView);
-        make.top.equalTo(_imgView.mas_bottom).with.offset(Height_Pt(30));
+        make.top.equalTo(_imgView.mas_bottom).with.offset(Height_Pt(20));
         make.right.equalTo(self.contentView);
-        make.height.mas_equalTo(Height_Pt(40));
     }];
     
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_imgView);
-        make.top.equalTo(_titleLabel.mas_bottom).with.offset(Height_Pt(18));
         make.right.equalTo(self.contentView);
-        make.bottom.equalTo(self.contentView).with.offset( - Height_Pt(20));
+        make.bottom.equalTo(self.contentView).with.offset( - Height_Pt(15));
     }];
 }
 

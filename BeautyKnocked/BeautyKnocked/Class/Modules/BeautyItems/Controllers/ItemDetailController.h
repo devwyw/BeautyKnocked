@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserHeader.h"
 
 @interface ItemDetailController : UIViewController
-@property (nonatomic,copy) NSString * detailID;
-@property (nonatomic,copy) NSString * projectId;
+@property (nonatomic,assign) MLOrderStyle type;
+@property (nonatomic,copy) NSString * id;
 @property (nonatomic,copy) NSString * alpha;
 @end

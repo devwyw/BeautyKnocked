@@ -33,7 +33,11 @@ static NSString *unAddTo=@"addto";
 }
 -(void)setCounts:(NSString *)counts{
     _counts=counts;
-    _countText.text=counts;
+    if (isStringEmpty(_counts)) {
+        _countText.text=@"1";
+    }else{
+        _countText.text=_counts;
+    }
 }
 -(void)initializeViews {
     /** 减少 */

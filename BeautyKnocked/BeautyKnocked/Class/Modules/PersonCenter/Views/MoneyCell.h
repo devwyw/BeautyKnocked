@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MoneyInfoModel.h"
 
 @interface MoneyCell : UITableViewCell
-
+@property (nonatomic,strong) MoneyInfoModel * model;
 @end

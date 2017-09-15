@@ -36,15 +36,13 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor =[UIColor colorWithHexString:@"#F7F7F7"];
         [self setupInterface];
         [self setupConstraints];
     }
     return self;
 }
-
 -(void)setupInterface {
-    self.backgroundColor =[UIColor colorWithHexString:@"#F7F7F7"];
-
     UIFont *font = [UIFont systemFontOfSize:Font_Size(35)];
     
     UIView *topline=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
@@ -52,7 +50,6 @@
     [self.contentView addSubview:topline];
     
     _imgView = [[UIImageView alloc] init];
-    [_imgView setImage:[UIImage imageNamed:@"touxiang_03"]];
     [self.contentView addSubview:_imgView];
     
     _orderNameLabel = [[UILabel alloc] init];
@@ -79,23 +76,28 @@
     _amountPriceLabel.font = font;
     _amountPriceLabel.textColor = [UIColor redColor];
     [self.contentView addSubview:_amountPriceLabel];
-    
-    /**
-     *
-     *   Debug data code
-     **/
-    _orderNameLabel.text = @"订单名称: 水美人";
-    _serviceTimeLabel.text = @"服务时间: 2017-3-25 15:00";
-    _serviceAddressLabel.text = @"服务地址: 南昌市世贸路001号金久大厦1546";
-    _unitPriceLabel.text = @"¥88";
-    _serviceTimesLabel.text = @"×1";
-    _amountPriceLabel.text = @"¥88";
-
 }
-
+-(void)setModel:(OrderInfoListModel *)model{
+    [Master GetWebImage:_imgView withUrl:model.imagePath];
+    _orderNameLabel.text = [NSString stringWithFormat:@"订单名称：%@",model.name];
+    _serviceAddressLabel.text = [NSString stringWithFormat:@"服务地址：%@",_addRess];
+    _unitPriceLabel.text = [NSString stringWithFormat:@"¥%@",model.price];
+    _serviceTimesLabel.text = [NSString stringWithFormat:@"x%@",model.num];
+    _amountPriceLabel.text = [NSString stringWithFormat:@"¥%@",model.money];
+    if (_isProduct) {
+        _serviceTimeLabel.text = nil;
+    }else{
+        NSTimeInterval interval=[[_time substringToIndex:10] doubleValue];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+        NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+        [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString *timeString = [dateformatter stringFromDate:date];
+        _serviceTimeLabel.text = [NSString stringWithFormat:@"服务时间：%@",timeString];
+    }
+}
 -(void)setupConstraints {
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).with.offset(Height_Pt(30));
+        make.centerY.equalTo(self.contentView);
         make.left.equalTo(self.contentView).with.offset(Width_Pt(40));
         make.width.mas_equalTo(Width_Pt(242));
         make.height.mas_equalTo(Height_Pt(240));
@@ -122,7 +124,7 @@
     
     [_unitPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_orderNameLabel);
-        make.right.equalTo(self.contentView).with.offset( - Width_Pt(20));
+        make.right.equalTo(self.contentView).with.offset( - Width_Pt(30));
         make.height.equalTo(_orderNameLabel.mas_height);
     }];
     
@@ -136,10 +138,7 @@
         make.top.equalTo(_serviceAddressLabel.mas_bottom).with.offset(Height_Pt(12));
         make.right.equalTo(_unitPriceLabel.mas_right);
         make.height.equalTo(_orderNameLabel.mas_height);
-        //make.bottom.equalTo(self.contentView).with.offset(- Height_Pt(35));
     }];
-    
-    
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "CarItem.h"
 #import "ItemDetailViewModel.h"
 #import "OrderController.h"
+#import "ShopCarController.h"
 
 @interface ItemDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -47,7 +48,6 @@
     [super viewWillAppear:animated];
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     self.BarAlpha = _alpha;
-    _carItem.count=100;
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -55,7 +55,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (isStringEmpty(self.projectId)) {
+    if (_type==MLItem) {
         self.title=@"项目详情";
     }else{
         self.title=@"套餐详情";
@@ -66,9 +66,13 @@
     
     /** 购物车Item */
     {
+        Weakify(self);
         _carItem=[[CarItem alloc]initWithOriginY:Height-111];
         [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
-            NSLog(@"购物车");
+            if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+                ShopCarController *car=[[ShopCarController alloc]init];
+                [Wself.navigationController pushViewController:car animated:YES];
+            }
         }];
         [self.view addSubview:_carItem];
     }
@@ -87,7 +91,7 @@
     [self.view addSubview:_tableView];
 
     _addReserveView = [[AddAndReserveView alloc] init];
-    if (isStringEmpty(self.projectId)) {
+    if (_type==MLItem) {
         _addReserveView.type=@"0";
     }else{
         _addReserveView.type=@"1";
@@ -95,7 +99,7 @@
     Weakify(self);
     [_addReserveView.reserveNowSignal subscribeNext:^(id  _Nullable x) {
         if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
-            if (isStringEmpty(self.projectId)) {
+            if (_type==MLItem) {
                 ConfirmOrderController *confirmController = [[ConfirmOrderController alloc] init];
                 confirmController.orderStyle = MLItem;
                 confirmController.detailModel=self.itemDetailViewModel.model;
@@ -111,11 +115,7 @@
     [self.view addSubview:_addReserveView];
     
     self.itemDetailViewModel.navigationController = self.navigationController;
-    if (isStringEmpty(self.projectId)) {
-        [self loadHttpData:self.detailID withProjectId:@""];
-    }else{
-        [self loadHttpData:self.detailID withProjectId:self.projectId];
-    }
+    [self loadHttpData];
 }
 -(void)addConstraints {
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -152,16 +152,16 @@
     return _tableheaderView;
 }
 #pragma mark ===== 详情 =====
--(void)loadHttpData:(NSString*)detailID withProjectId:(NSString*)projectId{
+-(void)loadHttpData{
     NSString *code=nil;
-    if (isStringEmpty(projectId)) {
+    if (_type==MLItem) {
         code=xmxq;
     }else{
         code=tcxq;
     }
     Weakify(self);
-    [Master HttpPostRequestByParams:@{@"id":detailID,@"projectId":projectId} url:mlqqm serviceCode:code Success:^(id json) {
-        if (isStringEmpty(projectId)) {
+    [Master HttpPostRequestByParams:@{@"id":_id} url:mlqqm serviceCode:code Success:^(id json) {
+        if (_type==MLItem) {
             Wself.itemDetailViewModel.model=[DetailModel mj_objectWithKeyValues:json[@"info"]];
             [Master GetWebImage:Wself.tableheaderView withUrl:Wself.itemDetailViewModel.model.imagePath];
         }else{
@@ -169,7 +169,7 @@
             [Master GetWebImage:Wself.tableheaderView withUrl:Wself.itemDetailViewModel.Pmodel.imagePath];
         }
         /** 评论列表 */
-        [Master HttpPostRequestByParams:@{@"id":detailID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
+        [Master HttpPostRequestByParams:@{@"id":_id,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
             Wself.itemDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
             [_tableView reloadData];
         } Failure:nil andNavigation:Wself.navigationController];

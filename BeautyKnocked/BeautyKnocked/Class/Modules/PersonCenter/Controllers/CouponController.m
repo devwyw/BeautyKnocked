@@ -65,6 +65,7 @@ NSInteger number3=0;
         self.menuHeight=Height_Pt(120);
         self.menuBGColor=[UIColor whiteColor];
         self.menuViewBottomSpace=0.6;
+        self.menuItemWidth = Width / 3;
         self.progressColor=[UIColor colorWithHexString:@"#E1BF6E"];
         self.titleColorNormal=[UIColor blackColor];
         self.titleColorSelected=self.titleColorNormal;

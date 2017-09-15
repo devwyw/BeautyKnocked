@@ -14,11 +14,8 @@
 @interface PersonCenterHeadView ()
 
 @property (nonatomic, strong) UIButton *setupButton;
-
 @property (nonatomic, strong) UIButton *messageButton;
-
 @property (nonatomic, strong) UIImageView *backImgView;
-
 @property (nonatomic,strong) UIButton *headIconBtn;
 @property (nonatomic,strong) UIImageView * headIcon;
 @property (nonatomic,strong) UILabel *nameLabel;
@@ -31,6 +28,7 @@
 @property (nonatomic,strong) UIButton *successGroup;
 @property (nonatomic,strong) UIButton *failGroup;
 @property (nonatomic,strong) Acount * user;
+@property (nonatomic,strong) UIView * read;
 @end
 
 @implementation PersonCenterHeadView
@@ -51,7 +49,16 @@
 }
 -(void)getUserData{
     _nameLabel.text = self.user.account;
-    [Master GetWebImage:_headIcon withUrl:self.user.headPath];
+    [Master GetWebImage:_headIcon withUrl:_user.headPath];
+    if (!isStringEmpty(_user.id)) {
+        [Master WebPostRequestByParams:@{@"clientId":_user.id} url:mlqqm serviceCode:wdxxs Success:^(id json) {
+            if ([json[@"info"] integerValue]>0) {
+                _read.hidden=NO;
+            }else{
+                _read.hidden=YES;
+            }
+        } Failure:nil andNavigation:nil];
+    }
 }
 -(void)setupInterface {
     _backImgView = [[UIImageView alloc] init];
@@ -97,7 +104,10 @@
     [self.backImgView addSubview:_levelBtn];
     [self.backImgView addSubview:_couponBtn];
     
-    
+    _read=[Master getLineView:[UIColor redColor]];
+    [_read makeCornerRadius:Width_Pt(12.5)];
+    _read.hidden=YES;
+    [_messageButton addSubview:_read];
     // group view
     _groupsLabel = [[UILabel  alloc] init];
     _groupsLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
@@ -157,6 +167,12 @@
         make.centerY.equalTo(_setupButton);
         make.left.equalTo(_backImgView).with.offset(Width_Pt(46));
         make.size.equalTo(_setupButton);
+    }];
+    
+    [_read mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.sizeOffset(CGSizeMake(Width_Pt(25), Height_Pt(25)));
+        make.top.equalTo(_messageButton);
+        make.right.equalTo(_messageButton);
     }];
     
     [_headIconBtn mas_makeConstraints:^(MASConstraintMaker *make) {

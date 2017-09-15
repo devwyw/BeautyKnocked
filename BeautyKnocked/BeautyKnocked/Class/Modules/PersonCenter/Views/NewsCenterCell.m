@@ -11,7 +11,7 @@
 @interface NewsCenterCell ()
 
 @property (nonatomic, strong) UIImageView *imgView;
-@property (nonatomic, strong) UILabel *signLabel;
+@property (nonatomic, strong) UIImageView *signView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *descrLabel;
 
@@ -21,7 +21,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
@@ -36,28 +35,22 @@
 }
 
 -(void)initializeViews {
-    
     _imgView = [[UIImageView alloc] init];
     
-    _signLabel = [[UILabel alloc] init];
-    _signLabel.font = [UIFont systemFontOfSize:Font_Size(35)];
-    _signLabel.textColor = [UIColor whiteColor];
-    _signLabel.backgroundColor = [UIColor orangeColor];
-    [_signLabel makeCornerRadius:4];
-    
+    _signView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"guanfnag"]];
+
     _titleLabel = [[UILabel alloc] init];
-    _titleLabel.font = [UIFont systemFontOfSize:Font_Size(48)];
+    _titleLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     
     _descrLabel = [[UILabel alloc] init];
     _descrLabel.textColor = [UIColor lightGrayColor];
-    _descrLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
+    _descrLabel.font = [UIFont systemFontOfSize:Font_Size(40)];
     
     [self.contentView addSubview:_imgView];
-    [self.contentView addSubview:_signLabel];
+    [self.contentView addSubview:_signView];
     [self.contentView addSubview:_titleLabel];
     [self.contentView addSubview:_descrLabel];
 }
-
 -(void)addConstraints {
     [_imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.contentView);
@@ -66,38 +59,35 @@
         make.height.mas_equalTo(Height_Pt(98));
     }];
     
-    [_signLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).with.offset(Width_Pt(50));
+    [_signView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).with.offset(Height_Pt(50));
         make.left.equalTo(_imgView.mas_right).with.offset(Width_Pt(55));
-        make.height.mas_equalTo(Height_Pt(55));
+        make.size.sizeOffset(CGSizeZero);
     }];
     
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_signLabel);
-        make.left.equalTo(_signLabel.mas_right).with.offset(2);
+        make.top.equalTo(self.contentView).with.offset(Height_Pt(50));
+        make.left.equalTo(_signView.mas_right).with.offset(2);
     }];
     
     [_descrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_signLabel.mas_left);
-        make.top.equalTo(_signLabel.mas_bottom).with.offset(Height_Pt(25));
+        make.left.equalTo(_signView);
+        make.top.equalTo(_titleLabel.mas_bottom).with.offset(Height_Pt(25));
         make.right.equalTo(self.contentView).with.offset( - Width_Pt(80));
-    }];    
-    
+    }];
 }
-
--(void)setSignText:(NSString *)signText {
-    _signLabel.text=signText;
+-(void)setModel:(NewsCenterModel *)model{
+    if ([model.imgName isEqualToString:@"xitongxiaoxi"]) {
+        [_signView mas_updateConstraints:^(MASConstraintMaker *make) {
+           make.size.sizeOffset(CGSizeMake(Width_Pt(90), Height_Pt(55)));
+        }];
+    }else{
+        [_signView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.sizeOffset(CGSizeZero);
+        }];
+    }
+    _titleLabel.text = model.title;
+    _descrLabel.text = model.descr;
+    _imgView.image = [UIImage imageNamed:model.imgName];
 }
-
--(void)setTitle:(NSString *)title {
-    _titleLabel.text = title;
-}
--(void)setDescrText:(NSString *)descrText {
-    _descrLabel.text = descrText;
-}
-
--(void)setImageName:(NSString *)imageName {
-    _imgView.image = [UIImage imageNamed:imageName];
-}
-
 @end

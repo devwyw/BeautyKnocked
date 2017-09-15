@@ -58,26 +58,6 @@
     [_entireSortBtn setTitle:self.titleArray[row] forState:UIControlStateNormal];
     [self.delegate didSelectWithRow:row];
 }
--(void)filterButtonClicked {
-    _rightFullView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
-    _rightFullView.backgroundColor=[UIColor colorWithWhite:0 alpha:0.3];
-    [[UIApplication sharedApplication].keyWindow addSubview:_rightFullView];    
-    
-    _filterView = [[PSRightFilterView alloc] initWithFrame:CGRectMake(Width, 0, Width, Height)];
-    _filterView.backgroundColor = [UIColor whiteColor];
-    _filterView.dataSource = @[@[@"傲氏养生",@"金牌臀疗",@"明星水光",@"无痛脱毛",@"光电疗养",@"组合套餐"],@[@"补水滋润",@"招牌全身",@"明星产品",@"美目明亮",@"露肉必备",@"祛斑紧皱"]];
-    
-    __weak typeof(_rightFullView) weakRightFullView = _rightFullView;
-    [_filterView setFilterBlock:^{
-        [weakRightFullView removeFromSuperview];
-    }];
-    
-    [_rightFullView addSubview:_filterView];
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        _filterView.frame = CGRectMake(Width_Pt(281), 0, Width_Pt(801), Height);
-    }];
-}
 #pragma mark Events Handle
 -(void)clickedAtIndexButton:(UIButton *)button {
     if (!_isNope) {
@@ -128,12 +108,35 @@
     [self addSubview:_saleSortBtn];
     
     _filterSortBtn = [self setupCustomBtnWtihImageName:@"shaixuan-weixuanze" selectedImageName:@"shaixuan-xuanzhong" title:@"筛选"];
-    [_filterSortBtn addTarget:self action:@selector(filterButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [[_filterSortBtn rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [Master showSVProgressHUD:@"筛选功能暂未开放~" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+    }];
     [self addSubview:_filterSortBtn];
     
     _line=[[UIView alloc]init];
     _line.backgroundColor=[UIColor colorWithHexString:@"#F7F7F7"];
     [self addSubview:_line];
+}
+-(void)filterButtonClicked {
+    //筛选
+    _rightFullView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
+    _rightFullView.backgroundColor=[UIColor colorWithWhite:0 alpha:0.3];
+    [[UIApplication sharedApplication].keyWindow addSubview:_rightFullView];
+    
+    _filterView = [[PSRightFilterView alloc] initWithFrame:CGRectMake(Width, 0, Width, Height)];
+    _filterView.backgroundColor = [UIColor whiteColor];
+    _filterView.dataSource = @[@[@"傲氏养生",@"金牌臀疗",@"明星水光",@"无痛脱毛",@"光电疗养",@"组合套餐"],@[@"补水滋润",@"招牌全身",@"明星产品",@"美目明亮",@"露肉必备",@"祛斑紧皱"]];
+    
+    __weak typeof(_rightFullView) weakRightFullView = _rightFullView;
+    [_filterView setFilterBlock:^{
+        [weakRightFullView removeFromSuperview];
+    }];
+    
+    [_rightFullView addSubview:_filterView];
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        _filterView.frame = CGRectMake(Width_Pt(281), 0, Width_Pt(801), Height);
+    }];
 }
 -(PSSortDropMenu *)sortMenu {
     if (!_sortMenu) {

@@ -51,13 +51,30 @@
     }
     return self;
 }
+-(void)setIsCancel:(BOOL)isCancel{
+    if (isCancel) {
+        [_collectBtn setTitle:@"取消收藏" forState:UIControlStateNormal];
+        [_collectBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+        _collectBtn.userInteractionEnabled=YES;
+    }
+}
 -(void)setModel:(BeauticianModel *)model{
+    _model=model;
+    [Master GetWebImage:_headImgView withUrl:model.headPath];
     _numberLabel.text=model.id;
     _nameLabel.text = model.name;
     _collectionCount.text = model.collects;
     _scoreNumber.text = model.score;
     _descrLabel.text = model.introduce;
-    _collectBtn.selected=[model.isCollect integerValue]==1 ? YES : NO;
+    if ([model.isCollect integerValue]==1) {
+        [_collectBtn setTitleColor:ThemeColor forState:UIControlStateNormal];
+        [_collectBtn setTitle:@"已收藏" forState:UIControlStateNormal];
+        _collectBtn.userInteractionEnabled=NO;
+    }else{
+        [_collectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_collectBtn setTitle:@"收藏美容师" forState:UIControlStateNormal];
+        _collectBtn.userInteractionEnabled=YES;
+    }
 }
 -(void)setIsBeauticianSelect:(BOOL)isBeauticianSelect{
     _isBeauticianSelect=isBeauticianSelect;
@@ -82,6 +99,7 @@
     [_imgView addSubview:_numberLabel];
     
     _headImgView = [[UIImageView alloc] init];
+    [_headImgView makeCornerRadius:Width_Pt(80.5)];
     [_headImgView setImage:[UIImage imageNamed:@"touxiang_03"]];
     [self.backView addSubview:_headImgView];
     
@@ -125,10 +143,6 @@
     [self.backView addSubview:_descrLabel];
     
     _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_collectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_collectBtn setTitle:@"收藏美容师" forState:UIControlStateNormal];
-    [_collectBtn setTitleColor:ThemeColor forState:UIControlStateSelected];
-    [_collectBtn setTitle:@"已收藏" forState:UIControlStateSelected];
     _collectBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_collectBtn setBackgroundImage:[UIImage imageNamed:@"shoucangkuang_19"] forState:UIControlStateNormal];
     [self.backView addSubview:_collectBtn];

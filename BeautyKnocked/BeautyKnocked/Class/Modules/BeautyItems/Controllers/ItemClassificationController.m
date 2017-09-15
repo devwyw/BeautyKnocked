@@ -180,8 +180,8 @@ static CGFloat const kNavigationBarHeight = 64;
     if (_viewTop > kWMHeaderViewHeight + kNavigationBarHeight) {
         _viewTop = kWMHeaderViewHeight + kNavigationBarHeight;
     }
-    self.viewFrame = CGRectMake(0, _viewTop, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - _viewTop);
-    self.classBannerView.frame = CGRectMake(0, _viewTop - kWMHeaderViewHeight, [UIScreen mainScreen].bounds.size.width,  kWMHeaderViewHeight);
+    self.viewFrame = CGRectMake(0, _viewTop, Width, Height - _viewTop);
+    self.classBannerView.frame = CGRectMake(0, _viewTop - kWMHeaderViewHeight, Width,  kWMHeaderViewHeight);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -201,11 +201,11 @@ static CGFloat const kNavigationBarHeight = 64;
     return self.itemArray[index][@"name"];
 }
 -(CGFloat)menuView:(WMMenuView *)menu widthForItemAtIndex:(NSInteger)index{
-    return [UIScreen mainScreen].bounds.size.width / self.itemArray.count;
+    return Width / self.itemArray.count;
 }
 -(SDCycleScrollView *)classBannerView {
     if (!_classBannerView) {
-        CGRect rect = CGRectMake(0, kNavigationBarHeight, [UIScreen mainScreen].bounds.size.width,  kWMHeaderViewHeight);
+        CGRect rect = CGRectMake(0, kNavigationBarHeight, Width,  kWMHeaderViewHeight);
         _classBannerView = [SDCycleScrollView cycleScrollViewWithFrame:rect delegate:self placeholderImage:nil];
         _classBannerView.autoScrollTimeInterval = 4.f;
         _classBannerView.localizationImageNamesGroup = @[@"banner1.jpg",@"banner1.jpg",@"banner1.jpg"];
@@ -213,11 +213,10 @@ static CGFloat const kNavigationBarHeight = 64;
     return _classBannerView;
 }
 -(void)loadHttpData{
+    Weakify(self);
     [Master HttpPostRequestByParams:nil url:mlqqm serviceCode:bqlb Success:^(id json) {
-        for (NSDictionary *dict in json[@"info"]) {
-            [self.itemArray addObject:dict];
-        }
-        [self reloadData];
+        _itemArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+        [Wself reloadData];
         } Failure:nil andNavigation:self.navigationController];
 }
 

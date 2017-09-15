@@ -142,8 +142,9 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         [[cell.subTypeModel takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
             ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
             itemDetailController.alpha=@"0";
+            itemDetailController.type=MLItem;
             itemDetailController.hidesBottomBarWhenPushed = YES;
-            itemDetailController.detailID=x[@"row"];
+            itemDetailController.id=x[@"row"];
             [Wself.navigationController pushViewController:itemDetailController animated:YES];
         }];
         return cell;
@@ -161,7 +162,8 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
         ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
         itemDetailController.alpha=@"0";
         itemDetailController.hidesBottomBarWhenPushed = YES;
-        itemDetailController.detailID=model.id;
+        itemDetailController.type=MLItem;
+        itemDetailController.id=model.id;
         [self.navigationController pushViewController:itemDetailController animated:YES];
     }
 }
@@ -371,7 +373,8 @@ static NSString *const homePageEnjoyTableViewCellReuseIdentifier = @"HomePageEnj
                 case 0:
                 {
                     /** 推荐技师 */
-                    BeauticianItemPageController *beauticianPageController = [[BeauticianItemPageController alloc] init];
+                    BeauticianItemPageController *beauticianPageController = [[BeauticianItemPageController alloc]init];
+                    beauticianPageController.model=_beauticianmodel;
                     [beauticianPageController setHidesBottomBarWhenPushed:YES];
                     [self.navigationController pushViewController:beauticianPageController animated:YES];
                 }

@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"光电中心"];
-    self.edgesForExtendedLayout=UIRectEdgeNone;
+    //self.edgesForExtendedLayout=UIRectEdgeNone;
     [self loadScrollVeiw];
     [self addButton];
     // Do any additional setup after loading the view.
@@ -155,11 +155,13 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 -(void)pushOk:(UIButton*)button{
-    NSLog(@"%@-%@",_text1.text,_text2.text);
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"预约成功" message:@"非常感谢您的预约，我们会尽快处理" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }]];
-    [self presentViewController:alertController animated:YES completion:nil];
+    [Master HttpPostRequestByParams:@{@"name":_text1.text,@"phone":_text2.text} url:mlqqm serviceCode:gdyy Success:^(id json) {
+        if ([json[@"info"] boolValue]) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"预约成功" message:@"非常感谢您的预约，我们会尽快进行服务" preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    } Failure:nil andNavigation:self.navigationController];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

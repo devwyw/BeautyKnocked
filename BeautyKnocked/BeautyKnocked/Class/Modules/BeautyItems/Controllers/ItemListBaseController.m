@@ -47,18 +47,18 @@ static NSInteger padding=6;
     switch ([self.model.type integerValue]) {
         case 7:
         {
-            [self loadHttpData:self.model.type withField:5 withLift:1 withType:self.model.type];
+            [self loadHttpDataWithField:5 withLift:1];
         }
             break;
         case 8:
         {
-            [self loadHttpData:self.model.type withField:8 withLift:1 withType:self.model.type];
+            [self loadHttpDataWithField:8 withLift:1];
         }
             break;
             
         default:
         {
-            [self loadHttpData:self.model.type withField:2 withLift:1 withType:self.model.type];
+            [self loadHttpDataWithField:2 withLift:1];
         }
             break;
     }
@@ -69,27 +69,27 @@ static NSInteger padding=6;
         case 7:
         {
             if (row==0) {
-                [self loadHttpData:self.model.type withServiceCode:self.model.interfacePath];
+                [self loadHttpData];
             }else{
-                [self loadHttpData:self.model.type withField:4 withLift:row-1 withType:self.model.type];
+                [self loadHttpDataWithField:4 withLift:row-1];
             }
         }
             break;
         case 8:
         {
             if (row==0) {
-                [self loadHttpData:self.model.type withServiceCode:self.model.interfacePath];
+                [self loadHttpData];
             }else{
-                [self loadHttpData:self.model.type withField:3 withLift:row-1 withType:self.model.type];
+                [self loadHttpDataWithField:3 withLift:row-1];
             }
         }
             break;
         default:
         {
             if (row==0) {
-                [self loadHttpData:self.model.type withServiceCode:self.model.interfacePath];
+                [self loadHttpData];
             }else{
-                [self loadHttpData:self.model.type withField:1 withLift:row-1 withType:self.model.type];
+                [self loadHttpDataWithField:1 withLift:row-1];
             }
         }
             break;
@@ -101,11 +101,9 @@ static NSInteger padding=6;
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ClassItemCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ClassItemCollectionCell" forIndexPath:indexPath];
     if ([self.model.type integerValue]==8) {
-        PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-        cell.Pmodel=model;
+        cell.Pmodel=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
     }else{
-        ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-        cell.model=model;
+        cell.model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
     }
     return cell;
 }
@@ -115,7 +113,7 @@ static NSInteger padding=6;
         ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
         productDetailController.alpha=@"0";
         productDetailController.hidesBottomBarWhenPushed = YES;
-        productDetailController.productID=model.id;
+        productDetailController.id=model.id;
         [self.navigationController pushViewController:productDetailController animated:YES];
     }else {
         ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
@@ -123,11 +121,12 @@ static NSInteger padding=6;
         itemDetailController.hidesBottomBarWhenPushed = YES;
         if ([self.model.type integerValue]==8) {
             PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            itemDetailController.detailID=model.id;
-            itemDetailController.projectId=model.projectId;
+            itemDetailController.id=model.id;
+            itemDetailController.type=MLPackage;
         }else{
             ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            itemDetailController.detailID=model.id;
+            itemDetailController.id=model.id;
+            itemDetailController.type=MLItem;
         }
         [self.navigationController pushViewController:itemDetailController animated:YES];
     }
@@ -142,7 +141,7 @@ static NSInteger padding=6;
     return padding;
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0.6, padding, padding, padding);
+    return UIEdgeInsetsMake(padding, padding, padding, padding);
 }
 -(void)addSubViews {
     [self.view addSubview:_sortView];
@@ -158,9 +157,7 @@ static NSInteger padding=6;
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = [UIColor clearColor];
     [_collectionView registerClass:[ClassItemCollectionCell class] forCellWithReuseIdentifier:@"ClassItemCollectionCell"];
-    _collectionView.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self loadHttpData:self.model.type withServiceCode:self.model.interfacePath];
-    }];
+    _collectionView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadHttpData)];
     [_collectionView.mj_header beginRefreshing];
 }
 -(void)configureConstraints {
@@ -176,20 +173,18 @@ static NSInteger padding=6;
     }];
 }
 #pragma mark ===== 默认排序 =====
--(void)loadHttpData:(NSString*)index withServiceCode:(NSString*)path{
-    [Master HttpPostRequestByParams:@{@"type":index} url:mlqqm serviceCode:path Success:^(id json) {
-        [self.itemArray removeAllObjects];
-        for (NSDictionary *dict in json[@"info"]) {
-            [self.itemArray addObject:dict];
-        }
+-(void)loadHttpData{
+    [Master HttpPostRequestByParams:@{@"type":_model.type} url:mlqqm serviceCode:_model.interfacePath Success:^(id json) {
+        [_itemArray removeAllObjects];
+        _itemArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         [_collectionView.mj_header endRefreshing];
         [_collectionView reloadData];
     } Failure:nil andNavigation:self.navigationController];
 }
 #pragma mark ===== 项目排序 =====
--(void)loadHttpData:(NSString*)index withField:(NSInteger)field withLift:(NSInteger)lift withType:(NSString*)type{
+-(void)loadHttpDataWithField:(NSInteger)field withLift:(NSInteger)lift{
     NSString *path=[[NSString alloc]init];
-    switch ([type integerValue]) {
+    switch ([_model.type integerValue]) {
         case 7:
             path=cplbpx;
             break;
@@ -200,7 +195,7 @@ static NSInteger padding=6;
             path=xmlbpx;
             break;
     }
-    [Master HttpPostRequestByParams:@{@"type":index,
+    [Master HttpPostRequestByParams:@{@"type":_model.type,
                                       @"field":[NSString stringWithFormat:@"%ld",field],
                                       @"lift":[NSString stringWithFormat:@"%ld",lift],
                                       } url:mlqqm serviceCode:path Success:^(id json) {

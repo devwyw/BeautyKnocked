@@ -9,17 +9,14 @@
 #import "NewsCenterModel.h"
 
 @implementation NewsCenterModel
-
--(instancetype)initWithImageName:(NSString *)imageName sign:(NSString *)sign title:(NSString *)title descr:(NSString *)descr {
+-(instancetype)initWithImageName:(NSString *)imageName title:(NSString *)title descr:(NSString *)descr{
     self =[super init];
     if (self) {
         self.imgName = imageName;
-        self.sign = sign;
         self.title = title;
         self.descr = descr;
     }
     return self;
-    
 }
 
 @end

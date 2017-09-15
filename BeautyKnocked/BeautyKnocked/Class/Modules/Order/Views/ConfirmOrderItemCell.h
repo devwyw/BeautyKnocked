@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderInfoListModel.h"
 @class DetailModel;
 @class PackageInfoModel;
 
@@ -14,4 +15,5 @@
 
 @property (nonatomic,strong) DetailModel * model;
 @property (nonatomic,strong) PackageInfoModel * Pmodel;
+@property (nonatomic,strong) OrderInfoListModel * infoModel;
 @end

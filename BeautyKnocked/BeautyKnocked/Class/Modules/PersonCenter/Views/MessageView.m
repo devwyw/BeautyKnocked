@@ -9,7 +9,7 @@
 #import "MessageView.h"
 #import <IQTextView.h>
 
-@interface MessageView ()
+@interface MessageView ()<UITextViewDelegate>
 @property (nonatomic,strong) UIView * backView;
 @property (nonatomic,strong) UILabel * title;
 @property (nonatomic,strong) UIButton * cancel;
@@ -50,6 +50,7 @@
     _textview.placeholder=@"您对美丽敲敲门服务平台是否存在什么疑问或困惑，请写下您的宝贵意见...";
     _textview.font=[UIFont systemFontOfSize:Font_Size(35)];
     _textview.backgroundColor=[UIColor colorWithHexString:@"#F2F2F2"];
+    _textview.delegate=self;
     [_backView addSubview:_textview];
     
     _done=[[UIButton alloc]init];
@@ -58,7 +59,29 @@
     [_done setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     _done.titleLabel.font=[UIFont systemFontOfSize:Font_Size(50)];
     _done.backgroundColor=[UIColor colorWithHexString:@"#E1BF6E"];
+    [[_done rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
+        if (_textview.text.length>=5) {
+            [Master RemovePopViewWithBlock:^{
+                [_subMessage sendNext:_textview.text];
+            }];
+        }
+    }];
     [_backView addSubview:_done];
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if (_textview.text.length > 140) {
+        _textview.text = [_textview.text substringToIndex:140];
+    }
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if (text.length == 0) return YES;
+    NSInteger existedLength = textView.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = text.length;
+    if (existedLength - selectedLength + replaceLength > 140) {
+        return NO;
+    }
+    return YES;
 }
 -(void)addConstraints {
     [_backView mas_makeConstraints:^(MASConstraintMaker *make) {

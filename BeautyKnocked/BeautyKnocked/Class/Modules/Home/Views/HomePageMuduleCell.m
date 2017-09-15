@@ -121,18 +121,16 @@ static NSString *const reuseIdentifier = @"HomePageItemCollectionViewCell";
     return self.itemArray.count;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ItemClassModel * model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
     HomePageItemCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    cell.model=model;
+    cell.model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    ItemClassModel * model=[[ItemClassModel alloc]init];
-    model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
+    ItemClassModel * model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.item]];
     [_subTypeModel sendNext:@{@"section":_section,@"row":model.id}];
 }
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake((Width - Width_Pt(52)*2 -Width_Pt(42) * 2) / 3, Height_Pt(442));
+    return CGSizeMake((Width - Width_Pt(52)*2 -Width_Pt(42) * 2) / 3, Height_Pt(440));
 }
 -(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return Width_Pt(52);

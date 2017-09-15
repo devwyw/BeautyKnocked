@@ -39,6 +39,13 @@
     _priceLabel.text = [NSString stringWithFormat:@"VIP价: ¥%@",model.vipPrice];
     _blcakPrice.text = [NSString stringWithFormat:@"市场价: ¥%@",model.price];
 }
+-(void)setInfoModel:(OrderInfoListModel *)infoModel{
+    [Master GetWebImage:_imgView withUrl:infoModel.imagePath];
+    _titleLabel.text = infoModel.name;
+    _serviceLenghtLabel.text = [NSString stringWithFormat:@"服务时长测试数据分钟"];
+    _priceLabel.text = [NSString stringWithFormat:@"实付价: ¥%@",infoModel.money];
+    _blcakPrice.text = [NSString stringWithFormat:@"市场价: ¥%@",infoModel.price];
+}
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {

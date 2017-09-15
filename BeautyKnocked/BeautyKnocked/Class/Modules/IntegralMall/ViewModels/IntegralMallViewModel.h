@@ -12,7 +12,7 @@
 
 @property (nonatomic,strong) UINavigationController *navigationController;
 @property (nonatomic,strong) NSArray * dataArray;
-@property (nonatomic,assign) NSInteger integral;
+@property (nonatomic,copy) NSString * integral;
 
 -(void)ddcs_configureCollectionView:(UICollectionView *)collectionView;
 

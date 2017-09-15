@@ -19,6 +19,7 @@ inhibit_all_warnings!
  pod 'ZLPhotoBrowser'
  pod 'JPush'
  pod 'WechatOpenSDK'
+ pod 'Popover.OC'
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'

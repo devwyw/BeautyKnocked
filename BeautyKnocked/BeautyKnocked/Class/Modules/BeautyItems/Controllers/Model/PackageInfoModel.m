@@ -9,6 +9,7 @@
 #import "PackageInfoModel.h"
 
 @implementation PackageInfoModel
+
 +(NSDictionary *)mj_objectClassInArray
 {
     return @{

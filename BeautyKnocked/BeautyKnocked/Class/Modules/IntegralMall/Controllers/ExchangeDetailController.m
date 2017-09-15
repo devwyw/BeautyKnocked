@@ -59,8 +59,11 @@
         [cancelAction setValue:[UIColor darkGrayColor] forKey:@"_titleTextColor"];
         UIAlertAction *okayAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             /** 兑换 */
-            ExchangeSuccessController *successController = [[ExchangeSuccessController alloc] init];
-            [Wself.navigationController pushViewController:successController animated:YES];
+            [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id,@"exchangeId":_model.id} url:mlqqm serviceCode:dh Success:^(id json) {
+                ExchangeSuccessController *successController = [[ExchangeSuccessController alloc] init];
+                successController.model=[IntegraInfoModel mj_objectWithKeyValues:json[@"info"]];
+                [Wself.navigationController pushViewController:successController animated:YES];
+            } Failure:nil andNavigation:Wself.navigationController];
         }];
         [alertController addAction:cancelAction];
         [alertController addAction:okayAction];

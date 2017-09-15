@@ -13,5 +13,6 @@
 -(void)makeCornerRadius:(CGFloat)cornerRadius;
 /** 设置边框 */
 -(void)makeBorderWidth:(CGFloat)width withColor:(UIColor*)color;
-
+/** 设置阴影 */
+-(void)makeShadowOffset:(CGSize)make;
 @end

@@ -11,8 +11,7 @@
 #import "UIButton+Category.h"
 #import "CarItem.h"
 #import <MJRefresh.h>
-#import <AFNetworking.h>
-#import <SVProgressHUD.h>
+#import "ShopCarController.h"
 
 @interface HomeController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -35,7 +34,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.BarAlpha=@"1";
-    _carItem.count=100;
     for (int i =101; i<=102; i++) {
         UIButton *item=(UIButton*)[self.navigationController.navigationBar viewWithTag:i];
         [item setHidden:NO];
@@ -110,9 +108,14 @@
     
     /** 购物车Item */
     {
+        Weakify(self);
         _carItem=[[CarItem alloc]initWithOriginY:Height-175];
         [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
-            NSLog(@"购物车");
+            if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+                ShopCarController *car=[[ShopCarController alloc]init];
+                car.hidesBottomBarWhenPushed=YES;
+                [Wself.navigationController pushViewController:car animated:YES];
+            }
         }];
         [self.view addSubview:_carItem];
     }
@@ -157,37 +160,21 @@
     [self.homePageViewModel tableviewWithDidSelected:indexPath];
 }
 -(void)loadHttpImageData{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    {/** 菊花 */
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD setMinimumDismissTimeInterval:3];
-    }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 20;
-    manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
+    [Master startStatus];
+    Weakify(self);
     /** 第一次请求 */
-    [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,lbt] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSData *data = responseObject;
-        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    [Master WebPostRequestByParams:nil url:mlqqm serviceCode:lbt Success:^(id json) {
         [_homePageViewModel.imageArray removeAllObjects];
-        _homePageViewModel.imageArray=[[NSMutableArray alloc]initWithArray:resultDic[@"info"]];
+        _homePageViewModel.imageArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
         [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         /** 第二次请求 */
-        [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,mldt] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSData *data = responseObject;
-            NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        [Master WebPostRequestByParams:nil url:mlqqm serviceCode:mldt Success:^(id json) {
             [_homePageViewModel.dataArray removeAllObjects];
-            _homePageViewModel.dataArray=[[NSMutableArray alloc]initWithArray:resultDic[@"info"]];
+            _homePageViewModel.dataArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
             /** 第三次请求 */
-            [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,tjmrs] parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                NSData *data = responseObject;
-                NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                _homePageViewModel.beauticianmodel=[BeauticianModel mj_objectWithKeyValues:resultDic[@"info"]];
+            [Master WebPostRequestByParams:nil url:mlqqm serviceCode:tjmrs Success:^(id json) {
+                _homePageViewModel.beauticianmodel=[BeauticianModel mj_objectWithKeyValues:json[@"info"]];
                 [_tableView reloadSections:[NSIndexSet indexSetWithIndex:4] withRowAnimation:UITableViewRowAnimationNone];
                 /** 第四次请求 */
                 NSString *aid=nil;
@@ -196,42 +183,26 @@
                 }else{
                     aid=[Acount shareManager].id;
                 }
-                [manager POST:[NSString stringWithFormat:@"%@%@",mlqqm,gyxm] parameters:@{@"clientId":aid} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                    [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-                    [SVProgressHUD dismiss];
-                    NSData *data = responseObject;
-                    NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                [Master WebPostRequestByParams:@{@"clientId":aid} url:mlqqm serviceCode:gyxm Success:^(id json) {
                     [_homePageViewModel.itemArray removeAllObjects];
-                    _homePageViewModel.itemArray=[[NSMutableArray alloc]initWithArray:resultDic[@"info"]];
-                    [_tableView.mj_header endRefreshing];
+                    _homePageViewModel.itemArray=[[NSMutableArray alloc]initWithArray:json[@"info"]];
+                    [Wself stopStatus];
                     [_tableView reloadSections:[NSIndexSet indexSetWithIndex:9] withRowAnimation:UITableViewRowAnimationNone];
-                }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-                    [SVProgressHUD dismiss];
-                    [_tableView.mj_header endRefreshing];
-                    NSLog(@"网络请求错误: %@",error);
-                    [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
-                }];
-            }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-                [SVProgressHUD dismiss];
-                [_tableView.mj_header endRefreshing];
-                NSLog(@"网络请求错误: %@",error);
-                [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
-            }];
-        }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-            [SVProgressHUD dismiss];
-            [_tableView.mj_header endRefreshing];
-            NSLog(@"网络请求错误: %@",error);
-            [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
-        }];
-    }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
-        [SVProgressHUD dismiss];
-        [_tableView.mj_header endRefreshing];
-        NSLog(@"网络请求错误: %@",error);
-        [Master showSVProgressHUD:[NSString stringWithFormat:@"网络连接错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
-    }];
+                } Failure:^(NSError *error) {
+                    [Wself stopStatus];
+                } andNavigation:Wself.navigationController];
+            } Failure:^(NSError *error) {
+                [Wself stopStatus];
+            } andNavigation:Wself.navigationController];
+        } Failure:^(NSError *error) {
+            [Wself stopStatus];
+        } andNavigation:Wself.navigationController];
+    } Failure:^(NSError *error) {
+        [Wself stopStatus];
+    } andNavigation:self.navigationController];
+}
+-(void)stopStatus{
+    [Master stopStatus];
+    [_tableView.mj_header endRefreshing];
 }
 @end

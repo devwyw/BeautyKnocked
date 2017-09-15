@@ -30,8 +30,7 @@
     _titleLabel.text=model.name;
     _priceLabel.text=[NSString stringWithFormat:@"¥ %@",model.price];
     if (isStringEmpty(model.count)) {
-        _model.count=@"1";
-        _countview.counts=_model.count;
+        _countview.counts=@"1";
     }else{
         _countview.counts=model.count;
     }

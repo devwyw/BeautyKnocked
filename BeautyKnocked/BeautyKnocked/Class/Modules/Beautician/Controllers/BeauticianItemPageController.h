@@ -7,11 +7,8 @@
 //
 
 #import <WMPageController/WMPageController.h>
-
-static CGFloat const kNavigationBarHeight = 64.f;
+@class BeauticianModel;
 
 @interface BeauticianItemPageController : WMPageController
-
-@property (nonatomic, assign) CGFloat viewTop;
-
+@property (nonatomic,strong) BeauticianModel * model;
 @end

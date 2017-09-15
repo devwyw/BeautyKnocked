@@ -10,7 +10,7 @@
 #import "MoneyCell.h"
 
 @interface MoneyTableController ()
-
+@property (nonatomic,strong) NSArray * dataArray;
 @end
 
 @implementation MoneyTableController
@@ -23,19 +23,21 @@
     self.tableView.backgroundColor=self.view.backgroundColor;
     self.tableView.estimatedRowHeight=100;
     [self.tableView registerClass:[MoneyCell class] forCellReuseIdentifier:@"MoneyCell"];
+    [self loadHttpData];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(NSArray*)dataArray{
+    if (!_dataArray) {
+        _dataArray=[[NSArray alloc]init];
+    }
+    return _dataArray;
 }
-
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return self.dataArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MoneyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MoneyCell" forIndexPath:indexPath];
+    cell.model=[MoneyInfoModel mj_objectWithKeyValues:self.dataArray[indexPath.row]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -46,5 +48,16 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return CGFLOAT_MIN;
+}
+-(void)loadHttpData{
+    Weakify(self);
+    [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id} url:mlqqm serviceCode:yemx Success:^(id json) {
+        _dataArray=[[NSArray alloc]initWithArray:json[@"info"]];
+        [Wself.tableView reloadData];
+    } Failure:nil andNavigation:self.navigationController];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 @end

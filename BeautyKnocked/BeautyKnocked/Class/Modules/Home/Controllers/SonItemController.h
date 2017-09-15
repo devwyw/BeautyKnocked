@@ -13,4 +13,5 @@
 @property (nonatomic,assign) NSInteger index;
 @property (nonatomic,strong) RACSubject * subModel;
 @property (nonatomic,assign) BOOL isSelected;
+@property (nonatomic,assign) BOOL isOrder;
 @end

@@ -75,6 +75,10 @@
 #define yjrgwc @"/manager/client/goods/shoppingCartManager/isAdd"
 #define yjfk @"/manager/client/base/feedbackManager/add"
 #define gycp @"/manager/client/goods/aboutManager/aboutProduct"
+#define gdyy @"/manager/client/base/lightManager/add"
+#define yemx @"/manager/beautician/base/balanceDetailManager/queryList"
+#define jd @"/manager/client/bill/projectBillManager/upBill"
+
 /** 提示框风格 */
 typedef enum : NSUInteger {
     ShowSVProgressTypeInfo,
@@ -109,6 +113,12 @@ typedef void(^PopViewHideBlock)();
 /** Post请求 */
 +(void)HttpPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure
                  andNavigation:(UINavigationController*)navigationController;
+/** Post请求->无加载动画 */
++(void)WebPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure
+                 andNavigation:(UINavigationController*)navigationController;
+/** 加载菊花动画 */
++(void)startStatus;
++(void)stopStatus;
 /** 网络图片 */
 +(void)GetWebImage:(UIImageView*)imageView withUrl:(NSString*)Url;
 /** 获取ip */

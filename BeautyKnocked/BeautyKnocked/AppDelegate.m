@@ -26,11 +26,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     /** 首次启动 */
-    if (isStringEmpty([[NSUserDefaults standardUserDefaults] objectForKey:@"isStartUp"])) {
-        [[NSUserDefaults standardUserDefaults]setObject:@"YES" forKey:@"isStartUp"];
-        self.window.rootViewController = [[StartImageController alloc]init];
-    }else{
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:@"appStatus"]) {
         self.window.rootViewController = [[TabBarController alloc]init];
+    }else{
+        [defaults setBool:YES forKey:@"appStatus"];
+        [defaults synchronize];
+        self.window.rootViewController = [[StartImageController alloc]init];
     }
     [self.window makeKeyAndVisible];
     

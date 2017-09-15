@@ -70,7 +70,7 @@
     NSString *text=[NSString stringWithFormat:@"¥ %@",model.money];
     _money.attributedText=[text setMinString:@"¥" withMinFont:Font_Size(50) andMaxString:model.money withMaxFont:Font_Size(100)];
     
-    _message.text=[NSString stringWithFormat:@"• %@",model.commName];
+    _message.text=[NSString stringWithFormat:@"• 仅限抵用%@",model.commName];
     _time.text=[NSString stringWithFormat:@"有效期: %@-%@",[self getWebTime:model.startTime],[self getWebTime:model.endTime]];
     
     if (model.isStatus) {
@@ -86,30 +86,36 @@
             _nowPay.hidden=YES;
         }
         NSString *type=nil;
+        NSString *info=nil;
         switch ([model.type integerValue]) {
             case 1:
-                type=@"项目";
+                type=@"项目券";
+                info=@"可抵扣此项目的全部金额";
                 break;
             case 2:
                 type=@"项目现金抵用券";
+                info=@"可抵扣同等价格的金额";
                 break;
             case 4:
                 type=@"闺蜜券";
+                info=@"测试数据";
                 break;
             case 5:
-                type=@"产品";
+                type=@"产品券";
+                info=@"可抵扣此产品的全部金额";
                 break;
             case 6:
                 type=@"产品现金抵用券";
+                info=@"可抵扣同等价格的金额";
                 break;
             default:
                 break;
         }
         _label1.text=[NSString stringWithFormat:@"• 此优惠券为%@;",type];
-        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，可抵扣相等价格的金额;",model.money];
-        _label3.text=@"• 每笔订单最多限用一张，不叠加使用优惠券;";
+        _label2.text=[NSString stringWithFormat:@"• 此优惠券面值%@元，%@;",model.money,info];
+        _label3.text=@"• 每笔订单最多限用一张，不能叠加使用优惠券;";
         
-        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"• 券不找零，不兑换现金，最终解释权归美丽敲敲门所有;"];
+        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:@"• 此券不找零，不兑换现金，最终解释权归美丽敲敲门所有;"];
         [attributeStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:Font_Size(35)] range:NSMakeRange(0, attributeStr.length)];
         NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
         style.alignment=NSTextAlignmentLeft;

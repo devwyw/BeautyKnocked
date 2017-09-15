@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderBaseTableViewController : UITableViewController
-
 @property (nonatomic,assign) NSInteger index;
-
 @end

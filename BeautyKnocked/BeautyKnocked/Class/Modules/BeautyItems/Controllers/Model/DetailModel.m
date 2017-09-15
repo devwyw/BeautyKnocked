@@ -9,6 +9,7 @@
 #import "DetailModel.h"
 
 @implementation DetailModel
+
 +(NSDictionary *)mj_objectClassInArray
 {
     return @{

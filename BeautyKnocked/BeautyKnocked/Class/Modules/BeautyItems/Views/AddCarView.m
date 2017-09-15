@@ -29,6 +29,9 @@ static NSString *unAddTo=@"bukejia";
     }
     return self;
 }
+-(NSString*)count{
+    return _number.text;
+}
 -(void)addGView{
     UIView *backview=[[UIView alloc]init];
     backview.backgroundColor=[UIColor whiteColor];
@@ -80,7 +83,6 @@ static NSString *unAddTo=@"bukejia";
                 _Lbtn.userInteractionEnabled=YES;
             }
         }
-        self.count=_number.text;
         [_Rbtn setImage:[UIImage imageNamed:addTos] forState:UIControlStateNormal];
         _Rbtn.userInteractionEnabled=YES;
     }];
@@ -91,9 +93,9 @@ static NSString *unAddTo=@"bukejia";
     _Rbtn.userInteractionEnabled=YES;
     [_Rbtn setImage:[UIImage imageNamed:@"kejia"] forState:UIControlStateNormal];
     [[_Rbtn rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-        if ([_number.text integerValue]<99) {
+        if ([_number.text integerValue]<10) {
             _number.text=[NSString stringWithFormat:@"%ld",[_number.text integerValue]+1];
-            if ([_number.text integerValue]==99) {
+            if ([_number.text integerValue]==10) {
                 [_Rbtn setImage:[UIImage imageNamed:unAddTo] forState:UIControlStateNormal];
                 _Rbtn.userInteractionEnabled=NO;
             }else{
@@ -101,7 +103,6 @@ static NSString *unAddTo=@"bukejia";
                 _Rbtn.userInteractionEnabled=YES;
             }
         }
-        self.count=_number.text;
         [_Lbtn setImage:[UIImage imageNamed:reduces] forState:UIControlStateNormal];
         _Lbtn.userInteractionEnabled=YES;
     }];
@@ -109,7 +110,6 @@ static NSString *unAddTo=@"bukejia";
     
     _number=[[UILabel alloc]init];
     _number.text=@"1";
-    self.count=_number.text;
     _number.backgroundColor=[UIColor colorWithHexString:@"#EEEEEE"];
     _number.textAlignment=NSTextAlignmentCenter;
     [_number makeCornerRadius:8];

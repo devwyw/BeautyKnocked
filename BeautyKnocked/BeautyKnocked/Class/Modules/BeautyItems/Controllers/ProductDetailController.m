@@ -12,6 +12,7 @@
 #import "ConfirmOrderController.h"
 #import "AddCarView.h"
 #import "CarItem.h"
+#import "ShopCarController.h"
 
 @interface ProductDetailController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -51,13 +52,17 @@
     self.title=@"产品详情";
     [self initializeViews];
     [self addConstraints];
-    [self loadHttpData:self.productID];
+    [self loadHttpData];
     
     /** 购物车Item */
     {
+        Weakify(self);
         _carItem=[[CarItem alloc]initWithOriginY:Height-111];
         [_carItem.pushCar subscribeNext:^(id  _Nullable x) {
-            NSLog(@"购物车");
+            if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+                ShopCarController *car=[[ShopCarController alloc]init];
+                [Wself.navigationController pushViewController:car animated:YES];
+            }
         }];
         [self.view addSubview:_carItem];
     }
@@ -89,11 +94,21 @@
     }];
     
     [_addReserveView.addCar subscribeNext:^(id  _Nullable x) {
-        AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
-        [view.doneAction subscribeNext:^(id  _Nullable x) {
-            [Master RemovePopViewWithBlock:nil];
-        }];
-        [Master PopSheetView:view];
+        [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id,@"productId":_id} url:mlqqm serviceCode:yjrgwc Success:^(id json) {
+            if ([json[@"info"] boolValue]) {
+                [Master showSVProgressHUD:@"此产品已加入购物车~" withType:ShowSVProgressTypeInfo withShowBlock:nil];
+            }else{
+                AddCarView *view=[[AddCarView alloc]initWithFrame:CGRectMake(0, 0, Width, Height_Pt(790))];
+                [view.doneAction subscribeNext:^(id  _Nullable x) {
+                    [Master HttpPostRequestByParams:@{@"clientId":[Acount shareManager].id,@"productId":_id,@"num":view.count} url:mlqqm serviceCode:jrgwc Success:^(id json) {
+                        [Master RemovePopViewWithBlock:^{
+                            [Master showSVProgressHUD:@"加入购物车成功~" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
+                        }];
+                    } Failure:nil andNavigation:Wself.navigationController];
+                }];
+                [Master PopSheetView:view];
+            }
+        } Failure:nil andNavigation:Wself.navigationController];
     }];
     
     [self.view addSubview:_tableView];
@@ -143,13 +158,13 @@
     return _productDetailViewModel;
 }
 #pragma mark ===== 产品详情 =====
--(void)loadHttpData:(NSString*)productID{
+-(void)loadHttpData{
     Weakify(self);
-    [Master HttpPostRequestByParams:@{@"id":productID} url:mlqqm serviceCode:cpxq Success:^(id json) {
-        self.productDetailViewModel.model=[ProductModel mj_objectWithKeyValues:json[@"info"]];
+    [Master HttpPostRequestByParams:@{@"id":_id} url:mlqqm serviceCode:cpxq Success:^(id json) {
+        Wself.productDetailViewModel.model=[ProductModel mj_objectWithKeyValues:json[@"info"]];
         [Master GetWebImage:Wself.tableheaderView withUrl:Wself.productDetailViewModel.model.imagePath];
         /** 评论列表 */
-        [Master HttpPostRequestByParams:@{@"id":productID,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
+        [Master HttpPostRequestByParams:@{@"id":_id,@"type":@"1"} url:mlqqm serviceCode:pllb Success:^(id json) {
             Wself.productDetailViewModel.listArray=[[NSArray alloc]initWithArray:json[@"info"]];
             [_tableView reloadData];
         } Failure:nil andNavigation:Wself.navigationController];

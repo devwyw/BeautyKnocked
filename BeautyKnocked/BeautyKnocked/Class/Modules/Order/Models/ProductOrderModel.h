@@ -19,4 +19,5 @@
 @property (nonatomic,copy) NSString * expressMode;
 @property (nonatomic,copy) NSString * remark;
 @property (nonatomic,copy) NSString * ip;
+@property (nonatomic,copy) NSString * shoppingCartIds;
 @end

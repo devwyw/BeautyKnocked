@@ -24,10 +24,8 @@
     [super viewDidLoad];
     self.BarColor = [ThemeColor toColorString];
     self.StatusDefaultBar=@"0";
-    if (_isType==1) {
+    if (_isType) {
         [self.navigationItem setTitle:@"选择美容师"];
-    }else if(_isType==2){
-        [self.navigationItem setTitle:@"收藏美容师"];
     }else{
         [self.navigationItem setTitle:@"预约美容师"];
     }
@@ -45,34 +43,30 @@
     return self.listArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BeauticianModel *model=[BeauticianModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     BeauticianCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BeauticianCell" forIndexPath:indexPath];
-    cell.isBeauticianSelect=_isType==1 ? YES:NO;
-    cell.model=model;
+    cell.isBeauticianSelect=_isType;
+    cell.model=[BeauticianModel mj_objectWithKeyValues:self.listArray[indexPath.row]];
     Weakify(self);
     [[cell.beaSelect takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
         //选择
-        [Wself.beauticianId sendNext:model.id];
+        [Wself.beauticianId sendNext:cell.model.id];
         [Wself.navigationController popViewControllerAnimated:YES];
     }];
     [[cell.collect takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
         //收藏
         Acount *user=[Acount shareManager];
         if ([user isSignInWithNavigationController:Wself.navigationController]) {
-            UIButton *btn=(UIButton*)x;
-            if (!btn.isSelected) {
-                [Master HttpPostRequestByParams:@{@"clientId":user.id,@"beauticianId":model.id} url:mlqqm serviceCode:khsc Success:^(id json) {
-                    btn.selected=!btn.isSelected;
-                    [Master showSVProgressHUD:@"收藏成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
-                        [Wself.tableView.mj_header beginRefreshing];
-                    }];
-                } Failure:nil andNavigation:Wself.navigationController];
-            }
+            [Master HttpPostRequestByParams:@{@"clientId":user.id,@"beauticianId":cell.model.id} url:mlqqm serviceCode:khsc Success:^(id json) {
+                [Master showSVProgressHUD:@"收藏成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                    [Wself.tableView.mj_header beginRefreshing];
+                }];
+            } Failure:nil andNavigation:Wself.navigationController];
         }
     }];
     [[cell.reserve takeUntil:cell.rac_prepareForReuseSignal]subscribeNext:^(id  _Nullable x) {
         //预约
         BeauticianItemPageController *beauticianPageController = [[BeauticianItemPageController alloc] init];
+        beauticianPageController.model=cell.model;
         [beauticianPageController setHidesBottomBarWhenPushed:YES];
         [Wself.navigationController pushViewController:beauticianPageController animated:YES];
     }];
@@ -95,7 +89,7 @@
         make.bottom.equalTo(self.view);
     }];
     
-    if (_isType!=0) {
+    if (_isType) {
         _sortMenu.hidden=YES;
         [_tableView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);

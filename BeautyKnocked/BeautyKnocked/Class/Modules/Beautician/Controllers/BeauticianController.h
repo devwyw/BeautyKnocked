@@ -11,7 +11,7 @@
 
 @interface BeauticianController : UIViewController
 @property (nonatomic,strong) RACSubject * beauticianId;
-@property (nonatomic,assign) NSInteger isType;
 @property (nonatomic,copy) NSString * serviceTime;
 @property (nonatomic,copy) NSString * pactServiceTime;
+@property (nonatomic,assign) BOOL isType;
 @end

@@ -26,14 +26,18 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor=[UIColor whiteColor];
         [self setupControls];
         [self setupConstraints];
     }
     return self;
 }
-
+-(void)setModel:(BeauticianModel *)model{
+    [Master GetWebImage:_imgView withUrl:model.headPath];
+    _nameLabel.text = model.name;
+    _starView.starCount=[model.score integerValue];
+}
 -(void)setupControls {
-    
     _imgView = [[UIImageView alloc] init];
     [self addSubview:_imgView];
     
@@ -42,7 +46,6 @@
     [self addSubview:_nameLabel];
     
     _starView = [StarView evaluationViewWithChooseStarBlock:nil];
-    _starView.starCount=5;
     _starView.spacing = 0.1;
     _starView.tapEnabled = NO;
     [self addSubview:_starView];
@@ -50,10 +53,6 @@
     _line = [[UIView alloc] init];
     _line.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:_line];
-    
-    [_imgView setImage:[UIImage imageNamed:@"touxiang_03"]];
-    _nameLabel.text = @"陈梦玲";
-    
 }
 
 -(void)setupConstraints {

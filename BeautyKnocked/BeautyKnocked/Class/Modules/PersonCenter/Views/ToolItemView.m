@@ -7,6 +7,7 @@
 //
 
 #import "ToolItemView.h"
+#import "UIButton+Category.h"
 
 @interface ToolItemView ()
 
@@ -24,6 +25,7 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
         [self setupInterface];
         [self setupConstraints];
     }
@@ -31,9 +33,6 @@
 }
 
 -(void)setupInterface {
-    
-    self.backgroundColor = [UIColor colorWithHexString:@"#F0F0F0"];
-    
     _collectBtn = [self configureWithTitle:@"收藏技师" image:@"shoucang_03"];
     [_collectBtn addTarget:self action:@selector(didClicked:) forControlEvents:UIControlEventTouchUpInside];
     _collectBtn.tag = 1001;
@@ -56,16 +55,10 @@
 }
 
 -(void)setupConstraints {
-    
     [_collectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self);
         make.width.equalTo(@[_shoppingCartBtn,_shoppingAddressBtn,_pointsMallBtn]);
         make.height.equalTo(@[_shoppingCartBtn,_shoppingAddressBtn,_pointsMallBtn]);
-    }];
-    
-    [_shoppingCartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_collectBtn.mas_right).with.offset(1);
-        make.right.and.top.equalTo(self);
     }];
     
     [_shoppingAddressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -73,9 +66,14 @@
         make.top.equalTo(_collectBtn.mas_bottom).with.offset(1);
     }];
     
+    [_shoppingCartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_collectBtn.mas_right).with.offset(1);
+        make.right.and.top.equalTo(self);
+    }];
+    
     [_pointsMallBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_shoppingAddressBtn.mas_right).with.offset(1);
-        make.right.and.bottom.equalTo(self);
+        make.right.bottom.equalTo(self);
         make.top.equalTo(_shoppingCartBtn.mas_bottom).with.offset(1);
     }];
     
@@ -84,6 +82,7 @@
 -(UIButton *)configureWithTitle:(NSString *)title image:(NSString *)image {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor whiteColor];
+    [button setImgViewStyle:ButtonImgViewStyleLeft imageSize:[UIImage imageNamed:image].size space:5];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:15];

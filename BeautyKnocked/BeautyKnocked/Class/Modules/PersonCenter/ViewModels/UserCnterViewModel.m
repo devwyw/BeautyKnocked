@@ -21,7 +21,8 @@
 #import "MoneyController.h"
 #import "LoginController.h"
 #import "CouponController.h"
-#import "BeauticianController.h"
+#import "CollectTableController.h"
+#import "ShopCarController.h"
 
 @interface UserCnterViewModel ()<PSheaderViewDelegate,ToolItemViewDelegate>
 
@@ -74,8 +75,20 @@
                 break;
                case 1:
             {
-                MessageView *message=[[MessageView alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
-                [Master PopAlertView:message];
+                Weakify(self);
+                Acount *user=[Acount shareManager];
+                if ([user isSignInWithNavigationController:self.navigationController]) {
+                    MessageView *message=[[MessageView alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(1018), Height_Pt(1186)+20)];
+                    message.subMessage=[RACSubject subject];
+                    [message.subMessage subscribeNext:^(id  _Nullable x) {
+                        [Master HttpPostRequestByParams:@{@"clientId":user.id,@"content":x} url:mlqqm serviceCode:yjfk Success:^(id json) {
+                            if ([json[@"info"] boolValue]) {
+                                [Master showSVProgressHUD:@"提交成功，我们会尽快处理您的问题~" withType:ShowSVProgressTypeSuccess withShowBlock:nil];
+                            }
+                        } Failure:nil andNavigation:Wself.navigationController];
+                    }];
+                    [Master PopAlertView:message];
+                }
             }
                 break;
             default:
@@ -173,11 +186,13 @@
 -(void)didChooseToolAtIndex:(NSUInteger)index {
     if ([[Acount shareManager] isSignInWithNavigationController:self.navigationController]) {
         if (index == 1) {
-            BeauticianController *controller=[[BeauticianController alloc]init];
+            CollectTableController *controller=[[CollectTableController alloc]init];
             controller.hidesBottomBarWhenPushed = YES;
-            controller.isType=2;
             [self.navigationController pushViewController:controller animated:YES];
         }else if (index == 2) {
+            ShopCarController *car=[[ShopCarController alloc]init];
+            car.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:car animated:YES];
         }else if (index == 3) {
             AddressController *addressVC = [[AddressController alloc] init];
             addressVC.hidesBottomBarWhenPushed = YES;

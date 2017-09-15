@@ -114,7 +114,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     RechargeModel *model=[RechargeModel mj_objectWithKeyValues:_rechargeArray[indexPath.row]];
     model.isSelected=!model.isSelected;
-    [_rechargeArray replaceObjectAtIndex:indexPath.row withObject:model];
+    [_rechargeArray replaceObjectAtIndex:indexPath.row withObject:model.mj_keyValues];
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

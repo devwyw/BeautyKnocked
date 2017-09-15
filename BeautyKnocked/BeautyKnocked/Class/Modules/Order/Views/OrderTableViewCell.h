@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderListModel.h"
+@class RACSubject;
 @class RACSignal;
-@protocol OrderTableViewCellDelegate <NSObject>
--(void)cellPush;
-@end
 
 @interface OrderTableViewCell : UITableViewCell
-@property (nonatomic,strong) id<OrderTableViewCellDelegate> cellDelegate;
-@property (nonatomic,strong) RACSignal * leftPush;
-@property (nonatomic,strong) RACSignal * rightPush;
+@property (nonatomic,strong) OrderListModel * model;
+@property (nonatomic,strong) RACSubject * subPush;
+@property (nonatomic,strong) RACSignal * subLeft;
+@property (nonatomic,strong) RACSignal * subRight;
 @end

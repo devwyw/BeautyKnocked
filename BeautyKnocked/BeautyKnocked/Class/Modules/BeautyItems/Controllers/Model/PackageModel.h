@@ -11,7 +11,6 @@
 @interface PackageModel : NSObject
 /** 套餐列表 */
 @property (nonatomic,copy) NSString * id;
-@property (nonatomic,copy) NSString * projectId;
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * price;
 @property (nonatomic,copy) NSString * imagePath;

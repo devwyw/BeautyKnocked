@@ -17,4 +17,8 @@
 
 @property (nonatomic,strong) DetailModel * detailModel;
 @property (nonatomic,strong) ProductModel * productModel;
+
+@property (nonatomic,strong) NSArray * carArray;
+
+@property (nonatomic,copy) NSString * cartIds;
 @end

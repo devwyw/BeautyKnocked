@@ -7,15 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewsCenterModel.h"
 
 @interface NewsCenterCell : UITableViewCell
-
-@property (nonatomic, copy) NSString *imageName;
-
-@property (nonatomic, copy) NSString *signText;
-
-@property (nonatomic, copy) NSString *title;
-
-@property (nonatomic, copy) NSString *descrText;
-
+@property (nonatomic,strong) NewsCenterModel * model;
 @end

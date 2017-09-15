@@ -17,6 +17,10 @@
     self.layer.borderWidth=width;
     self.layer.borderColor=color.CGColor;
 }
-
-
+-(void)makeShadowOffset:(CGSize)make;{
+    self.layer.shadowColor=[UIColor blackColor].CGColor;
+    self.layer.shadowOffset=make;
+    self.layer.shadowOpacity = 0.35f;
+    self.layer.shadowRadius = 2;
+}
 @end

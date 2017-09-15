@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RACSubject;
 
 @interface MessageView : UIView
-
+@property (nonatomic,strong) RACSubject * subMessage;
 @end

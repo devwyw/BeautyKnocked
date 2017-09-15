@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TitleClassModel.h"
 
 @interface BeauticianItemController : UIViewController
-
+@property (nonatomic,strong) TitleClassModel * model;
+@property (nonatomic,strong) NSString * Bid;
 @end

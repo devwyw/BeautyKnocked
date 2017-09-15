@@ -199,7 +199,7 @@
         case 1:
         {
             BeauticianController *controller=[[BeauticianController alloc]init];
-            controller.isType=1;
+            controller.isType=YES;
             controller.beauticianId=[RACSubject subject];
             [controller.beauticianId subscribeNext:^(id  _Nullable x) {
                 _model.beauticianId=x;

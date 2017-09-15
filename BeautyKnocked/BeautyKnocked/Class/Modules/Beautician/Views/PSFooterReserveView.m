@@ -21,28 +21,31 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor=[UIColor whiteColor];
         [self createAndAddViews];
         [self addConstraints];
     }
     return self;
 }
-
+-(void)setPrice:(NSString *)price{
+    _price=price;
+    _priceLabel.text = [NSString stringWithFormat:@"合计：¥ %@",price];
+}
+-(void)setBtnName:(NSString *)btnName{
+    [_reserveNowButton setTitle:btnName forState:UIControlStateNormal];
+}
 -(void)createAndAddViews {
-    
-    _priceLabel =  [[UILabel alloc] init];
-    _priceLabel.font = [UIFont systemFontOfSize:Font_Size(49)];
+    _priceLabel = [[UILabel alloc] init];
+    _priceLabel.font = [UIFont systemFontOfSize:Font_Size(47.5)];
+    _priceLabel.textColor=ThemeColor;
+    _priceLabel.text = @"合计：¥ 0";
     [self addSubview:_priceLabel];
     
     _reserveNowButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _reserveNowButton.titleLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    [_reserveNowButton setTitle:@"立即预约" forState:UIControlStateNormal];
     [_reserveNowButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
     [self addSubview:_reserveNowButton];
-    
-    _priceLabel.text = @"合计: ¥ 148";
-    
 }
-
 -(void)addConstraints {
     
     [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,5 +62,7 @@
     }];
     
 }
-
+-(RACSignal*)subPush{
+    return [_reserveNowButton rac_signalForControlEvents:UIControlEventTouchUpInside];
+}
 @end

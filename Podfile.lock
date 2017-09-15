@@ -25,6 +25,7 @@ PODS:
   - Masonry (1.0.2)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
+  - Popover.OC (1.0)
   - PYSearch (0.8.2)
   - ReactiveObjC (2.1.2)
   - SDCycleScrollView (1.65):
@@ -46,6 +47,7 @@ DEPENDENCIES:
   - Masonry (= 1.0.2)
   - MJExtension (= 3.0.13)
   - MJRefresh (= 3.1.12)
+  - Popover.OC
   - PYSearch
   - ReactiveObjC (= 2.1.2)
   - SDCycleScrollView (= 1.65)
@@ -65,6 +67,7 @@ SPEC CHECKSUMS:
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  Popover.OC: b63f258fb9a9f480d23db9e486f9b165cce17ef8
   PYSearch: 6abe3721eb6a2f2a77f06a095b734cdb8faf3c81
   ReactiveObjC: 7b6782ae39f9ac0f57205c3b0c0b69b9dd7048c0
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
@@ -74,6 +77,6 @@ SPEC CHECKSUMS:
   WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
   ZLPhotoBrowser: e3b90e4ab9ec5d19ba2ed2ef7c9ded654e1b1c8e
 
-PODFILE CHECKSUM: 7b7a47a1bbe509a8453ef8f1a67dea15f563ab95
+PODFILE CHECKSUM: 91e27a3d2259854ec0cc1a41c97ec854505834dc
 
 COCOAPODS: 1.2.0

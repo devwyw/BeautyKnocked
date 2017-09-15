@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class OrderListModel;
 
 @interface OrderMessageViewController : UIViewController
-
+@property (nonatomic,strong) OrderListModel * model;
 @end

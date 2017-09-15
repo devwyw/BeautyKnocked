@@ -30,32 +30,45 @@
     }
     return self;
 }
+-(void)setModel:(MoneyInfoModel *)model{
+    _title.text=model.source;
+    _message.text=model.name;
 
+    if ([model.status integerValue]==0) {
+        _money.textColor=[UIColor colorWithHexString:@"#D6AA3A"];
+        _money.text=[NSString stringWithFormat:@"+%@",model.money];
+    }else{
+        _money.textColor=[UIColor redColor];
+        _money.text=[NSString stringWithFormat:@"-%@",model.money];
+    }
+    
+    NSTimeInterval interval=[[model.createDate substringToIndex:10] doubleValue];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+    NSDateFormatter *dateformatter=[[NSDateFormatter alloc] init];
+    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *timeString = [dateformatter stringFromDate:date];
+    _time.text=[NSString stringWithFormat:@"服务时间：%@",timeString];
+}
 -(void)initializeViews {
     _title=[[UILabel alloc]init];
-    _title.font=[UIFont systemFontOfSize:Font_Size(50)];
+    _title.font=[UIFont systemFontOfSize:Font_Size(45)];
     _title.textColor=[UIColor blackColor];
-    _title.text=@"退款至余额";
     [self.contentView addSubview:_title];
     
     _message=[[UILabel alloc]init];
     _message.font=[UIFont systemFontOfSize:Font_Size(40)];
     _message.textColor=[UIColor lightGrayColor];
-    _message.text=@"水漾海洋特润拼团失败";
     [self.contentView addSubview:_message];
     
     _money=[[UILabel alloc]init];
     _money.font=[UIFont systemFontOfSize:Font_Size(50)];
     _money.textAlignment=NSTextAlignmentRight;
-    _money.textColor=[UIColor colorWithHexString:@"#D6AA3A"];
-    _money.text=@"+1000";
     [self.contentView addSubview:_money];
     
     _time=[[UILabel alloc]init];
-    _time.font=[UIFont systemFontOfSize:Font_Size(40)];
+    _time.font=[UIFont systemFontOfSize:Font_Size(37.5)];
     _time.textAlignment=NSTextAlignmentRight;
     _time.textColor=[UIColor lightGrayColor];
-    _time.text=@"2017-01-01 01:01";
     [self.contentView addSubview:_time];
 }
 -(void)addConstraints {

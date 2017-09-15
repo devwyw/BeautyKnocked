@@ -64,7 +64,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CouponModel *model=[CouponModel mj_objectWithKeyValues:_listArray[indexPath.row]];
     model.isStatus=!model.isStatus;
-    [_listArray replaceObjectAtIndex:indexPath.row withObject:model];
+    [_listArray replaceObjectAtIndex:indexPath.row withObject:model.mj_keyValues];
     if (model.isStatus) {
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     }else{

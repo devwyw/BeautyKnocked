@@ -10,5 +10,5 @@
 
 @interface ProductDetailController : UIViewController
 @property (nonatomic,copy) NSString * alpha;
-@property (nonatomic,copy) NSString * productID;
+@property (nonatomic,copy) NSString * id;
 @end

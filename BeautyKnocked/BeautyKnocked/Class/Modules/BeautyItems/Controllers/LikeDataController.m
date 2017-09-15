@@ -123,7 +123,8 @@
             ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
             itemDetailController.alpha=@"0";
             itemDetailController.hidesBottomBarWhenPushed = YES;
-            itemDetailController.detailID=model.id;
+            itemDetailController.type=MLItem;
+            itemDetailController.id=model.id;
             [self.navigationController pushViewController:itemDetailController animated:YES];
         }
             break;
@@ -132,8 +133,8 @@
             ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
             itemDetailController.alpha=@"0";
             itemDetailController.hidesBottomBarWhenPushed = YES;
-            itemDetailController.detailID=model.id;
-            itemDetailController.projectId=@"1";
+            itemDetailController.type=MLPackage;
+            itemDetailController.id=model.id;
             [self.navigationController pushViewController:itemDetailController animated:YES];
         }
             break;
@@ -142,7 +143,7 @@
             ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
             productDetailController.alpha=@"0";
             productDetailController.hidesBottomBarWhenPushed = YES;
-            productDetailController.productID=model.id;
+            productDetailController.id=model.id;
             [self.navigationController pushViewController:productDetailController animated:YES];
         }
             break;

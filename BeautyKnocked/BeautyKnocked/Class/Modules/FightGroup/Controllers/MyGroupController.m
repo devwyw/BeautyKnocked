@@ -22,6 +22,7 @@
         self.menuViewStyle = WMMenuViewStyleLine;
         self.titleSizeSelected = 14;
         self.titleSizeNormal = 14;
+        self.menuHeight = 35;
         self.titleColorSelected=[UIColor colorWithHexString:@"#D9AB39"];
         self.menuBGColor=[UIColor whiteColor];
     }

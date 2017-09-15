@@ -24,7 +24,6 @@
         [self addSubview:_carAction];
         
         _carCount=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 22, 22)];
-        _carCount.text=@"0";
         [_carCount setFont:[UIFont systemFontOfSize:10]];
         [_carCount setTextAlignment:NSTextAlignmentCenter];
         [_carCount setTextColor:[UIColor whiteColor]];
@@ -32,6 +31,7 @@
         [_carCount.layer setCornerRadius:11];
         [_carCount.layer setMasksToBounds:YES];
         [_carAction addSubview:_carCount];
+        _carCount.hidden=YES;
     }
     return self;
 }
@@ -41,8 +41,12 @@
 -(void)setCount:(NSInteger)count{
     if (count>99) {
         _carCount.text=@"99+";
+        _carCount.hidden=NO;
+    }else if(count==0){
+        _carCount.hidden=YES;
     }else{
         _carCount.text=[NSString stringWithFormat:@"%ld",count];
+        _carCount.hidden=NO;
     }
 }
 @end

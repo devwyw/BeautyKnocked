@@ -110,14 +110,6 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
     
     _submitOrderView = [[ConfirmOrderSubmitView alloc] init];
     _submitOrderView.backgroundColor = [UIColor whiteColor];
-    switch (_orderStyle) {
-        case MLItem:
-            _submitOrderView.totalPrice=self.detailModel.price;
-            break;
-        default:
-            _submitOrderView.totalPrice=self.productModel.price;
-            break;
-    }
     /** 提交订单 */
     Weakify(self);
     [_submitOrderView.payInfo subscribeNext:^(id  _Nullable x) {
@@ -262,24 +254,23 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
                     return cell;
                 }else{
                     /** 产品列表 */
-                    ProductModel *model=[ProductModel mj_objectWithKeyValues:_addArray[indexPath.row-2]];
                     ConfirmOrderProductCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCell forIndexPath:indexPath];
-                    cell.model=model;
-                    [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:cell.model.mj_keyValues];
+                    cell.model=[ProductModel mj_objectWithKeyValues:_addArray[indexPath.row-2]];
                     cell.subCount=[RACSubject subject];
                     [[cell.subCount takeUntil:cell.rac_prepareForReuseSignal] subscribeNext:^(id  _Nullable x) {
                         _productOrderModel.productIds=nil;
                         _submitOrderView.totalPrice=nil;
-                        model.count=x;
-                        [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:model.mj_keyValues];
+                        cell.model.count=x;
+                        [_addArray replaceObjectAtIndex:indexPath.row-2 withObject:cell.model.mj_keyValues];
                         
                         for (NSDictionary *dict in _addArray) {
-                            _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([dict[@"count"] integerValue]*[dict[@"price"] floatValue])+[_submitOrderView.totalPrice floatValue]];
-                            for (int i=0; i<[dict[@"count"] integerValue]; i++) {
+                            ProductModel *model=[ProductModel mj_objectWithKeyValues:dict];
+                            _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([model.count integerValue]*[model.price floatValue])+[_submitOrderView.totalPrice floatValue]];
+                            for (int i=0; i<[model.count integerValue]; i++) {
                                 if (!isStringEmpty(_productOrderModel.productIds)) {
-                                    _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,dict[@"id"]];
+                                    _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,model.id];
                                 }else{
-                                    _productOrderModel.productIds=dict[@"id"];
+                                    _productOrderModel.productIds=model.id;
                                 }
                             }
                         }
@@ -511,11 +502,26 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             self.detailOrderModel.ip=ip;
             _detailOrderModel.clientId=clientId;
             _detailOrderModel.beauticianId=@"0";
-            _detailOrderModel.projectIds=self.detailModel.id;
             _detailOrderModel.clientCouponId=@"0";
             _detailOrderModel.payType=@"0";
-            _detailOrderModel.serviceTime=_detailModel.serviceTime;
-            [self.addArray addObject:_detailModel.mj_keyValues];
+            if (isArrayEmpty(_carArray)) {
+                _detailOrderModel.projectIds=_detailModel.id;
+                _detailOrderModel.serviceTime=_detailModel.serviceTime;
+                _submitOrderView.totalPrice=_detailModel.price;
+                [self.addArray addObject:_detailModel.mj_keyValues];
+            }else{
+                self.addArray=[[NSMutableArray alloc]initWithArray:_carArray];
+                for (NSDictionary *dict in _addArray) {
+                    DetailModel *model=[DetailModel mj_objectWithKeyValues:dict];
+                    if (!isStringEmpty(_detailOrderModel.projectIds)) {
+                        _detailOrderModel.projectIds=[NSString stringWithFormat:@"%@,%@",_detailOrderModel.projectIds,model.id];
+                    }else{
+                        _detailOrderModel.projectIds=model.id;
+                    }
+                    _detailOrderModel.serviceTime=[NSString stringWithFormat:@"%ld",[_detailOrderModel.serviceTime integerValue]+[model.serviceTime integerValue]];
+                    _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([model.price floatValue])+[_submitOrderView.totalPrice floatValue]];
+                }
+            }
             break;
         default:
             self.productOrderModel.ip=ip;
@@ -523,8 +529,25 @@ static NSString *const RemarksCell = @"ConfirmOrderRemarksCell";
             _productOrderModel.beauticianId=@"0";
             _productOrderModel.clientCouponId=@"0";
             _productOrderModel.expressMode=@"0";
-            _productOrderModel.productIds=self.productModel.id;
-            [self.addArray addObject:_productModel.mj_keyValues];
+            _productOrderModel.shoppingCartIds=_cartIds;
+            if (isArrayEmpty(_carArray)) {
+                _productOrderModel.productIds=_productModel.id;
+                _submitOrderView.totalPrice=_productModel.price;
+                [self.addArray addObject:_productModel.mj_keyValues];
+            }else{
+                self.addArray=[[NSMutableArray alloc]initWithArray:_carArray];
+                for (NSDictionary *dict in _addArray) {
+                    ProductModel *model=[ProductModel mj_objectWithKeyValues:dict];
+                    _submitOrderView.totalPrice=[NSString stringWithFormat:@"%f",([model.count integerValue]*[model.price floatValue])+[_submitOrderView.totalPrice floatValue]];
+                    for (int i=0; i<[model.count integerValue]; i++) {
+                        if (!isStringEmpty(_productOrderModel.productIds)) {
+                            _productOrderModel.productIds=[NSString stringWithFormat:@"%@,%@",_productOrderModel.productIds,model.id];
+                        }else{
+                            _productOrderModel.productIds=model.id;
+                        }
+                    }
+                }
+            }
             break;
     }
     [Master HttpPostRequestByParams:@{@"clientId":clientId} url:mlqqm serviceCode:fwdzlb Success:^(id json) {

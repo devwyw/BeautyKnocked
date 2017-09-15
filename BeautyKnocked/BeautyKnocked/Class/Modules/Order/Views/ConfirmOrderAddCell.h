@@ -13,5 +13,4 @@
 
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,strong) RACSignal * addMore;
-
 @end

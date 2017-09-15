@@ -56,7 +56,7 @@
     
     UILabel *money=[[UILabel alloc]init];
     if ([user.money floatValue]<1) {
-        money.text=[NSString stringWithFormat:@"¥ %.2f",[user.money floatValue]];
+        money.text=[NSString stringWithFormat:@"¥ %.1f",[user.money floatValue]];
     }else{
         money.text=[NSString stringWithFormat:@"¥ %@",user.money];
     }

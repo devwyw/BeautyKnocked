@@ -153,7 +153,7 @@ static NSInteger netWorkingStatus=0;
                 break;
             default:
                 if (netWorkingStatus==1)break;
-                [Master PopNetWorkingView];
+                [Master showSVProgressHUD:[NSString stringWithFormat:@"网络请求错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
                 break;
         }
         if (!isObjectEmpty(failure)){
@@ -161,13 +161,62 @@ static NSInteger netWorkingStatus=0;
         }
     }];
 }
++(void)WebPostRequestByParams:(NSDictionary *)params url:(NSString *)url serviceCode:(NSString *)serviceCode Success:(HttpSuccessBlock)success Failure:(HttpFalureBlock)failure
+                andNavigation:(UINavigationController*)navigationController{
+    /** 拼接 */
+    url = [NSString stringWithFormat:@"%@%@",url,serviceCode];
+    /** Post网络请求 */
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 15;
+    manager.requestSerializer  = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", @"text/plain",nil];
+    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSData *data = responseObject;
+        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"网络请求成功:%@",resultDic);
+        if (!isObjectEmpty(success)) {
+            if ([Master getSuccess:resultDic WithUINavigationController:navigationController]) {
+                success(resultDic);
+            }
+        }
+    }failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"网络请求错误:%@",error);
+        switch (error.code) {
+            case -1004:
+                if (netWorkingStatus==1)break;
+                [Master PopNetWorkingView];
+                break;
+            default:
+                if (netWorkingStatus==1)break;
+                [Master showSVProgressHUD:[NSString stringWithFormat:@"网络请求错误,错误代码%ld",error.code] withType:ShowSVProgressTypeError withShowBlock:nil];
+                break;
+        }
+        if (!isObjectEmpty(failure)){
+            failure(error);
+        }
+    }];
+}
++(void)startStatus{
+    {/** 菊花 */
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD setMinimumDismissTimeInterval:3];
+    }
+}
++(void)stopStatus{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
+    [SVProgressHUD dismiss];
+}
 +(void)PopNetWorkingView{
     [LEEAlert alert].config
     .LeeAddCustomView(^(LEECustomView *custom) {
         UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"kulian"]];
         custom.view=image;
     })
-    .LeeTitle(@"网络不给力，请检查您的网络设置")
+    .LeeTitle(@"网络不给力，请检查您的网络设置~")
     .LeeCancelAction(@"网络设置", ^{
         [Master pushSystemSettingWithUrl:@"App-Prefs:root=MOBILE_DATA_SETTINGS_ID"];
     })
@@ -220,9 +269,9 @@ static NSInteger netWorkingStatus=0;
             case 8:
         {
             [Master showSVProgressHUD:json[@"message"] withType:ShowSVProgressTypeError withShowBlock:^{
-                LoginController *loginController = [[LoginController alloc] init];
-                UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
                 if (!isObjectEmpty(root)) {
+                    LoginController *loginController = [[LoginController alloc] init];
+                    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginController];
                     [root presentViewController:loginNav animated:YES completion:^{
                         [root popToRootViewControllerAnimated:NO];
                     }];

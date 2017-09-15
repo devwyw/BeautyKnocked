@@ -115,7 +115,7 @@ static NSInteger padding=6;
         Weakify(self);
         if (_index==7) {
             PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-            [Master HttpPostRequestByParams:@{@"id":model.id,@"projectId":model.projectId} url:mlqqm serviceCode:tcxq Success:^(id json) {
+            [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:tcxq Success:^(id json) {
                 [Wself.subModel sendNext:json[@"info"]];
                 [Wself.navigationController popViewControllerAnimated:YES];
             } Failure:nil andNavigation:Wself.navigationController];
@@ -128,8 +128,13 @@ static NSInteger padding=6;
             }
             ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
             [Master HttpPostRequestByParams:@{@"id":model.id} url:mlqqm serviceCode:code Success:^(id json) {
-                [Wself.subModel sendNext:json[@"info"]];
-                [Wself.navigationController popViewControllerAnimated:YES];
+                if (_isOrder) {
+                    [Wself.navigationController popViewControllerAnimated:YES];
+                    [Wself.subModel sendNext:json[@"info"]];
+                }else{
+                    [Wself.subModel sendNext:json[@"info"]];
+                    [Wself.navigationController popViewControllerAnimated:YES];
+                }
             } Failure:nil andNavigation:Wself.navigationController];
         }
     }else{
@@ -139,7 +144,7 @@ static NSInteger padding=6;
             ProductDetailController *productDetailController = [[ProductDetailController alloc] init];
             productDetailController.alpha=@"0";
             productDetailController.hidesBottomBarWhenPushed = YES;
-            productDetailController.productID=model.id;
+            productDetailController.id=model.id;
             [self.navigationController pushViewController:productDetailController animated:YES];
         }else {
             ItemDetailController *itemDetailController = [[ItemDetailController alloc] init];
@@ -148,12 +153,13 @@ static NSInteger padding=6;
             if (_index==7) {
                 //套餐
                 PackageModel *model=[PackageModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-                itemDetailController.detailID=model.id;
-                itemDetailController.projectId=model.projectId;
+                itemDetailController.id=model.id;
+                itemDetailController.type=MLPackage;
             }else{
                 //项目
                 ItemClassModel *model=[ItemClassModel mj_objectWithKeyValues:self.itemArray[indexPath.row]];
-                itemDetailController.detailID=model.id;
+                itemDetailController.id=model.id;
+                itemDetailController.type=MLItem;
             }
             [self.navigationController pushViewController:itemDetailController animated:YES];
         }
@@ -169,7 +175,7 @@ static NSInteger padding=6;
     return padding;
 }
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0.6, padding, padding, padding);
+    return UIEdgeInsetsMake(padding, padding, padding, padding);
 }
 -(void)addSubViews {
     [self.view addSubview:_sortView];

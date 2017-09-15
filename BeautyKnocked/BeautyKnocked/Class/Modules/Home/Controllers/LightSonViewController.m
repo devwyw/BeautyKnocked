@@ -16,7 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout=UIRectEdgeNone;
     NSArray * titleArr=@[@"欧洲之星",@" ULTHERA超声刀",@"OPT冰点快速脱毛仪",@"水光针",@"热立塑LIPOSONIX",@"C6至尊祛斑王"];
     [self setTitle:titleArr[_Mtag-1]];
     NSArray * imageArr=@[@"smzt.jpg",@"csdqt.jpg",@"opttmqt.jpg",@"sgz.jpg",@"rls.jpg",@"cqbw.jpg"];

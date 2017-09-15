@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BeauticianModel.h"
 
 @interface BeauticianPageHeaderView : UIView
-
+@property (nonatomic,strong) BeauticianModel * model;
 @end

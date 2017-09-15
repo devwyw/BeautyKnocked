@@ -23,35 +23,28 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
 -(instancetype)initWithStyle:(UITableViewStyle)style{
     return [super initWithStyle:UITableViewStyleGrouped];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.tableView.scrollEnabled = NO;
     self.title=@"兑换成功";
+    Acount *user=[Acount shareManager];
+    [Master HttpPostRequestByParams:@{@"id":user.id} url:mlqqm serviceCode:khjf Success:^(id json) {
+        user.score=[NSString stringWithFormat:@"%ld",[json[@"info"] integerValue]];
+        [user UpdateAcount];
+    } Failure:nil andNavigation:self.navigationController];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
     return 2;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
     }
     return 3;
 }
-
-
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      UITableViewCell *cell = nil;
      if (!cell) {
          cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
@@ -65,12 +58,12 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
          }];
      }else {
          NSArray *titles = @[@"兑换订单编号",@"优惠券金额",@"兑换积分"];
-         NSArray *texts = @[@"42215645656",@"¥60",@"400积分"];
+         NSArray *texts = @[_model.code,[NSString stringWithFormat:@"¥%@",_model.money],[NSString stringWithFormat:@"%@积分",_model.integral]];
          
          cell.textLabel.text = titles[indexPath.row];
          cell.detailTextLabel.text = texts[indexPath.row];
          
-         cell.detailTextLabel.textColor = indexPath.row > 0 ? [UIColor redColor] : [UIColor lightGrayColor];
+         cell.detailTextLabel.textColor = indexPath.row > 0 ? [UIColor colorWithHexString:@"#f5624b"] : [UIColor darkGrayColor];
          cell.textLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
          cell.detailTextLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
      }
@@ -104,8 +97,25 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
 
 -(UIImageView *)successImgView {
     if (!_successImgView) {
-        _successImgView = [[UIImageView alloc] init];
-        [_successImgView setImage:[UIImage imageNamed:@"duihuanbeijing"]];
+        _successImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"duihuanbeijing"]];
+        
+        UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chenggong1"]];
+        [_successImgView addSubview:image];
+        
+        UILabel *title=[[UILabel alloc]init];
+        title.font=[UIFont systemFontOfSize:Font_Size(50)];
+        title.text=@"兑换成功";
+        [_successImgView addSubview:title];
+        
+        [image mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_successImgView).offset(Height_Pt(67));
+            make.centerX.equalTo(_successImgView);
+            make.size.sizeOffset(CGSizeMake(Width_Pt(115), Height_Pt(115)));
+        }];
+        [title mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(image.mas_bottom).offset(Height_Pt(35));
+            make.centerX.equalTo(_successImgView);
+        }];
     }
     return _successImgView;
 }
@@ -125,5 +135,8 @@ static NSString *const reuseIdentifier = @"ExchangeSuccess";
         [self.navigationController pushViewController:recordingController animated:YES];
     }
 }
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 @end

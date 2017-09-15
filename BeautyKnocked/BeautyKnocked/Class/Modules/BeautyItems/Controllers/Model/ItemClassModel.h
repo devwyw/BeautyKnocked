@@ -16,4 +16,5 @@
 @property (nonatomic,copy) NSString * vipPrice;
 @property (nonatomic,copy) NSString * imagePath;
 @property (nonatomic,copy) NSString * buySecond;
+@property (nonatomic,assign) BOOL isSelect;
 @end

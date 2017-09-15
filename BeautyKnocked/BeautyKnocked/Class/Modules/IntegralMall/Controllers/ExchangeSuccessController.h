@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IntegraInfoModel.h"
 
 @interface ExchangeSuccessController : UITableViewController
-
+@property (nonatomic,strong) IntegraInfoModel * model;
 @end
