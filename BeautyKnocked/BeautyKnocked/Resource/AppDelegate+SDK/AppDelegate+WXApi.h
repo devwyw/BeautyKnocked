@@ -10,7 +10,7 @@
 #import <WXApi.h>
 
 @interface AppDelegate (WXApi)
-+(void)registerWAppKey;
++(void)registerWxAppKey;
 +(BOOL)handleOpenURL:(NSURL*)url Delegate:(id)delegate;
 +(void)onResp:(BaseResp*)resp;
 +(void)WXPayWithPrepayId:(NSString*)prepayId;

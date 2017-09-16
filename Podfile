@@ -20,6 +20,14 @@ inhibit_all_warnings!
  pod 'JPush'
  pod 'WechatOpenSDK'
  pod 'Popover.OC'
+ 
+ pod 'UMengUShare/UI'
+ pod 'UMengUShare/Social/ReducedWeChat'
+ pod 'UMengUShare/Social/ReducedQQ'
+ pod 'UMengUShare/Social/ReducedSina'
+ pod 'UMengUShare/Social/SMS'
+ 
+
 
 target 'BeautyKnocked' do
     project 'BeautyKnocked/BeautyKnocked.xcodeproj'

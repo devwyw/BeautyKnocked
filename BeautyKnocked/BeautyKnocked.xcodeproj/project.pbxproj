@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		040442571F1F54D500E59CF1 /* NewUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 040442561F1F54D500E59CF1 /* NewUserController.m */; };
+		0409E2F61F6CB6F800DD9757 /* AppDelegate+UShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 0409E2F51F6CB6F800DD9757 /* AppDelegate+UShare.m */; };
 		0413DB691F1EFDD800357B27 /* LightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0413DB681F1EFDD800357B27 /* LightViewController.m */; };
 		0413DB721F1F0DE000357B27 /* LightSonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0413DB711F1F0DE000357B27 /* LightSonViewController.m */; };
 		041BFDB71F43D64700903185 /* RechargeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 041BFDB61F43D64700903185 /* RechargeModel.m */; };
@@ -984,6 +985,8 @@
 /* Begin PBXFileReference section */
 		040442551F1F54D500E59CF1 /* NewUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewUserController.h; sourceTree = "<group>"; };
 		040442561F1F54D500E59CF1 /* NewUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewUserController.m; sourceTree = "<group>"; };
+		0409E2F41F6CB6F800DD9757 /* AppDelegate+UShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+UShare.h"; sourceTree = "<group>"; };
+		0409E2F51F6CB6F800DD9757 /* AppDelegate+UShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+UShare.m"; sourceTree = "<group>"; };
 		0413DB671F1EFDD800357B27 /* LightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightViewController.h; sourceTree = "<group>"; };
 		0413DB681F1EFDD800357B27 /* LightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightViewController.m; sourceTree = "<group>"; };
 		0413DB701F1F0DE000357B27 /* LightSonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSonViewController.h; sourceTree = "<group>"; };
@@ -3337,6 +3340,8 @@
 				04EFA4D81F5557BB003933A5 /* AppDelegate+JPush.m */,
 				0420BAFD1F593E6B006BD63A /* AppDelegate+WXApi.h */,
 				0420BAFE1F593E6B006BD63A /* AppDelegate+WXApi.m */,
+				0409E2F41F6CB6F800DD9757 /* AppDelegate+UShare.h */,
+				0409E2F51F6CB6F800DD9757 /* AppDelegate+UShare.m */,
 				04EFA4D91F5557BB003933A5 /* SDK */,
 			);
 			name = "AppDelegate+SDK";
@@ -5285,6 +5290,7 @@
 				154662181F3202FE00ED146E /* MessageView.m in Sources */,
 				0423C6C51F4E721C00F492CB /* WebTimeModel.m in Sources */,
 				04E8C6851F3073D5005566C4 /* RechargeController.m in Sources */,
+				0409E2F61F6CB6F800DD9757 /* AppDelegate+UShare.m in Sources */,
 				7388F5331EDA72D900EB7EE4 /* SetupViewModel.m in Sources */,
 				738DAAD61EDE76B000F45DE3 /* BeauticianRegisterViewModel.m in Sources */,
 				046AF9101F418F3B00C627D6 /* ComListModel.m in Sources */,

@@ -13,6 +13,7 @@
 #import "AppDelegate+JPush.h"
 #import "AppDelegate+Alipay.h"
 #import "AppDelegate+WXApi.h"
+#import "AppDelegate+UShare.h"
 
 @interface AppDelegate ()<JPUSHRegisterDelegate,WXApiDelegate>
 
@@ -43,7 +44,9 @@
     /** 极光推送->注册 */
     [AppDelegate registerJPushSDKWithOptions:launchOptions Delegate:self];
     /** 微信支付->注册 */
-    [AppDelegate registerWAppKey];
+    [AppDelegate registerWxAppKey];
+    /** U-Share分享->注册 */
+    [AppDelegate registerShareKey];
     
     return YES;
 }
@@ -91,14 +94,19 @@
 }
 #pragma mark ===== 支付SDK =====
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    if ([url.host isEqualToString:@"safepay"]) {
-        /** 支付宝 */
-        [AppDelegate openURL:url];
-        return YES;
-    }else{
-        /** 微信支付 */
-        return [AppDelegate handleOpenURL:url Delegate:self];
+    BOOL isShare=[AppDelegate openURL:url sourceApplication:sourceApplication annotation:annotation];
+    if (!isShare) {
+        if ([url.host isEqualToString:@"safepay"]) {
+            /** 支付宝 */
+            [AppDelegate openURL:url];
+            return YES;
+        }else{
+            /** 微信支付 */
+            return [AppDelegate handleOpenURL:url Delegate:self];
+        }
     }
+    /** 分享 */
+    return isShare;
 }
 // 9.0以后新API接口
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options{

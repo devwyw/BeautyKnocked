@@ -34,6 +34,19 @@ PODS:
     - SDWebImage/Core (= 3.7.0)
   - SDWebImage/Core (3.7.0)
   - SVProgressHUD (2.1.2)
+  - UMengUShare/Core (6.4.5):
+    - UMengUShare/Network
+  - UMengUShare/Network (6.4.5)
+  - UMengUShare/Social/ReducedQQ (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/Social/ReducedSina (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/Social/ReducedWeChat (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/Social/SMS (6.4.5):
+    - UMengUShare/Core
+  - UMengUShare/UI (6.4.5):
+    - UMengUShare/Core
   - WechatOpenSDK (1.8.0)
   - WMPageController (2.2.1)
   - ZLPhotoBrowser (2.2.5)
@@ -53,6 +66,11 @@ DEPENDENCIES:
   - SDCycleScrollView (= 1.65)
   - SDWebImage (= 3.7)
   - SVProgressHUD
+  - UMengUShare/Social/ReducedQQ
+  - UMengUShare/Social/ReducedSina
+  - UMengUShare/Social/ReducedWeChat
+  - UMengUShare/Social/SMS
+  - UMengUShare/UI
   - WechatOpenSDK
   - WMPageController (= 2.2.1)
   - ZLPhotoBrowser
@@ -73,10 +91,11 @@ SPEC CHECKSUMS:
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: b42db92951f9d565c55f1d7f1d5efe47e33a7515
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  UMengUShare: a5711c54e640b04e3048e931d2b88d50f9cfa55c
   WechatOpenSDK: 0ee07a8d492299d3e47372a33da5af26524a7576
   WMPageController: 181bcc9b1fb7c9c3466bff66012552953a547d28
   ZLPhotoBrowser: e3b90e4ab9ec5d19ba2ed2ef7c9ded654e1b1c8e
 
-PODFILE CHECKSUM: 91e27a3d2259854ec0cc1a41c97ec854505834dc
+PODFILE CHECKSUM: ed50a132037649a1d0bcd97cc0e94124ab6e5fae
 
 COCOAPODS: 1.2.0

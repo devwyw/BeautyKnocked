@@ -8,6 +8,7 @@
 
 #import "ShareViewController.h"
 #import "UIButton+Category.h"
+#import "AppDelegate+UShare.h"
 
 @interface ShareViewController ()
 @property (nonatomic,strong) UIImageView * popImage;
@@ -155,7 +156,7 @@
     }];
 }
 -(void)share:(UIButton*)button{
-    NSLog(@"分享");
+    [AppDelegate popShareSheetViewWithMessage:@"这是一段分享测试内容"];
 }
 -(void)shareButton:(UIButton*)button{
     switch (button.tag) {

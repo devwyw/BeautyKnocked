@@ -11,7 +11,7 @@
 static NSString *AppKey = @"wx1dba3ac93eb4b2e5";
 @implementation AppDelegate (WXApi)
 
-+(void)registerWAppKey{
++(void)registerWxAppKey{
     [WXApi registerApp:AppKey];
 }
 +(BOOL)handleOpenURL:(NSURL*)url Delegate:(id)delegate{
