@@ -10,11 +10,14 @@
 #import "SetupViewModel.h"
 
 @interface PSSetupController ()
-
 @property (nonatomic, strong)SetupViewModel *setupViewModel;
 @end
 
 @implementation PSSetupController
+
+-(instancetype)initWithStyle:(UITableViewStyle)style {
+    return [super initWithStyle:UITableViewStylePlain];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

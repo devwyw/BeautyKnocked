@@ -54,7 +54,7 @@ static Acount *instance=nil;
         [self GetAcount];
     }else{
         [Data open];
-        [Data executeUpdate:@"CREATE TABLE 'acount' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'aid' VARCHAR(255),'account' VARCHAR(255),'nickName' VARCHAR(255),'headPath' VARCHAR(255),'rank' VARCHAR(255),'money' VARCHAR(255),'score' VARCHAR(255),'longitude' VARCHAR(255),'latitude' VARCHAR(255),'token' VARCHAR(255))"];
+        [Data executeUpdate:@"CREATE TABLE 'acount' ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'aid' VARCHAR(255),'account' VARCHAR(255),'nickName' VARCHAR(255),'headPath' VARCHAR(255),'rank' VARCHAR(255),'money' VARCHAR(255),'score' VARCHAR(255))"];
         [Data close];
     }
 }
@@ -69,7 +69,7 @@ static Acount *instance=nil;
     if (!isStringEmpty(aid)) {
         [Data executeUpdate:@"DELETE FROM acount WHERE aid = ?",aid];
     }
-    [Data executeUpdate:@"INSERT INTO acount(aid,account,nickName,headPath,rank,money,score,longitude,latitude,token) VALUES(?,?,?,?,?,?,?,?,?,?)",self.id,self.account,self.nickName,self.headPath,self.rank,self.money,self.score];
+    [Data executeUpdate:@"INSERT INTO acount(aid,account,nickName,headPath,rank,money,score) VALUES(?,?,?,?,?,?,?)",self.id,self.account,self.nickName,self.headPath,self.rank,self.money,self.score];
     [Data close];
 }
 /** 账号退出 */

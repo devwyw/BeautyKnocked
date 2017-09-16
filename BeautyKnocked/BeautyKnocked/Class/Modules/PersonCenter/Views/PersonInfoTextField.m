@@ -56,14 +56,13 @@
     _textField.text=text;
 }
 -(void)createViews {
-    Acount *user=[Acount shareManager];
     _textLabel = [[UILabel alloc] init];
     _textLabel.textColor = [UIColor grayColor];
     _textLabel.font = [UIFont systemFontOfSize:Font_Size(45)];
     [self addSubview:_textLabel];
     
     _textField = [[UITextField alloc] init];
-    _textField.text=user.nickName;
+    Acount *user=[Acount shareManager];
     Weakify(self);
     [[_textField rac_signalForControlEvents:UIControlEventEditingDidEnd] subscribeNext:^(__kindof UIControl * _Nullable x) {
         if (![_textField.text isEqualToString:user.nickName] && _textField.text.length>0) {

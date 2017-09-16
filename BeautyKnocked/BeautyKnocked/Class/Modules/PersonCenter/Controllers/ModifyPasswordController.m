@@ -38,7 +38,6 @@
 }
 
 -(void)createViews {
-    Acount *user=[Acount shareManager];
     UIColor *endColor=[UIColor grayColor];
     Weakify(self);
     _currentPasswordTF = [TextField textFieldWithPlaceholder:@"当前密码" textSize:Font_Size(48) borderColor:endColor];
@@ -89,7 +88,7 @@
             if ([_currentPasswordTF.text isEqualToString:_passwordTF.text]) {
                 [Master showSVProgressHUD:@"旧密码与新密码相同" withType:ShowSVProgressTypeInfo withShowBlock:nil];
             }else{
-                [Master HttpPostRequestByParams:@{@"id":user.id,
+                [Master HttpPostRequestByParams:@{@"id":[Acount shareManager].id,
                                                   @"oldPassword":_currentPasswordTF.text,
                                                   @"newPassword":_passwordTF.text} url:mlqqm serviceCode:ggmm Success:^(id json) {
                                                       [Master showSVProgressHUD:@"修改成功" withType:ShowSVProgressTypeSuccess withShowBlock:^{

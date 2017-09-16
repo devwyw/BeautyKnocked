@@ -10,6 +10,8 @@
 #import "AboutUsTableViewController.h"
 #import "BeauticianRegistrationController.h"
 #import "AppDelegate+JPush.h"
+#import <SDImageCache.h>
+#import <SVProgressHUD.h>
 
 @interface SetupViewModel ()
 @property (nonatomic,strong) UIButton *loginOutButton;
@@ -55,31 +57,31 @@
     UITableViewCell *cell = nil;
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row < 4) {
-        if (indexPath.row==0) {
-            Weakify(self);
-            UISwitch *notificationSwitchs= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
-            notificationSwitchs.onTintColor = ThemeColor;
-            notificationSwitchs.on=_isStart;
-            [[notificationSwitchs rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
-                [Master pushSystemSettingWithUrl:@"App-Prefs:root=www.paisen.com.BeautyKnocked"];
-                [Wself.navigationController popViewControllerAnimated:YES];
-            }];
-            cell.accessoryView = notificationSwitchs;
-        }else if(indexPath.row<3){
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        cell.textLabel.text = self.dataSource[indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
-    }else {
-        [cell.contentView addSubview:self.loginOutButton];
-        [self.loginOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(cell.contentView).with.insets(UIEdgeInsetsMake(Height_Pt(66), Width_Pt(50), 0, Width_Pt(50)));
+    cell.textLabel.text = self.dataSource[indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:Font_Size(50)];
+    if (indexPath.row==0) {
+        Weakify(self);
+        UISwitch *notificationSwitchs= [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, Width_Pt(160), Height_Pt(80))];
+        notificationSwitchs.onTintColor = ThemeColor;
+        notificationSwitchs.on=_isStart;
+        [[notificationSwitchs rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UISwitch * _Nullable message) {
+            [Master pushSystemSettingWithUrl:@"App-Prefs:root=www.paisen.com.BeautyKnocked"];
+            [Wself.navigationController popViewControllerAnimated:YES];
         }];
+        cell.accessoryView = notificationSwitchs;
+    }else if(indexPath.row<3){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else if (indexPath.row==3){
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, Width_Pt(180), Height_Pt(40))];
+        label.textColor=[UIColor darkGrayColor];
+        label.textAlignment=NSTextAlignmentRight;
+        label.font=[UIFont systemFontOfSize:Font_Size(40)];
+        float cacheSize = [[SDImageCache sharedImageCache] getSize];
+        label.text=cacheSize/(1024*1024) >= 1 ? [NSString stringWithFormat:@"%.1fMB",cacheSize/(1024*1024)] : [NSString stringWithFormat:@"%.1fKB",cacheSize/1024];
+        cell.accessoryView = label;
     }
     return cell;
 }
-
 -(CGFloat)configTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 4) {
         return Height_Pt(214);
@@ -93,6 +95,19 @@
     }else if (indexPath.row == 2) {
         AboutUsTableViewController *aboutVC = [[AboutUsTableViewController alloc] init];
         [self.navigationController pushViewController:aboutVC animated:YES];
+    }else if (indexPath.row==3){
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [[SDImageCache sharedImageCache] clearMemory];
+        [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+            [SVProgressHUD dismissWithDelay:3 completion:^{
+                [Master showSVProgressHUD:@"清理完成~" withType:ShowSVProgressTypeSuccess withShowBlock:^{
+                    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                }];
+            }];
+            
+        }];
     }
 }
 -(UIView*)configTableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -110,13 +125,13 @@
         [_loginOutButton setBackgroundImage:[UIImage imageNamed:@"tijiaokuang"] forState:UIControlStateNormal];
         Weakify(self);
         [[_loginOutButton rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) {
-            if ([[Acount shareManager] isSignInWithNavigationController:Wself.navigationController]) {
+            Acount *user=[Acount shareManager];
+            if ([user isSignInWithNavigationController:Wself.navigationController]) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"您确定要退出登录吗?" message:@"(退出后不会删除历史数据,下次登录仍可使用本账号)" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
                 [cancelAction setValue:[UIColor redColor] forKey:@"_titleTextColor"];
                 [alertController addAction:cancelAction];
                 [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    Acount *user=[Acount shareManager];
                     [Master HttpPostRequestByParams:@{@"id":user.id} url:mlqqm serviceCode:tcdl Success:^(id json) {
                         [JPUSHService deleteAlias:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
                         } seq:[user.id integerValue]];
